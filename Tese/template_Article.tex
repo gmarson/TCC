@@ -2,11 +2,16 @@
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
+
+
 %opening
 \title{Análise Comparativa dos Algoritmos Genéticos Many-Objective em problemas de otimização discreta}
 \author{Gabriel Augusto Marson\\ gabrielmarson@live.com }
 
+
 \begin{document}
+
+
 
 \maketitle
 
@@ -20,11 +25,30 @@
 
 \subsection{Visão Geral}	
 
-	Algoritmos genéticos são uma abordagem baseada na teoria da evolução de Darwin que têm como regra uma sequência de passos para atingir determinado objetivo.
+	Algoritmos genéticos são uma abordagem baseada na teoria da evolução de Darwin que têm como regra uma sequência de passos para atingir determinado objetivo. 
 	
-	Apesar de ter sido constatado o sucesso do AG para certos tipos de problemas, alguns outros permaneceram sem serem resolvidos por esse método. Problemas de otimização discreta são um exemplo disso pois eles requerem que a classificação dos indivíduos seja realizada de acordo com vários critérios.
+	Apesar de ter sido constatado o sucesso do AG para certos tipos de problemas, alguns outros permaneceram sem serem resolvidos por esse método. Problemas de otimização discreta são um exemplo disso pois requerem que a classificação dos indivíduos seja realizada de acordo com vários critérios.
+		
+	Consideremos, por exemplo, o problema do Roteamento Multicast (PRM). Como foi dito em Marcos \cite{bueno2010heuristicas} ele pode ser modelado como um grafo direcionado onde os vértices são os hosts e as arestas representam os enlaces de comunicação. Dessa forma, dado o grafo $G$ que representa a rede e um fluxo $\phi$, deve-se calcular árvores enraizadas $T$ de $G$ para carregar $\phi$ em $G$, partindo de um vértice que representa o início de um conexão ou envio de pacote e passando por um subconjunto de vértices de $G$.
 	
-	Os AGs Multi-Objective constituem uma abordagem para resolver esse problema categorizando possíveis melhores respostas em virtude dos critérios avaliados.
+	Existem uma série de atributos que podem influenciar o desempenho de uma rede tais como custo, delay, capacidade e tráfego atual. Os AGs Multi-Objective constituem uma abordagem para resolver problemas desse tipo categorizando possíveis melhores respostas em virtude dos critérios avaliados.
+	
+	A proposta geral de um AG multi-objective consiste em ordenar vários indivíduos por meio de várias funções objetivos. Dessa forma, criou-se o conceito de fronteira de Pareto  \cite{Pareto}, no qual estão os melhores indivíduos de acordo com várias funções objetivos. O critério para a classificação de qual indivíduo permanece em qual fronteira é a dominância.
+	
+	Diz-se que $i \preceq j$ (i domina j) se:
+	
+	\begin{enumerate}
+		\item $x$ não é pior do que $y$ para todas as funções objetivos
+		
+		\item $x$ é melhor do que y em pelo menos uma função objetivo.
+	\end{enumerate}
+	
+	Esse tipo de classificação pode ser melhor compreendido se analisarmos um problema simples como a compra de um carro. Vários critérios podem ser utilizados para comprá-lo como preço e desempenho. Assim na fronteira de Pareto, estariam os indivíduos com o melhor preço e melhor desempenho. Portanto, não existe uma única resposta para esse tipo de problema.
+	
+	Vários critérios de diferenciação de respostas podem ser usados em AGs multi-objective. No NSGAII \cite{NSGAII}, por exemplo, utiliza-se o agrupamento por fronteiras, ou rank além do método de \textit{crowding distance}, utilizado como critério de desempate na escolha do indivíduo caso eles tenham o mesmo rank e, também, para impedir que a variabilidade genética da população seja compremetida.
+	
+	Em virtude de bons resultados gerados por esses algoritmos em problemas discretos, tal qual o PRM, serão analisados métodos de AG multi e many objective como NSGA-II e SPEA2 aplicados a problemas clássicos da computação como o problema da Mochila e do Caixeiro Viajante. 
+	
 	
 	
 \section{Agoritmos Genéticos}
@@ -33,8 +57,20 @@
 	
 	Essa teoria foi imprescindível para a criação dos algoritmos genéticos por John Henry Holland. Físico formado pelo MIT(Massachusetts Institute of Technology), Holland elaborou um algoritmo não determinístico com foco em resolução de problemas de custo muito alto.
 	
-	O AG consiste em dar uma interpretação para um conjunto de dados e evoluí-los para uma solução. As fases do AG dividem-se em aplicar uma função objetivo, a qual será responsável por classificar a aptidão do indivíduo, selecionar os indivíduos mais aptos, que serão os pais da próxima geração e realizar o cruzamento deles. Percebe-se a semelhança com a teoria de Darwin.
+	O AG consiste em dar uma interpretação para um conjunto de dados e evoluí-los para uma solução. Nesse caso, todos os dados seriam um população e cada indivíduo representa um dado, além de uma solução em potencial para o problema. O algoritmo avalia cada membro usando uma métrica de aptidão. Isso consiste em dar um nota para cada indivíduo que simboliza as chances dele transmitir suas características para a próxima geração.
 	
-	Repete-se esse processo até que uma boa solução seja encontrada. Normalmente isso ocorre quando os indivíduos convergem para um só ou após um determinado número de gerações preestabelecido.
+	Alguns métodos são utilizados para selecionar os dados. Dessa forma serão escolhidos $N$ pares de pais para realizarem o cruzamento. O processo de crossover retorna um ou mais filhos. Existe uma pequena chance (cerca de $1\%$) de ocorrer uma mutação no material genético dos filhos, em virtude de aumentar a diversidade genética na população.
+	
+	Os filhos resultantes do cruzamento dos pais são reinseridos na população. Com o intuito de manter o custo computacional não crescente e de eliminar indivíduos fracos, utilizam-se métodos de inserção para diminuir a população.
+	
+	Esse processo se repete por um número determinado gerações ou pode ser parado quando todos os indivíduos possuírem o mesmo material genético (é improvável que a mutação nas próximas gerações produza um indivíduo mais apto). 
+ 	Percebe-se a semelhança com a teoria de Darwin em que os indivíduos mais adaptados passarão suas características aos seus descendentes.
+	
+	
+\subsection{title}
+
+\newpage
+\bibliographystyle{ieeetr}
+\bibliography{Bibliografia}
 
 \end{document}
