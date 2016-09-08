@@ -19,7 +19,7 @@ public class Crossover {
     }
 
     public ArrayList<Object> binaryCrossover(Object parent1,
-    Object parent2 )
+                                             Object parent2 )
     {
         return null;
     }
