@@ -6,14 +6,66 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Ndi = Numero de soluções que dominam a solução i
- * Ui = Conjunto de soluções dominadas por i. Cada i do tipo member está associado a um arrayList de Members
+ * ndi = Numero de soluções que dominam a solução i
+ * ui = Conjunto de soluções dominadas por i. Cada i do tipo member está associado a um arrayList de Members
  */
 public class Member {
-    private int Ndi;
-    private HashMap<Member, ArrayList<Member>> Ui = new HashMap<Member, ArrayList<Member>>(); //TODO mudar a instanciação pro construtor
-    private HashMap<Member, ArrayList<Function>> resultingFunctions;
-    private Data data;
+    private int ndi = 0;
+    private ArrayList<Member> ui =  null;
+    private ArrayList<Integer> resultOfFunctions = null; // Acho que um arraylist basta
+    private double data;
 
+    public Member(double data)
+    {
+        this.ui = new ArrayList<Member>();
+        this.resultOfFunctions = new ArrayList<Integer>();
+        this.data =data;
+    }
 
+    public void addMemberToUi(Member m)
+    {
+        if (m != null)
+        {
+            this.ui.add(m);
+        }
+    }
+
+    public void removeAllMembersFromUi(){
+        for(int i=0;i<this.ui.size();i++)
+        {
+            this.ui.remove(i);
+        }
+    }
+
+    public int getNdi() {
+        return ndi;
+    }
+
+    public void setNdi(int ndi) {
+        this.ndi = ndi;
+    }
+
+    public ArrayList<Member> getUi() {
+        return ui;
+    }
+
+    public void setUi(ArrayList<Member> ui) {
+        this.ui = ui;
+    }
+
+    public ArrayList<Integer> getResultOfFunctions() {
+        return resultOfFunctions;
+    }
+
+    public void setResultOfFunctions(ArrayList<Integer> resultOfFunctions) {
+        this.resultOfFunctions = resultOfFunctions;
+    }
+
+    public double getData() {
+        return data;
+    }
+
+    public void setData(double data) {
+        this.data = data;
+    }
 }

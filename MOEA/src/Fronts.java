@@ -16,5 +16,12 @@ public class Fronts {
         this.fronts.add(f);
     }
 
+    public void resetFronts()
+    {
+        for(int i=0;i<this.fronts.size();i++)
+        {
+            this.fronts.remove(i);
+        }
+    }
 
 }
