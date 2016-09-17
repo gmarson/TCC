@@ -6,30 +6,26 @@ import java.util.Random;
  * TCC UFU
  */
 
-public class Population {
+public abstract class Population {
     public static int POP_SIZE =5;
     public static int NUM_GER=50;
     public static double CROSS_RATE=20;
     public static double MUT_RATE=1;
 
+
     private static ArrayList<Member> population = new ArrayList<Member>();
 
-    public Population(int size, int ger, double cross, double mut)
-    {
-        this.POP_SIZE = size;
-        this.NUM_GER = ger;
-        this.CROSS_RATE = cross/100.0;
-        this.MUT_RATE = mut/100.0;
-
-    }
-
-    public Population()
+    private Population()
     {
         this.CROSS_RATE = this.CROSS_RATE/100.0;
         this.MUT_RATE = this.MUT_RATE/100.0;
     }
 
-    public void generatePopulation()
+    public static ArrayList<Member> getInstance(){
+        return population;
+    }
+
+    public static void generatePopulation()
     {
         Function f = ProblemSCH.getInstance();
         if(f == null)
@@ -46,14 +42,14 @@ public class Population {
 
         for(int i=0 ; i<POP_SIZE; i++)
         {
-            this.population.add(new Member(minValue + (maxValue - minValue) * r.nextDouble()));
+            population.add(new Member(minValue + (maxValue - minValue) * r.nextDouble()));
         }
     }
 
-    public void printPopulation()
+    public static void printPopulation()
     {
         System.out.println("Population");
-        for(int i = 0; i<this.population.size(); i++)
+        for(int i = 0; i<population.size(); i++)
         {
             System.out.println("I = "+i+" DATA = "+ population.get(i).getData());
         }
@@ -63,21 +59,17 @@ public class Population {
         return population;
     }
 
-    public void setPopulation(ArrayList<Member> population) {
-        this.population = population;
+    public static void replaceElement(ArrayList<Object> appliedFunctions, int indexOf)
+    {
+        population.get(indexOf).setResultOfFunctions(appliedFunctions);
     }
 
-    public void replaceElement(ArrayList<Object> appliedFunctions, int indexOf)
+    public static void printPopulationDetailed()
     {
-        this.population.get(indexOf).setResultOfFunctions(appliedFunctions);
-    }
-
-    public void printPopulationDetailed()
-    {
-        for(int i=0; i<this.population.size(); i++)
+        for(int i=0; i<population.size(); i++)
         {
             System.out.println("I"+i);
-            this.population.get(i).printMember();
+            population.get(i).printMember();
         }
     }
 }

@@ -9,7 +9,7 @@ public abstract class Function {
 
     protected Function(){}
 
-    public abstract void applyFunction(Population p);
+    public abstract void applyFunction();
 
     public abstract double getMaxValue();
     public abstract void setMaxValue(int maxValue);

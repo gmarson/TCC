@@ -22,18 +22,19 @@ public class ProblemSCH extends Function {
         this.setMinValue(-1000);
     }
 
-    public  void applyFunction(Population p){
+
+    public  void applyFunction(){
         Member m_aux;
         ArrayList<Object> resultingFunction = new ArrayList<>();
         int i,j;
-        for(i=0;i<p.POP_SIZE;i++)
+        for(i=0;i<Population.POP_SIZE;i++)
         {
-            m_aux = p.getPopulation().get(i);
+            m_aux = Population.getInstance().get(i);
 
             resultingFunction.add(this.firstFunction(m_aux.getData()));
             resultingFunction.add(this.secondFunction(m_aux.getData()));
 
-            p.replaceElement(resultingFunction,i);
+            Population.replaceElement(resultingFunction,i);
             resultingFunction.clear();
         }
 

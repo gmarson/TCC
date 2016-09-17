@@ -23,12 +23,12 @@ public class NSGAII {
 
          */
 
-        Population p =new Population();
+
         Function f = ProblemSCH.getInstance();
 
-        p.generatePopulation();
-        f.applyFunction(p);
-        p.printPopulationDetailed();
+        Population.generatePopulation();
+        f.applyFunction();
+        Population.printPopulationDetailed();
 
     }
 }
