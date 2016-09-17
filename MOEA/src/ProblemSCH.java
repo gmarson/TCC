@@ -11,11 +11,10 @@ public class ProblemSCH extends Function {
 
     private static ProblemSCH function = new ProblemSCH();
 
-
+    //Singleton
     public static ProblemSCH getInstance() {
         return function;
     }
-
     private ProblemSCH()
     {
         this.setNumberOfFunctions(2);
@@ -23,24 +22,42 @@ public class ProblemSCH extends Function {
         this.setMinValue(-1000);
     }
 
-    public static void setFunction(ProblemSCH function) {
-        ProblemSCH.function = function;
+    public  void applyFunction(Population p){
+        Member m_aux;
+        ArrayList<Object> resultingFunction = new ArrayList<>();
+        int i,j;
+        for(i=0;i<p.POP_SIZE;i++)
+        {
+            m_aux = p.getPopulation().get(i);
+
+            resultingFunction.add(this.firstFunction(m_aux.getData()));
+            resultingFunction.add(this.secondFunction(m_aux.getData()));
+
+            p.replaceElement(resultingFunction,i);
+            resultingFunction.clear();
+        }
+
     }
 
+
+
+
+
+    //functions
     public int firstFunction(double x)
     {
         return (int) Math.pow(x,2);
-    }
+    } //f(x) = x²
     public int secondFunction(double x)
     {
         return (int) Math.pow(x-2,2);
-    }
-
+    }//f(x) = (x-2)²
     public int getNumberOfFunctions() {
         return numberOfFunctions;
     }
 
 
+    //Getters and Setters
     public double getMaxValue() {
         return  maxValue;
     }
@@ -59,10 +76,6 @@ public class ProblemSCH extends Function {
 
     public void setNumberOfFunctions(int numberOfFunctions) {
         this.numberOfFunctions = numberOfFunctions;
-    }
-
-    public static Function getFunction() {
-        return function;
     }
 
 

@@ -4,7 +4,7 @@
  */
 
 import java.util.ArrayList;
-public class Fronts {
+public abstract class Fronts {
     private ArrayList<Front> fronts;
 
     public Fronts()
@@ -19,10 +19,18 @@ public class Fronts {
 
     public void resetFronts()
     {
-        for(int i=0;i<this.fronts.size();i++)
-        {
-            this.fronts.remove(i);
-        }
+        this.fronts.clear();
     }
 
+    public void updateDominanceRelations(){
+
+    }
+
+    //Getters and Setters
+    public ArrayList<Front> getFronts() {
+        return fronts;
+    }
+    public void setFronts(ArrayList<Front> fronts) {
+        this.fronts = fronts;
+    }
 }

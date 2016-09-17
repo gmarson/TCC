@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by gmarson on 9/8/2016.
  * TCC UFU
  */
-public class Utils {
+public abstract class Utils {
+
+
 
 }

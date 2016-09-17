@@ -7,12 +7,12 @@ import java.util.Random;
  */
 
 public class Population {
-    public static int POP_SIZE =100;
+    public static int POP_SIZE =5;
     public static int NUM_GER=50;
     public static double CROSS_RATE=20;
     public static double MUT_RATE=1;
 
-    private ArrayList<Member> population = new ArrayList<Member>();
+    private static ArrayList<Member> population = new ArrayList<Member>();
 
     public Population(int size, int ger, double cross, double mut)
     {
@@ -56,6 +56,28 @@ public class Population {
         for(int i = 0; i<this.population.size(); i++)
         {
             System.out.println("I = "+i+" DATA = "+ population.get(i).getData());
+        }
+    }
+
+    public ArrayList<Member> getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(ArrayList<Member> population) {
+        this.population = population;
+    }
+
+    public void replaceElement(ArrayList<Object> appliedFunctions, int indexOf)
+    {
+        this.population.get(indexOf).setResultOfFunctions(appliedFunctions);
+    }
+
+    public void printPopulationDetailed()
+    {
+        for(int i=0; i<this.population.size(); i++)
+        {
+            System.out.println("I"+i);
+            this.population.get(i).printMember();
         }
     }
 }

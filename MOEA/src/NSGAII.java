@@ -10,7 +10,7 @@ public class NSGAII {
     {
         /*
             V Gerar indivíduos aleatoriamente
-            2 Aplicar as funções objetivos
+            V Aplicar as funções objetivos
             3 Dividir os indivíduos por fronteiras aplicando métrica de dominância.
             Aqui, eu ja tenho os ranks ^^
             4 Cálculo de Aptidao
@@ -24,7 +24,11 @@ public class NSGAII {
          */
 
         Population p =new Population();
+        Function f = ProblemSCH.getInstance();
+
         p.generatePopulation();
-        p.printPopulation();
+        f.applyFunction(p);
+        p.printPopulationDetailed();
+
     }
 }

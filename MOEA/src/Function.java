@@ -9,8 +9,11 @@ public abstract class Function {
 
     protected Function(){}
 
+    public abstract void applyFunction(Population p);
+
     public abstract double getMaxValue();
     public abstract void setMaxValue(int maxValue);
     public abstract int getMinValue();
     public abstract void setMinValue(int minValue);
+
 }
