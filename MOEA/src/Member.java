@@ -1,5 +1,6 @@
 /**
  * Created by gmarson on 9/8/2016.
+ * TCC UFU
  */
 
 import java.util.ArrayList;
@@ -12,11 +13,12 @@ import java.util.HashMap;
 public class Member {
     private int ndi = 0;
     private ArrayList<Member> ui =  null;
-    private ArrayList<Integer> resultOfFunctions = null; // Acho que um arraylist basta
+    private ArrayList<?> resultOfFunctions = null; // Acho que um arraylist basta
     private double data;
 
     public Member(double data)
     {
+
         this.ui = new ArrayList<Member>();
         this.resultOfFunctions = new ArrayList<Integer>();
         this.data =data;
@@ -53,7 +55,7 @@ public class Member {
         this.ui = ui;
     }
 
-    public ArrayList<Integer> getResultOfFunctions() {
+    public ArrayList<?> getResultOfFunctions() {
         return resultOfFunctions;
     }
 
