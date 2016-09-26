@@ -40,10 +40,6 @@ public class ProblemSCH extends Function {
 
     }
 
-
-
-
-
     //functions
     public int firstFunction(double x)
     {

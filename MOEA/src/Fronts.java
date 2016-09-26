@@ -5,32 +5,50 @@
 
 import java.util.ArrayList;
 public abstract class Fronts {
-    private ArrayList<Front> fronts;
+    private static int frontCounter = 0;
+    private static ArrayList<Front> fronts = new ArrayList<Front>();
 
-    public Fronts()
+    //Singleton
+    private Fronts()
     {
-        this.fronts = new ArrayList<Front>();
-    }
-
-    public void addFront(Front f)
-    {
-        this.fronts.add(f);
-    }
-
-    public void resetFronts()
-    {
-        this.fronts.clear();
-    }
-
-    public void updateDominanceRelations(){
 
     }
-
-    //Getters and Setters
-    public ArrayList<Front> getFronts() {
+    public static ArrayList<Front> getInstance(){
         return fronts;
     }
-    public void setFronts(ArrayList<Front> fronts) {
-        this.fronts = fronts;
+
+
+    //Basic Operations
+    public static void addFront()
+    {
+        fronts.add(new Front(Fronts.frontCounter));
+        frontCounter++;
+    }
+    public static void resetFronts()
+    {
+        fronts.clear();
+        frontCounter = 0;
+    }
+
+    public void makeFronts()
+    {
+        ArrayList<Member> p = Population.getInstance();
+        if(p.isEmpty()) {
+            System.out.println("Empty Population while building Fronts!");
+            return;
+        }
+
+
+
+
+    }
+
+
+    //Getters and Setters
+    public static ArrayList<Front> getFronts() {
+        return fronts;
+    }
+    public static void setFronts(ArrayList<Front> fronts) {
+        Fronts.fronts = fronts;
     }
 }

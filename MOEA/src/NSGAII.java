@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * Created by gmarson on 9/14/2016.
  * TCC UFU
@@ -26,9 +24,12 @@ public class NSGAII {
 
         Function f = ProblemSCH.getInstance();
 
-        Population.generatePopulation();
+        Population.buildPopulation();
         f.applyFunction();
-        Population.printPopulationDetailed();
+        //Population.printPopulationDetailed();
+
+        Utils.dominates();
+        Population.dominanceRelations();
 
     }
 }

@@ -25,7 +25,7 @@ public abstract class Population {
         return population;
     }
 
-    public static void generatePopulation()
+    public static void buildPopulation()
     {
         Function f = ProblemSCH.getInstance();
         if(f == null)
@@ -46,15 +46,6 @@ public abstract class Population {
         }
     }
 
-    public static void printPopulation()
-    {
-        System.out.println("Population");
-        for(int i = 0; i<population.size(); i++)
-        {
-            System.out.println("I = "+i+" DATA = "+ population.get(i).getData());
-        }
-    }
-
     public ArrayList<Member> getPopulation() {
         return population;
     }
@@ -64,6 +55,28 @@ public abstract class Population {
         population.get(indexOf).setResultOfFunctions(appliedFunctions);
     }
 
+
+    public void removePartialNdi()
+    {
+        if(population == null)
+        {
+            System.out.println("Empty population on removePartialNdi!");
+            return;
+        }
+        population.forEach(Member::removeFromPartialNdi); //TODO se bugar o erro pode estar aki
+    }
+
+
+    //Debugging ...
+    public static void printPopulation()
+    {
+        System.out.println("Population");
+        for(int i = 0; i<population.size(); i++)
+        {
+            System.out.println("I = "+i+" DATA = "+ population.get(i).getData());
+        }
+    }
+
     public static void printPopulationDetailed()
     {
         for(int i=0; i<population.size(); i++)
@@ -71,5 +84,47 @@ public abstract class Population {
             System.out.println("I"+i);
             population.get(i).printMember();
         }
+    }
+
+    public static void dominanceRelations()
+    {
+        Population.printPopulationDetailed();
+        ArrayList<Member> p = Population.getInstance();
+        if(p.isEmpty()) return;
+        int i,j,k,l;
+        ArrayList<Member> dominates;
+        ArrayList<Integer> functions;
+        Member currentMember, dominatedMember;
+        int isDominatedBy;
+
+        for(i=0;i<POP_SIZE;i++){
+            currentMember = p.get(i);
+            functions = currentMember.getResultOfFunctions();
+            dominates = currentMember.getUi();
+            isDominatedBy = currentMember.getNdi();
+
+            System.out.print("Indivíduo \n"+currentMember.getData()+"\t");
+            System.out.println(currentMember.getResultOfFunctions());
+            System.out.println("\nDomina: ");
+
+
+            if(dominates.isEmpty()) {System.out.print("Ninguem");}
+            else
+            {
+                for(j = 0;j<dominates.size();j++)
+                {
+                    dominatedMember = dominates.get(j);
+                    System.out.print(dominatedMember.getData()+"\t");
+                    System.out.println(dominatedMember.getResultOfFunctions());
+
+                }
+
+            }
+            System.out.println("\n");
+
+
+
+        }
+
     }
 }
