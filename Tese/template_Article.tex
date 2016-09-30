@@ -1,4 +1,4 @@
-\documentclass[]{article}
+ \documentclass[]{article}
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
@@ -17,23 +17,23 @@
 
 \begin{abstract}
 	
-	\noindent Essa dissertação tem como objetivo mostrar o desempenho de alguns algoritmos genéticos em problemas discretos clássicos da computação assim como em quais circunstâncias são mais utilizados.
+	\noindent Essa investigação tem como objetivo mostrar o desempenho de alguns algoritmos genéticos multiobjetivos em problemas discretos clássicos da computação assim como em quais circunstâncias são mais adequados.
 	
 \end{abstract}
 
-\section{Introdução}
+\section{Introdução}	
 
-\subsection{Visão Geral}	
-
-	Algoritmos genéticos são uma abordagem baseada na teoria da evolução de Darwin que têm como regra uma sequência de passos para atingir determinado objetivo. 
+	Algoritmos genéticos (AGs) apresentam uma abordagem de busca baseada na teoria da evolução de Darwin que adotam uma sequência de passos para atingir um determinado objetivo. 
 	
-	Apesar de ter sido constatado o sucesso do AG para certos tipos de problemas, alguns outros permaneceram sem serem resolvidos por esse método. Problemas de otimização discreta são um exemplo disso pois requerem que a classificação dos indivíduos seja realizada de acordo com vários critérios.
+	Apesar de ter sido constatado o sucesso dos AGs para certos tipos de problemas, alguns outros permanecem como desafio. Os de otimização discreta com múltiplos objetivos são mais desafiadores pois requerem que a classificação dos indivíduos seja realizada de acordo com vários critérios.
 		
-	Consideremos, por exemplo, o problema do Roteamento Multicast (PRM). Como foi dito em Marcos \cite{bueno2010heuristicas} ele pode ser modelado como um grafo direcionado onde os vértices são os hosts e as arestas representam os enlaces de comunicação. Dessa forma, dado o grafo $G$ que representa a rede e um fluxo $\phi$, deve-se calcular árvores enraizadas $T$ de $G$ para carregar $\phi$ em $G$, partindo de um vértice que representa o início de um conexão ou envio de pacote e passando por um subconjunto de vértices de $G$.
+	Consideremos, por exemplo, o problema do Roteamento Multicast (PRM). Como foi dito em Bueno \cite{bueno2010heuristicas} ele pode ser modelado como um grafo direcionado onde os vértices são os hosts e as arestas representam os enlaces de comunicação. Dessa forma, dado o grafo $G$ que representa a rede e um fluxo $\phi$, deve-se calcular árvores enraizadas $T$ de $G$ para carregar $\phi$ em $G$, partindo-se de um vértice que representa o início de uma conexão ou envio de pacote e passando por um subconjunto de vértices de $G$.
 	
-	Existem uma série de atributos que podem influenciar o desempenho de uma rede tais como custo, delay, capacidade e tráfego atual. Um AG simples apenas consegue administrar um critérios por vez. Os AGs Multi-Objective constituem uma abordagem para resolver problemas desse tipo categorizando possíveis melhores respostas em virtude dos critérios avaliados.
+	Existe uma série de atributos que podem influenciar o desempenho de uma rede tais como custo, delay, capacidade e tráfego atual. Um AG simples apenas consegue administrar um critério por vez. Os AGs Multi-Objective constituem uma abordagem mais adequada para resolver problemas desse tipo categorizando possíveis melhores respostas em virtude dos critérios avaliados.
 	
-	A proposta de um AG multi-objective como o Non-dominated Sorting Genetic Algorithm II (NSGAII) \cite{NSGAII}, por exemplo, consiste em classificar vários indivíduos por meio de várias funções objetivo. Dessa forma, criou-se o conceito de fronteira de Pareto  \cite{Pareto}, no qual estarão os melhores indivíduos de acordo com várias funções objetivo. O critério para a classificação de qual indivíduo permanece em qual fronteira é a dominância.
+	Mais recentemente, uma versão mais complexa conhecida por Algoritmos Genéticos Multiobjetivos (AGMOs) foi proposta, na qual o processo de avaliação dos indivíduos leve em consideração diferentes objetivos ou critérios.
+	
+	A proposta de um AG multi-objectivo como o Non-dominated Sorting Genetic Algorithm II (NSGAII) \cite{NSGAII}, por exemplo, consiste em classificar vários indivíduos por meio de várias funções objetivo. Dessa forma, utilizou-se o conceito de fronteira de Pareto  \cite{Pareto}, uma região do espaço de busca na qual estarão os melhores indivíduos de acordo com várias funções objetivo. O critério para a classificação de qual indivíduo permanece em qual fronteira é a dominância.
 	
 	Diz-se que $x \preceq y$ ($x$ domina $y$) se:
 	
@@ -45,15 +45,14 @@
 	
 	Esse tipo de classificação pode ser melhor compreendido se analisarmos um problema simples como a compra de um carro. Vários critérios podem ser utilizados para comprá-lo como preço e desempenho. Assim na fronteira de Pareto, estariam os indivíduos com uma combinação de melhor preço e melhor desempenho. Portanto, não existe uma única resposta para esse tipo de problema.
 	
-	No  NSGAII, além do agrupamento por fronteiras, ou rank, utiliza-se, também, o \textit{crowding distance}, como critério de desempate na escolha do indivíduo caso eles tenham o mesmo rank e, também, para impedir que a variabilidade genética da população seja comprometida.
-	
-	Em virtude de bons resultados gerados por esses algoritmos em problemas discretos, tal qual o PRM, serão analisados métodos de AG multi e many objective como NSGA-II e SPEA2 aplicados a problemas clássicos da computação como o problema da Mochila e do Caixeiro Viajante. 
+	No  NSGAII \cite{NSGAII}, além do agrupamento por fronteiras, ou rank, utiliza-se também a métrica \textit{crowding distance}, como critério de desempate na escolha do indivíduo caso estejam na mesma fronteira de dominância e, também, para impedir que a variabilidade genética da população seja comprometida.
+	 
 	
 \section{Agoritmos Genéticos}
 
 	Publicada em 1859, a obra \textbf{Na Origem das Espécies – Sob o Conhecimento da Seleção Natural}, de Charles Darwin, foi alvo de críticas pois explicitava que o seres de um ambiente mudam de uma determinada geração pra outra e são selecionados de acordo com essas mudanças. A partir disso, Darwin escreveu que todos os seres vivos possuem um ancestral comum, contrastando com a visão criacionista da época.
 	
-	Essa teoria foi imprescindível para a criação dos algoritmos genéticos por John Henry Holland. Físico formado pelo MIT(Massachusetts Institute of Technology), Holland elaborou um algoritmo não determinístico com foco em resolução de problemas de custo muito alto.
+	Essa teoria foi imprescindível para a criação dos algoritmos genéticos por John Henry Holland. Físico formado pelo MIT (Massachusetts Institute of Technology), Holland elaborou um algoritmo não determinístico com foco em resolução de problemas de custo muito alto.
 	
 	O AG consiste em dar uma interpretação para um conjunto de dados e evoluí-los para uma solução. Nesse caso, todos os dados seriam uma população e cada indivíduo representa um dado, além de ser uma solução em potencial para o problema. O algoritmo avalia cada membro usando uma métrica de aptidão. Isso consiste em dar um nota para cada indivíduo que simboliza as chances dele transmitir suas características para a próxima geração.
 	
@@ -64,7 +63,20 @@
 	Esse processo se repete por um número determinado gerações ou pode ser parado quando todos os indivíduos possuírem o mesmo material genético (é improvável que a mutação nas próximas gerações produza um indivíduo mais apto). 
  	Percebe-se a semelhança com a teoria de Darwin em que os indivíduos mais adaptados passarão suas características aos seus descendentes.
 	
+\section{Objetivos}
+\subsection{Objetivos Gerais}
 
+	Em virtude de bons resultados gerados por esses algoritmos em problemas discretos, tal qual o PRM, serão analisados métodos de AG multi e many objective como NSGA-II e SPEA2 aplicados a problemas clássicos da computação como o problema da Mochila e do Caixeiro Viajante.
+	
+	Além desses, pretende-se investigar uma nova família de AGs conhecida como AG \textit{Many-objectives}, por serem apropirados a problemas com vários objetivos. Dentre esses AGMOs, podemos citar o SPEA3 e o AEMMT.
+	
+\subsection{Objetivos Específicos}
+
+	\begin{itemize}
+		\item Implementar os algoritmos SPEA2 e NSGA2
+		\item Realizar uma análise comparativa com as abordagens ja existentes para resolução de problemas discretos com multi objetivos
+		\item Estudo de desempenho de algoritmos \textit{many-objective} como SPEA2 e AEMMT
+	\end{itemize}
 
 \newpage
 \bibliographystyle{ieeetr}

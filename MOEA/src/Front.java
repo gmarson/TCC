@@ -13,6 +13,7 @@ public class Front {
     public Front(int FrontCounter)
     {
         this.id = FrontCounter;
+        members = new ArrayList<Member>();
     }
 
     public void addMemberToFront(Member m)
@@ -29,5 +30,8 @@ public class Front {
     //Getters and Setters
     public ArrayList<Member> getMembers() {
         return members;
+    }
+    public int getId() {
+        return id;
     }
 }

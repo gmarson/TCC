@@ -17,6 +17,7 @@ public class Member
     private ArrayList<Integer> resultOfFunctions = null;
     private double data;
     private int partialNdi = 0;
+    private boolean alreadyInFront = false;
 
     //constructor
     public Member(double data)
@@ -99,5 +100,11 @@ public class Member
     }
     public void setPartialNdi(int partialNdi) {
         this.partialNdi = partialNdi;
+    }
+    public boolean isAlreadyInFront() {
+        return alreadyInFront;
+    }
+    public void setAlreadyInFront(boolean alreadyInFront) {
+        this.alreadyInFront = alreadyInFront;
     }
 }

@@ -30,19 +30,47 @@ public abstract class Fronts {
         frontCounter = 0;
     }
 
-    public void makeFronts()
+    public static void makeFronts()
     {
+        int exitLoop = 0;
         ArrayList<Member> p = Population.getInstance();
         if(p.isEmpty()) {
             System.out.println("Empty Population while building Fronts!");
             return;
+        }
+        while(true){
+            fronts.add(new Front(frontCounter));
+            for(Member member: p ) {
+                if(member.isAlreadyInFront()) exitLoop++;
+
+                if (member.getPartialNdi() == 0) {
+                    exitLoop++;
+                    member.setAlreadyInFront(true);
+                    fronts.get(frontCounter).addMemberToFront(member);
+                }
+                member.getData();
+                member.removeFromPartialNdi();
+            }
+            p.size();
+            if(exitLoop == p.size()) break;
+            frontCounter++;
+            exitLoop = 0;
         }
 
 
 
 
     }
+    //Deebugging ...
 
+    public static void printFronts()
+    {
+        for(Front f: fronts)
+        {
+            System.out.println("Front Number"+f.getId());
+            f.getMembers().forEach(Member::printMember);
+        }
+    }
 
     //Getters and Setters
     public static ArrayList<Front> getFronts() {
