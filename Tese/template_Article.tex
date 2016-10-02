@@ -66,17 +66,72 @@
 \section{Objetivos}
 \subsection{Objetivos Gerais}
 
-	Em virtude de bons resultados gerados por esses algoritmos em problemas discretos, tal qual o PRM, serão analisados métodos de AG multi e many objective como NSGA-II e SPEA2 aplicados a problemas clássicos da computação como o problema da Mochila e do Caixeiro Viajante.
+	Em virtude de bons resultados gerados por esses algoritmos em problemas discretos, tal qual o PRM, serão analisados métodos de AG multi e many objective como NSGAII\cite{NSGAII} e SPEA2\cite{SPEA2} aplicados a problemas clássicos da computação como o problema da Mochila e do Caixeiro Viajante.
 	
 	Além desses, pretende-se investigar uma nova família de AGs conhecida como AG \textit{Many-objectives}, por serem apropirados a problemas com vários objetivos. Dentre esses AGMOs, podemos citar o SPEA3 e o AEMMT.
 	
 \subsection{Objetivos Específicos}
 
 	\begin{itemize}
-		\item Implementar os algoritmos SPEA2 e NSGA2
-		\item Realizar uma análise comparativa com as abordagens ja existentes para resolução de problemas discretos com multi objetivos
-		\item Estudo de desempenho de algoritmos \textit{many-objective} como SPEA2 e AEMMT
+		\item Implementar os algoritmos SPEA2\cite{SPEA2} e NSGAII\cite{NSGAII}
+		\item Realizar uma análise comparativa com as abordagens já existentes para r esolução de problemas discretos com multi objetivos
+		\item Estudo de desempenho de algoritmos \textit{many-objective} como SPEA3 e AEMMT
 	\end{itemize}
+
+\subsection{Justificativas}
+	
+	Existem muitos problemas de otimização discreta multiobjetivo ainda não resolvidos de forma eficiente. O estudo desses problemas, assim como dos algoritmos que os resolvem, constituem prática importante para embasar novas descobertas com o intuito de otimizar as soluções já existentes ou de criar novas.
+
+\subsection{Metodologia}
+	
+	O método científico é o método no qual o pesquisador parte de uma premissa inicial do problema até a sua resposta, no final da pesquisa. Constitui as técnicas que serão utilizadas e os passos seguidos. 
+	
+	Será realizado uma pesquisa descritiva de caráter qualitativo com o intuito de construir uma comparação entre os AGMOs e outras abordagens para resolver problemas de otimização discreta multi-objetivo. Para isso, será feito a implementação de alguns AGMOs como SPEA2\cite{SPEA2} e NSGAII\cite{NSGAII}.
+	
+	Os critérios de comparação serão, inicialmente, a complexidade dos algoritmos segundo a notação O e o desempenho que eles apresentam em problemas de otimização discreta. A principio, serão testados problemas de maximização e minimização de funções propostos nos artigos de NSGAI\cite{NSGAI} e NSGAII\cite{NSGAII} em virtude de verificar o desempenho dessas abordagens em funções mais simples.
+	
+	Em seguida, os algoritmos serão aplicados em problemas mais complexos, tidos como clássicos, na computação. São os problemas da mochila e do caixeiro viajante. Espera-se que os AGMOs apresentem desempenho superior aos algoritmos convencionais quando aplicados a problemas de, no máximo, três objetivos.
+	
+	O desempenho dos AGMOs diminuem consideravelmente a medida que uma maior quantidade de funções é requerida pelo problema, portanto, torna-se necessário o estudo dos algoritmos genéticos \textit{many-objective}. Será feita uma análise descritiva do algoritmo bem como uma comparação da capacidade de custo e resolução dos algoritmos atuais.
+	
+\subsection{Cronograma}
+
+	As atividades principais para desenvolver o artigo são:
+	
+\begin{itemize}
+	\item Estudo dos AGMOs(EAGMOs)
+	\item Implementação dos AGMOs(IAGMOs) 
+	\item Análise Comparativa(AC)
+	\item Estudo de Algoritmos Many-Objective(EMany-O)
+	\item Dissertação(D)
+\end{itemize}
+	
+	Sendo que o planejamento para elas é o seguinte:
+	
+	\begin{table}[!h]
+	\centering
+	\caption{Cronograma de Atividades}
+	\begin{tabular}{|l|c|c|c|c|c|}
+	\hline
+	\multicolumn{1}{|c|}{\textbf{}} & \textbf{EAGMOs} & \multicolumn{1}{l|}{\textbf{IAGMOs}} & \multicolumn{1}{l|}{\textbf{AC}} & \multicolumn{1}{l|}{\textbf{EMany-O}} & \multicolumn{1}{l|}{\textbf{D}} \\ \hline
+	\textbf{Agosto(2016)}           & X               &                                      &                                  &                                       &                                 \\ \hline
+	\textbf{Setembro(2016)}         & X               & X                                    &                                  &                                       &                                 \\ \hline
+	\textbf{Outubro(2016)}          & X               & X                                    &                                  &                                       &                                 \\ \hline
+	\textbf{Novembro(2016)}         & \textbf{}       & X                                    & X                                &                                       &                                 \\ \hline
+	\textbf{Dezembro(2016)}         & \textbf{}       & X                                    & X                                &                                       &                                 \\ \hline
+	\textbf{Janeiro(2017)}          & \textbf{}       &                                      & X                                &                                       & X                               \\ \hline
+	\textbf{Fevereiro(2017)}        & \textbf{}       &                                      &                                  & X                                     & X                               \\ \hline
+	\textbf{Março(2017)}            & \textbf{}       &                                      &                                  & X                                     & X                               \\ \hline
+	\textbf{Abril(2017)}            &                 &                                      &                                  & X                                     & X                               \\ \hline
+	\textbf{Maio(2017)}             &                 &                                      &                                  &                                       & X                               \\ \hline
+	\textbf{Junho(2017)}            &                 &                                      &                                  &                                       & X                               \\ \hline
+	\end{tabular}
+	\end{table}
+	
+	
+	
+	
+	
 
 \newpage
 \bibliographystyle{ieeetr}
