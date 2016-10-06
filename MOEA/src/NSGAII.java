@@ -9,12 +9,10 @@ public class NSGAII {
         /*
             V Gerar indivíduos aleatoriamente
             V Aplicar as funções objetivos
-            3 Dividir os indivíduos por fronteiras aplicando métrica de dominância.
+            V Dividir os indivíduos por fronteiras aplicando métrica de dominância.
             Aqui, eu ja tenho os ranks ^^
 
-
             LOOP
-
                 5 - selecionar os pais (torneio simples)
 
                 6 - cruzamento (geração dos filhos) (crossover binario de um ponto)

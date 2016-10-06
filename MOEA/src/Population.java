@@ -9,7 +9,7 @@ import java.util.Random;
 public abstract class Population {
     public static int POP_SIZE =5;
     public static int NUM_GER=50;
-    public static double CROSS_RATE=20;
+    public static double CROSS_RATE=80;
     public static double MUT_RATE=1;
 
 

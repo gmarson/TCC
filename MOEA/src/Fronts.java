@@ -61,8 +61,17 @@ public abstract class Fronts {
 
 
     }
-    //Deebugging ...
 
+    public static void getBestMemberGivenFront()
+    {
+        //di = di + ( f(i+1) - f(i-1) ) / ( fmax - fmin )
+        ArrayList<Front> fronts = Fronts.getInstance();
+
+
+    }
+
+
+    //Deebugging ...
     public static void printFronts()
     {
         for(Front f: fronts)
@@ -71,6 +80,9 @@ public abstract class Fronts {
             f.getMembers().forEach(Member::printMember);
         }
     }
+
+
+
 
     //Getters and Setters
     public static ArrayList<Front> getFronts() {

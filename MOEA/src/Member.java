@@ -4,20 +4,23 @@
  */
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Comparator;
+
 
 /**
  * ndi = Numero de soluções que dominam a solução i, ou seja que me dominam (dado que sou i)
  * ui = Conjunto de soluções dominadas por i. Cada i do tipo member está associado a um arrayList de Members
  */
-public class Member
+public class Member implements Comparable<Member>
 {
     private int ndi = 0;
     private ArrayList<Member> ui =  null;
     private ArrayList<Integer> resultOfFunctions = null;
+    private int currentFunctionValue; //TODO implementa comparable normal usando esse atributo e passa os valores das funçoes pra ca
     private double data;
     private int partialNdi = 0;
     private boolean alreadyInFront = false;
+    private double crowdingDistanceValue =0.0;
 
     //constructor
     public Member(double data)
@@ -27,6 +30,15 @@ public class Member
         this.data =data;
     }
 
+    public void changeCurrentFunctionValue(int functionId)
+    {
+        this.currentFunctionValue = this.resultOfFunctions.get(functionId);
+    }
+
+    public void addToCrowdingDistanceValue(double value)
+    {
+        this.crowdingDistanceValue += value;
+    }
 
     public void removeAllMembersFromUi(){
         for(int i=0;i<this.ui.size();i++)
@@ -106,5 +118,30 @@ public class Member
     }
     public void setAlreadyInFront(boolean alreadyInFront) {
         this.alreadyInFront = alreadyInFront;
+    }
+    public double getCrowdingDistanceValue() {
+        return crowdingDistanceValue;
+    }
+    public void setCrowdingDistanceValue(int crowdingDistanceValue) {
+        this.crowdingDistanceValue = crowdingDistanceValue;
+    }
+    public int getCurrentFunctionValue() {
+        return currentFunctionValue;
+    }
+    public void setCurrentFunctionValue(int currentFunctionValue) {
+        this.currentFunctionValue = currentFunctionValue;
+    }
+
+    @Override
+    public int compareTo(Member other) {
+        if(this.currentFunctionValue > other.currentFunctionValue)
+        {
+            return 1;
+        }
+        else if(this.currentFunctionValue < other.currentFunctionValue)
+        {
+            return -1;
+        }
+        return 0;
     }
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -6,6 +7,8 @@ import java.util.Scanner;
  * TCC UFU
  */
 public abstract class Utils {
+
+
 
     public static void dominates()
     {
@@ -103,6 +106,31 @@ public abstract class Utils {
 
     }
 
+    public static int getRandom(int max, int min)
+    {
+        Random random = new Random();
+        return random.nextInt((max - min) + 1) + min;
+    }
+
+    public static Object crowdingDistance( Member parent1,Member parent2)
+    {
+        int frontId = parent1.getNdi();
+        ArrayList<Front> f = Fronts.getInstance();
+        ArrayList<Member> currentFront = f.get(frontId).getMembers();
+        int best = Integer.MIN_VALUE;
+        int worst = Integer.MAX_VALUE;
+        Member bestMember=null, worstMember=null;
+        Member m;
+        ProblemSCH sch = ProblemSCH.getInstance();
+
+
+
+        //di = value + ( f(i+1) - f(i-1) ) / ( fmax - fmin )
+
+
+
+        return null;
+    }
 
 
 
