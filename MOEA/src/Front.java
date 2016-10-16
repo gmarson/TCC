@@ -26,64 +26,68 @@ public class Front{
         members.add(m);
     }
 
-    public ArrayList<Member> crowdingDistance(int frontId)
+    public void crowdingDistanceOfFront()
     {
 
         ProblemSCH sch = ProblemSCH.getInstance();
         ArrayList<Front> f= Fronts.getInstance();
-        ArrayList<Member> members = f.get(frontId).getMembers();
-        int membersSize = members.size();
+        int membersSize = this.members.size();
         double fiplus1, fiminus1,fmax,fmin;
-        if(members.isEmpty() || membersSize ==1) return members;
+        if(members.isEmpty()) return;
 
+
+        switch (membersSize)
+        {
+            case 1:
+            {
+                this.members.get(0).setCrowdingDistanceValue(Integer.MAX_VALUE);
+                return;
+            }
+            case 2:
+            {
+                this.members.get(0).setCrowdingDistanceValue(Integer.MAX_VALUE);
+                this.members.get(membersSize-1).setCrowdingDistanceValue(Integer.MAX_VALUE);
+                return;
+            }
+            default:
+                break;
+        }
+
+
+        Double currentFunctionValue, previousFunctionValue;
         for(int i=0;i<sch.getNumberOfFunctions();i++)
         {
-            //ordeno por funcao na posição i
-            for(Member m : members)
+            //atualizo as funções objetivos do laço
+            for(Member m : this.members)
             {
                 m.changeCurrentFunctionValue(i);
             }
-            Collections.sort(members);
 
-            members.get(0).setCrowdingDistanceValue(Integer.MAX_VALUE);
-            members.get(membersSize).setCrowdingDistanceValue(Integer.MAX_VALUE);
+            //ordeno os individuos pela função objetivo
+            Collections.sort(this.members);
 
+            //seto os extremos com infinito
+            this.members.get(0).setCrowdingDistanceValue(Integer.MAX_VALUE);
+            this.members.get(membersSize-1).setCrowdingDistanceValue(Integer.MAX_VALUE);
+            fmax = this.members.get(0).getCurrentFunctionValue();
+            fmin = this.members.get(membersSize-1).getCurrentFunctionValue();
+
+            if(fmax - fmin == 0)
+            {
+                fmax += 0.1;
+            }
+
+            //faço o calculo do crownding distance normal para o resto
             for(int j=1;j<membersSize-1;j++)
             {
-                fiplus1 = (double) members.get(j+1).getCurrentFunctionValue();
-                fiminus1 =(double) members.get(j-1).getCurrentFunctionValue();
-                fmax = sch.getMaxValue();
-                fmin = sch.getMinValue();
-                members.get(j).addToCrowdingDistanceValue((fiplus1-fiminus1)/(fmax-fmin));
-                //JESUS ABENCOA !!!
+                fiplus1 = (double) this.members.get(j+1).getCurrentFunctionValue();
+                fiminus1 =(double) this.members.get(j-1).getCurrentFunctionValue();
+                this.members.get(j).addToCrowdingDistanceValue((fiplus1-fiminus1)/(fmax-fmin));
             }
-
-        }
-
-
-        return null;
-    }
-
-/*
-
-    //Comparators
-    public class getAttribute1Comparator implements Comparator<Member> {
-        @Override
-        public int compare(Member o1, Member o2) {
-            return o1.getResultOfFunctions().get(1).compareTo(o2.getResultOfFunctions().get(1));
         }
     }
 
-    static Comparator<Member> getAttribute2Comparator() {
-        return new Comparator<Member>() {
-            @Override
-            public int compare(Member o1, Member o2) {
-                return o1.getResultOfFunctions().get(2).compareTo(o2.getResultOfFunctions().get(2));
-            }
 
-        };
-    }
-*/
 
     //Getters and Setters
     public ArrayList<Member> getMembers() {

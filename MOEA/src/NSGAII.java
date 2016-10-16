@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by gmarson on 9/14/2016.
  * TCC UFU
@@ -33,13 +35,28 @@ public class NSGAII {
         Function f = ProblemSCH.getInstance();
 
         Population.buildPopulation();
+        ArrayList<Member>p = Population.getInstance();
         f.applyFunction();
+        //System.out.println("Before crossover");
         //Population.printPopulationDetailed();
 
         Utils.dominates();
-        Population.dominanceRelations();
+        //Population.dominanceRelations();
         Fronts.makeFronts();
-        Fronts.printFronts();
+        //Fronts.printFronts();
+        ArrayList<Integer> indexOfparents = Selection.binaryTournament();
+        //Selection.membersGoingToCrossover(parents);
+
+        Crossover.doCrossover(1,indexOfparents);
+
+
+        //System.out.println("After Crossover");
+        //Population.printPopulationDetailed();
+
+        //TODO vamos focar nas fronts, alguma coisa ta errada pq tem front que nao tem nenhum individuo, logo
+        //TODO ela nao deveria estar listada em fronts
+        Population.reinsertion();
+
 
     }
 }

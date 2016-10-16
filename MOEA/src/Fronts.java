@@ -33,43 +33,56 @@ public abstract class Fronts {
     public static void makeFronts()
     {
         int exitLoop = 0;
+        boolean firstMemberInFront = true;
         ArrayList<Member> p = Population.getInstance();
         if(p.isEmpty()) {
             System.out.println("Empty Population while building Fronts!");
             return;
         }
-        while(true){
-            fronts.add(new Front(frontCounter));
-            for(Member member: p ) {
-                if(member.isAlreadyInFront()) exitLoop++;
+        while(true)
+        {
+            for(Member member: p )
+            {
+                if(member.isAlreadyInFront()) {
+                    exitLoop++;
+                }
+                else if(member.getPartialNdi() ==0)
+                {
+                    if(firstMemberInFront)
+                    {
+                        System.out.println("Construi a front");
+                        fronts.add(new Front(frontCounter));
+                        firstMemberInFront = false;
+                    }
 
-                if (member.getPartialNdi() == 0) {
                     exitLoop++;
                     member.setAlreadyInFront(true);
+
+                    System.out.println("Tamanho de frontS "+fronts.size());
+                    System.out.println("Tamanho do frontcounter "+frontCounter);
+
                     fronts.get(frontCounter).addMemberToFront(member);
+                    System.out.println("Membro adicionado na front: "+member);
                 }
-                member.getData();
+
                 member.removeFromPartialNdi();
             }
-            p.size();
+
+
+            System.out.println("front counter  " +frontCounter);
+            System.out.println("Exit loop "+exitLoop);
+            System.out.println("p.size "+p.size());
+
             if(exitLoop == p.size()) break;
-            frontCounter++;
             exitLoop = 0;
+
+            if(firstMemberInFront == false)
+            {
+                firstMemberInFront = true;
+                frontCounter++;
+            }
         }
-
-
-
-
     }
-
-    public static void getBestMemberGivenFront()
-    {
-        //di = di + ( f(i+1) - f(i-1) ) / ( fmax - fmin )
-        ArrayList<Front> fronts = Fronts.getInstance();
-
-
-    }
-
 
     //Deebugging ...
     public static void printFronts()
@@ -77,6 +90,10 @@ public abstract class Fronts {
         for(Front f: fronts)
         {
             System.out.println("Front Number"+f.getId());
+            if(f.getMembers() == null)
+            {
+                System.out.println("tem nada aki");
+            }
             f.getMembers().forEach(Member::printMember);
         }
     }

@@ -24,20 +24,23 @@ public class ProblemSCH extends Function {
 
 
     public  void applyFunction(){
-        Member m_aux;
+        Member memberAtIndex;
         ArrayList<Object> resultingFunction = new ArrayList<>();
+        ArrayList<Member> p = Population.getInstance();
         int i,j;
         for(i=0;i<Population.POP_SIZE;i++)
         {
-            m_aux = Population.getInstance().get(i);
+            memberAtIndex = p.get(i);
 
-            resultingFunction.add(this.firstFunction(m_aux.getData()));
-            resultingFunction.add(this.secondFunction(m_aux.getData()));
+            if(memberAtIndex.getResultOfFunctions().isEmpty())
+            {
+                resultingFunction.add(this.firstFunction(memberAtIndex.getData()));
+                resultingFunction.add(this.secondFunction(memberAtIndex.getData()));
 
-            Population.replaceElement(resultingFunction,i);
-            resultingFunction.clear();
+                Population.replaceElement(resultingFunction,i);
+                resultingFunction.clear();
+            }
         }
-
     }
 
     //functions
@@ -58,19 +61,15 @@ public class ProblemSCH extends Function {
     public double getMaxValue() {
         return  maxValue;
     }
-
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
     }
-
     public int getMinValue() {
         return minValue;
     }
-
     public void setMinValue(int minValue) {
         this.minValue = minValue;
     }
-
     public void setNumberOfFunctions(int numberOfFunctions) {
         this.numberOfFunctions = numberOfFunctions;
     }

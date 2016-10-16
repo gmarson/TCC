@@ -4,8 +4,6 @@
  */
 
 import java.util.ArrayList;
-import java.util.Comparator;
-
 
 /**
  * ndi = Numero de soluções que dominam a solução i, ou seja que me dominam (dado que sou i)
@@ -16,23 +14,76 @@ public class Member implements Comparable<Member>
     private int ndi = 0;
     private ArrayList<Member> ui =  null;
     private ArrayList<Integer> resultOfFunctions = null;
-    private int currentFunctionValue; //TODO implementa comparable normal usando esse atributo e passa os valores das funçoes pra ca
+    private int currentFunctionValue;
     private double data;
+    private double decimal;
+    private String binaryDataDecimal;
     private int partialNdi = 0;
     private boolean alreadyInFront = false;
     private double crowdingDistanceValue =0.0;
 
-    //constructor
+    //constructors
     public Member(double data)
     {
         this.ui = new ArrayList<Member>();
         this.resultOfFunctions = new ArrayList<Integer>();
         this.data =data;
+        this.doubleToBinary();
+    }
+
+    public Member(String binaryData, double decimalPart, boolean isNegative)
+    {
+        this.ui = new ArrayList<Member>();
+        this.resultOfFunctions = new ArrayList<Integer>();
+        this.setDataGivenBinary(binaryData,decimalPart);
+
+        if(isNegative) this.data *=-1;
+
+        this.printMember();
+    }
+
+    public Member(Member another)
+    {
+        this.ui = another.ui;
+        this.resultOfFunctions = another.resultOfFunctions;
+        this.data = another.data;
+        this.doubleToBinary();
+
+        //System.out.println(another+""+this);
     }
 
     public void changeCurrentFunctionValue(int functionId)
     {
         this.currentFunctionValue = this.resultOfFunctions.get(functionId);
+    }
+
+    public void doubleToBinary()
+    {
+        double number = Math.abs(this.data);
+
+        int nonDecimal = (int)Math.floor(number);
+        this.decimal = number - nonDecimal;
+
+        this.binaryDataDecimal = Integer.toBinaryString(nonDecimal);
+
+        //System.out.println(binaryDataDecimal);
+
+    }
+
+    public void newGeneration()
+    {
+        this.ndi = 0;
+        this.ui.clear();
+        this.partialNdi = 0;
+        this.alreadyInFront = false;
+        this.crowdingDistanceValue =0.0;
+    }
+
+    public void setDataGivenBinary(String binaryString, double decimalPart)
+    {
+        int parsedInt = Integer.parseInt(binaryString);
+        this.data = decimalPart + (double) parsedInt;
+        this.binaryDataDecimal = binaryString;
     }
 
     public void addToCrowdingDistanceValue(double value)
@@ -93,8 +144,7 @@ public class Member implements Comparable<Member>
     }
     public ArrayList<Integer> getResultOfFunctions() {
         if (resultOfFunctions.isEmpty()){
-            System.out.println("Result of Functions Empty!");
-            return null;
+            //System.out.println("Result of Functions Empty!");
         }
         return resultOfFunctions;
     }
@@ -122,7 +172,7 @@ public class Member implements Comparable<Member>
     public double getCrowdingDistanceValue() {
         return crowdingDistanceValue;
     }
-    public void setCrowdingDistanceValue(int crowdingDistanceValue) {
+    public void setCrowdingDistanceValue(double crowdingDistanceValue) {
         this.crowdingDistanceValue = crowdingDistanceValue;
     }
     public int getCurrentFunctionValue() {
@@ -130,6 +180,24 @@ public class Member implements Comparable<Member>
     }
     public void setCurrentFunctionValue(int currentFunctionValue) {
         this.currentFunctionValue = currentFunctionValue;
+    }
+    public String getBinaryDataDecimal() {
+        return binaryDataDecimal;
+    }
+    public void setBinaryDataDecimal(String binaryDataDecimal) {
+        this.binaryDataDecimal = binaryDataDecimal;
+    }
+    public double getDecimal() {
+        return decimal;
+    }
+    public void setDecimal(double decimal) {
+        this.decimal = decimal;
+    }
+
+    public boolean isNegative()
+    {
+        if (this.data < 0) return true;
+        return false;
     }
 
     @Override
