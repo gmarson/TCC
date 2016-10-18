@@ -50,7 +50,7 @@ public abstract class Fronts {
                 {
                     if(firstMemberInFront)
                     {
-                        System.out.println("Construi a front");
+                        //System.out.println("Construi a front");
                         fronts.add(new Front(frontCounter));
                         firstMemberInFront = false;
                     }
@@ -58,20 +58,20 @@ public abstract class Fronts {
                     exitLoop++;
                     member.setAlreadyInFront(true);
 
-                    System.out.println("Tamanho de frontS "+fronts.size());
-                    System.out.println("Tamanho do frontcounter "+frontCounter);
+                    //System.out.println("Tamanho de frontS "+fronts.size());
+                    //System.out.println("Tamanho do frontcounter "+frontCounter);
 
                     fronts.get(frontCounter).addMemberToFront(member);
-                    System.out.println("Membro adicionado na front: "+member);
+                    //System.out.println("Membro adicionado na front: "+member);
                 }
 
                 member.removeFromPartialNdi();
             }
 
 
-            System.out.println("front counter  " +frontCounter);
-            System.out.println("Exit loop "+exitLoop);
-            System.out.println("p.size "+p.size());
+            //System.out.println("front counter  " +frontCounter);
+            //System.out.println("Exit loop "+exitLoop);
+            //System.out.println("p.size "+p.size());
 
             if(exitLoop == p.size()) break;
             exitLoop = 0;

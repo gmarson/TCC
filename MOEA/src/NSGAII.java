@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by gmarson on 9/14/2016.
@@ -31,7 +32,6 @@ public class NSGAII {
                     i é o elemento atual do rank, fmax o valor máximo para f e fmin o minimo
          */
 
-
         Function f = ProblemSCH.getInstance();
 
         Population.buildPopulation();
@@ -43,12 +43,13 @@ public class NSGAII {
         Utils.dominates();
         //Population.dominanceRelations();
         Fronts.makeFronts();
-        //Fronts.printFronts();
+        Fronts.printFronts();
+        Scanner s = new Scanner(System.in);
+
         ArrayList<Integer> indexOfparents = Selection.binaryTournament();
         //Selection.membersGoingToCrossover(parents);
 
         Crossover.doCrossover(1,indexOfparents);
-
 
         //System.out.println("After Crossover");
         //Population.printPopulationDetailed();
@@ -56,7 +57,7 @@ public class NSGAII {
         //TODO vamos focar nas fronts, alguma coisa ta errada pq tem front que nao tem nenhum individuo, logo
         //TODO ela nao deveria estar listada em fronts
         Population.reinsertion();
-
+        //Fronts.printFronts();
 
     }
 }

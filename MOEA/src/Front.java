@@ -19,7 +19,7 @@ public class Front{
     public void addMemberToFront(Member m)
     {
         if(m ==null){
-            System.out.println("Empty Member!");
+            System.out.println("Empty Member while adding it in front!");
             return;
         }
 

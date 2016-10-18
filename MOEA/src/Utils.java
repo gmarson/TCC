@@ -14,11 +14,12 @@ public abstract class Utils {
     {
         int dominates;
         ArrayList<Member> p = Population.getInstance();
+        int populationSize = p.size();
         int i, j;
         ArrayList<Integer> resultingFunctionsI, resultingFunctionsJ;
         if (!p.isEmpty()) {
-            for (i = 0; i < Population.POP_SIZE; i++) {
-                for (j = i + 1; j < Population.POP_SIZE; j++) {
+            for (i = 0; i < populationSize; i++) {
+                for (j = i + 1; j < populationSize; j++) {
 
                     resultingFunctionsI = p.get(i).getResultOfFunctions();
                     resultingFunctionsJ = p.get(j).getResultOfFunctions();

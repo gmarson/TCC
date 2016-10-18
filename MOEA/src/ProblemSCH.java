@@ -28,7 +28,7 @@ public class ProblemSCH extends Function {
         ArrayList<Object> resultingFunction = new ArrayList<>();
         ArrayList<Member> p = Population.getInstance();
         int i,j;
-        for(i=0;i<Population.POP_SIZE;i++)
+        for(i=0;i<Population.getInstance().size();i++)
         {
             memberAtIndex = p.get(i);
 

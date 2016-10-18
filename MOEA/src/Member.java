@@ -116,6 +116,10 @@ public class Member implements Comparable<Member>
         {
             this.ui.add(m);
         }
+        else
+        {
+            System.out.println("Null member while adding to UI");
+        }
     }
 
     //For Debugging Purposes ...

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by gmarson on 9/8/2016.
@@ -85,6 +86,85 @@ public abstract class Population {
         }
     }
 
+
+
+    public static void reinsertion()
+    {
+        ArrayList<Member> p = Population.getInstance();
+        Function function = ProblemSCH.getInstance();
+        ArrayList<Front> fronts = Fronts.getInstance();
+        ArrayList<Member> membersInFront;
+        int frontSize, currentIndexMemberInFront=0,i,currentPopulationSize = 0;
+        Front front;
+
+        System.out.println("Antes");
+        Population.printPopulationDetailed();
+        for(Member m:p)
+        {
+            m.newGeneration();
+        }
+
+
+        Fronts.resetFronts();
+
+        function.applyFunction();
+
+
+
+        Utils.dominates();
+
+
+        Fronts.makeFronts();
+
+        for(i=0;i<fronts.size();i++)
+        {
+            front = fronts.get(i);
+
+            System.out.println(front.getMembers().size());
+            //passo por cada elemento da front vigente e quando currentPopulationSizer sera maior que popsize ai esta na hora de deletar o resto
+            membersInFront = front.getMembers();
+            frontSize = membersInFront.size();
+            if(currentPopulationSize != POP_SIZE)
+            {
+                if (frontSize + currentPopulationSize <= POP_SIZE)
+                {
+                    currentPopulationSize += frontSize;
+                }
+                else
+                {
+                    System.out.println("Entrou no primeiro else");
+                    //verifica usando crowding distance
+                    front.crowdingDistanceOfFront();
+                    System.out.println("Passou do crowding distance");
+                    currentIndexMemberInFront =0;
+                    while(currentPopulationSize != POP_SIZE)
+                    {
+                        currentIndexMemberInFront++;
+                        currentPopulationSize++;
+                    }
+                    for(int j=currentIndexMemberInFront+1; j<front.getMembers().size();j++)
+                    {
+                        front.getMembers().remove(j);
+                    }
+
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        System.out.println("Tamanho do i "+(i));
+        for(;i<fronts.size();i++)
+        {
+            fronts.remove(i);
+        }
+
+
+    }
+
+
+    // Debugging ...
     public static void dominanceRelations()
     {
         Population.printPopulationDetailed();
@@ -127,32 +207,5 @@ public abstract class Population {
 
     }
 
-    public static void reinsertion()
-    {
-        ArrayList<Member> p = Population.getInstance();
-        Function function = ProblemSCH.getInstance();
 
-        function.applyFunction();
-        for(Member m:p)
-        {
-            m.newGeneration();
-        }
-
-        Utils.dominates();
-
-        Fronts.resetFronts();
-        Fronts.makeFronts();
-
-        ArrayList<Front> fronts = Fronts.getInstance();
-        ArrayList<Member> membersInFront;
-
-        for(Front front: fronts)
-        {
-            //passo por cada elemento da front vigente colocando na população atual
-            membersInFront = front.getMembers();
-            System.out.println("front size"+ membersInFront.size());
-        }
-
-
-    }
 }
