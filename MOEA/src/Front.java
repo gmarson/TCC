@@ -87,7 +87,23 @@ public class Front{
         }
     }
 
+    public void removeMember(int index)
+    {
+        System.out.println("Removendo membro ");
+        this.members.get(index).printMember();
+        this.members.remove(index);
+    }
 
+    //Debugging ...
+
+    public void printFront()
+    {
+        System.out.println("Membros na fronte");
+        for(Member m: this.members)
+        {
+            m.printMember();
+        }
+    }
 
     //Getters and Setters
     public ArrayList<Member> getMembers() {

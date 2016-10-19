@@ -116,16 +116,20 @@ public abstract class Population {
 
         Fronts.makeFronts();
 
+        System.out.println("Antes de reinserir");
+        Fronts.printFronts();
+
+
         for(i=0;i<fronts.size();i++)
         {
             front = fronts.get(i);
 
-            System.out.println(front.getMembers().size());
             //passo por cada elemento da front vigente e quando currentPopulationSizer sera maior que popsize ai esta na hora de deletar o resto
             membersInFront = front.getMembers();
             frontSize = membersInFront.size();
-            if(currentPopulationSize != POP_SIZE)
+            if(currentPopulationSize < POP_SIZE)
             {
+
                 if (frontSize + currentPopulationSize <= POP_SIZE)
                 {
                     currentPopulationSize += frontSize;
@@ -133,20 +137,19 @@ public abstract class Population {
                 else
                 {
                     System.out.println("Entrou no primeiro else");
-                    //verifica usando crowding distance
                     front.crowdingDistanceOfFront();
-                    System.out.println("Passou do crowding distance");
                     currentIndexMemberInFront =0;
-                    while(currentPopulationSize != POP_SIZE)
+
+                    while(currentPopulationSize < POP_SIZE)
                     {
                         currentIndexMemberInFront++;
                         currentPopulationSize++;
                     }
                     for(int j=currentIndexMemberInFront+1; j<front.getMembers().size();j++)
                     {
-                        front.getMembers().remove(j);
+                        System.out.println("j = "+j);
+                        front.removeMember(j);
                     }
-
                 }
             }
             else
@@ -155,12 +158,8 @@ public abstract class Population {
             }
         }
         System.out.println("Tamanho do i "+(i));
-        for(;i<fronts.size();i++)
-        {
-            fronts.remove(i);
-        }
-
-
+        Fronts.removeFronts(i);
+        Fronts.printFronts();
     }
 
 

@@ -17,6 +17,22 @@ public abstract class Fronts {
         return fronts;
     }
 
+    public static void removeFronts(int index)
+    {
+        int oldFrontsSize = fronts.size();
+        int oldIndex = index;
+
+        while(index < oldFrontsSize)
+        {
+            System.out.println("Removendo a front");
+            fronts.get(oldIndex).printFront();
+            fronts.remove(oldIndex);
+            frontCounter --;
+            index++;
+        }
+
+
+    }
 
     //Basic Operations
     public static void addFront()
