@@ -23,6 +23,7 @@ public class Front{
             return;
         }
 
+        m.setFrontId(this.id);
         members.add(m);
     }
 
@@ -89,8 +90,8 @@ public class Front{
 
     public void removeMember(int index)
     {
-        System.out.println("Removendo membro ");
-        this.members.get(index).printMember();
+        //System.out.println("Removendo membro ");
+        //this.members.get(index).printMember();
         this.members.remove(index);
     }
 

@@ -8,11 +8,10 @@ import java.util.Scanner;
  */
 
 public abstract class Population {
-    public static int POP_SIZE =6;
+    public static int POP_SIZE =100;
     public static int NUM_GER=50;
-    public static double CROSS_RATE=80;
+    public static double CROSS_RATE=50;
     public static double MUT_RATE=1;
-
 
     private static ArrayList<Member> population = new ArrayList<Member>();
 
@@ -56,6 +55,7 @@ public abstract class Population {
     }
 
 
+
     public void removePartialNdi()
     {
         if(population == null)
@@ -66,6 +66,123 @@ public abstract class Population {
         population.forEach(Member::removeFromPartialNdi);
     }
 
+    public static void removeMemberGivenId(int id)
+    {
+        ArrayList<Member> p = Population.getInstance();
+        p.remove(id);
+    }
+
+    public static void removeMemberGivenObject(Member m)
+    {
+        ArrayList<Member> p = Population.getInstance();
+        p.remove(m);
+    }
+
+    public static void reinsertion()
+    {
+
+        Scanner s = new Scanner(System.in); // TODO tirar
+        ArrayList<Member> p = Population.getInstance();
+        Function function = ProblemSCH.getInstance();
+        ArrayList<Front> fronts = Fronts.getInstance();
+        ArrayList<Member> membersInFront;
+        int frontSize, currentIndexMemberInFront=0,i,currentPopulationSize = 0,firstFontSize =-1;
+        Front front;
+        Member memberToBeRemoved;
+
+        //System.out.println("Antes");
+        //Population.printPopulationDetailed();
+        newMiddleGeneration();
+
+        function.applyFunction();
+        Utils.dominates();
+        Fronts.makeFronts();
+        //System.out.println("Antes de reinserir");
+        //Fronts.printFronts();
+
+        for(i=0;i<fronts.size();i++)
+        {
+            front = fronts.get(i);
+
+            //passo por cada elemento da front vigente e quando currentPopulationSizer sera maior que popsize ai esta na hora de deletar o resto
+            membersInFront = front.getMembers();
+            frontSize = membersInFront.size();
+
+            if(currentPopulationSize < POP_SIZE)
+            {
+
+                if (frontSize + currentPopulationSize <= POP_SIZE)
+                {
+                    currentPopulationSize += frontSize;
+                }
+                else
+                {
+                    //System.out.println("Entrou no else de quebrar a front");
+                    front.crowdingDistanceOfFront();
+
+                    currentIndexMemberInFront =0;
+
+                    while(currentPopulationSize < POP_SIZE)
+                    {
+                        currentIndexMemberInFront++;
+                        currentPopulationSize++;
+                    }
+                    firstFontSize = front.getMembers().size();
+                    for(int j=currentIndexMemberInFront; j<firstFontSize;j++)
+                    {
+
+                        //System.out.println("TO DENTRO DO LAÇO AKI Ó");
+                        //System.out.println("primeiro tamanho da front: "+ firstFontSize);
+                        //System.out.println("tamanho da front: "+ front.getMembers().size());
+                        //System.out.println("currentIndexMemberInAFront = "+j+"\ncurrentPopulationSize =  "+currentPopulationSize);
+                        //s.nextLine();
+                        //front.printFront();
+                        memberToBeRemoved = front.getMembers().get(currentIndexMemberInFront); //deleto sempre a mesma posição pois o array regride
+
+                        Population.removeMemberGivenObject(memberToBeRemoved);
+
+                        front.removeMember(currentIndexMemberInFront);
+                        //s.nextLine();
+
+
+                    }
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        //System.out.println("Tamanho do i "+(i));
+        Fronts.removeFronts(i);
+        //Population.printPopulationDetailed();
+        newGeneration();
+
+
+        //Population.updateIdOfMembers();
+        //Fronts.printFronts();
+        //Population.printPopulationDetailed();
+
+    }
+
+    public static void newGeneration()
+    {
+        Fronts.resetFronts();
+        Crossover.resetNewMebers();
+        for(Member m: population)
+        {
+            m.newGeneration();
+        }
+    }
+
+    public static void newMiddleGeneration()
+    {
+        Fronts.resetFronts();
+        for(Member m: population)
+        {
+            m.newGeneration();
+        }
+    }
 
     //Debugging ...
     public static void printPopulation()
@@ -86,84 +203,6 @@ public abstract class Population {
         }
     }
 
-
-
-    public static void reinsertion()
-    {
-        ArrayList<Member> p = Population.getInstance();
-        Function function = ProblemSCH.getInstance();
-        ArrayList<Front> fronts = Fronts.getInstance();
-        ArrayList<Member> membersInFront;
-        int frontSize, currentIndexMemberInFront=0,i,currentPopulationSize = 0;
-        Front front;
-
-        System.out.println("Antes");
-        Population.printPopulationDetailed();
-        for(Member m:p)
-        {
-            m.newGeneration();
-        }
-
-
-        Fronts.resetFronts();
-
-        function.applyFunction();
-
-
-
-        Utils.dominates();
-
-
-        Fronts.makeFronts();
-
-        System.out.println("Antes de reinserir");
-        Fronts.printFronts();
-
-
-        for(i=0;i<fronts.size();i++)
-        {
-            front = fronts.get(i);
-
-            //passo por cada elemento da front vigente e quando currentPopulationSizer sera maior que popsize ai esta na hora de deletar o resto
-            membersInFront = front.getMembers();
-            frontSize = membersInFront.size();
-            if(currentPopulationSize < POP_SIZE)
-            {
-
-                if (frontSize + currentPopulationSize <= POP_SIZE)
-                {
-                    currentPopulationSize += frontSize;
-                }
-                else
-                {
-                    System.out.println("Entrou no primeiro else");
-                    front.crowdingDistanceOfFront();
-                    currentIndexMemberInFront =0;
-
-                    while(currentPopulationSize < POP_SIZE)
-                    {
-                        currentIndexMemberInFront++;
-                        currentPopulationSize++;
-                    }
-                    for(int j=currentIndexMemberInFront+1; j<front.getMembers().size();j++)
-                    {
-                        System.out.println("j = "+j);
-                        front.removeMember(j);
-                    }
-                }
-            }
-            else
-            {
-                break;
-            }
-        }
-        System.out.println("Tamanho do i "+(i));
-        Fronts.removeFronts(i);
-        Fronts.printFronts();
-    }
-
-
-    // Debugging ...
     public static void dominanceRelations()
     {
         Population.printPopulationDetailed();

@@ -21,17 +21,19 @@ public abstract class Fronts {
     {
         int oldFrontsSize = fronts.size();
         int oldIndex = index;
+        Front front;
 
-        while(index < oldFrontsSize)
-        {
-            System.out.println("Removendo a front");
-            fronts.get(oldIndex).printFront();
+        while(index < oldFrontsSize) {
+            //System.out.println("Removendo a front");
+            front = fronts.get(oldIndex);
+            for(Member m:front.getMembers())
+            {
+                Population.removeMemberGivenObject(m);
+            }
             fronts.remove(oldIndex);
-            frontCounter --;
+            frontCounter--;
             index++;
         }
-
-
     }
 
     //Basic Operations
@@ -55,6 +57,7 @@ public abstract class Fronts {
             System.out.println("Empty Population while building Fronts!");
             return;
         }
+
         while(true)
         {
             for(Member member: p )
@@ -103,6 +106,11 @@ public abstract class Fronts {
     //Deebugging ...
     public static void printFronts()
     {
+        if(fronts.size() ==0)
+        {
+            System.out.println("Empty Fronts while printing them!");
+            return;
+        }
         for(Front f: fronts)
         {
             System.out.println("Front Number"+f.getId());

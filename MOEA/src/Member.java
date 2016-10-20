@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class Member implements Comparable<Member>
 {
+    private int frontId = -1;
     private int ndi = 0;
     private ArrayList<Member> ui =  null;
     private ArrayList<Integer> resultOfFunctions = null;
@@ -29,6 +30,7 @@ public class Member implements Comparable<Member>
         this.resultOfFunctions = new ArrayList<Integer>();
         this.data =data;
         this.doubleToBinary();
+
     }
 
     public Member(String binaryData, double decimalPart, boolean isNegative)
@@ -40,6 +42,7 @@ public class Member implements Comparable<Member>
         if(isNegative) this.data *=-1;
 
         this.printMember();
+
     }
 
     public Member(Member another)
@@ -48,9 +51,9 @@ public class Member implements Comparable<Member>
         this.resultOfFunctions = another.resultOfFunctions;
         this.data = another.data;
         this.doubleToBinary();
-
         //System.out.println(another+""+this);
     }
+
 
     public void changeCurrentFunctionValue(int functionId)
     {
@@ -77,6 +80,7 @@ public class Member implements Comparable<Member>
         this.partialNdi = 0;
         this.alreadyInFront = false;
         this.crowdingDistanceValue =0.0;
+        this.frontId = -1;
     }
 
     public void setDataGivenBinary(String binaryString, double decimalPart)
@@ -122,10 +126,10 @@ public class Member implements Comparable<Member>
         }
     }
 
-    //For Debugging Purposes ...
+    //Debugging  ...
     public void printMember()
     {
-        System.out.println("Data: "+this.data+"\nNdi ="+this.ndi+"\nUi Group:"+this.ui);
+        System.out.println("Data: "+this.data+"\nNdi ="+this.ndi+"\nUi Group:"+this.ui+"\nFrontId = "+this.frontId);
         for(int i=0;i<this.resultOfFunctions.size();i++)
         {
             System.out.print("F"+i+": "+this.resultOfFunctions.get(i)+"\t");
@@ -196,6 +200,12 @@ public class Member implements Comparable<Member>
     }
     public void setDecimal(double decimal) {
         this.decimal = decimal;
+    }
+    public int getFrontId() {
+        return frontId;
+    }
+    public void setFrontId(int frontId) {
+        this.frontId = frontId;
     }
 
     public boolean isNegative()

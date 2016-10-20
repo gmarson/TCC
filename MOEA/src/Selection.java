@@ -23,7 +23,7 @@ public abstract class Selection {
         int crossoverRate = (int)Population.CROSS_RATE /100;
         ArrayList<Member> p = Population.getInstance();
         ArrayList<Integer> parents = new ArrayList<Integer>();
-        ArrayList<Front> f = Fronts.getInstance();
+        ArrayList<Front> fronts = Fronts.getInstance();
         Front currentFront;
         Member bestParentForTour=null, opponentParent;
         int randomNumber;
@@ -47,7 +47,9 @@ public abstract class Selection {
                 {
                     if(!(bestParentForTour.equals(opponentParent)))
                     {
-                        currentFront = f.get(bestParentForTour.getNdi());
+                        //bestParentForTour.printMember();
+                        //Fronts.printFronts();
+                        currentFront = fronts.get(bestParentForTour.getFrontId());
                         currentFront.crowdingDistanceOfFront();
 
                         if(bestParentForTour.getCrowdingDistanceValue() < opponentParent.getCrowdingDistanceValue())

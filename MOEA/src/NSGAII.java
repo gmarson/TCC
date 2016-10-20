@@ -16,11 +16,11 @@ public class NSGAII {
             Aqui, eu ja tenho os ranks ^^
 
             LOOP
-                5 - selecionar os pais (torneio simples)
+                V - selecionar os pais (torneio simples)
 
-                6 - cruzamento (geração dos filhos) (crossover binario de um ponto)
+                V - cruzamento (geração dos filhos) (crossover binario de um ponto)
 
-                7 - Calculo de fronteira
+                V - Calculo de fronteira
 
                 8 - reinserção
 
@@ -35,29 +35,33 @@ public class NSGAII {
         Function f = ProblemSCH.getInstance();
 
         Population.buildPopulation();
-        ArrayList<Member>p = Population.getInstance();
-        f.applyFunction();
-        //System.out.println("Before crossover");
-        //Population.printPopulationDetailed();
-
-        Utils.dominates();
-        //Population.dominanceRelations();
-        Fronts.makeFronts();
-        Fronts.printFronts();
         Scanner s = new Scanner(System.in);
+        for(int i=0; i< Population.NUM_GER;i++) {
+            f.applyFunction();
+            //System.out.println("after applying functions");
+            //Population.printPopulationDetailed();
 
-        ArrayList<Integer> indexOfparents = Selection.binaryTournament();
-        //Selection.membersGoingToCrossover(parents);
+            //System.out.println("Before crossover");
+            //Population.printPopulationDetailed();
+            Utils.dominates();
 
-        Crossover.doCrossover(1,indexOfparents);
+            //Population.dominanceRelations();
+            //System.out.println("VOU FAZER AS FRONTS");
+            Fronts.makeFronts();
 
-        //System.out.println("After Crossover");
-        //Population.printPopulationDetailed();
+            //System.out.println("SAI DAS FRONTS");
+            //Fronts.printFronts();
 
-        //TODO vamos focar nas fronts, alguma coisa ta errada pq tem front que nao tem nenhum individuo, logo
-        //TODO ela nao deveria estar listada em fronts
-        Population.reinsertion();
-        //Fronts.printFronts();
+            ArrayList<Integer> indexOfparents = Selection.binaryTournament();
 
+            //Selection.membersGoingToCrossover(parents);
+            Crossover.doCrossover(1, indexOfparents);
+
+            //System.out.println("After Crossover");
+            //Population.printPopulationDetailed();
+            Population.reinsertion();
+            //Fronts.printFronts();
+        }
+        Population.printPopulation();
     }
 }

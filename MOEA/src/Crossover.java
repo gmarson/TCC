@@ -40,7 +40,7 @@ public abstract class Crossover {
      * @param parent2
      * @return
      */
-    public static void binaryCrossover(Member parent1,Member parent2 )
+    public static void binaryCrossover(Member parent1,Member parent2 ) // not working
     {
         String parent1Binary = parent1.getBinaryDataDecimal();
         String parent2Binary = parent2.getBinaryDataDecimal();
@@ -76,7 +76,7 @@ public abstract class Crossover {
         newMembers.add(new Member(child1Binary, parent1.getDecimal(),p1negative));
         newMembers.add(new Member(child2Binary, parent2.getDecimal(),p2negative));
 
-        //TODO debuga aki pq ta errado
+
     }
 
     public static void doCrossover(int option,ArrayList<Integer> indexOfParents)
@@ -125,4 +125,10 @@ public abstract class Crossover {
 
 
     }
+
+    public static void resetNewMebers()
+    {
+        newMembers.clear();
+    }
+
 }
