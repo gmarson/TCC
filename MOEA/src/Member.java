@@ -4,6 +4,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * ndi = Numero de soluções que dominam a solução i, ou seja que me dominam (dado que sou i)
@@ -15,12 +16,12 @@ public class Member implements Comparable<Member>
     private int ndi = 0;
     private ArrayList<Member> ui =  null;
     private ArrayList<Integer> resultOfFunctions = null;
-    private int currentFunctionValue;
+    private double currentFunctionValue;
     private double data;
-    private double decimal;
-    private String binaryDataDecimal;
+    private String binaryData;
     private int partialNdi = 0;
     private boolean alreadyInFront = false;
+    private boolean negative = false;
     private double crowdingDistanceValue =0.0;
 
     //constructors
@@ -29,31 +30,59 @@ public class Member implements Comparable<Member>
         this.ui = new ArrayList<Member>();
         this.resultOfFunctions = new ArrayList<Integer>();
         this.data =data;
+        if(this.data < 0)
+        {
+            this.negative = true;
+        }
         this.doubleToBinary();
 
     }
 
-    public Member(String binaryData, double decimalPart, boolean isNegative)
+    public Member(String binaryData)
     {
+        //Scanner s = new Scanner(System.in);
         this.ui = new ArrayList<Member>();
         this.resultOfFunctions = new ArrayList<Integer>();
-        this.setDataGivenBinary(binaryData,decimalPart);
+        this.binaryData = binaryData;
+        char signal = binaryData.charAt(0);
 
-        if(isNegative) this.data *=-1;
 
-        this.printMember();
-
+        this.setDataGivenBinary(binaryData.substring(1));
+        //System.out.println("Data do member criado: "+this.data);
+        //s.nextLine();
+        if(signal == '1')
+        {
+            this.data *= -1;
+            this.negative = true;
+        }
     }
 
     public Member(Member another)
     {
+        //TODO ver se precisa do ndi
         this.ui = another.ui;
         this.resultOfFunctions = another.resultOfFunctions;
         this.data = another.data;
-        this.doubleToBinary();
-        //System.out.println(another+""+this);
+        this.negative = another.negative;
+        this.binaryData = another.binaryData;
     }
 
+    public void changeToCrowdingDistanceValue()
+    {
+        this.currentFunctionValue = this.crowdingDistanceValue;
+    }
+
+    public void setNegative(String signal)
+    {
+        if(signal == "0")
+        {
+            this.negative = false;
+        }
+        else
+        {
+            this.negative = true;
+        }
+    }
 
     public void changeCurrentFunctionValue(int functionId)
     {
@@ -62,14 +91,20 @@ public class Member implements Comparable<Member>
 
     public void doubleToBinary()
     {
-        double number = Math.abs(this.data);
 
-        int nonDecimal = (int)Math.floor(number);
-        this.decimal = number - nonDecimal;
+        Integer number = (int)Math.abs(this.data);
+        this.binaryData = Integer.toBinaryString(number);
 
-        this.binaryDataDecimal = Integer.toBinaryString(nonDecimal);
+        if(this.negative)
+        {
+            this.binaryData = "1" + this.binaryData;
+        }
+        else
+        {
+            this.binaryData = "0" + this.binaryData;
+        }
 
-        //System.out.println(binaryDataDecimal);
+        //System.out.println("Binary data = "+this.binaryData+"\nNumber "+this.data);
 
     }
 
@@ -83,11 +118,20 @@ public class Member implements Comparable<Member>
         this.frontId = -1;
     }
 
-    public void setDataGivenBinary(String binaryString, double decimalPart)
+    public void setDataGivenBinary(String binaryString)
     {
-        int parsedInt = Integer.parseInt(binaryString);
-        this.data = decimalPart + (double) parsedInt;
-        this.binaryDataDecimal = binaryString;
+        int finalNumber =0;
+
+        binaryString = new StringBuilder(binaryString).reverse().toString();
+        for(int i=0;i<binaryString.length();i++)
+        {
+            if(binaryString.charAt(i) == '1')
+            {
+                finalNumber += Math.pow(2,i);
+            }
+        }
+        this.data = finalNumber;
+
     }
 
     public void addToCrowdingDistanceValue(double value)
@@ -102,7 +146,7 @@ public class Member implements Comparable<Member>
         }
     }
 
-    //will be used for fronts calculations
+    //used for fronts calculations
     public void removeFromPartialNdi()
     {
         this.partialNdi--;
@@ -129,11 +173,13 @@ public class Member implements Comparable<Member>
     //Debugging  ...
     public void printMember()
     {
-        System.out.println("Data: "+this.data+"\nNdi ="+this.ndi+"\nUi Group:"+this.ui+"\nFrontId = "+this.frontId);
+        System.out.println("Instance:"+this+"\nData: "+this.data+"\nNdi ="+this.ndi+"\nUi Group:"+this.ui+"\nFrontId = "+this.frontId+"\nCrowding Distance"+this.crowdingDistanceValue);
+
         for(int i=0;i<this.resultOfFunctions.size();i++)
         {
             System.out.print("F"+i+": "+this.resultOfFunctions.get(i)+"\t");
         }
+
         System.out.println("\n");
     }
 
@@ -183,23 +229,17 @@ public class Member implements Comparable<Member>
     public void setCrowdingDistanceValue(double crowdingDistanceValue) {
         this.crowdingDistanceValue = crowdingDistanceValue;
     }
-    public int getCurrentFunctionValue() {
+    public double getCurrentFunctionValue() {
         return currentFunctionValue;
     }
     public void setCurrentFunctionValue(int currentFunctionValue) {
         this.currentFunctionValue = currentFunctionValue;
     }
-    public String getBinaryDataDecimal() {
-        return binaryDataDecimal;
+    public String getBinaryData() {
+        return binaryData;
     }
-    public void setBinaryDataDecimal(String binaryDataDecimal) {
-        this.binaryDataDecimal = binaryDataDecimal;
-    }
-    public double getDecimal() {
-        return decimal;
-    }
-    public void setDecimal(double decimal) {
-        this.decimal = decimal;
+    public void setBinaryData(String binaryData) {
+        this.binaryData = binaryData;
     }
     public int getFrontId() {
         return frontId;

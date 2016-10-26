@@ -67,6 +67,7 @@ public abstract class Fronts {
                 }
                 else if(member.getPartialNdi() ==0)
                 {
+
                     if(firstMemberInFront)
                     {
                         //System.out.println("Construi a front");

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class Crossover {
 
-    // TODO para real usar crossover aritméico
+
     private static double alfa=0.0, betha;
 
     private static ArrayList<Member> newMembers = new ArrayList<Member>();
@@ -22,10 +22,11 @@ public abstract class Crossover {
 
     public static ArrayList<Member> arithmeticCrossover(Member parent1, Member parent2)
     {
-        //TODO perguntar para o tiago pq o método que eu vi na internet eh diferente do dele
+
         betha = Utils.getRandomDouble((double)alfa+1,(double) alfa);
-        double data1 = parent1.getData() + betha * (parent2.getData() - parent1.getData());
-        double data2 = parent2.getData() + betha * (parent1.getData() - parent2.getData());
+
+        double data1 = parent1.getData() * betha + (1-betha ) * parent2.getData();
+        double data2 = parent2.getData() * betha + (1-betha ) * parent1.getData();
         ArrayList<Member> children = new ArrayList<Member>();
 
         children.add(new Member(data1));
@@ -34,31 +35,21 @@ public abstract class Crossover {
         return children;
     }
 
-    /**
-     * Crossover para funções reais
-     * @param parent1
-     * @param parent2
-     * @return
-     */
-    public static void binaryCrossover(Member parent1,Member parent2 ) // not working
+    public static ArrayList<Member> binaryCrossover(Member parent1,Member parent2 )
     {
-        String parent1Binary = parent1.getBinaryDataDecimal();
-        String parent2Binary = parent2.getBinaryDataDecimal();
+        // o sinal é considerado no crossover e compoe o numero no cruzamento
+        String parent1Binary = parent1.getBinaryData();
+        String parent2Binary = parent2.getBinaryData();
         int diff = parent1Binary.length() - parent2Binary.length();
 
         if(diff > 0) //parent 1 is bigger
         {
-            for(int i=0;i<diff;i++)
-            {
-                parent2Binary = "0" +parent2Binary;
-            }
+            parent2Binary = setParentToCorrectSize(parent2,diff);
+
         }
         else if (diff <0) // parent 2 is bigger
         {
-            for(int i=0;i<diff;i++)
-            {
-                parent1Binary = "0" +parent1Binary;
-            }
+            parent1Binary = setParentToCorrectSize(parent1,diff);
         }
 
         int cutoff =  Utils.getRandom(parent1Binary.length(),0);
@@ -70,12 +61,38 @@ public abstract class Crossover {
         String child1Binary = parent1FirstPart + parent2SecondPart;
         String child2Binary = parent2FirstPart + parent1SecondPart;
 
-        boolean p1negative = parent1.isNegative();
-        boolean p2negative = parent2.isNegative();
+        ArrayList<Member> children = new ArrayList<Member>();
 
-        newMembers.add(new Member(child1Binary, parent1.getDecimal(),p1negative));
-        newMembers.add(new Member(child2Binary, parent2.getDecimal(),p2negative));
+        //System.out.println("oia os fi");
 
+
+        children.add(new Member(child1Binary));
+        children.add(new Member(child2Binary));
+
+        return children;
+
+    }
+
+    public static String setParentToCorrectSize(Member parent, int diff)
+    {
+        String parentBinary = parent.getBinaryData();
+        if (parent.isNegative())
+        {
+            for(int i=0;i<diff;i++)
+            {
+                parentBinary = "0" +parentBinary;
+            }
+        }
+        else
+        {
+            parentBinary.substring(1);
+            for(int i=0;i<diff-1;i++)
+            {
+                parentBinary = "0" +parentBinary;
+            }
+            parentBinary = "1" +parentBinary;
+        }
+        return parentBinary;
 
     }
 
@@ -116,7 +133,25 @@ public abstract class Crossover {
         }
         else if(option == 2)
         { //binary crossover
+            int parentIndex = 0;
+            for(int i=0; i<amountOfParents; i++)
+            {
+                m1 = p.get(indexOfParents.get(parentIndex));
+                m2 = p.get(indexOfParents.get(parentIndex+1));
 
+                children = binaryCrossover(m1,m2);
+                for(int j = 0; j <2;j++)
+                {
+                    if(Mutation.checkForMutation())
+                    {
+                        Mutation.doMutation(children.get(j));
+                    }
+                }
+
+                parentIndex += 2;
+                p.add(new Member(children.get(0)));
+                p.add(new Member(children.get(1)));
+            }
         }
         else
         {

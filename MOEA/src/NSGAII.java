@@ -37,7 +37,10 @@ public class NSGAII {
         Population.buildPopulation();
         Scanner s = new Scanner(System.in);
         for(int i=0; i< Population.NUM_GER;i++) {
+            //System.out.println("I+ "+i);
+
             f.applyFunction();
+
             //System.out.println("after applying functions");
             //Population.printPopulationDetailed();
 
@@ -45,9 +48,11 @@ public class NSGAII {
             //Population.printPopulationDetailed();
             Utils.dominates();
 
+
             //Population.dominanceRelations();
             //System.out.println("VOU FAZER AS FRONTS");
             Fronts.makeFronts();
+
 
             //System.out.println("SAI DAS FRONTS");
             //Fronts.printFronts();
@@ -55,13 +60,24 @@ public class NSGAII {
             ArrayList<Integer> indexOfparents = Selection.binaryTournament();
 
             //Selection.membersGoingToCrossover(parents);
-            Crossover.doCrossover(1, indexOfparents);
+            Crossover.doCrossover(2, indexOfparents);
 
             //System.out.println("After Crossover");
             //Population.printPopulationDetailed();
+            //s.nextLine();
             Population.reinsertion();
+            //s.nextLine();
             //Fronts.printFronts();
         }
         Population.printPopulation();
+
+
+
     }
+
+
+
+
+
+
 }

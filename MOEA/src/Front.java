@@ -30,6 +30,8 @@ public class Front{
     public void crowdingDistanceOfFront()
     {
 
+        //System.out.println("Printando os membros antes de fazer o crowding distance");
+        //this.printFront();
         ProblemSCH sch = ProblemSCH.getInstance();
         ArrayList<Front> f= Fronts.getInstance();
         int membersSize = this.members.size();
@@ -41,19 +43,18 @@ public class Front{
         {
             case 1:
             {
-                this.members.get(0).setCrowdingDistanceValue(Integer.MAX_VALUE);
+                this.members.get(0).setCrowdingDistanceValue(Double.POSITIVE_INFINITY);
                 return;
             }
             case 2:
             {
-                this.members.get(0).setCrowdingDistanceValue(Integer.MAX_VALUE);
-                this.members.get(membersSize-1).setCrowdingDistanceValue(Integer.MAX_VALUE);
+                this.members.get(0).setCrowdingDistanceValue(Double.POSITIVE_INFINITY);
+                this.members.get(membersSize-1).setCrowdingDistanceValue(Double.POSITIVE_INFINITY);
                 return;
             }
             default:
                 break;
         }
-
 
         Double currentFunctionValue, previousFunctionValue;
         for(int i=0;i<sch.getNumberOfFunctions();i++)
@@ -68,8 +69,8 @@ public class Front{
             Collections.sort(this.members);
 
             //seto os extremos com infinito
-            this.members.get(0).setCrowdingDistanceValue(Integer.MAX_VALUE);
-            this.members.get(membersSize-1).setCrowdingDistanceValue(Integer.MAX_VALUE);
+            this.members.get(0).setCrowdingDistanceValue(Double.POSITIVE_INFINITY);
+            this.members.get(membersSize-1).setCrowdingDistanceValue(Double.POSITIVE_INFINITY);
             fmax = this.members.get(0).getCurrentFunctionValue();
             fmin = this.members.get(membersSize-1).getCurrentFunctionValue();
 
@@ -84,6 +85,53 @@ public class Front{
                 fiplus1 = (double) this.members.get(j+1).getCurrentFunctionValue();
                 fiminus1 =(double) this.members.get(j-1).getCurrentFunctionValue();
                 this.members.get(j).addToCrowdingDistanceValue((fiplus1-fiminus1)/(fmax-fmin));
+            }
+        }
+
+        for(Member m : this.members)
+        {
+            m.changeToCrowdingDistanceValue();
+        }
+        Collections.sort(this.members);
+        //System.out.println("Printando os membros depois de fazer o crowding distance");
+        //this.printFront();
+    }
+
+
+    public void removeMembersGivenRange(int max)
+    {
+        int firstFontSize = this.members.size();
+        Member memberToBeRemoved;
+
+        if(firstFontSize==2)
+        {
+            memberToBeRemoved = this.getMembers().get(0);
+
+            Population.removeMemberGivenObject(memberToBeRemoved);
+            this.members.remove(memberToBeRemoved);
+        }
+        else
+        {
+            while(this.members.size() > max)
+            {
+
+                //System.out.println("TO DENTRO DO LAÇO AKI Ó");
+                //System.out.println("primeiro tamanho da front: "+ firstFontSize);
+                //System.out.println("tamanho da front: "+ this.getMembers().size());
+
+
+                //this.printFront();
+                memberToBeRemoved = this.getMembers().get(1); //deleto sempre a mesma posição pois o array regride
+                //System.out.println("Membro a ser removido ");
+                //memberToBeRemoved.printMember();
+
+                //s.nextLine();
+                Population.removeMemberGivenObject(memberToBeRemoved);
+
+                this.members.remove(memberToBeRemoved);
+                //s.nextLine();
+
+
             }
         }
     }
