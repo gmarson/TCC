@@ -1,4 +1,4 @@
- \documentclass[]{article}
+\documentclass[]{article}
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
@@ -17,35 +17,35 @@
 
 \begin{abstract}
 	
-	\noindent Essa investigação tem como objetivo mostrar o desempenho de alguns algoritmos genéticos multiobjetivos em problemas discretos clássicos da computação assim como em quais circunstâncias são mais adequados.
+	\noindent Esta investigação tem como objetivo mostrar o desempenho de alguns algoritmos genéticos multiobjetivos em problemas discretos clássicos da computação assim como em quais circunstâncias são mais adequados.
 	
 \end{abstract}
 
 \section{Introdução}	
 
-	Algoritmos genéticos (AGs) apresentam uma abordagem de busca baseada na teoria da evolução de Darwin que adotam uma sequência de passos para atingir um determinado objetivo. 
+	Algoritmos genéticos (AGs) apresentam uma abordagem de busca baseada na teoria da evolução de Darwin que adotam uma sequência de passos para atingir um determinado objetivo. Elas tem em comum o fato de que os indivíduos mais adaptados passarão suas características aos seus descendentes.
 	
-	Apesar de ter sido constatado o sucesso dos AGs para certos tipos de problemas, alguns outros permanecem como desafio. Os de otimização discreta com múltiplos objetivos são mais desafiadores pois requerem que a classificação dos indivíduos seja realizada de acordo com vários critérios.
+	Apesar de ter sido constatado o sucesso dos AGs para certos tipos de problemas, como de criptoaritmética, alguns outros permanecem como desafio. Os de otimização discreta com múltiplos objetivos são mais desafiadores pois requerem a maximização ou minimização de mais de um função objetivo.
 		
-	Consideremos, por exemplo, o problema do Roteamento Multicast (PRM). Como foi dito em Bueno \cite{bueno2010heuristicas} ele pode ser modelado como um grafo direcionado onde os vértices são os hosts e as arestas representam os enlaces de comunicação. Dessa forma, dado o grafo $G$ que representa a rede e um fluxo $\phi$, deve-se calcular árvores enraizadas $T$ de $G$ para carregar $\phi$ em $G$, partindo-se de um vértice que representa o início de uma conexão ou envio de pacote e passando por um subconjunto de vértices de $G$.
+	Consideremos, por exemplo, o problema do Roteamento Multicast (PRM). Como foi dito em Bueno \cite{bueno2010heuristicas} ele pode ser modelado como um grafo direcionado onde os vértices são os hosts e as arestas representam os enlaces de comunicação. Dessa forma, dado o grafo $G$ que representa a rede e um fluxo $\phi$, deve-se calcular árvores enraizadas de $G$ para carregar $\phi$ em $G$, partindo-se de um vértice que representa o início de uma conexão ou envio de pacote e passando por um subconjunto de vértices de $G$ que tenham os nós folha como destino.
 	
 	Existe uma série de atributos que podem influenciar o desempenho de uma rede tais como custo, delay, capacidade e tráfego atual. Um AG simples apenas consegue administrar um critério por vez. Os AGs Multi-Objective constituem uma abordagem mais adequada para resolver problemas desse tipo categorizando possíveis melhores respostas em virtude dos critérios avaliados.
 	
-	Mais recentemente, uma versão mais complexa conhecida por Algoritmos Genéticos Multiobjetivos (AGMOs) foi proposta, na qual o processo de avaliação dos indivíduos leve em consideração diferentes objetivos ou critérios.
+	Recentemente, uma versão conhecida por Algoritmos Genéticos Multiobjetivos (AGMOs) foi proposta, na qual o processo de avaliação dos indivíduos leve em consideração diferentes objetivos ou critérios.
 	
-	A proposta de um AG multi-objectivo como o Non-dominated Sorting Genetic Algorithm II (NSGAII) \cite{NSGAII}, por exemplo, consiste em classificar vários indivíduos por meio de várias funções objetivo. Dessa forma, utilizou-se o conceito de fronteira de Pareto  \cite{Pareto}, uma região do espaço de busca na qual estarão os melhores indivíduos de acordo com várias funções objetivo. O critério para a classificação de qual indivíduo permanece em qual fronteira é a dominância.
+	A fim de considerar todos os objetivos no cálculo de aptidão, os AGMO's utilizam o conceito de fronteira de Paretto \cite{Pareto} que consiste em classificar vários indivíduos por meio de várias funções objetivo. Dessa forma, utilizou-se o conceito de fronteira de Pareto  \cite{Pareto}, que estabelece uma região do espaço de busca na qual estarão os melhores indivíduos de acordo com várias funções objetivo. O critério para a classificação de qual indivíduo permanece em qual fronteira é a dominância.
 	
 	Diz-se que $x \preceq y$ ($x$ domina $y$) se:
 	
 	\begin{enumerate}
-		\item $x$ não é pior do que $y$ para todas as funções objetivos
+		\item $x$ para toda função objetivo, $x$ não é pior que $y$.
 		
 		\item $x$ é melhor do que y em pelo menos uma função objetivo.
 	\end{enumerate}
 	
-	Esse tipo de classificação pode ser melhor compreendido se analisarmos um problema simples como a compra de um carro. Vários critérios podem ser utilizados para comprá-lo como preço e desempenho. Assim na fronteira de Pareto, estariam os indivíduos com uma combinação de melhor preço e melhor desempenho. Portanto, não existe uma única resposta para esse tipo de problema.
+	Esse tipo de classificação pode ser melhor compreendida se analisarmos um problema simples como a compra de um carro. Vários critérios podem ser utilizados para comprá-lo como preço e desempenho. Assim, na fronteira de Pareto, estariam os indivíduos com uma combinação de melhor preço e melhor desempenho. Estas duas métricas são normalmente conflitantes, quanto melhor o preço, pior o desempenho. Alguns carros terão bom preço e bom desempenho e portanto estarão mais próximos da fronteira de Pareto. Somente aqueles carros que não tiverem preço e desempenho piores que algum outro estarão na Fronteira de Paretto. Portanto, não existe uma única resposta para esse tipo de problema.
 	
-	No  NSGAII \cite{NSGAII}, além do agrupamento por fronteiras, ou rank, utiliza-se também a métrica \textit{crowding distance}, como critério de desempate na escolha do indivíduo caso estejam na mesma fronteira de dominância e, também, para impedir que a variabilidade genética da população seja comprometida.
+	No  NSGAII \cite{NSGAII}, além do agrupamento por fronteiras, ou rank, utiliza-se também a métrica \textit{crowding distance}, como critério de desempate na escolha do indivíduo caso estejam na mesma fronteira de dominância e, também, para impedir que a variabilidade genética da população seja comprometida. O objetivo dessa técnica é que os indivíduos na fronteira de Paretto sejam mais o mais diversificado possível.
 	 
 	
 \section{Agoritmos Genéticos}
@@ -54,19 +54,19 @@
 	
 	Essa teoria foi imprescindível para a criação dos algoritmos genéticos por John Henry Holland. Físico formado pelo MIT (Massachusetts Institute of Technology), Holland elaborou um algoritmo não determinístico com foco em resolução de problemas de custo muito alto.
 	
-	O AG consiste em dar uma interpretação para um conjunto de dados e evoluí-los para uma solução. Nesse caso, todos os dados seriam uma população e cada indivíduo representa um dado, além de ser uma solução em potencial para o problema. O algoritmo avalia cada membro usando uma métrica de aptidão. Isso consiste em dar um nota para cada indivíduo que simboliza as chances dele transmitir suas características para a próxima geração.
+	O AG consiste em dar uma interpretação para um conjunto de dados e evoluí-los para uma solução ótima. Todos os dados seriam uma população e cada indivíduo representa um dado, além de ser uma solução para o problema. O algoritmo avalia cada membro usando uma métrica de aptidão. Isso consiste em dar um nota para cada indivíduo que simboliza as chances dele transmitir suas características para a próxima geração.
 	
-	Alguns métodos são utilizados para selecionar os dados. Dessa forma serão escolhidos $N$ pares de pais para realizarem o cruzamento, onde $N$ é o tamanho da população inicial. O processo de troca de material genético chamado crossover retorna um ou mais filhos sendo que existe uma pequena chance (cerca de $1\%$) de ocorrer uma mutação no material genético dos filhos, em virtude de aumentar a variabilidade na população.
+	Alguns métodos são utilizados para selecionar os indivíduos. Dado que o método gera dois filhos por cruzamento de um par de pais, serão escolhidos $N$ pares de pais, onde $N$ é o tamanho da população inicial. O processo de troca de material genético chamado \textit{crossover} retorna um ou mais filhos sendo que, geralmente, existe uma pequena chance de ocorrer uma mutação no material genético dos filhos, em virtude de aumentar a variabilidade na população.
 	
 	Após o cruzamento, os filhos resultantes são reinseridos na população. Com o intuito de manter o custo computacional não crescente e de eliminar indivíduos fracos, utilizam-se métodos de reinserção para diminuir a população.
 	
-	Esse processo se repete por um número determinado gerações ou pode ser parado quando todos os indivíduos possuírem o mesmo material genético (é improvável que a mutação nas próximas gerações produza um indivíduo mais apto). 
- 	Percebe-se a semelhança com a teoria de Darwin em que os indivíduos mais adaptados passarão suas características aos seus descendentes.
+	Este ciclo se repete por um número determinado gerações ou pode ser parado quando todos os indivíduos possuírem o mesmo material genético (é improvável que a mutação nas próximas gerações produza um indivíduo mais apto). 
+ 	
 	
 \section{Objetivos}
 \subsection{Objetivos Gerais}
 
-	Em virtude de bons resultados gerados por esses algoritmos em problemas discretos, tal qual o PRM, serão analisados métodos de AG multi e many objective como NSGAII\cite{NSGAII} e SPEA2\cite{SPEA2} aplicados a problemas clássicos da computação como o problema da Mochila e do Caixeiro Viajante.
+	Em virtude de bons resultados gerados por esses algoritmos em problemas discretos, tal qual o PRM, serão analisados métodos de AG multi e \textit{Many-objective} como NSGAII\cite{NSGAII}, SPEA2\cite{SPEA2}, SPEA3 e AEMMT aplicados a problemas clássicos da computação como o problema da Mochila, sendo que os dois últimos pertencem a classificação de \textit{Many-objective}.
 	
 	Além desses, pretende-se investigar uma nova família de AGs conhecida como AG \textit{Many-objectives}, por serem apropirados a problemas com vários objetivos. Dentre esses AGMOs, podemos citar o SPEA3 e o AEMMT.
 	
@@ -84,15 +84,15 @@
 
 \subsection{Metodologia}
 	
-	O método científico é o método no qual o pesquisador parte de uma premissa inicial do problema até a sua resposta, no final da pesquisa. Constitui as técnicas que serão utilizadas e os passos seguidos. 
+	O método científico é o método no qual o pesquisador parte de uma premissa inicial do problema até a sua resposta, no final da pesquisa.
 	
-	Será realizado uma pesquisa descritiva de caráter explicativo com o intuito de construir uma comparação entre os AGMOs e outras abordagens para resolver problemas de otimização discreta multi-objetivo. Pretende-se, também, explicar em quais circunstâncias é indicado o uso dos AGMOs. Para isso, será feito a implementação de alguns AGMOs como SPEA2\cite{SPEA2} e NSGAII\cite{NSGAII}.
+	Será realizada uma pesquisa descritiva de caráter explicativo com o intuito de construir uma comparação entre os AGMOs e outras abordagens para resolver problemas de otimização discreta multi-objetivo. Pretende-se, também, explicar em quais circunstâncias é indicado o uso dos AGMOs. Para isso, será feito a implementação de alguns AGMOs como SPEA2\cite{SPEA2} e NSGAII\cite{NSGAII}.
 	
-	Os critérios de comparação serão, inicialmente, a complexidade dos algoritmos segundo a notação O e o desempenho que eles apresentam em problemas de otimização discreta. A principio, serão testados problemas de maximização e minimização de funções propostos nos artigos de NSGAI\cite{NSGAI} e NSGAII\cite{NSGAII} em virtude de verificar o desempenho dessas abordagens em funções mais simples.
+	Os critérios de comparação serão, inicialmente, a complexidade dos algoritmos segundo a notação O e o desempenho que apresentam em problemas de otimização discreta. Com o objetivo de verificar o desempenho em funções simples, primeiramente, os algoritmos serão testados nos problemas de otimização de funções propostos em NSGAI\cite{NSGAI} e NSGA-II\cite{NSGAII}.
 	
 	Em seguida, os algoritmos serão aplicados em problemas mais complexos, tidos como clássicos, na computação. São os problemas da mochila e do caixeiro viajante. Espera-se que os AGMOs apresentem desempenho superior aos algoritmos convencionais quando aplicados a problemas de, no máximo, três objetivos.
 	
-	O desempenho dos AGMOs diminuem consideravelmente a medida que uma maior quantidade de funções é requerida pelo problema, portanto, torna-se necessário o estudo dos algoritmos genéticos \textit{many-objective}. Será feita uma análise descritiva do algoritmo bem como uma comparação da capacidade de custo e resolução dos algoritmos atuais.
+	O desempenho dos AGMOs diminuem consideravelmente a medida que uma maior quantidade de funções é requerida pelo problema, portanto, torna-se necessário o estudo dos algoritmos genéticos \textit{many-objective}. Será feita uma análise descritiva do algoritmo bem como uma comparação de custo e resolução dos algoritmos atuais.
 	
 \subsection{Cronograma}
 
@@ -128,9 +128,15 @@
 	\end{tabular}
 	\end{table}
 	
+\section{Estado da Arte}
 	
-	
-	
+	predicao de estruturas de RNA
+    
+    Escolha de decisão em mercados imobiliarios de alto risco
+    
+    Application of multi-objective genetic algorithm to optimize energy efficiency and thermal comfort in building design
+    
+    http://www.sciencedirect.com/science/article/pii/S0378778814010305
 	
 
 \newpage
