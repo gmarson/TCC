@@ -2,7 +2,9 @@
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
-
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 
 %opening
 \title{Análise Comparativa dos Algoritmos Genéticos Many-Objective em problemas de otimização discreta}
@@ -47,20 +49,7 @@
 	
 	No  NSGAII \cite{NSGAII}, além do agrupamento por fronteiras, ou rank, utiliza-se também a métrica \textit{crowding distance}, como critério de desempate na escolha do indivíduo caso estejam na mesma fronteira de dominância e, também, para impedir que a variabilidade genética da população seja comprometida. O objetivo dessa técnica é que os indivíduos na fronteira de Paretto sejam mais o mais diversificado possível.
 	 
-	
-\section{Agoritmos Genéticos}
 
-	Publicada em 1859, a obra \textbf{Na Origem das Espécies – Sob o Conhecimento da Seleção Natural}, de Charles Darwin, foi alvo de críticas pois explicitava que o seres de um ambiente mudam de uma determinada geração pra outra e são selecionados de acordo com essas mudanças. A partir disso, Darwin escreveu que todos os seres vivos possuem um ancestral comum, contrastando com a visão criacionista da época.
-	
-	Essa teoria foi imprescindível para a criação dos algoritmos genéticos por John Henry Holland. Físico formado pelo MIT (Massachusetts Institute of Technology), Holland elaborou um algoritmo não determinístico com foco em resolução de problemas de custo muito alto.
-	
-	O AG consiste em dar uma interpretação para um conjunto de dados e evoluí-los para uma solução ótima. Todos os dados seriam uma população e cada indivíduo representa um dado, além de ser uma solução para o problema. O algoritmo avalia cada membro usando uma métrica de aptidão. Isso consiste em dar um nota para cada indivíduo que simboliza as chances dele transmitir suas características para a próxima geração.
-	
-	Alguns métodos são utilizados para selecionar os indivíduos. Dado que o método gera dois filhos por cruzamento de um par de pais, serão escolhidos $N$ pares de pais, onde $N$ é o tamanho da população inicial. O processo de troca de material genético chamado \textit{crossover} retorna um ou mais filhos sendo que, geralmente, existe uma pequena chance de ocorrer uma mutação no material genético dos filhos, em virtude de aumentar a variabilidade na população.
-	
-	Após o cruzamento, os filhos resultantes são reinseridos na população. Com o intuito de manter o custo computacional não crescente e de eliminar indivíduos fracos, utilizam-se métodos de reinserção para diminuir a população.
-	
-	Este ciclo se repete por um número determinado gerações ou pode ser parado quando todos os indivíduos possuírem o mesmo material genético (é improvável que a mutação nas próximas gerações produza um indivíduo mais apto). 
  	
 	
 \section{Objetivos}
@@ -122,23 +111,113 @@
 	\textbf{Janeiro(2017)}          & \textbf{}       &                                      & X                                &                                       & X                               \\ \hline
 	\textbf{Fevereiro(2017)}        & \textbf{}       &                                      &                                  & X                                     & X                               \\ \hline
 	\textbf{Março(2017)}            & \textbf{}       &                                      &                                  & X                                     & X                               \\ \hline
-	\textbf{Abril(2017)}            &                 &                                      &                                  & X                                     & X                               \\ \hline
-	\textbf{Maio(2017)}             &                 &                                      &                                  &                                       & X                               \\ \hline
-	\textbf{Junho(2017)}            &                 &                                      &                                  &                                       & X                               \\ \hline
+	\textbf{Abril(2017)}                  &                 &                                      &                                  & X                                     & X                               \\ \hline
+	\textbf{Maio(2017)}                   &                 &                                      &                                  &                                       & X                               \\ \hline
+	\textbf{Junho(2017)}                   &                 &                                      &                                  &                                       & X                               \\ \hline
 	\end{tabular}
 	\end{table}
-	
+
 \section{Estado da Arte}
 	
 	predicao de estruturas de RNA
+		    
+ 	Escolha de decisão em mercados imobiliarios de alto risco
+  
+ 	Application of multi-objective genetic algorithm to optimize energy efficiency and thermal comfort in building design
+  
+ 	http://www.sciencedirect.com/science/article/pii/S0378778814010305
+	
+	
+\section{Trabalhos Correlatos}
+	
+	Trabalhos correlatos constituem artigos que utilizam técnicas e abordagens semelhantes à adotada nesta tese. Os próximos estudos descritos, tem como principal objetivo realizar comparações de AGMOs dado um escopo predefinido de problema.
+	 
+	A análise comparativa proposta nesta tese pretende auxiliar pesquisas futuras no que diz respeito à comparações dos algoritmos genéticos multiobjetivo tradicionais em problemas discretos.
+	
+    \subsection{Comparison Study of SPEA2+, SPEA2, and NSGA-II in Diesel Engine Emissions and Fuel Economy Problem}
     
-    Escolha de decisão em mercados imobiliarios de alto risco
+    Nesse artigo\cite{SPEA2ComparisonNSGAII} é feito o uso de algoritmos como SPEA2 e NSGAII em uma análise comparativa de funções que quantificam as emissões de gases em motores a diesel(SFC, NOx e Soot). Esse problema é classificado como \textit{Diesel engine fuel emission scheduling problem} e os algoritmos aplicados nesse problema consistem em minimizar a emissão desses tipos de gases de forma simultânea.
     
-    Application of multi-objective genetic algorithm to optimize energy efficiency and thermal comfort in building design
+    Em virtude de calcular a eficácia de cada solução, foi determinada uma métrica de proporção comparada a um conjunto ideal, ou seja, quanto mais próximo os indivíduos não dominados estiverem da solução ideal, melhor será aquele conjunto de soluções. Seja $S_1$ e $S_2$ possíveis conjuntos de populações finais para o problema proposto e seja $S_u$ o conjunto união dessas soluções. A partir de $S_u$ serão selecionados os indivíduos não dominados para um conjunto $S_p$. Quantos mais próximas as soluções estiverem de $S_p$ melhores serão consideradas.
     
-    http://www.sciencedirect.com/science/article/pii/S0378778814010305
+   	O artigo conclui que o algoritmo SPEA2+ \cite{SPEA2+} é ligeiramente mais eficiente do que os tradicional SPEA2 pois encontra soluções mais diversificadas. Além disso, por meio dos gráficos apresentados conclui-se que a capacidade de mostrar soluções diversificadas, para o problema em questão,
+	do algoritmo NSGAII é consideravelmente inferior ao SPEA2.
+	
+	
+    
+    \subsection{Multi-Objective Optimization of Vehicle Passive Suspension
+    	System using NSGA-II, SPEA2 and PESA-II}
+    	
+   	No âmbito engenharia mecatrônica, pesquisadores aplicaram algoritmos genéticos multiobjetivo com ênfase na suspensão de automóveis. De acordo com o artigo\cite{SuspensionCar}, o objetivo era resolver o conflito entre proporcionar mais conforto para os passageiros e motorista ou aumentar a capacidade de controle do automóvel. Como esses dois critérios são conflitantes, foi utilizada uma abordagem de testes e comparações com AGMOs.
+   	
+   	O estudo demonstrou que as fronteira de Pareto obtida pelo NSGAII foi considerada de rendimento extremo, sendo superior ao SPEA2 e ao PESAII\cite{PESA-II}. No entanto, NSGAII perde para os dois outros métodos em termos de diversidade de soluções na fronteira de Pareto.
+   	
+    
 	
 
+\section{Referencial Teórico}
+\subsection{Agoritmos Genéticos}
+
+	Publicada em 1859, a obra \textbf{Na Origem das Espécies – Sob o Conhecimento da Seleção Natural}, de Charles Darwin, foi alvo de críticas pois explicitava que o seres de um ambiente mudam de uma determinada geração pra outra e são selecionados de acordo com essas mudanças. A partir disso, Darwin escreveu que todos os seres vivos possuem um ancestral comum, contrastando com a visão criacionista da época.
+	
+	Essa teoria foi imprescindível para a criação dos algoritmos genéticos por John Henry Holland. Físico formado pelo MIT (Massachusetts Institute of Technology), Holland elaborou um algoritmo não determinístico com foco em resolução de problemas de custo muito alto.
+	
+	O AG consiste em dar uma interpretação para um conjunto de dados e evoluí-los para uma solução ótima. Todos os dados seriam uma população e cada indivíduo representa um dado, além de ser uma solução para o problema. O algoritmo avalia cada membro usando uma métrica de aptidão. Isso consiste em dar um nota para cada indivíduo que simboliza as chances dele transmitir suas características para a próxima geração.
+	
+	Alguns métodos são utilizados para selecionar os indivíduos. Dado que o método gera dois filhos por cruzamento de um par de pais, serão escolhidos $N$ pares de pais, onde $N$ é o tamanho da população inicial. O processo de troca de material genético chamado \textit{crossover} retorna um ou mais filhos sendo que, geralmente, existe uma pequena chance de ocorrer uma mutação no material genético dos filhos, em virtude de aumentar a variabilidade na população.
+	
+	Após o cruzamento, os filhos resultantes são reinseridos na população. Com o intuito de manter o custo computacional não crescente e de eliminar indivíduos fracos, utilizam-se métodos de reinserção para diminuir a população.
+	
+	Este ciclo se repete por um número determinado gerações ou pode ser parado quando todos os indivíduos possuírem o mesmo material genético (é improvável que a mutação nas próximas gerações produza um indivíduo mais apto). 
+
+\subsection{Fronteira de Pareto}
+	FALAR COISAS AKI
+	
+	
+\subsection{Non-dominated Sorting Genetic Algorithm II}
+	O  Non-dominated Sorting Genetic Algorithm(NSGA-II)\cite{NSGAII} é um algoritmo baseado em uma ordenação elitista por dominância. Tem como objetivo classificar os indivíduos de um conjunto M por fronteiras F sendo que na fronteira F1 estariam os melhores indivíduos por critérios de dominância de todo o conjunto M. Na fronteira F2, estariam todos os indivíduos não dominados de $M-F1$ e assim sucessivamente.
+    A classificação dos indivíduos ocorre utilizando-se o conceito de dominância que pode ser explicado usando os seguintes critérios.
+    \begin{enumerate}
+    \item $ndi$ o número de soluções que dominam a solução i.
+    \item $Ui$ o conjunto de soluções que são dominadas por i.
+ 	Indivíduos com menor ndi possível ($ndi = 0$)  estão na fronteira de Paretto. As demais fronteiras são estabelecidas pelos individuos com ndi subsequente. 
+    \end{enumerate}
+    
+    O NSGAII trabalha com duas populações P e Q sendo que P é a população inicial da geração corrente e Q são os filhos de P resultantes de um processo de cruzamento após a seleção. Ao fim de cada geração, essas duas populações convergem para uma só e ocorrerá um processo de seleção de todos os indivíduos para formar uma nova população P que será a inicial do próximo ciclo. Serão escolhidos, portanto, os indivíduos que estão nas melhores fronteiras até o número total de P ser preenchido. Como critério de desempate para o caso de a última fronteira ser maior do que o restante de elementos faltantes em P, utiliza-se o critério de desempate \textit{Crowding Distance} em que são priorizados os indivíduos com maior variabilidade genética.
+    
+    O cáculo dessa métrica é feito obtendo-se a soma da média da distância das duas soluções adjacentes a cada indivíduo para cada objetivo referente a ele. Dessa forma, são selecionados os indivíduos que estão mais distantes um dos outros na fronteira.
+    
+    A aptidão de cada solução é determinada usando-se os seguintes critérios.
+    
+    \begin{enumerate}
+    \item \textit{Rank}(ou fronteira) em que o indíviduo está.
+    \item \textit{Crowding Distance} como desempate para indivíduos na mesma fronteira.
+    \end{enumerate}
+  
+   Ao fim desse processo espera-se vários, ou todos, os indivíduos na fronteira de Paretto com os variabilidade elevada.
+ 
+\subsection{Strength Pareto Evolutionary Algorithm 2}
+	O Strength Pareto Evolutionary Algorithm 2\cite{SPEA2} é um algoritmo que trabalha com duas populações $P$ e $Q$ sendo que $P$ é a população inicial e em $Q$ serão apenas armazenadas as soluções não dominadas encontradas pelo algoritmo. Serão denotados por $P_t$ e $Q_t$ as populações para a geração $t = 1, 2, ..., N_{iter}$.
+    
+    Inicia-se estabelecendo uma população inicial aleatória para $P_1$ e classificando todos os indivíduos de $R_t = P_t \cup Q_t$. Um dos critérios que irá compor a função de aptidão(\textit{fitness}) é o \textit{strength} de cada indivíduo que pode ser estabelecido por:
+ 
+ \begin{large}
+ \begin{center}
+  	 $strength_i = |\{j,j \in R_t, | i \leq j\}|$
+  \end{center}
+ \end{large}
+  
+   Como foi dito em Waldo e Alexandre, \cite{WaldoAlexandre} a interpretação para o valor  \textit{strength} é a quantidade de elementos em $R_t$ que são dominados por $i$. Calcula-se, também o valor de \textit{raw fitness} denotado na equação como:
+   
+\begin{large}
+ \begin{center}
+  	 $raw_i = |\{\sum_{j \in R_t, j\leq i} strength_j\}|$
+  \end{center}
+\end{large}
+   
+    Sendo assim,  $raw_i$ é o somatório dos $strengths_j$ tal que $j \in R_t$ e j domina i. As soluções com $raw_i = 0$ não são dominadas por nenhum outro indivíduo.  
+    
+    
 \newpage
 \bibliographystyle{ieeetr}
 \bibliography{Bibliografia}
