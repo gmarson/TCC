@@ -27,17 +27,18 @@ public class Front{
         members.add(m);
     }
 
+
     public void crowdingDistanceOfFront()
     {
 
         //System.out.println("Printando os membros antes de fazer o crowding distance");
         //this.printFront();
+
         ProblemSCH sch = ProblemSCH.getInstance();
-        ArrayList<Front> f= Fronts.getInstance();
         int membersSize = this.members.size();
         double fiplus1, fiminus1,fmax,fmin;
         if(members.isEmpty()) return;
-
+        Scanner s = new Scanner(System.in);
 
         switch (membersSize)
         {
@@ -66,13 +67,23 @@ public class Front{
             }
 
             //ordeno os individuos pela função objetivo
+
             Collections.sort(this.members);
+
 
             //seto os extremos com infinito
             this.members.get(0).setCrowdingDistanceValue(Double.POSITIVE_INFINITY);
             this.members.get(membersSize-1).setCrowdingDistanceValue(Double.POSITIVE_INFINITY);
-            fmax = this.members.get(0).getCurrentFunctionValue();
-            fmin = this.members.get(membersSize-1).getCurrentFunctionValue();
+            this.members.get(0).setInfinity(true);
+            this.members.get(membersSize-1).setInfinity(true);
+            fmin = this.members.get(0).getCurrentFunctionValue();
+            fmax = this.members.get(membersSize-1).getCurrentFunctionValue();
+
+            //System.out.println("Imprimindo membros na front");
+            //this.printFront();
+            //System.out.println("Pessoal que recebeu infinto no crowding ");
+            //this.members.get(0).printMember();
+            //this.members.get(membersSize-1).printMember();
 
             if(fmax - fmin == 0)
             {
@@ -95,11 +106,13 @@ public class Front{
         Collections.sort(this.members);
         //System.out.println("Printando os membros depois de fazer o crowding distance");
         //this.printFront();
+        //s.nextLine();
     }
 
 
     public void removeMembersGivenRange(int max)
     {
+        Scanner s = new Scanner(System.in);
         int firstFontSize = this.members.size();
         Member memberToBeRemoved;
 
@@ -121,17 +134,15 @@ public class Front{
 
 
                 //this.printFront();
-                memberToBeRemoved = this.getMembers().get(1); //deleto sempre a mesma posição pois o array regride
+                memberToBeRemoved = this.getMembers().get(0); //deleto sempre a mesma posição pois o array regride
                 //System.out.println("Membro a ser removido ");
                 //memberToBeRemoved.printMember();
 
                 //s.nextLine();
                 Population.removeMemberGivenObject(memberToBeRemoved);
-
                 this.members.remove(memberToBeRemoved);
+
                 //s.nextLine();
-
-
             }
         }
     }

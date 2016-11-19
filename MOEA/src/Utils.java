@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 
 /**
@@ -9,102 +8,67 @@ import java.util.Scanner;
  */
 public abstract class Utils {
 
-
-
-    public static void dominates() //TODO o negocio é saber a causa das fronts estarem ordenadas por data no final, Sabendo isso ja era!!!!
+    public static void dominatesPopulation()
     {
-        int dominates;
         ArrayList<Member> p = Population.getInstance();
         int populationSize = p.size();
-        int i, j;
-        ArrayList<Integer> resultingFunctionsI, resultingFunctionsJ;
-        if (!p.isEmpty()) {
-            for (i = 0; i < populationSize; i++) {
-                for (j = i + 1; j < populationSize; j++) {
+        int i , j;
+        Member mi, mj;
+        if(!p.isEmpty())
+        {
+            for(i =0; i< populationSize;i++)
+            {
+                mi = p.get(i);
+                for(j=i+1; j< populationSize; j++)
+                {
+                    mj = p.get(j);
 
-                    //System.out.println("data i = "+p.get(i).getData()+"\ndata j = "+p.get(j).getData());
-                    resultingFunctionsI = p.get(i).getResultOfFunctions();
-                    resultingFunctionsJ = p.get(j).getResultOfFunctions();
+                    if(dominates(mi,mj))
+                    {
 
-                    dominates = compare(resultingFunctionsI, resultingFunctionsJ);
+                        p.get(j).addNdi();
+                        p.get(i).addMemberToUi(mj);
+                    }
+                    else if(dominates(mj,mi))
+                    {
 
-                    switch (dominates){
-                        case 1:
-                        {
-                            p.get(j).addNdi(); // j eh dominada por i
-                            p.get(i).addMemberToUi(p.get(j)); //j eh adicionado na
-                                                             // lista dos que sao dominados por i
-                            break;
-                        }
-                        case -1:
-                        {
-                            p.get(i).addNdi(); // i eh dominada por j
-                            p.get(j).addMemberToUi(p.get(i)); //i eh adicionado na
-                                                             // lista dos que sao dominados por j
-                            break;
-                        }
-                        default:
-                        {
-                            break;
-                        }
+                        p.get(i).addNdi();
+                        p.get(j).addMemberToUi(mi);
                     }
                 }
             }
         }
+
+
     }
 
-
-    public static int compare(ArrayList<Integer> resultingFunctionsI, ArrayList<Integer> resultingFunctionsJ )
+    public static boolean dominates(Member i, Member j)
     {
+        boolean better=false, worse=false;
+        ArrayList<Integer> arrayI = i.getResultOfFunctions();
+        ArrayList<Integer> arrayJ = j.getResultOfFunctions();
 
-        boolean IgreaterThanJ =false;
-        boolean JgreaterThanI = false;
-        int numberOfFunctions = resultingFunctionsI.size(), k, k1;
-        ArrayList<Boolean> IDominatesJ = new ArrayList<Boolean>();
-        ArrayList<Boolean> JDominatesI = new ArrayList<Boolean>();
-        Scanner s = new Scanner(System.in);
-        for(k=0;k<numberOfFunctions;k++)
+        for(int k=0; k <arrayI.size();k++)
         {
-            for(k1=0;k1<numberOfFunctions;k1++)
+            if(arrayI.get(k) <= arrayJ.get(k))
             {
-                //System.out.println("funcao de i "+resultingFunctionsI.get(k)+"\nfuncao de j "+resultingFunctionsJ.get(k1));
-                //s.nextLine();
-                if(resultingFunctionsI.get(k) <= resultingFunctionsJ.get(k1))
+                if(arrayI.get(k) < arrayJ.get(k))
                 {
-                    IDominatesJ.add(true);
-                    JDominatesI.add(false);
-                    if(resultingFunctionsI.get(k) < resultingFunctionsJ.get(k1) && IgreaterThanJ ==false){
-                        IgreaterThanJ =true;
-                    }
+                    better = true;
                 }
-                else
-                {
-                    JDominatesI.add(true);
-                    IDominatesJ.add(false);
-
-                    if(resultingFunctionsJ.get(k1) < resultingFunctionsI.get(k) && JgreaterThanI ==false){
-                        JgreaterThanI =true;
-                    }
-                }
+            }
+            else
+            {
+                return false;
             }
         }
 
-        if(!(IDominatesJ.contains(false)) && IgreaterThanJ )
+        if(better)
         {
-            //System.out.println("i domina j");
-            return 1;
-        }
-        else if(!(JDominatesI.contains(false)) && JgreaterThanI )
-        {
-            //System.out.println("j domina i");
-            return -1;
-        }
-        else
-        {
-            //System.out.println("nao se dominam");
-            return 0;
+            return true;
         }
 
+        return false;
     }
 
     public static int getRandom(int max, int min)

@@ -4,6 +4,8 @@
  */
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
 public abstract class Fronts {
     private static int frontCounter = 0;
     private static ArrayList<Front> fronts = new ArrayList<Front>();
@@ -102,6 +104,7 @@ public abstract class Fronts {
                 frontCounter++;
             }
         }
+
     }
 
     //Deebugging ...

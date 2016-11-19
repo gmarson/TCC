@@ -40,6 +40,8 @@ public abstract class Crossover {
         // o sinal é considerado no crossover e compoe o numero no cruzamento
         String parent1Binary = parent1.getBinaryData();
         String parent2Binary = parent2.getBinaryData();
+        //System.out.println("P1: "+parent1.getData()+"\nP1Binary: "+parent1.getBinaryData());
+        //System.out.println("P2: "+parent2.getData()+"\nP2Binary: "+parent2.getBinaryData());
         int diff = parent1Binary.length() - parent2Binary.length();
 
         if(diff > 0) //parent 1 is bigger
@@ -53,25 +55,81 @@ public abstract class Crossover {
         }
 
         int cutoff =  Utils.getRandom(parent1Binary.length(),0);
+        //System.out.println("Corte "+cutoff);
         String parent1FirstPart = parent1Binary.substring(0,cutoff);
+        //System.out.println("Primeira parte do primeiro filho: "+parent1FirstPart);
         String parent1SecondPart = parent1Binary.substring(cutoff,parent1Binary.length());
+        //System.out.println("Segunda parte do primeiro filho: "+parent1SecondPart);
         String parent2FirstPart =  parent2Binary.substring(0,cutoff);
+       // System.out.println("Primeira parte do segundo filho: "+parent2FirstPart);
         String parent2SecondPart= parent2Binary.substring(cutoff,parent2Binary.length());
+        //System.out.println("Segunda parte do segundo filho: "+parent2SecondPart);
 
         String child1Binary = parent1FirstPart + parent2SecondPart;
         String child2Binary = parent2FirstPart + parent1SecondPart;
 
-        ArrayList<Member> children = new ArrayList<Member>();
+
+
 
         //System.out.println("oia os fi");
 
+        //System.out.println("Filho1Binary: "+child1Binary);
+        //System.out.println("Filho2Binary: "+child2Binary);
 
+        child1Binary = setParentToCorrectSize(child1Binary);
+        child2Binary = setParentToCorrectSize(child2Binary);
+
+        ArrayList<Member> children = new ArrayList<Member>();
         children.add(new Member(child1Binary));
         children.add(new Member(child2Binary));
+        //TODO mudei aki
+        //children.add(new Member(Utils.getRandom(1000,-1000)));
+        //children.add(new Member(Utils.getRandom(1000,-1000)));
 
         return children;
 
     }
+
+    public static String setParentToCorrectSize(String children)
+    {
+
+        char childrenChar[] = children.toCharArray();
+        children = "";
+        boolean oneOcurred=false;
+        if(childrenChar[0] == '1')
+        {
+            children = "1";
+        }
+        else
+        {
+            children = "0";
+        }
+
+        for(int i = 1;i<childrenChar.length;i++)
+        {
+            if(oneOcurred)
+            {
+                if(childrenChar[i] == '1')
+                {
+                    children = children + "1";
+                }
+                else
+                {
+                    children = children + "0";
+                }
+
+            }
+            else if(!oneOcurred && childrenChar[i] == '1')
+            {
+                oneOcurred = true;
+                children = children + "1";
+            }
+        }
+
+        //System.out.println("filho minimizado: "+children);
+        return children;
+    }
+
 
     public static String setParentToCorrectSize(Member parent, int diff)
     {
@@ -166,4 +224,17 @@ public abstract class Crossover {
         newMembers.clear();
     }
 
+    // Debuging ...
+
+    public static void printNewMembers()
+    {
+        if(newMembers.isEmpty())
+        {
+            System.out.println("NewMembers is empty!");
+        }
+        for(Member m : newMembers)
+        {
+            m.printMember();
+        }
+    }
 }

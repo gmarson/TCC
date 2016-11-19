@@ -22,6 +22,7 @@ public class Member implements Comparable<Member>
     private int partialNdi = 0;
     private boolean alreadyInFront = false;
     private boolean negative = false;
+    private boolean infinity = false;
     private double crowdingDistanceValue =0.0;
 
     //constructors
@@ -43,23 +44,32 @@ public class Member implements Comparable<Member>
         //Scanner s = new Scanner(System.in);
         this.ui = new ArrayList<Member>();
         this.resultOfFunctions = new ArrayList<Integer>();
-        this.binaryData = binaryData;
         char signal = binaryData.charAt(0);
 
+        if(binaryData.length() == 1)
+        {
+            this.data = 0;
+            this.binaryData = "0";
+        }
+        else
+        {
+            this.binaryData = binaryData;
+            this.setDataGivenBinary(binaryData.substring(1));
+        }
 
-        this.setDataGivenBinary(binaryData.substring(1));
-        //System.out.println("Data do member criado: "+this.data);
         //s.nextLine();
         if(signal == '1')
         {
             this.data *= -1;
             this.negative = true;
         }
+        //System.out.println("Data do member criado: "+this.data);
     }
 
     public Member(Member another)
     {
         //TODO ver se precisa do ndi
+        this.ndi = another.ndi;
         this.ui = another.ui;
         this.resultOfFunctions = another.resultOfFunctions;
         this.data = another.data;
@@ -247,7 +257,12 @@ public class Member implements Comparable<Member>
     public void setFrontId(int frontId) {
         this.frontId = frontId;
     }
-
+    public boolean isInfinity() {
+        return infinity;
+    }
+    public void setInfinity(boolean infinity) {
+        this.infinity = infinity;
+    }
     public boolean isNegative()
     {
         if (this.data < 0) return true;

@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public abstract class Population {
     public static int POP_SIZE =100;
-    public static int NUM_GER=50;
+    public static int NUM_GER=200;
     public static double CROSS_RATE=50;
     public static double MUT_RATE=1;
 
@@ -54,8 +54,6 @@ public abstract class Population {
         population.get(indexOf).setResultOfFunctions(appliedFunctions);
     }
 
-
-
     public void removePartialNdi()
     {
         if(population == null)
@@ -91,12 +89,13 @@ public abstract class Population {
         Member memberToBeRemoved;
 
         //System.out.println("Antes");
-        //Population.printPopulationDetailed();
+        //Population.printPopulation();
         //s.nextLine();
         newMiddleGeneration();
 
         function.applyFunction();
-        Utils.dominates();
+
+        Utils.dominatesPopulation();
         Fronts.makeFronts();
 
         //System.out.println("PRINTANDO A POPULACAO ANTES DE RE-INSERIR");
@@ -105,6 +104,7 @@ public abstract class Population {
         for(i=0;i<fronts.size();i++)
         {
             front = fronts.get(i);
+            //front.printFront();
 
             //passo por cada elemento da front vigente e quando currentPopulationSize sera maior que popsize ai esta na hora de deletar o resto
             membersInFront = front.getMembers();
@@ -121,11 +121,13 @@ public abstract class Population {
                 {
 
                     //System.out.println("Entrou no else de quebrar a front");
-                    front.crowdingDistanceOfFront();
+                    //TODO descomentar o crowding
+                    //front.crowdingDistanceOfFront();
                     //System.out.println("Printando a Front");
                     //front.printFront();
                     currentIndexMemberInFront =0;
-
+                    //front.printFront();
+                    //s.nextLine();
 
                     while(currentPopulationSize < POP_SIZE)
                     {
@@ -136,15 +138,16 @@ public abstract class Population {
                     //System.out.println("currentIndexMember in Front: "+currentIndexMemberInFront);
 
                     front.removeMembersGivenRange(currentIndexMemberInFront);
-
                 }
-
             }
             else
             {
                 break;
             }
         }
+
+        Fronts.printFronts();
+
         //System.out.println("Tamanho do i "+(i));
         Fronts.removeFronts(i);
         //System.out.println("depois de reinserir");
@@ -157,6 +160,28 @@ public abstract class Population {
         //Fronts.printFronts();
         //Population.printPopulationDetailed();
 
+        //Crossover.printNewMembers();
+        //Fronts.printFronts();
+        int zero= 0, um =0, dois=0, tres=0, mum=0;
+        for(Member m : p)
+        {
+            if(m.getData() == 0) zero++;
+            if(m.getData() == 1) um++;
+            if(m.getData() == 2) dois++;
+            if(m.getData() == 3) tres++;
+            if(m.getData() == -1) mum++;
+        }
+
+        System.out.println("quantidade de numeros 0:"+zero);
+        System.out.println("quantidade de numeros 1:"+um);
+        System.out.println("quantidade de numeros 2:"+dois);
+        System.out.println("quantidade de numeros 3:"+tres);
+        System.out.println("quantidade de numeros -1:"+mum);
+
+
+        Population.printPopulation();
+
+        //s.nextLine();
     }
 
     public static void newGeneration()

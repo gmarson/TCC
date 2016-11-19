@@ -36,17 +36,19 @@ public class NSGAII {
 
         Population.buildPopulation();
         Scanner s = new Scanner(System.in);
+
+
         for(int i=0; i< Population.NUM_GER;i++) {
             //System.out.println("I+ "+i);
 
-            f.applyFunction();
+            f. applyFunction();
 
             //System.out.println("after applying functions");
             //Population.printPopulationDetailed();
 
             //System.out.println("Before crossover");
             //Population.printPopulationDetailed();
-            Utils.dominates();
+            Utils.dominatesPopulation();
 
 
             //Population.dominanceRelations();
@@ -68,9 +70,10 @@ public class NSGAII {
             Population.reinsertion();
             //s.nextLine();
             //Fronts.printFronts();
+            //Population.printPopulationDetailed();
+            //s.nextLine();
         }
         Population.printPopulation();
-
 
 
     }

@@ -1,4 +1,4 @@
-import javax.rmi.CORBA.Util;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public abstract class Selection {
 
-    private static int TOUR = 3;
+    private static int TOUR = 5;
 
 
     public Selection()
@@ -60,13 +60,7 @@ public abstract class Selection {
                         currentFront = fronts.get(bestParentForTour.getFrontId());
                         currentFront.crowdingDistanceOfFront();
 
-                        if(bestParentForTour.getCrowdingDistanceValue() < opponentParent.getCrowdingDistanceValue())
-                        {
-                            //System.out.println("Crowding distance de bestparent"+ bestParentForTour.getCrowdingDistanceValue());
-                            //System.out.println("Crowding distance de opponentparent"+ opponentParent.getCrowdingDistanceValue());
-                            bestParentForTour = opponentParent;
-                        }
-                        else if (bestParentForTour.getCrowdingDistanceValue() == opponentParent.getCrowdingDistanceValue())
+                        if (bestParentForTour.getCrowdingDistanceValue() == opponentParent.getCrowdingDistanceValue() || bestParentForTour.isInfinity() && opponentParent.isInfinity())
                         {
                             //System.out.println("Crowding Distance igual");
                             //System.out.println(Utils.getRandom(2,0));
@@ -77,6 +71,13 @@ public abstract class Selection {
                             //s.nextLine();
 
                         }
+                        else if(bestParentForTour.getCrowdingDistanceValue() < opponentParent.getCrowdingDistanceValue())
+                        {
+                            //System.out.println("Crowding distance de bestparent"+ bestParentForTour.getCrowdingDistanceValue());
+                            //System.out.println("Crowding distance de opponentparent"+ opponentParent.getCrowdingDistanceValue());
+                            bestParentForTour = opponentParent;
+                        }
+
                     }
 
                 }

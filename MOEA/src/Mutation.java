@@ -23,18 +23,27 @@ public abstract class Mutation {
         double oldData = memberToBeMutated.getData();
         double addToOldData;
         ProblemSCH sch = ProblemSCH.getInstance();
-
-        double maxInterval = sch.getMaxValue() - oldData;
-        if(maxInterval > oldData)
+        String oldString,newString="";
+        char c;
+        char charArray[];
+        for(int i =0 ; i<memberToBeMutated.getBinaryData().length();i++)
         {
-            addToOldData = Utils.getRandomDouble(maxInterval,oldData);
+            if(Utils.getRandom(99,0) == 1)
+            {
+                oldString = memberToBeMutated.getBinaryData();
+                c = oldString.charAt(i);
+                charArray = oldString.toCharArray();
+                if(c == '0')
+                {
+                    charArray[i] = '1';
+                }
+                else
+                {
+                    charArray[i] = '0';
+                }
+                newString = new String(charArray);
+                memberToBeMutated.setBinaryData(newString);
+            }
         }
-        else
-        {
-            addToOldData = Utils.getRandomDouble(oldData,maxInterval);
-        }
-
-        memberToBeMutated.setData(oldData + addToOldData);
     }
-
 }
