@@ -73,6 +73,8 @@ public class NSGAII {
             //Population.printPopulationDetailed();
             //s.nextLine();
         }
+
+        Population.printFirstFrontData();
         Population.printPopulation();
 
 

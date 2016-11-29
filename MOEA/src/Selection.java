@@ -38,6 +38,7 @@ public abstract class Selection {
                 randomNumber = Utils.getRandom(Population.POP_SIZE,0);
                 opponentParent = p.get(randomNumber);
 
+
                 //opponentParent.printMember();
                 //System.out.println("\ncontra");
                 if(bestParentForTour == null)
@@ -91,14 +92,14 @@ public abstract class Selection {
             opponentParent = null;
         }
 
+
+
         return parents;
     }
 
     //Debugging ...
     public static void membersGoingToCrossover(ArrayList<Integer> parents)
     {
-        //TODO tem que sempre colocar um numero par de pais. No caso da populaçao = 5 isso nao vai funcionar
-
         ArrayList<Member> p = Population.getInstance();
         Integer indexOfParents, nextIndexOfParents;
         System.out.println(""+parents);

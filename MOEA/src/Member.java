@@ -63,6 +63,8 @@ public class Member implements Comparable<Member>
             this.data *= -1;
             this.negative = true;
         }
+
+
         //System.out.println("Data do member criado: "+this.data);
     }
 

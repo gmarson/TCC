@@ -25,13 +25,11 @@ public abstract class Utils {
 
                     if(dominates(mi,mj))
                     {
-
                         p.get(j).addNdi();
                         p.get(i).addMemberToUi(mj);
                     }
                     else if(dominates(mj,mi))
                     {
-
                         p.get(i).addNdi();
                         p.get(j).addMemberToUi(mi);
                     }

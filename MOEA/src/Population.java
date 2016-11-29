@@ -9,11 +9,12 @@ import java.util.Scanner;
 
 public abstract class Population {
     public static int POP_SIZE =100;
-    public static int NUM_GER=200;
+    public static int NUM_GER=50;
     public static double CROSS_RATE=50;
     public static double MUT_RATE=1;
 
     private static ArrayList<Member> population = new ArrayList<Member>();
+    private static ArrayList<Integer> firstFrontData = new ArrayList<Integer>();
 
     private Population()
     {
@@ -22,6 +23,12 @@ public abstract class Population {
 
     public static ArrayList<Member> getInstance(){
         return population;
+    }
+
+    public static void printFirstFrontData()
+    {
+        System.out.println("Elementos na primeira Fronteira");
+        System.out.println(firstFrontData);
     }
 
     public static void buildPopulation()
@@ -84,11 +91,12 @@ public abstract class Population {
         Function function = ProblemSCH.getInstance();
         ArrayList<Front> fronts = Fronts.getInstance();
         ArrayList<Member> membersInFront;
-        int frontSize, currentIndexMemberInFront=0,i,currentPopulationSize = 0,firstFontSize =-1,diff=0;
+        int frontSize, currentIndexMemberInFront=0,i,currentPopulationSize = 0;
         Front front;
-        Member memberToBeRemoved;
 
-        //System.out.println("Antes");
+        int zero= 0, um =0, dois=0, tres=0, mum=0;
+
+
         //Population.printPopulation();
         //s.nextLine();
         newMiddleGeneration();
@@ -121,8 +129,7 @@ public abstract class Population {
                 {
 
                     //System.out.println("Entrou no else de quebrar a front");
-                    //TODO descomentar o crowding
-                    //front.crowdingDistanceOfFront();
+                    front.crowdingDistanceOfFront();
                     //System.out.println("Printando a Front");
                     //front.printFront();
                     currentIndexMemberInFront =0;
@@ -146,23 +153,25 @@ public abstract class Population {
             }
         }
 
-        Fronts.printFronts();
+        //Fronts.printFronts();
+
+        firstFrontData = Fronts.returnFirstFrontData();
+
 
         //System.out.println("Tamanho do i "+(i));
         Fronts.removeFronts(i);
+
         //System.out.println("depois de reinserir");
         //Population.printPopulationDetailed();
         //s.nextLine();
         newGeneration();
 
-
-        //Population.updateIdOfMembers();
         //Fronts.printFronts();
         //Population.printPopulationDetailed();
 
         //Crossover.printNewMembers();
         //Fronts.printFronts();
-        int zero= 0, um =0, dois=0, tres=0, mum=0;
+        /*zero= 0; um =0; dois=0; tres=0; mum=0;
         for(Member m : p)
         {
             if(m.getData() == 0) zero++;
@@ -177,9 +186,10 @@ public abstract class Population {
         System.out.println("quantidade de numeros 2:"+dois);
         System.out.println("quantidade de numeros 3:"+tres);
         System.out.println("quantidade de numeros -1:"+mum);
+        System.out.println("\n\n\n\n");
+        */
 
-
-        Population.printPopulation();
+        //Population.printPopulation();
 
         //s.nextLine();
     }

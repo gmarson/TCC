@@ -4,6 +4,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class Crossover {
 
@@ -82,9 +83,7 @@ public abstract class Crossover {
         ArrayList<Member> children = new ArrayList<Member>();
         children.add(new Member(child1Binary));
         children.add(new Member(child2Binary));
-        //TODO mudei aki
-        //children.add(new Member(Utils.getRandom(1000,-1000)));
-        //children.add(new Member(Utils.getRandom(1000,-1000)));
+
 
         return children;
 
@@ -215,7 +214,6 @@ public abstract class Crossover {
         {
                 System.out.println("Invalid Crossover Option!");
         }
-
 
     }
 

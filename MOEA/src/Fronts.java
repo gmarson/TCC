@@ -107,6 +107,43 @@ public abstract class Fronts {
 
     }
 
+    public static ArrayList<Integer> returnFirstFrontData()
+    {
+        ArrayList<Member> firstFront = fronts.get(0).getMembers();
+        ArrayList<Integer> dataOfFront = new ArrayList<Integer>();
+        boolean newElement = true;
+
+        for(int i =0; i<firstFront.size();i++)
+        {
+
+            int data =  (int) firstFront.get(i).getData();
+
+            if (dataOfFront.isEmpty())
+            {
+                dataOfFront.add( new Integer (data) );
+            }
+            else
+            {
+                for(int j=0;j<dataOfFront.size();j++)
+                {
+                    if (dataOfFront.get(j) == data) {
+                        newElement = false;
+                        break;
+                    }
+                }
+
+                if (newElement)
+                {
+                    dataOfFront.add(new Integer(data));
+                }
+                newElement = true;
+            }
+
+        }
+
+        return  dataOfFront;
+    }
+
     //Deebugging ...
     public static void printFronts()
     {
