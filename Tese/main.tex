@@ -1,0 +1,380 @@
+\documentclass[12pt, %
+openright, 
+oneside, %
+%twoside, %TCC: Se seu texto tem mais de 100 páginas, descomente esta linha e comente a anterior
+a4paper,    %
+%english,   %
+brazil]{facom-ufu-abntex2}
+
+\autor{Gabriel Augusto Marson} %TCC
+\data{2017}
+\orientador{Professora Gina} %TCC
+
+\titulo{Análise Comparativa dos Algoritmos Genéticos Many-Objective em problemas de otimização discreta} %TCC
+
+\begin{document}
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS 
+% ----------------------------------------------------------
+%\pretextual
+\imprimircapa
+
+
+
+
+
+\begin{resumo} %TCC:
+ Esta investigação tem como objetivo mostrar o desempenho de alguns algoritmos genéticos multiobjetivos em problemas discretos clássicos da computação assim como em quais circunstâncias são mais adequados.
+
+ \vspace{\onelineskip}
+    
+ \noindent
+ \textbf{Palavras-chave}: NSGA-II, SPEA2. %TCC:
+\end{resumo}
+
+% ---
+% inserir lista de ilustrações
+% ---
+%\pdfbookmark[0]{\listfigurename}{lof}
+%\listoffigures*
+%\cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
+
+
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas} %TCC:
+  %\item[Fig.] Area of the $i^{th}$ component
+  %\item[456] Isto é um número
+  %\item[123] Isto é outro número
+  \item[NSGA-II] Mondominated Sorting Genetic Algorithm II
+  \item[SPEA2] Strength Pareto Evolutionary Algorithm 2 
+  \item[AGMO] Algoritmo Genético Multi Objetivo
+\end{siglas}
+% ---
+
+%% ---
+%% inserir lista de símbolos, se for adequado ao trabalho. %TCC:
+%% ---
+%\begin{simbolos}
+%  \item[$ \Gamma $] Letra grega Gama
+%  \item[$ \Lambda $] Lambda
+%  \item[$ \zeta $] Letra grega minúscula zeta
+%  \item[$ \in $] Pertence
+%\end{simbolos}
+%% ---
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
+
+
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+
+% ----------------------------------------------------------
+% Introdução
+% ----------------------------------------------------------
+
+\chapter*[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+%TCC:
+	Algoritmos genéticos (AGs) apresentam uma abordagem de busca baseada na teoria da evolução de Darwin que adotam uma sequência de passos para atingir um determinado objetivo. Elas tem em comum o fato de que os indivíduos mais aptos passarão suas características aos seus descendentes.
+	
+	Apesar de ter sido constatado o sucesso dos AGs para certos tipos de problemas, como de criptoaritmética, alguns outros permanecem como desafio. Os de otimização discreta com múltiplos objetivos são mais desafiadores pois requerem a maximização ou minimização de mais de uma função objetivo.
+		
+	Consideremos, por exemplo, o problema do Roteamento Multicast (PRM). Como foi dito em Bueno \cite{bueno2010heuristicas} ele pode ser modelado como um grafo direcionado onde os vértices são os hosts e as arestas representam os enlaces de comunicação. Dessa forma, dado o grafo $G$ que representa a rede e um fluxo $\phi$, deve-se calcular árvores enraizadas de $G$ para carregar $\phi$ em $G$, partindo-se de um vértice que representa o início de uma conexão ou envio de pacote e passando por um subconjunto de vértices de $G$ que tenham todos os nós folha como destino.
+	
+	Existe uma série de atributos que podem influenciar o desempenho de uma rede tais como custo, delay, capacidade e tráfego atual. Um AG simples apenas consegue administrar um critério por vez. Os AGs Multi-Objective constituem uma abordagem mais adequada para resolver problemas desse tipo categorizando possíveis melhores respostas em virtude dos critérios avaliados.
+	
+	Recentemente, uma versão conhecida por Algoritmos Genéticos Multiobjetivos (AGMOs) foi proposta, na qual o processo de avaliação dos indivíduos leva em consideração diferentes objetivos ou critérios.
+	
+	A fim de considerar todos os objetivos no cálculo de aptidão, os AGMO's utilizam o conceito de fronteira de Paretto \cite{Pareto} que estabelece uma região do espaço de busca na qual estarão os melhores indivíduos de acordo com várias funções objetivo. O critério para a classificação de qual indivíduo permanece em qual fronteira é a dominância. Dado dois indivíduos pode-se dizer que $A$ domina $B$ se, para toda função objetivo $F$, $F_a$ não é pior que $F_b$ e $F_a$ é melhor do que $F_b$ em pelo menos uma função objetivo.
+		
+	No NSGAII \cite{NSGAII}, além do agrupamento por fronteiras, ou rank, utiliza-se também a métrica \textit{crowding distance}, a qual consite em priorizar os resultados mais diferentes, como critério de desempate na escolha do indivíduo caso estejam na mesma fronteira de dominância e, também, para impedir que a variabilidade genética da população seja comprometida. O objetivo dessa técnica é que os indivíduos na fronteira de Paretto sejam o mais diversificado possível.
+	 
+     Este artigo consiste em um comparativo entre vários algoritmos genéticos multiobjetivo. Busca-se saber qual o AGMO mais indicado para determinada situação, qual tem o menor custo e qual possui maior capacidade de conceder respostas diversificadas.
+
+
+\chapter*[Objetivos]{Objetivos}
+\addcontentsline{toc}{chapter}{Objetivos}
+\section{Objetivos Gerais}
+	Em virtude de bons resultados gerados pelos AGMOs em problemas discretos, tal qual o PRM, serão analisados métodos de AG multi e \textit{Many-objective} como NSGA-II\cite{NSGAII}, SPEA2\cite{SPEA2}, NSGA-III e AEMMT(os dois últimos pertencentes a classificação de \textit{Many-objective}) aplicados a problemas clássicos da computação como o problema da Mochila.
+
+\section{Objetivos Específicos}
+\begin{itemize}
+		\item Implementar os algoritmos SPEA2\cite{SPEA2} e NSGAII\cite{NSGAII}
+		\item Realizar uma análise comparativa com as abordagens já existentes para resolução de problemas discretos com multi objetivos
+		\item Análise de desempenho de algoritmos \textit{many-objective} como SPEA3 e AEMMT
+	\end{itemize}
+
+\section{Justificativas}
+Existem muitos problemas de otimização discreta multiobjetivo ainda não resolvidos de forma eficiente. O estudo desses problemas, assim como dos algoritmos que os resolvem, constituem prática importante para embasar novas descobertas com o intuito de otimizar as soluções já existentes ou de criar novas.
+
+\section{Metodologia}
+	
+	O método científico é o método no qual o pesquisador parte de uma premissa inicial do problema até a sua resposta, no final da pesquisa.
+	
+	Será realizada uma pesquisa descritiva de caráter explicativo com o intuito de construir uma comparação entre os AGMOs e outras abordagens para resolver problemas de otimização discreta multi-objetivo. Pretende-se, também, explicar em quais circunstâncias é indicado o uso dos AGMOs. Para isso, será feito a implementação de alguns AGMOs como SPEA2\cite{SPEA2} e NSGAII\cite{NSGAII}.
+	
+	Os critérios de comparação serão, inicialmente, a complexidade dos algoritmos segundo a notação O e o desempenho que apresentam em problemas de otimização discreta. Com o objetivo de verificar o desempenho em funções simples, primeiramente, os algoritmos serão testados nos problemas de otimização de funções propostos em NSGAI\cite{NSGAI} e NSGA-II\cite{NSGAII}.
+	
+	Em seguida, os algoritmos serão aplicados em problemas mais complexos, tidos como clássicos, na computação. São os problemas da mochila e do caixeiro viajante. Espera-se que os AGMOs apresentem desempenho superior aos algoritmos convencionais quando aplicados a problemas de, no máximo, três objetivos.
+	
+	O desempenho dos AGMOs diminuem consideravelmente a medida que uma maior quantidade de funções é requerida pelo problema, portanto, torna-se necessário o estudo dos algoritmos genéticos \textit{many-objective}. Será feita uma análise descritiva do algoritmo bem como uma comparação de custo e resolução dos algoritmos atuais.
+
+\newpage
+\section{Cronograma}
+	As atividades principais para desenvolver o artigo são:
+	
+\begin{itemize}
+	\item Estudo dos AGMOs(EAGMOs)
+	\item Implementação dos AGMOs(IAGMOs) 
+	\item Análise Comparativa(AC)
+	\item Estudo de Algoritmos Many-Objective(EMany-O)
+	\item Dissertação(D)
+\end{itemize}
+	
+	Sendo que o planejamento para elas é o seguinte:
+	
+	\begin{table}[!h]
+	\centering
+	\caption{Cronograma de Atividades}
+	\begin{tabular}{|l|c|c|c|c|c|}
+	\hline
+	\multicolumn{1}{|c|}{\textbf{}} & \textbf{EAGMOs} & \multicolumn{1}{l|}{\textbf{IAGMOs}} & \multicolumn{1}{l|}{\textbf{AC}} & \multicolumn{1}{l|}{\textbf{EMany-O}} & \multicolumn{1}{l|}{\textbf{D}} \\ \hline
+	\textbf{Agosto(2016)}           & X               &                                      &                                  &                                       &                                 \\ \hline
+	\textbf{Setembro(2016)}         & X               & X                                    &                                  &                                       &                                 \\ \hline
+	\textbf{Outubro(2016)}          & X               & X                                    &                                  &                                       &                                 \\ \hline
+	\textbf{Novembro(2016)}         & \textbf{}       & X                                    & X                                &                                       &                                 \\ \hline
+	\textbf{Dezembro(2016)}         & \textbf{}       & X                                    & X                                &                                       &                                 \\ \hline
+	\textbf{Janeiro(2017)}          & \textbf{}       &                                      & X                                &                                       & X                               \\ \hline
+	\textbf{Fevereiro(2017)}        & \textbf{}       &                                      &                                  & X                                     & X                               \\ \hline
+	\textbf{Março(2017)}            & \textbf{}       &                                      &                                  & X                                     & X                               \\ \hline
+	\textbf{Abril(2017)}                  &                 &                                      &                                  & X                                     & X                               \\ \hline
+	\textbf{Maio(2017)}                   &                 &                                      &                                  &                                       & X                               \\ \hline
+	\textbf{Junho(2017)}                   &                 &                                      &                                  &                                       & X                               \\ \hline
+	\end{tabular}
+	\end{table}
+
+\chapter*[Estado da Arte]{Estado da Arte}
+\addcontentsline{toc}{chapter}{Estado da Arte}
+	Nos últimos dez anos os algoritmos genéticos multiobjetivo popularizaram-se devido ao fato de que, além de poderem fornecer respostas para problemas de alta complexidade, também o faziam de maneira que as respostas fossem mais diversificadas.
+    
+    Um desses problemas é encontrar sub-grafos dentro de um grafo maior. Como exemplo disso temos o artigo de Pizzuti\cite{MOGA-NET} o qual tem como objetivo encontrar comunidades(sub-grafos) específicas dentro de uma rede. Para isso, é sugerido um algoritmo genético multiobjetivo denominado de \textit{MOGA-Net}. Recebe duas funções objetivo, a primeira concede um score a cada comunidade para avaliar a divisão que foi imposta a ela. A segunda função objetivo constitui um score conferido aos nodos presentes em cada comunidade. A solução proposta nesse artigo é capaz de competir com algoritmos atuais que resolvem o mesmo problema.
+	
+    Em um outro contexto de melhoramento na distribuição de energia, surgiu uma demanda por fontes de energia mais acessíveis e por um sistema que seja capaz de suprir as necessidades dos seus usuários. No entanto, esses fatores são conflitantes entre si. Também foi motivo para a criação do artigo, a crescente preocupação de instituições ambientalistas com foco em geração de energia limpa e/ou não poluente. Esse problema é conhecido por \textit{Economic Power Dispatch Problem} e em Hamida \cite{EnergyDispatchSPEA2} é utilizado, de forma bem sucedida, o SPEA2 para obter possíveis soluções para esse problema. 
+    
+    Além disso, é muito presente na literatura a integração dos algoritmos genéticos multi objetivo com outras ferramentas com o intuito de obter uma solução mais próxima da ótima. Essa situação foi exemplificada nos casos seguintes.
+    
+    Como foi visto em  Briza e Naval\cite{stockMOPSO}, uma outra aplicação de algoritmos genéticos multiobjetivo reside na análise de risco em compra e venda de ações na bolsa. Nesse caso, foi criado um AGMO utilizando o algoritmo PSO(Particle Swarm Optimization) visto em Kennedy\cite{PSO}. Após comparação feita com outra ferramenta de análise que utiliza o NSGAII, foi concluído que o novo algoritmo, denominado de MOPSO, superou(e muito) a ferramenta atual.
+	
+    Um outro exemplo de técnicas conjuntas com AGMOs pode ser visto em  Ak\cite{SoilGasPlantDepositionNSGAII}. A taxa de sedimentação de elementos associado as usinas de gás e óleo nos equipamentos é algo preocupante e imprevisível. De acordo com os métodos atuais de controle citados no artigo, não existe uma abordagem não determinística para esse tipo de problema, ou seja, os algoritmos existentes são incapazes de fornecer uma resposta considerando a variabilidade/incerteza dos parâmetros de entrada do problema. O artigo propõe exatamente esse tipo de abordagem ao utilizar o NSGAII para treinar uma rede neural. O treinamento consiste no fato de que os componentes de entrada da rede neural, pesos e bias, serão determinados pelo NSGAII.
+    
+    Os exemplos citados previamente tem o intuito de mensurar a importância que vem sendo dada a algoritmos não determinísticos(principalmente AGMOs) em problemas de áreas não relacionadas. Isso demonstra que os AGMOs constituem uma boa abordagem para qualquer tipo de problema e, em pricipal situações nas quais deseja-se obter respostas diversificadas. Isso pode ser verificado, principalmente, nos artigos \cite{stockMOPSO} e \cite{SoilGasPlantDepositionNSGAII} em que as soluções propostas oferecem respostas com maior variabilidade e até superiores se comparadas com as convencionais.
+    
+\chapter*[Trabalhos Correlatos]{Trabalhos Correlatos}
+\addcontentsline{toc}{chapter}{Trabalhos Correlatos}
+
+	Trabalhos correlatos constituem artigos que utilizam técnicas e abordagens semelhantes a adotada nesta tese. Os próximos estudos descritos tem como principal objetivo realizar comparações de AGMOs dado um escopo predefinido de problema.
+	 
+	O primeiro estudo explicita que, dada a capacidade que os AGMOs possuem de resolver certos tipos de problemas, o interesse em estabelecer relações entre as suas variações aumentou. A análise proposta neste artigo pretende auxiliar pesquisas futuras no que diz respeito às comparações dos algoritmos genéticos multi objetivo tradicionais em problemas de otimização discretos.
+	
+    \section{Comparison Study of SPEA2+, SPEA2, and NSGA-II in Diesel Engine Emissions and Fuel Economy Problem}
+    
+    Nesse artigo\cite{SPEA2ComparisonNSGAII} é feito o uso de algoritmos como SPEA2 e NSGAII em uma análise comparativa de funções que quantificam as emissões de gases em motores a diesel(SFC, NOx e Soot). Esse problema é classificado como \textit{Diesel engine fuel emission scheduling problem} e os algoritmos aplicados nesse problema consistem em minimizar a emissão desses tipos de gases de forma simultânea.
+    
+   Em virtude de calcular a eficácia de cada solução, foi determinada uma métrica de proporção comparada a um conjunto ideal, ou seja, quanto mais próximo os indivíduos não dominados estiverem da solução ideal, melhor será aquele conjunto de soluções. Seja $S_1$ e $S_2$ possíveis conjuntos de populações finais para o problema proposto e seja $S_u$ o conjunto união dessas soluções. A partir de $S_u$ serão selecionados os indivíduos não dominados para um conjunto $S_p$. Quantos mais próximas as soluções estiverem de $S_p$ melhores serão consideradas.
+    
+   	O artigo conclui que o algoritmo SPEA2+ \cite{SPEA2+} é ligeiramente mais eficiente do que o tradicional SPEA2 pois encontra soluções ligeiramente mais diversificadas. Além disso, por meio dos gráficos apresentados conclui-se que a capacidade de mostrar soluções diversificadas, para o problema em questão, do algoritmo NSGAII é consideravelmente inferior ao SPEA2.
+   
+    \section{Multi-Objective Optimization of Vehicle Passive Suspension
+    	System using NSGA-II, SPEA2 and PESA-II}
+    	
+   	No âmbito engenharia mecatrônica, pesquisadores aplicaram algoritmos genéticos multiobjetivo com ênfase na suspensão de automóveis. Isso  pode ser verificado na pesquisa de Gadhvi \textit{Et. al} \cite{suspensionCar}, em que o objetivo era escolher entre proporcionar mais conforto para os passageiros e motorista ou aumentar a estabilidade do automóvel. Como esses dois critérios são conflitantes, foi utilizada uma abordagem de testes e comparações com AGMOs.
+   	
+   	O estudo demonstrou que a fronteira de Pareto obtida pelo NSGA-II foi considerada de rendimento extremo, sendo superior ao SPEA2 e ao PESA-II\cite{PESA-II}. No entanto, NSGA-II perde para os dois outros métodos em termos de diversidade de soluções na fronteira de Pareto.
+    
+\chapter*[Referencial Teórico]{Referencial Teórico}
+\addcontentsline{toc}{chapter}{Referencial Teórico}
+    
+    Nesta seção, serão abordados conceitos necessários para a compreensão deste trabalho, como o funcionamento dos algoritmos genéticos multi objetivos e os processos utilizados por eles.
+    
+\section{Agoritmos Genéticos} 
+	Publicada em 1859, a obra \textbf{Na Origem das Espécies – Sob o Conhecimento da Seleção Natural}, de Charles Darwin, foi alvo de críticas pois explicitava que o seres de um ambiente mudam de uma determinada geração pra outra e são selecionados de acordo com essas mudanças. A partir disso, Darwin escreveu que todos os seres vivos possuem um ancestral comum, contrastando com a visão criacionista da época.
+	
+	Certamente a teoria de Darwin constituiu significativo embasamento para que John Holland formulasse os algoritmos genéticos. Físico formado pelo MIT (Massachusetts Institute of Technology), Holland elaborou um algoritmo não determinístico com foco em resolução de problemas de custo muito alto.
+	
+	O AG consiste em dar uma interpretação para um conjunto de dados e evoluí-los para uma solução ótima. Todo o conjunto de indivíduos(dados) é uma população e cada indivíduo representa uma solução para o problema. O algoritmo avalia cada membro usando uma métrica de aptidão. Isso consiste em dar uma nota para cada indivíduo que simboliza as chances dele transmitir suas características para a próxima geração.
+	
+	Alguns métodos são utilizados para selecionar os indivíduos. Dado que o método gera dois filhos por cruzamento de um par de pais, serão escolhidos $N$ pares de pais, onde $N$ é o tamanho da população inicial. O processo de troca de material genético chamado \textit{crossover} retorna um ou mais filhos sendo que, geralmente, existe uma pequena chance de ocorrer uma mutação no material genético dos filhos, em virtude de aumentar a variabilidade na população.
+	
+	Após o cruzamento, os filhos resultantes são reinseridos na população. Com o intuito de manter o custo computacional não crescente e de eliminar indivíduos fracos, utilizam-se métodos de reinserção para diminuir a população.
+	
+	Este ciclo se repete por um número determinado gerações ou pode ser parado quando todos os indivíduos possuírem o mesmo material genético (é improvável que a mutação nas próximas gerações produza um indivíduo mais apto).
+    
+\section{Fronteira de Pareto}
+	Fronteira de Pareto\cite{Pareto} consiste em um método de classificação dos indivíduos de uma população de acordo com  os critérios de dominância:
+    Diz-se que $x \preceq y$ ($x$ domina $y$) se:
+	
+	\begin{enumerate}
+		\item para toda função objetivo, $x$ não é pior que $y$.
+		
+		\item $x$ é melhor do que y em pelo menos uma função objetivo.
+	\end{enumerate}
+	onde x e y são argumentos de funções objetivos a serem minimizadas ou maximizadas.
+    
+    Esse tipo de classificação pode ser melhor compreendida se analisarmos um problema simples como a compra de um carro. Vários critérios podem ser utilizados para comprá-lo como preço e desempenho. Na fronteira de Pareto, estariam, portanto, os indivíduos não dominados em termos de preço e desempenho, ou seja, os que  não tiverem essas características piores que algum outro. Estas duas métricas são normalmente conflitantes, quanto melhor o preço, pior o desempenho. Carros com bom preço e bom desempenho estarão mais próximos da fronteira de Pareto. Portanto, não existe uma única resposta para esse tipo de problema sendo que na fronteira de Pareto estarão as melhores respostas possíveis considerando preço e desempenho.
+	
+\section{Non-dominated Sorting Genetic Algorithm II}
+	O  Non-dominated Sorting Genetic Algorithm(NSGA-II)\cite{NSGAII} é um algoritmo baseado em uma ordenação elitista por dominância. Tem como objetivo classificar os indivíduos de um conjunto $M$ por fronteiras $F$ sendo que na fronteira $F_1$ estariam os melhores indivíduos por critérios de dominância de todo o conjunto $M$. Na fronteira $F_2$, estariam todos os indivíduos não dominados de $M-F_1$ e assim sucessivamente.
+    A classificação dos indivíduos ocorre utilizando-se o conceito de dominância que pode ser explicado usando os seguintes critérios.
+    \begin{enumerate}
+    \item $Nd_i$ o número de soluções que dominam a solução $i$.
+    \item $U_i$ o conjunto de soluções que são dominadas por $i$.
+ 	Indivíduos com menor $Nd_i$ possível ($Nd_i = 0$)  estão na primeira fronteira. As demais fronteiras são estabelecidas pelos individuos com $Nd_i$ subsequente. 
+    \end{enumerate}
+    
+    O NSGAII trabalha com duas populações $P_t$ e $Q_t$ sendo que $P_t$ é a população inicial da geração corrente e $Q_t$ são os filhos de $P_t$ resultantes de um processo de cruzamento após a seleção. Ao fim de cada geração $t$, essas duas populações serão concatenadas em uma só e ocorrerá um processo de seleção de todos os indivíduos para formar uma nova população $P_{t+1}$ que será a inicial do próximo ciclo. Serão escolhidos, portanto, os indivíduos que estão nas primeiras fronteiras até o número total de $P_{t+1}$ ser preenchido. Como critério de desempate para o caso de a última fronteira ser maior do que o restante de elementos faltantes em $P_{t+1}$, utiliza-se o critério de desempate \textit{Crowding Distance} em que são priorizados os indivíduos com maior variabilidade genética.
+    
+    O cáculo dessa métrica é feito obtendo-se a soma da média da distância das duas soluções adjacentes a cada indivíduo para cada objetivo referente a ele. Dessa forma, são selecionados os indivíduos que estão mais distantes um dos outros na fronteira.
+    
+    A aptidão de cada solução é determinada usando-se os seguintes critérios.
+    
+    \begin{enumerate}
+    \item \textit{Rank}(ou fronteira) em que o indíviduo está. Essa nota sempre será utilizada.
+    \item \textit{Crowding Distance} como desempate para indivíduos na mesma fronteira.
+    \end{enumerate}
+  
+   Ao fim desse processo espera-se que vários, ou todos, os indivíduos na primeira fronteira com variabilidade elevada. A solução mais desejada é a primeira fronteira tornar-se a fronteira de Pareto, ou seja, todos os indivíduos naquela fronteira apresentam soluções ótimas.
+ 
+\section{Strength Pareto Evolutionary Algorithm 2}
+	O Strength Pareto Evolutionary Algorithm 2\cite{SPEA2} é um algoritmo que, assim como o NSGA-II, trabalha com duas populações $P$ e $Q$ sendo que $P$ é a população inicial e em $Q$ serão apenas armazenadas as soluções não dominadas encontradas pelo algoritmo. Serão denotados por $P_t$ e $Q_t$ as populações para a geração $t = 1, 2, ..., N_{iter}$.
+    
+    Inicia-se estabelecendo uma população inicial aleatória para $P_1$ e classificando todos os indivíduos de $R_t = P_t \cup Q_t$. Um dos critérios que irá compor a função de aptidão(\textit{fitness}) é o \textit{strength} de cada indivíduo que pode ser estabelecido por:
+ 
+ \begin{large}
+ \begin{center}
+  	 $strength_i = |\{j,j \in R_t, | i \leq j\}|$
+  \end{center}
+ \end{large}
+  
+   Como foi dito em Waldo e Alexandre, \cite{WaldoAlexandre} a interpretação para o valor  \textit{strength} é a quantidade de elementos em $R_t$ que são dominados por $i$. Calcula-se, também o valor de \textit{raw fitness} denotado na equação como:
+   
+\begin{large}
+ \begin{center}
+  	 $raw_i = |\{\sum_{j \in R_t, j\leq i} strength_j\}|$
+  \end{center}
+\end{large}
+   
+    Sendo assim,  $raw_i$ é o somatório dos $strengths_j$ tal que $j \in R_t$ e j domina i. As soluções com $raw_i = 0$ não são dominadas por nenhum outro indivíduo.  
+    
+    Espera-se, ao fim do algoritmo, um conjunto de indivíduos mais diversificados do que no NSGA-II.
+	
+    
+
+%\chapter{Revisão Bibliográfica}
+%TCC:
+%Um ou mais capítulos (por exemplo, se há duas linhas de trabalhos relacionados.
+
+%\chapter{Desenvolvimento}
+%TCC:
+%Um ou mais capítulos (por exemplo um para testes)
+
+
+%TCC:
+%TCC:
+%TCC:
+%TCC:
+
+% ---
+% Conclusão
+% ---
+%\chapter*[Conclusão]{Conclusão}
+%\addcontentsline{toc}{chapter}{Conclusão}
+%TCC:
+%E daí?
+
+
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{abntex2-modelo-references}
+
+
+%% ----------------------------------------------------------
+%% Apêndices TCC: só mantenha se for pertinente.
+%% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+%\begin{apendicesenv}
+
+% Imprime uma página indicando o início dos apêndices
+%\partapendices
+
+% ----------------------------------------------------------
+%\chapter{Quisque libero justo}
+% ----------------------------------------------------------
+
+%\lipsum[50]
+
+% ----------------------------------------------------------
+%\chapter{Coisas que fiz e que achei interessante mas não tanto para entrar no corpo do texto}
+% ----------------------------------------------------------
+%\lipsum[55-57]
+
+%\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos %TCC: so mantenha se pertinente.
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+
+%EU TIREI
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+
+%\printindex
+
+
+
+\end{document}
