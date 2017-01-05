@@ -1,176 +1,62 @@
+import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
+import java.util.Scanner;
 /**
- * Created by gmarson on 9/8/2016.
+ * Created by gmarson on 12/21/2016.
  * TCC UFU
  */
+public class Fronts {
+    protected ArrayList<Front> allFronts = new ArrayList<>();
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public abstract class Fronts {
-    private static int frontCounter = 0;
-    private static ArrayList<Front> fronts = new ArrayList<Front>();
-
-    //Singleton
-    private Fronts()
+    public void buildOrderedFronts(Population p)
     {
-
-    }
-    public static ArrayList<Front> getInstance(){
-        return fronts;
-    }
-
-    public static void removeFronts(int index)
-    {
-        int oldFrontsSize = fronts.size();
-        int oldIndex = index;
-        Front front;
-
-        while(index < oldFrontsSize) {
-            //System.out.println("Removendo a front");
-            front = fronts.get(oldIndex);
-            for(Member m:front.getMembers())
-            {
-                Population.removeMemberGivenObject(m);
-            }
-            fronts.remove(oldIndex);
-            frontCounter--;
-            index++;
-        }
-    }
-
-    //Basic Operations
-    public static void addFront()
-    {
-        fronts.add(new Front(Fronts.frontCounter));
-        frontCounter++;
-    }
-    public static void resetFronts()
-    {
-        fronts.clear();
-        frontCounter = 0;
-    }
-
-    public static void makeFronts()
-    {
-        int exitLoop = 0;
-        boolean firstMemberInFront = true;
-        ArrayList<Member> p = Population.getInstance();
-        if(p.isEmpty()) {
-            System.out.println("Empty Population while building Fronts!");
-            return;
-        }
-
-        while(true)
+        int currentRankOfMember = -1;
+        for(Member member:p.population)
         {
-            for(Member member: p )
-            {
-                if(member.isAlreadyInFront()) {
-                    exitLoop++;
-                }
-                else if(member.getPartialNdi() ==0)
-                {
-
-                    if(firstMemberInFront)
-                    {
-                        //System.out.println("Construi a front");
-                        fronts.add(new Front(frontCounter));
-                        firstMemberInFront = false;
-                    }
-
-                    exitLoop++;
-                    member.setAlreadyInFront(true);
-
-                    //System.out.println("Tamanho de frontS "+fronts.size());
-                    //System.out.println("Tamanho do frontcounter "+frontCounter);
-
-                    fronts.get(frontCounter).addMemberToFront(member);
-                    //System.out.println("Membro adicionado na front: "+member);
-                }
-
-                member.removeFromPartialNdi();
+            if(currentRankOfMember != member.rank){
+                currentRankOfMember = member.rank;
+                addNewFront(currentRankOfMember);
             }
 
-
-            //System.out.println("front counter  " +frontCounter);
-            //System.out.println("Exit loop "+exitLoop);
-            //System.out.println("p.size "+p.size());
-
-            if(exitLoop == p.size()) break;
-            exitLoop = 0;
-
-            if(firstMemberInFront == false)
-            {
-                firstMemberInFront = true;
-                frontCounter++;
-            }
+            this.allFronts.get(currentRankOfMember).addMemberToFront(member);
         }
+
 
     }
 
-    public static ArrayList<Integer> returnFirstFrontData()
+    public void addNewFront(int currentRankOfMember)
     {
-        ArrayList<Member> firstFront = fronts.get(0).getMembers();
-        ArrayList<Integer> dataOfFront = new ArrayList<Integer>();
-        boolean newElement = true;
-
-        for(int i =0; i<firstFront.size();i++)
-        {
-
-            int data =  (int) firstFront.get(i).getData();
-
-            if (dataOfFront.isEmpty())
-            {
-                dataOfFront.add( new Integer (data) );
-            }
-            else
-            {
-                for(int j=0;j<dataOfFront.size();j++)
-                {
-                    if (dataOfFront.get(j) == data) {
-                        newElement = false;
-                        break;
-                    }
-                }
-
-                if (newElement)
-                {
-                    dataOfFront.add(new Integer(data));
-                }
-                newElement = true;
-            }
-
-        }
-
-        return  dataOfFront;
+        this.allFronts.add(currentRankOfMember,new Front());
     }
 
-    //Deebugging ...
-    public static void printFronts()
+    public void printAllFronts()
     {
-        if(fronts.size() ==0)
+        int i=0;
+        for(Front front: allFronts)
         {
-            System.out.println("Empty Fronts while printing them!");
-            return;
-        }
-        for(Front f: fronts)
-        {
-            System.out.println("Front Number"+f.getId());
-            if(f.getMembers() == null)
+            int currentRank = front.membersAtThisFront.get(0).rank;
+            int memberCounter = 0;
+            System.out.println("Fronteira "+currentRank);
+            for(Member member:front.membersAtThisFront)
             {
-                System.out.println("tem nada aki");
+                System.out.println("Member "+memberCounter+" = "+member.value);
+                memberCounter++;
+                i++;
             }
-            f.getMembers().forEach(Member::printMember);
+            System.out.println();
         }
+        System.out.println("Populacao: "+i);
     }
 
-
-
-
-    //Getters and Setters
-    public static ArrayList<Front> getFronts() {
-        return fronts;
-    }
-    public static void setFronts(ArrayList<Front> fronts) {
-        Fronts.fronts = fronts;
+    public ArrayList returnFirstFrontOccurances() {
+        ArrayList<Double> occurrances = new ArrayList();
+        for (Member member:this.allFronts.get(0).membersAtThisFront)
+        {
+            if (!occurrances.contains(member.value)){
+                occurrances.add(member.value);
+            }
+        }
+        return occurrances;
     }
 }

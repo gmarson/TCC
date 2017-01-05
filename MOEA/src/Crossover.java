@@ -1,238 +1,88 @@
+
+import javax.rmi.CORBA.Util;
+import java.util.ArrayList;
+
 /**
- * Created by gmarson on 9/8/2016.
+ * Created by gmarson on 12/24/2016.
  * TCC UFU
  */
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public abstract class Crossover {
 
+    public static Population crossoverAndMutation(Population selected){
 
-    private static double alfa=0.0, betha;
+        Population children = new Population();
+        ArrayList<Integer> pairOfChildren;
+        for (int i = 0, j =0; j < selected.population.size()/2; i+=2, j++) {
+            Member m1 = selected.population.get(i);
+            Member m2 = selected.population.get(i+1);
 
-    private static ArrayList<Member> newMembers = new ArrayList<Member>();
+            ArrayList<Integer> m1BinaryValue = Utils.toBinary((int)m1.value);
+            ArrayList<Integer> m2BinaryValue = Utils.toBinary((int)m2.value);
 
-    private Crossover(){}
+            increaseToMaxBinaryLenSize(m1BinaryValue);
+            increaseToMaxBinaryLenSize(m2BinaryValue);
 
-    public static ArrayList<Member> getInstance()
-    {
-        return newMembers;
-    }
+            pairOfChildren = makeChildren(m1BinaryValue,m2BinaryValue);
 
 
-    public static ArrayList<Member> arithmeticCrossover(Member parent1, Member parent2)
-    {
-
-        betha = Utils.getRandomDouble((double)alfa+1,(double) alfa);
-
-        double data1 = parent1.getData() * betha + (1-betha ) * parent2.getData();
-        double data2 = parent2.getData() * betha + (1-betha ) * parent1.getData();
-        ArrayList<Member> children = new ArrayList<Member>();
-
-        children.add(new Member(data1));
-        children.add(new Member(data2));
-
-        return children;
-    }
-
-    public static ArrayList<Member> binaryCrossover(Member parent1,Member parent2 )
-    {
-        // o sinal é considerado no crossover e compoe o numero no cruzamento
-        String parent1Binary = parent1.getBinaryData();
-        String parent2Binary = parent2.getBinaryData();
-        //System.out.println("P1: "+parent1.getData()+"\nP1Binary: "+parent1.getBinaryData());
-        //System.out.println("P2: "+parent2.getData()+"\nP2Binary: "+parent2.getBinaryData());
-        int diff = parent1Binary.length() - parent2Binary.length();
-
-        if(diff > 0) //parent 1 is bigger
-        {
-            parent2Binary = setParentToCorrectSize(parent2,diff);
-
+            children.addMember(new Member(pairOfChildren.get(0)));
+            children.addMember(new Member(pairOfChildren.get(1)));
         }
-        else if (diff <0) // parent 2 is bigger
-        {
-            parent1Binary = setParentToCorrectSize(parent1,diff);
-        }
-
-        int cutoff =  Utils.getRandom(parent1Binary.length(),0);
-        //System.out.println("Corte "+cutoff);
-        String parent1FirstPart = parent1Binary.substring(0,cutoff);
-        //System.out.println("Primeira parte do primeiro filho: "+parent1FirstPart);
-        String parent1SecondPart = parent1Binary.substring(cutoff,parent1Binary.length());
-        //System.out.println("Segunda parte do primeiro filho: "+parent1SecondPart);
-        String parent2FirstPart =  parent2Binary.substring(0,cutoff);
-       // System.out.println("Primeira parte do segundo filho: "+parent2FirstPart);
-        String parent2SecondPart= parent2Binary.substring(cutoff,parent2Binary.length());
-        //System.out.println("Segunda parte do segundo filho: "+parent2SecondPart);
-
-        String child1Binary = parent1FirstPart + parent2SecondPart;
-        String child2Binary = parent2FirstPart + parent1SecondPart;
-
-
-
-
-        //System.out.println("oia os fi");
-
-        //System.out.println("Filho1Binary: "+child1Binary);
-        //System.out.println("Filho2Binary: "+child2Binary);
-
-        child1Binary = setParentToCorrectSize(child1Binary);
-        child2Binary = setParentToCorrectSize(child2Binary);
-
-        ArrayList<Member> children = new ArrayList<Member>();
-        children.add(new Member(child1Binary));
-        children.add(new Member(child2Binary));
-
 
         return children;
 
     }
 
-    public static String setParentToCorrectSize(String children)
+    public static void binaryMutation(ArrayList<Integer> binaryNumber)
     {
-
-        char childrenChar[] = children.toCharArray();
-        children = "";
-        boolean oneOcurred=false;
-        if(childrenChar[0] == '1')
+        if(Utils.getRandom(1,100) <= NSGAII.MUTATION_RATE)
         {
-            children = "1";
+            int sectionToBeMutated = Utils.getRandom(0,binaryNumber.size());
+            if(binaryNumber.get(sectionToBeMutated) == 0)
+                binaryNumber.set(sectionToBeMutated,1);
+            else
+                binaryNumber.set(sectionToBeMutated,0);
         }
-        else
-        {
-            children = "0";
-        }
+    }
 
-        for(int i = 1;i<childrenChar.length;i++)
+    public static void increaseToMaxBinaryLenSize(ArrayList<Integer> binary)
+    {
+        boolean haveToCorrectSignal = false;
+        if(binary.get(0) == 1)
         {
-            if(oneOcurred)
-            {
-                if(childrenChar[i] == '1')
-                {
-                    children = children + "1";
-                }
-                else
-                {
-                    children = children + "0";
-                }
-
-            }
-            else if(!oneOcurred && childrenChar[i] == '1')
-            {
-                oneOcurred = true;
-                children = children + "1";
-            }
+            binary.set(0,0);
+            haveToCorrectSignal = true;
         }
 
-        //System.out.println("filho minimizado: "+children);
-        return children;
+        for (int i = 0; i <ProblemSCH.MAX_BINARY_LEN; i++) {
+            binary.add(0,0);
+        }
+        if (haveToCorrectSignal) binary.set(0,1);
+    }
+
+    public static ArrayList<Integer> makeChildren(ArrayList<Integer> binary1, ArrayList<Integer> binary2)
+    {
+        int cutoff =  Utils.getRandom(0,ProblemSCH.MAX_BINARY_LEN);
+
+        ArrayList<Integer> pairOfChildren   = new ArrayList<>();
+        ArrayList<Integer> child1First      = new ArrayList<>(binary1.subList(0, cutoff));
+        ArrayList<Integer> child1Second     = new ArrayList<>(binary2.subList(cutoff, binary2.size() ) );
+        ArrayList<Integer> child2First      = new ArrayList<>(binary2.subList(0, cutoff));
+        ArrayList<Integer> child2Second     = new ArrayList<>(binary1.subList(cutoff, binary1.size() ) );
+
+        child1First.addAll(child2Second);
+        child2First.addAll(child1Second);
+
+        binaryMutation(child1First);
+        binaryMutation(child2First);
+
+        pairOfChildren.add(Utils.binaryToInteger(child1First));
+        pairOfChildren.add(Utils.binaryToInteger(child2First));
+
+        return pairOfChildren;
+
     }
 
 
-    public static String setParentToCorrectSize(Member parent, int diff)
-    {
-        String parentBinary = parent.getBinaryData();
-        if (parent.isNegative())
-        {
-            for(int i=0;i<diff;i++)
-            {
-                parentBinary = "0" +parentBinary;
-            }
-        }
-        else
-        {
-            parentBinary.substring(1);
-            for(int i=0;i<diff-1;i++)
-            {
-                parentBinary = "0" +parentBinary;
-            }
-            parentBinary = "1" +parentBinary;
-        }
-        return parentBinary;
 
-    }
-
-    public static void doCrossover(int option,ArrayList<Integer> indexOfParents)
-    {
-
-        double amountOfParents = indexOfParents.size() / 2.0;
-        ArrayList<Member> p = Population.getInstance();
-        ArrayList<Member> children = new ArrayList<Member>();
-        Member m1,m2;
-        if(Math.floor(amountOfParents) - amountOfParents != 0)
-        {
-            System.out.println("Amount of parents is not an even number");
-            return;
-        }
-
-        if(option == 1)
-        { // arithmetic crossover
-            int parentIndex = 0;
-            for(int i=0; i<amountOfParents; i++)
-            {
-                m1 = p.get(indexOfParents.get(parentIndex));
-                m2 = p.get(indexOfParents.get(parentIndex+1));
-
-                children = arithmeticCrossover(m1,m2);
-                for(int j = 0; j <2;j++)
-                {
-                    if(Mutation.checkForMutation())
-                    {
-                        Mutation.doMutation(children.get(j));
-                    }
-                }
-
-                parentIndex +=2;
-                p.add(new Member(children.get(0)));
-                p.add(new Member(children.get(1)));
-            }
-        }
-        else if(option == 2)
-        { //binary crossover
-            int parentIndex = 0;
-            for(int i=0; i<amountOfParents; i++)
-            {
-                m1 = p.get(indexOfParents.get(parentIndex));
-                m2 = p.get(indexOfParents.get(parentIndex+1));
-
-                children = binaryCrossover(m1,m2);
-                for(int j = 0; j <2;j++)
-                {
-                    if(Mutation.checkForMutation())
-                    {
-                        Mutation.doMutation(children.get(j));
-                    }
-                }
-
-                parentIndex += 2;
-                p.add(new Member(children.get(0)));
-                p.add(new Member(children.get(1)));
-            }
-        }
-        else
-        {
-                System.out.println("Invalid Crossover Option!");
-        }
-
-    }
-
-    public static void resetNewMebers()
-    {
-        newMembers.clear();
-    }
-
-    // Debuging ...
-
-    public static void printNewMembers()
-    {
-        if(newMembers.isEmpty())
-        {
-            System.out.println("NewMembers is empty!");
-        }
-        for(Member m : newMembers)
-        {
-            m.printMember();
-        }
-    }
 }

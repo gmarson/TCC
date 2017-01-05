@@ -1,79 +1,55 @@
 import java.util.ArrayList;
 
 /**
- * Created by gmarson on 9/15/2016.
+ * Created by gmarson on 12/21/2016.
  * TCC UFU
  */
+public class ProblemSCH extends Problem {
 
-public class ProblemSCH extends Function {
-    private int maxValue, minValue;
-    private int numberOfFunctions;
+    protected int MAX_MEMBER_VALUE = 1000, MIN_MEMBER_VALUE = -1000;
+    static int MAX_BINARY_LEN = 11;
 
-    private static ProblemSCH function = new ProblemSCH();
+    public ProblemSCH(){}
 
-    //Singleton
-    public static ProblemSCH getInstance() {
-        return function;
+
+    @Override
+    public ArrayList<Member> generateRandomMembers() {
+        ArrayList<Member> population =  new ArrayList<>();
+        for (int i = 0; i < NSGAII.POPULATION_SIZE; i++) {
+            population.add(new Member(Utils.getRandom(MIN_MEMBER_VALUE, MAX_MEMBER_VALUE)));
+        }
+
+
+        return population;
     }
-    private ProblemSCH()
-    {
-        this.setNumberOfFunctions(2);
-        this.setMaxValue(1000);
-        this.setMinValue(-1000);
-    }
 
-
-    public  void applyFunction(){
-        Member memberAtIndex;
-        ArrayList<Object> resultingFunction = new ArrayList<>();
-        ArrayList<Member> p = Population.getInstance();
-        int i,j;
-        for(i=0;i<Population.getInstance().size();i++)
+    @Override
+    public void evaluateAgainstObjectiveFunctions(Population p) {
+        for (Member m: p.population)
         {
-            memberAtIndex = p.get(i);
-
-            if(memberAtIndex.getResultOfFunctions().isEmpty())
-            {
-                resultingFunction.add(this.firstFunction(memberAtIndex.getData()));
-                resultingFunction.add(this.secondFunction(memberAtIndex.getData()));
-
-                Population.replaceElement(resultingFunction,i);
-                resultingFunction.clear();
-            }
+            applyFunctions(m);
         }
     }
 
-    //functions
-    public int firstFunction(double x)
+    public void applyFunctions(Member member)
     {
-        return (int) Math.pow(x,2);
-    } //f(x) = x²
-    public int secondFunction(double x)
+        int valueOfMember = (int) member.value;
+        member.resultOfFunctions.add(firstFunction(valueOfMember));
+        member.resultOfFunctions.add(secondFunction(valueOfMember));
+    }
+
+    public double firstFunction(int valueOfMember)
     {
-        return (int) Math.pow(x-2,2);
-    }//f(x) = (x-2)²
-    public int getNumberOfFunctions() {
-        return numberOfFunctions;
+        double appliedValue;
+        appliedValue =  valueOfMember * valueOfMember;
+        return appliedValue;
     }
 
-
-    //Getters and Setters
-    public double getMaxValue() {
-        return  maxValue;
+    public double secondFunction(int valueOfMember)
+    {
+        double appliedValue;
+        valueOfMember = valueOfMember -2;
+        appliedValue =  valueOfMember * valueOfMember;
+        return appliedValue;
     }
-    public void setMaxValue(int maxValue) {
-        this.maxValue = maxValue;
-    }
-    public int getMinValue() {
-        return minValue;
-    }
-    public void setMinValue(int minValue) {
-        this.minValue = minValue;
-    }
-    public void setNumberOfFunctions(int numberOfFunctions) {
-        this.numberOfFunctions = numberOfFunctions;
-    }
-
-
-
 }

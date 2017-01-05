@@ -1,117 +1,100 @@
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
- * Created by gmarson on 9/14/2016.
+ * Created by gmarson on 12/23/2016.
  * TCC UFU
  */
 public abstract class Selection {
 
-    private static int TOUR = 5;
+    public static int TOUR_SIZE =3;
 
 
-    public Selection()
+    public static Population selectParentsByRank(Population population)
     {
-
+        return tournamentWithoutCrowding(population);
     }
 
+    public static Population selectParentsByRankAndCrowding(Population population){
 
-    //varro de 0 até a taxa de crossover que são a qtd de filhos gerados
-    // seleciono aleatoriamente 1 pra competir com o outro em uma quantidade tour de vezes
-    // primeiro criterio fronteira, segundo critério, crowding distance
-    public static ArrayList<Integer> binaryTournament()
+        return  tournamentWithCrowding(population);
+    }
+
+    public static Population tournamentWithoutCrowding(Population p)
     {
-        int crossoverRate = (int)Population.CROSS_RATE /100;
-        ArrayList<Member> p = Population.getInstance();
-        ArrayList<Integer> parents = new ArrayList<Integer>();
-        ArrayList<Front> fronts = Fronts.getInstance();
-        Front currentFront;
-        Member bestParentForTour=null, opponentParent;
-        int randomNumber,randomNumber2;
+        Population selected = new Population();
+        ArrayList<Member> membersByTour;
+        for (int i = 0; i < NSGAII.CROSSOVER_RATE * p.population.size(); i++) {
+            membersByTour = makeCompetitors(p);
+            selected.population.add(returnWinnerCompetitorByRank(membersByTour) );
+        }
 
-        for(int i =0; i<Population.POP_SIZE; i++)
-        {
-            for(int j=0;j<TOUR;j++)
+        return selected;
+    }
+
+    public static Population tournamentWithCrowding(Population p)
+    {
+        Population selected = new Population();
+        ArrayList<Member> membersByTour;
+        for (int i = 0; i < NSGAII.CROSSOVER_RATE * p.population.size(); i++) {
+            membersByTour = makeCompetitors(p);
+            selected.population.add(returnWinnerCompetitorByRankAndCrowding(membersByTour) );
+        }
+
+        return selected;
+    }
+
+    private static ArrayList<Member> makeCompetitors(Population p)
+    {
+        ArrayList<Member> membersByTour = new ArrayList<>();
+        for (int j = 0; j < TOUR_SIZE; j++) {
+            int randomNumberForTournament = Utils.getRandom(0,p.population.size());
+            membersByTour.add(p.population.get(randomNumberForTournament));
+        }
+        return membersByTour;
+    }
+
+    public static Member returnWinnerCompetitorByRank(ArrayList<Member> membersByTour)
+    {
+        Member bestMember, opponentMember;
+        bestMember = membersByTour.get(0);
+        for (int i = 1; i < membersByTour.size(); i++) {
+            opponentMember = membersByTour.get(i);
+            if (!bestMember.solutionsThatThisMemberDominates.contains(opponentMember))
+                bestMember = opponentMember;
+        }
+        return bestMember;
+    }
+
+    public static Member returnWinnerCompetitorByRankAndCrowding(ArrayList<Member> membersByTour)
+    {
+        Member bestMember, opponentMember;
+        bestMember = membersByTour.get(0);
+        for (int i = 1; i < membersByTour.size(); i++) {
+            opponentMember = membersByTour.get(i);
+            if (!bestMember.solutionsThatThisMemberDominates.contains(opponentMember))
             {
-                //System.out.println("----------------NOVA RODADA------------------");
-                randomNumber = Utils.getRandom(Population.POP_SIZE,0);
-                opponentParent = p.get(randomNumber);
+                if(!opponentMember.solutionsThatThisMemberDominates.contains(bestMember))
+                    bestMember = getMemberWithHigherCrowdingValue(bestMember, opponentMember);
 
-
-                //opponentParent.printMember();
-                //System.out.println("\ncontra");
-                if(bestParentForTour == null)
-                {
-                    bestParentForTour = opponentParent;
-                }
-                //bestParentForTour.printMember();
-
-                if(bestParentForTour.getNdi() > opponentParent.getNdi())
-                {
-                    bestParentForTour = opponentParent;
-                }
-                else if(bestParentForTour.getNdi() == opponentParent.getNdi())
-                {
-                    if(bestParentForTour.getData() != opponentParent.getData())
-                    {
-
-                        //bestParentForTour.printMember();
-                        //Fronts.printFronts();
-                        currentFront = fronts.get(bestParentForTour.getFrontId());
-                        currentFront.crowdingDistanceOfFront();
-
-                        if (bestParentForTour.getCrowdingDistanceValue() == opponentParent.getCrowdingDistanceValue() || bestParentForTour.isInfinity() && opponentParent.isInfinity())
-                        {
-                            //System.out.println("Crowding Distance igual");
-                            //System.out.println(Utils.getRandom(2,0));
-                            if(Utils.getRandom(2,0) == 1)
-                            {
-                                bestParentForTour = opponentParent;
-                            }
-                            //s.nextLine();
-
-                        }
-                        else if(bestParentForTour.getCrowdingDistanceValue() < opponentParent.getCrowdingDistanceValue())
-                        {
-                            //System.out.println("Crowding distance de bestparent"+ bestParentForTour.getCrowdingDistanceValue());
-                            //System.out.println("Crowding distance de opponentparent"+ opponentParent.getCrowdingDistanceValue());
-                            bestParentForTour = opponentParent;
-                        }
-
-                    }
-
-                }
-
-                //System.out.println("Vencedor");
-                //bestParentForTour.printMember();
-                //s.nextLine();
+                else
+                    bestMember = opponentMember;
             }
-            parents.add(p.indexOf(bestParentForTour));
-            bestParentForTour = null;
-            opponentParent = null;
         }
 
+        return bestMember;
 
-
-        return parents;
     }
 
-    //Debugging ...
-    public static void membersGoingToCrossover(ArrayList<Integer> parents)
+    public static Member getMemberWithHigherCrowdingValue(Member member1, Member member2)
     {
-        ArrayList<Member> p = Population.getInstance();
-        Integer indexOfParents, nextIndexOfParents;
-        System.out.println(""+parents);
+        if(member1.crowdingDistanceValue > member2.crowdingDistanceValue)
+        //quanto maior o crowding, mais distante das areas condensadas estara esse individuo
+            return member1;
 
-        for(int i=0;i<parents.size()-1;i+=2)
-        {
-            System.out.println("I= "+i);
-            indexOfParents = parents.get(i);
-            nextIndexOfParents = parents.get(i+1);
-            System.out.println("PARENT 1: "+p.get(indexOfParents)+"\nPARENT 2: "+p.get(nextIndexOfParents)+"\n");
-        }
+        return member2;
 
     }
+
 
 }
