@@ -9,7 +9,7 @@ public class Population {
     protected ArrayList<Member> population = new ArrayList<>();
     protected Problem problem;
     protected Fronts fronts = new Fronts();
-
+    protected static Dominance dominance = new Dominance();
 
     public Population()
     {
@@ -19,9 +19,8 @@ public class Population {
     public void fastNonDominatedSort()
     {
         resetAttributesAndFrontsForAllMembers();
-        establishDominanceForAllMembers();
+        this.dominance.establishDominanceForAllMembers(this);
         this.population =sortPopulationByDominance();
-
         this.fronts.buildOrderedFronts(this);
 
     }
@@ -35,6 +34,12 @@ public class Population {
             member.solutionsThatThisMemberDominates = new ArrayList<>();
             member.rank = -1;
             member.crowdingDistanceValue = 0;
+
+            //SPEA2
+            member.strength = 0;
+            member.density = 0;
+            member.rawFitness = 0;
+            member.fitness = 0;
         }
 
     }
@@ -92,55 +97,6 @@ public class Population {
         return true;
     }
 
-    public void establishDominanceForAllMembers()
-    {
-        Member mi,mj;
-        for(int i =0; i< this.population.size();i++)
-        {
-            mi = this.population.get(i);
-            for(int j=i+1; j< this.population.size(); j++)
-            {
-                mj = this.population.get(j);
-
-                if(dominates(mi,mj))
-                {
-                    mj.numberOfSolutionsThatDominatesThisMember++;
-                    mi.solutionsThatThisMemberDominates.add(mj);
-                }
-                else if(dominates(mj,mi))
-                {
-                    mi.numberOfSolutionsThatDominatesThisMember++;
-                    mj.solutionsThatThisMemberDominates.add(mi);
-                }
-            }
-        }
-    }
-
-    public boolean dominates(Member m1, Member m2)
-    {
-        boolean better = false;
-
-        for (int i = 0; i < Problem.PROBLEM_SIZE ; i++) {
-
-            if(m1.resultOfFunctions.get(i) <= m2.resultOfFunctions.get(i))
-            {
-
-                if(m1.resultOfFunctions.get(i) < m2.resultOfFunctions.get(i))
-                {
-                    better = true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        if(better)
-            return true;
-
-        return false;
-
-    }
 
     public void addMember(Member member)
     {
@@ -155,6 +111,14 @@ public class Population {
         return mergedPopulation;
     }
 
+    public void mergePopulationWithFront(Population currentPopulation, Front archive)
+    {
+        ArrayList<Member> p1 = new ArrayList<>(currentPopulation.population);
+        ArrayList<Member> p2 = new ArrayList<>(archive.membersAtThisFront);
+        this.population.addAll(p1);
+        this.population.addAll(p2);
+    }
+
     public void addFrontToPopulation(Front front){
         this.fronts.allFronts.add(front);
         for(Member member: front.membersAtThisFront)
@@ -162,6 +126,11 @@ public class Population {
             this.population.add(member);
         }
 
+    }
+
+    public Front getNonDominatedFront()
+    {
+        return this.fronts.allFronts.get(0);
     }
 
 

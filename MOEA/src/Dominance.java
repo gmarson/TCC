@@ -1,0 +1,57 @@
+/**
+ * Created by gabrielm on 09/01/17.
+ */
+public class Dominance {
+
+    public void establishDominanceForAllMembers(Population p)
+    {
+        Member mi,mj;
+        for(int i =0; i< p.population.size();i++)
+        {
+            mi = p.population.get(i);
+            for(int j=i+1; j< p.population.size(); j++)
+            {
+                mj = p.population.get(j);
+
+                if(dominates(mi,mj))
+                {
+                    mj.numberOfSolutionsThatDominatesThisMember++;
+                    mi.solutionsThatThisMemberDominates.add(mj);
+                }
+                else if(dominates(mj,mi))
+                {
+                    mi.numberOfSolutionsThatDominatesThisMember++;
+                    mj.solutionsThatThisMemberDominates.add(mi);
+                }
+            }
+        }
+    }
+
+    public boolean dominates(Member m1, Member m2)
+    {
+        boolean better = false;
+
+        for (int i = 0; i < Problem.PROBLEM_SIZE ; i++) {
+
+            if(m1.resultOfFunctions.get(i) <= m2.resultOfFunctions.get(i))
+            {
+
+                if(m1.resultOfFunctions.get(i) < m2.resultOfFunctions.get(i))
+                {
+                    better = true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if(better)
+            return true;
+
+        return false;
+
+    }
+
+
+}

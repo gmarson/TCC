@@ -4,11 +4,11 @@
  */
 public class NSGAII {
 
-    static int POPULATION_SIZE =100;
-    static int MUTATION_RATE = 5;
-    static double CROSSOVER_RATE = 1;
-    static double NUMBER_OF_GENERATIONS = 25;
-    static int SEED = 1; //for test only
+    protected static int POPULATION_SIZE =100;
+    protected static int MUTATION_RATE = 5;
+    protected static double CROSSOVER_RATE = 1;
+    protected static double NUMBER_OF_GENERATIONS = 25;
+    protected static int SEED = 1; //for test only
 
     public void runAlgorithm()
     {
@@ -17,13 +17,14 @@ public class NSGAII {
         Population union, sortedUnion;
         Population p = new Population();
         ProblemSCH problem = new ProblemSCH();
+        Crossover binaryCrossover = new BinaryCrossover();
 
         p.population = p.problem.generateRandomMembers();
         problem.evaluateAgainstObjectiveFunctions(p);
         p.fastNonDominatedSort();
 
         Population selected = Selection.selectParentsByRank(p);
-        Population children = Crossover.crossoverAndMutation(selected);
+        Population children = binaryCrossover.crossoverAndMutation(selected);
 
         sortedUnion = new Population();
         while(genCounter < NUMBER_OF_GENERATIONS)
@@ -61,7 +62,7 @@ public class NSGAII {
 
             selected = Selection.selectParentsByRankAndCrowding(sortedUnion);
             p = sortedUnion;
-            children = Crossover.crossoverAndMutation(selected);
+            children = binaryCrossover.crossoverAndMutation(selected);
 
         }
 

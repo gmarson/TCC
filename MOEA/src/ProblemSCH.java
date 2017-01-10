@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ProblemSCH extends Problem {
 
     protected int MAX_MEMBER_VALUE = 1000, MIN_MEMBER_VALUE = -1000;
-    static int MAX_BINARY_LEN = 11;
+    protected static int MAX_BINARY_LEN = 11;
 
     public ProblemSCH(){}
 
@@ -51,5 +51,28 @@ public class ProblemSCH extends Problem {
         valueOfMember = valueOfMember -2;
         appliedValue =  valueOfMember * valueOfMember;
         return appliedValue;
+    }
+
+    public static void printMembersWithAppliedFunctions(Population p)
+    {
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.value);
+            System.out.println("F1 = "+m.resultOfFunctions.get(0));
+            System.out.println("F2 = "+m.resultOfFunctions.get(1));
+            System.out.println("Rank = "+m.rank + "\n");
+            i++;
+        }
+    }
+
+    public static void printMembersWithValue(Population p)
+    {
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.value);
+            i++;
+        }
     }
 }
