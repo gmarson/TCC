@@ -1,11 +1,13 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * Created by gabrielm on 09/01/17.
  */
 public class SPEA2 {
 
-
-
     Matrix distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
+    Scanner s = new Scanner(System.in);
 
     public void runAlgorithm(){
         int genCounter = 0;
@@ -21,9 +23,11 @@ public class SPEA2 {
             problem.evaluateAgainstObjectiveFunctions(p);
             union.mergePopulationWithFront(p,archive);
             union.fastNonDominatedSort();
+            calculateFitness(union);
 
             archive = union.getNonDominatedFront();
             //todo verificar se os numeros estao em ordem de dominancia
+
 
             genCounter++;
         }
@@ -47,6 +51,7 @@ public class SPEA2 {
     public void calculateDensity(Member member, Population union, int indexOfMatrix)
     {
         calculateDistanceBetweenMembers(member,union, indexOfMatrix);
+        double sigma = calculateSigma(indexOfMatrix);
     }
 
     public void calculateDistanceBetweenMembers(Member member,Population union,int indexOfMatrix)
@@ -60,14 +65,11 @@ public class SPEA2 {
         }
     }
 
-    public double calculateSigma(Member member)
+    public double calculateSigma(int indexOfMatrix)
     {
-        double sigma = 0;
         int positionOfsigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
-        //todo ordenar a linha de posicao na matriz
-        //todo o sigma é o valor na positionOfSigma
-
-        return sigma;
+        ArrayList<Double> orderedMatrixRow = Utils.returnOrderedArray(distanceMatrix, indexOfMatrix);
+        return orderedMatrixRow.get(positionOfsigma);
     }
 
     public void calculateFitness(Population union)
@@ -77,7 +79,7 @@ public class SPEA2 {
         {
             calculateStrength(member);
             calculateRawFitness(member, union);
-            calculateDensity(member, union, indexOfMatrix);        //todo implementar
+            calculateDensity(member, union, indexOfMatrix);
             member.fitness = member.rawFitness + member.density;
             indexOfMatrix++;
         }

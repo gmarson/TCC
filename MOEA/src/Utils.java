@@ -103,4 +103,29 @@ public abstract class Utils {
         return sqrt( pow( ( x1- x2) , 2 ) + pow( ( y1 - y2) , 2) );
     }
 
+    public static ArrayList<Double> returnOrderedArray(Matrix distanceMatrix, int indexOfMatrix)
+    {
+        ArrayList<Double> dataArray = new ArrayList<>();
+        double dataToBeInserted;
+        for (int j = 0; j < distanceMatrix.columns; j++)
+        {
+            if (j != indexOfMatrix)
+            {
+                dataToBeInserted = distanceMatrix.distance[indexOfMatrix][j];
+                if (dataArray.isEmpty())
+                    dataArray.add(dataToBeInserted);
+                else
+                    insertDataOnArray(dataToBeInserted,dataArray);
+            }
+        }
+        return dataArray;
+    }
+
+    private static void insertDataOnArray(double dataToBeInserted, ArrayList<Double> dataArray)
+    {
+        for (int i = 0; i < dataArray.size(); i++) {
+            if (dataToBeInserted < dataArray.get(i))
+                dataArray.add(i,dataToBeInserted);
+        }
+    }
 }
