@@ -6,7 +6,7 @@ import java.util.Scanner;
  */
 public class SPEA2 {
 
-    Matrix distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
+    Matrix distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
     Scanner s = new Scanner(System.in);
 
     public void runAlgorithm(){
@@ -28,11 +28,16 @@ public class SPEA2 {
             archive = union.getNonDominatedFront();
             //todo verificar se os numeros estao em ordem de dominancia
 
-
             genCounter++;
+
+            prepareForNextGen();
         }
     }
 
+    public void prepareForNextGen()
+    {
+        this.distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
+    }
 
     public void calculateStrength(Member member)
     {
@@ -58,7 +63,7 @@ public class SPEA2 {
     {
         //todo ver se o membro no indice da matriz eh o mesmo membro do que foi passado por paramentro
         Member mi = union.population.get(indexOfMatrix), mj;
-        for (int j = 0; j < distanceMatrix.columns; j++)
+        for (int j = 0; j < distanceMatrix.distance[0].length; j++)
         {
             mj = union.population.get(j);
             distanceMatrix.distance[indexOfMatrix][j] = Utils.euclidianDistance(mi,mj);
@@ -67,9 +72,9 @@ public class SPEA2 {
 
     public double calculateSigma(int indexOfMatrix)
     {
-        int positionOfsigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
+        int positionOfSigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
         ArrayList<Double> orderedMatrixRow = Utils.returnOrderedArray(distanceMatrix, indexOfMatrix);
-        return orderedMatrixRow.get(positionOfsigma);
+        return orderedMatrixRow.get(positionOfSigma);
     }
 
     public void calculateFitness(Population union)
