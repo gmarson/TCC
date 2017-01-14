@@ -31,26 +31,16 @@ public class Dominance {
     {
         boolean better = false;
 
-        for (int i = 0; i < Problem.PROBLEM_SIZE ; i++) {
+        for (int i = 0; i < Constants.PROBLEM_SIZE ; i++) {
 
             if(m1.resultOfFunctions.get(i) <= m2.resultOfFunctions.get(i))
-            {
-
-                if(m1.resultOfFunctions.get(i) < m2.resultOfFunctions.get(i))
-                {
-                    better = true;
-                }
-            }
+                better = m1.resultOfFunctions.get(i) < m2.resultOfFunctions.get(i);
             else
-            {
                 return false;
-            }
+
         }
-        if(better)
-            return true;
 
-        return false;
-
+        return better;
     }
 
 

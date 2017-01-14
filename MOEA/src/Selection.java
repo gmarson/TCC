@@ -7,8 +7,6 @@ import java.util.ArrayList;
  */
 public abstract class Selection {
 
-    public static int TOUR_SIZE =3;
-
 
     public static Population selectParentsByRank(Population population)
     {
@@ -24,7 +22,7 @@ public abstract class Selection {
     {
         Population selected = new Population();
         ArrayList<Member> membersByTour;
-        for (int i = 0; i < NSGAII.CROSSOVER_RATE * p.population.size(); i++) {
+        for (int i = 0; i < Constants.CROSSOVER_RATE * p.population.size(); i++) {
             membersByTour = makeCompetitors(p);
             selected.population.add(returnWinnerCompetitorByRank(membersByTour) );
         }
@@ -36,7 +34,7 @@ public abstract class Selection {
     {
         Population selected = new Population();
         ArrayList<Member> membersByTour;
-        for (int i = 0; i < NSGAII.CROSSOVER_RATE * p.population.size(); i++) {
+        for (int i = 0; i < Constants.CROSSOVER_RATE * p.population.size(); i++) {
             membersByTour = makeCompetitors(p);
             selected.population.add(returnWinnerCompetitorByRankAndCrowding(membersByTour) );
         }
@@ -47,7 +45,7 @@ public abstract class Selection {
     private static ArrayList<Member> makeCompetitors(Population p)
     {
         ArrayList<Member> membersByTour = new ArrayList<>();
-        for (int j = 0; j < TOUR_SIZE; j++) {
+        for (int j = 0; j < Constants.TOUR_SIZE; j++) {
             int randomNumberForTournament = Utils.getRandom(0,p.population.size());
             membersByTour.add(p.population.get(randomNumberForTournament));
         }
@@ -89,7 +87,6 @@ public abstract class Selection {
     public static Member getMemberWithHigherCrowdingValue(Member member1, Member member2)
     {
         if(member1.crowdingDistanceValue > member2.crowdingDistanceValue)
-        //quanto maior o crowding, mais distante das areas condensadas estara esse individuo
             return member1;
 
         return member2;

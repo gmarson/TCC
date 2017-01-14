@@ -133,5 +133,9 @@ public class Population {
         return this.fronts.allFronts.get(0);
     }
 
+    public double distance(Member m1, Member m2){
+        return Math.abs(m1.value - m2.value);
+    }
+
 
 }

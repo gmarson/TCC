@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 /**
  * Created by gabrielm on 05/01/17.
  */
@@ -24,7 +23,6 @@ public class BinaryCrossover implements Crossover {
 
             pairOfChildren = makeChildren(m1BinaryValue,m2BinaryValue);
 
-
             children.addMember(new Member(pairOfChildren.get(0)));
             children.addMember(new Member(pairOfChildren.get(1)));
         }
@@ -34,7 +32,7 @@ public class BinaryCrossover implements Crossover {
 
     protected void binaryMutation(ArrayList<Integer> binaryNumber)
     {
-        if(Utils.getRandom(1,100) <= NSGAII.MUTATION_RATE)
+        if(Utils.getRandom(1,100) <= Constants.MUTATION_RATE)
         {
             int sectionToBeMutated = Utils.getRandom(0,binaryNumber.size());
             if(binaryNumber.get(sectionToBeMutated) == 0)
@@ -53,7 +51,7 @@ public class BinaryCrossover implements Crossover {
             haveToCorrectSignal = true;
         }
 
-        for (int i = 0; i < ProblemSCH.MAX_BINARY_LEN; i++) {
+        for (int i = 0; i < Constants.MAX_BINARY_LEN; i++) {
             binary.add(0,0);
         }
         if (haveToCorrectSignal) binary.set(0,1);
@@ -61,7 +59,7 @@ public class BinaryCrossover implements Crossover {
 
     protected ArrayList<Integer> makeChildren(ArrayList<Integer> binary1, ArrayList<Integer> binary2)
     {
-        int cutoff =  Utils.getRandom(0, ProblemSCH.MAX_BINARY_LEN);
+        int cutoff =  Utils.getRandom(0, Constants.MAX_BINARY_LEN);
 
         ArrayList<Integer> pairOfChildren   = new ArrayList<>();
         ArrayList<Integer> child1First      = new ArrayList<>(binary1.subList(0, cutoff));

@@ -12,7 +12,7 @@ public class Front {
 
     public void crowdingDistanceAssignment(){
 
-        for (int i = 0; i < Problem.PROBLEM_SIZE; i++) {
+        for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {
 
             Utils.insertionSort(membersAtThisFront,i);
 

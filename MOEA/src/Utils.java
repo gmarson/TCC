@@ -1,6 +1,7 @@
-import com.sun.tools.corba.se.idl.InterfaceGen;
 
 import java.util.*;
+
+import static java.lang.Math.*;
 
 /**
  * Created by gmarson on 12/21/2016.
@@ -92,5 +93,14 @@ public abstract class Utils {
 
     }
 
+    public static double euclidianDistance(Member m1, Member m2)
+    {
+        double x1 = m1.resultOfFunctions.get(0);
+        double y1 = m1.resultOfFunctions.get(1);
+        double x2 = m2.resultOfFunctions.get(0);
+        double y2 = m2.resultOfFunctions.get(1);
+
+        return sqrt( pow( ( x1- x2) , 2 ) + pow( ( y1 - y2) , 2) );
+    }
 
 }

@@ -4,10 +4,7 @@ import java.util.ArrayList;
  * Created by gmarson on 12/21/2016.
  * TCC UFU
  */
-public class ProblemSCH extends Problem {
-
-    protected int MAX_MEMBER_VALUE = 1000, MIN_MEMBER_VALUE = -1000;
-    protected static int MAX_BINARY_LEN = 11;
+public class ProblemSCH implements Problem {
 
     public ProblemSCH(){}
 
@@ -15,8 +12,8 @@ public class ProblemSCH extends Problem {
     @Override
     public ArrayList<Member> generateRandomMembers() {
         ArrayList<Member> population =  new ArrayList<>();
-        for (int i = 0; i < NSGAII.POPULATION_SIZE; i++) {
-            population.add(new Member(Utils.getRandom(MIN_MEMBER_VALUE, MAX_MEMBER_VALUE)));
+        for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
+            population.add(new Member(Utils.getRandom(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
         }
 
 
