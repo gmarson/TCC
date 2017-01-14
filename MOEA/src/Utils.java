@@ -138,10 +138,13 @@ public abstract class Utils {
             System.out.println("Olha o meu data array "+dataArray);//todo
             System.out.println("Data to be inserted: "+ dataToBeInserted);//todo
             while(dataToBeInserted < dataArray.get(i))
+            {
                 i++;
-
+                if(i == dataArray.size()) break;
+            }
 
             dataArray.add(i,dataToBeInserted);
+
             //todo é aki, vai na fé que é aki  ˆˆˆ
 
         }

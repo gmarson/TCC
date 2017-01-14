@@ -55,6 +55,7 @@ public class SPEA2 {
 
     public void calculateDensity(Member member, Population union, int indexOfMatrix)
     {
+
         calculateDistanceBetweenMembers(member,union,indexOfMatrix);
         double sigma = calculateSigma(indexOfMatrix);
         member.density = 1 / (sigma + 2);
@@ -63,11 +64,11 @@ public class SPEA2 {
 
     public void calculateDistanceBetweenMembers(Member member,Population union,int indexOfMatrix)
     {
-        //todo ver se o membro no indice da matriz eh o mesmo membro do que foi passado por paramentro
         Member mi = union.population.get(indexOfMatrix), mj;
 
         for (int j = 0; j < distanceMatrix.distance[0].length; j++)
         {
+            if(j > indexOfMatrix) break; // todo fiz essa linha pensando em otimzar. Vamos ver se dá.
             mj = union.population.get(j);
             distanceMatrix.distance[indexOfMatrix][j] = Utils.euclidianDistance(mi,mj);
         }
