@@ -1,4 +1,5 @@
 
+import java.awt.*;
 import java.util.*;
 
 import static java.lang.Math.*;
@@ -9,7 +10,7 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    static Random random = new Random();
+    static Random random = new Random(Constants.SEED);
 
     public static int getRandom(int min, int max)
     {
@@ -69,10 +70,12 @@ public abstract class Utils {
 
     public static void insertionSort(ArrayList<Member> members, int idOfFunctionToBeEvaluated)
     {
-        for (int i = 0; i < members.size(); i++) {
+        for (int i = 0; i < members.size(); i++)
+        {
             Member memberBeingCompared = members.get(i);
             double valueOfMemberBeingCompared = memberBeingCompared.resultOfFunctions.get(idOfFunctionToBeEvaluated);
-            for (int j = i -1; j >= 0 && members.get(j).resultOfFunctions.get(idOfFunctionToBeEvaluated) > valueOfMemberBeingCompared ; j--) {
+            for (int j = i -1; j >= 0 && members.get(j).resultOfFunctions.get(idOfFunctionToBeEvaluated) > valueOfMemberBeingCompared ; j--)
+            {
                 members.set(j+1, members.get(j));
                 members.set(j,memberBeingCompared);
             }
@@ -81,10 +84,12 @@ public abstract class Utils {
 
     public static void insertionSortCrowding(ArrayList<Member> members)
     {
-        for (int i = 0; i < members.size(); i++) {
+        for (int i = 0; i < members.size(); i++)
+        {
             Member memberBeingCompared = members.get(i);
             double valueOfMemberBeingCompared = memberBeingCompared.crowdingDistanceValue;
-            for (int j = i -1; j >= 0 && members.get(j).crowdingDistanceValue > valueOfMemberBeingCompared ; j--) {
+            for (int j = i -1; j >= 0 && members.get(j).crowdingDistanceValue > valueOfMemberBeingCompared ; j--)
+            {
                 members.set(j+1, members.get(j));
                 members.set(j,memberBeingCompared);
             }
@@ -107,25 +112,39 @@ public abstract class Utils {
     {
         ArrayList<Double> dataArray = new ArrayList<>();
         double dataToBeInserted;
-        for (int j = 0; j < distanceMatrix.columns; j++)
+        int j=0;
+        while(j < distanceMatrix.columns)
         {
             if (j != indexOfMatrix)
             {
                 dataToBeInserted = distanceMatrix.distance[indexOfMatrix][j];
-                if (dataArray.isEmpty())
-                    dataArray.add(dataToBeInserted);
-                else
-                    insertDataOnArray(dataToBeInserted,dataArray);
+                insertDataOnOrderedArray(dataToBeInserted,dataArray);
+
             }
+            System.out.println("Tamanho do j: "+j);//todo
+            j++;
         }
         return dataArray;
     }
 
-    private static void insertDataOnArray(double dataToBeInserted, ArrayList<Double> dataArray)
+    private static void insertDataOnOrderedArray(double dataToBeInserted, ArrayList<Double> dataArray)
     {
-        for (int i = 0; i < dataArray.size(); i++) {
-            if (dataToBeInserted < dataArray.get(i))
-                dataArray.add(i,dataToBeInserted);
+
+        if (dataArray.isEmpty())
+            dataArray.add(dataToBeInserted);
+        else
+        {
+            int i=0;
+            System.out.println("Olha o meu data array "+dataArray);//todo
+            System.out.println("Data to be inserted: "+ dataToBeInserted);//todo
+            while(dataToBeInserted < dataArray.get(i))
+                i++;
+
+
+            dataArray.add(i,dataToBeInserted);
+            //todo é aki, vai na fé que é aki  ˆˆˆ
+
         }
+
     }
 }

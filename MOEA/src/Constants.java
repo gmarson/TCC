@@ -20,7 +20,6 @@ public interface  Constants {
     int MIN_MEMBER_VALUE = -1000;
     int MAX_BINARY_LEN = 11;
 
-
     //FOR TEST ONLY
     int SEED = 1;
 }
