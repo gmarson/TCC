@@ -3,11 +3,14 @@
  */
 public abstract class EnvironmentalSelection {
 
-    public static void populateWithRemainingBest(Population environment, Population archive){
-        //
-        //
-        //
-        //
+    public static void populateWithRemainingBest(Population population, Population archive)
+    {
+        /*
+        * Junta os dois pq a population eh o resultado do crossover do arquivo, portanto, ela mudou
+        * Entao a gnt junta os dois  e ordena por fitnnes pq ja vamos ter calculado tudo //todo no crossover instanciar todos os indivíduos para a pop
+        * Aqui nao vai importar as fronteiras, aliás acho que as fronteiras nao importam no spea2, TENHO QUASE CTZ
+        * Depois de juntar os dois vamos colocar os elementos deles na pop nova até que o tamnho do arquivo seja preenchido
+        * */
 
     }
 
@@ -16,12 +19,6 @@ public abstract class EnvironmentalSelection {
 
     }
 
-    public static void returnEnvironment(Population population, Population archive)
-    {
-        // aki serão as duas primeiras linhas daquele codigo ruby
-        // retorno o ambiente só com os não dominados
-        // ESSE ENVIRONMENT É A PROXIMA POPULACAO ENTAO O EFEITO DE RETORNAR ESSA FUNÇÃO QHE PEGAR OS MELHORES DO ARQUIVO COM O OS MELHORES DA POPULAÇÃO
 
-    }
 
 }

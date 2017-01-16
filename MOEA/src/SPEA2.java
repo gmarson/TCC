@@ -14,6 +14,7 @@ public class SPEA2 {
         Problem problem = new ProblemSCH();
         Population archive = new Population();
         Population union = new Population();
+        Population environment = new Population();
 
         p.population = problem.generateRandomMembers();
 
@@ -26,15 +27,14 @@ public class SPEA2 {
 
             archive.fronts.allFronts.add(0,union.getNonDominatedFront());
             //todo verificar se os numeros estao em ordem de dominancia
-
-
+            //todo nao vai pelo codigo do ruby, LA EH SO A LOGICA
             if (archive.fronts.allFronts.get(0).membersAtThisFront.size() < Constants.ARCHIVE_SIZE)
             {
                 //coloca mais
-                EnvironmentalSelection.populateWithRemainingBest(p,archive); //todo implementar
+                EnvironmentalSelection.populateWithRemainingBest(union,archive); //todo implementar
 
             }
-            else if(archive.fronts.allFronts.get(0).membersAtThisFront.size() > Constants.ARCHIVE_SIZE) // todo implementar
+            else if(archive.fronts.allFronts.get(0).membersAtThisFront.size() > Constants.ARCHIVE_SIZE) //todo implementar
             {
                 //truncamento
                 EnvironmentalSelection.removeMostSimilar(archive);
