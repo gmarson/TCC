@@ -111,10 +111,10 @@ public class Population {
         return mergedPopulation;
     }
 
-    public void mergePopulationWithFront(Population currentPopulation, Front archive)
+    public void mergeTwoPopulations(Population currentPopulation, Population archive)
     {
         ArrayList<Member> p1 = new ArrayList<>(currentPopulation.population);
-        ArrayList<Member> p2 = new ArrayList<>(archive.membersAtThisFront);
+        ArrayList<Member> p2 = new ArrayList<>(archive.population);
         this.population.addAll(p1);
         this.population.addAll(p2);
     }

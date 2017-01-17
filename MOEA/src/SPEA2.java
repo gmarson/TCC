@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -6,14 +5,14 @@ import java.util.Scanner;
  */
 public class SPEA2 {
 
-    Matrix distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
+
     Scanner s = new Scanner(System.in);
 
     public void runAlgorithm(){
         int genCounter = 0;
         Population p = new Population();
         Problem problem = new ProblemSCH();
-        Front archive = new Front();
+        Population archive = new Population();
         Population union = new Population();
 
         p.population = problem.generateRandomMembers();
@@ -21,80 +20,36 @@ public class SPEA2 {
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {
             problem.evaluateAgainstObjectiveFunctions(p);
-            union.mergePopulationWithFront(p,archive);
+            union.mergeTwoPopulations(p,archive);
             union.fastNonDominatedSort();
-            calculateFitness(union);
+            Fitness.calculateFitness(union);
 
-            archive = union.getNonDominatedFront();
+            archive.fronts.allFronts.add(0,union.getNonDominatedFront());
             //todo verificar se os numeros estao em ordem de dominancia
 
+
+            if (archive.fronts.allFronts.get(0).membersAtThisFront.size() < Constants.ARCHIVE_SIZE)
+            {
+                //coloca mais
+                EnvironmentalSelection.populateWithRemainingBest(p,archive); //todo implementar
+
+            }
+            else if(archive.fronts.allFronts.get(0).membersAtThisFront.size() > Constants.ARCHIVE_SIZE) // todo implementar
+            {
+                //truncamento
+                EnvironmentalSelection.removeMostSimilar(archive);
+            }
+
+
+            //todo falta selecao
+            //todo falta crossover e mutacao
+
             genCounter++;
-
-            prepareForNextGen();
+            Fitness.prepareForNextGen();
         }
     }
 
-    public void prepareForNextGen()
-    {
-        this.distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
-    }
 
-    public void calculateStrength(Member member)
-    {
-        member.strength = member.solutionsThatThisMemberDominates.size();
-    }
 
-    public void calculateRawFitness(Member memberToBeEvaluated, Population union)
-    {
-        for (Member member: union.population)
-        {
-            if(member.solutionsThatThisMemberDominates.contains(memberToBeEvaluated))
-                memberToBeEvaluated.rawFitness += member.strength;
-        }
-    }
-
-    public void calculateDensity(Member member, Population union, int indexOfMatrix)
-    {
-
-        calculateDistanceBetweenMembers(member,union,indexOfMatrix);
-        double sigma = calculateSigma(indexOfMatrix);
-        member.density = 1 / (sigma + 2);
-
-    }
-
-    public void calculateDistanceBetweenMembers(Member member,Population union,int indexOfMatrix)
-    {
-        Member mi = union.population.get(indexOfMatrix), mj;
-
-        for (int j = 0; j < distanceMatrix.distance[0].length; j++)
-        {
-            if(j > indexOfMatrix) break; // todo fiz essa linha pensando em otimzar. Vamos ver se dá.
-            mj = union.population.get(j);
-            distanceMatrix.distance[indexOfMatrix][j] = Utils.euclidianDistance(mi,mj);
-        }
-        distanceMatrix.printMatrix(); //todo
-    }
-
-    public double calculateSigma(int indexOfMatrix)
-    {
-        int positionOfSigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
-        ArrayList<Double> orderedMatrixRow = Utils.returnOrderedArray(distanceMatrix, indexOfMatrix);
-        return orderedMatrixRow.get(positionOfSigma);
-    }
-
-    public void calculateFitness(Population union)
-    {
-        int indexOfMatrix=0;
-
-        for(Member member: union.population)
-        {
-            calculateStrength(member);
-            calculateRawFitness(member, union);
-            calculateDensity(member, union, indexOfMatrix);
-            member.fitness = member.rawFitness + member.density;
-            indexOfMatrix++;
-        }
-
-    }
 
 }
