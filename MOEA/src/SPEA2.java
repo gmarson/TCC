@@ -1,10 +1,9 @@
 import java.util.Scanner;
 
-/**
+/** 
  * Created by gabrielm on 09/01/17.
  */
 public class SPEA2 {
-
 
     Scanner s = new Scanner(System.in);
 
@@ -14,7 +13,7 @@ public class SPEA2 {
         Problem problem = new ProblemSCH();
         Population archive = new Population();
         Population union = new Population();
-        Population environment = new Population();
+        Population selected = new Population();
 
         p.population = problem.generateRandomMembers();
 
@@ -39,6 +38,8 @@ public class SPEA2 {
                 //truncamento
                 EnvironmentalSelection.removeMostSimilar(archive);
             }
+
+
 
 
             //todo falta selecao

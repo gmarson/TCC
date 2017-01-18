@@ -6,6 +6,7 @@ public class NSGAII {
 
     public void runAlgorithm()
     {
+       
         Front lastFrontToMergeWithPopulation = null;
         int genCounter = 0;
         Population union, sortedUnion;

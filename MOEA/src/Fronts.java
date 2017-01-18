@@ -49,8 +49,8 @@ public class Fronts {
         System.out.println("Populacao: "+i);
     }
 
-    public ArrayList returnFirstFrontOccurances() {
-        ArrayList<Double> occurrances = new ArrayList();
+    public ArrayList<Double> returnFirstFrontOccurances() {
+        ArrayList<Double> occurrances = new ArrayList<Double>();
         for (Member member:this.allFronts.get(0).membersAtThisFront)
         {
             if (!occurrances.contains(member.value)){

@@ -5,6 +5,19 @@ public abstract class EnvironmentalSelection {
 
     public static void populateWithRemainingBest(Population population, Population archive)
     {
+        Population environment = new Population();
+        environment.mergeTwoPopulations(population, archive);
+        Sorts.quickSortMembersByFitness(environment);   
+
+        archive  = new Population();
+
+        int i = 0;
+        while(archive.population.size() < Constants.ARCHIVE_SIZE)
+        {
+            archive.population.add(environment.population.get(i)); 
+            i++;
+        }
+
         /*
         * Junta os dois pq a population eh o resultado do crossover do arquivo, portanto, ela mudou
         * Entao a gnt junta os dois  e ordena por fitnnes pq ja vamos ter calculado tudo //todo no crossover instanciar todos os indivíduos para a pop
@@ -19,6 +32,7 @@ public abstract class EnvironmentalSelection {
 
     }
 
+    
 
 
 }

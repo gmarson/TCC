@@ -19,7 +19,7 @@ public class Population {
     public void fastNonDominatedSort()
     {
         resetAttributesAndFrontsForAllMembers();
-        this.dominance.establishDominanceForAllMembers(this);
+        dominance.establishDominanceForAllMembers(this);
         this.population =sortPopulationByDominance();
         this.fronts.buildOrderedFronts(this);
 

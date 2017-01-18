@@ -14,7 +14,7 @@ public class Front {
 
         for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {
 
-            Utils.insertionSort(membersAtThisFront,i);
+            Sorts.insertionSort(membersAtThisFront,i);
 
             membersAtThisFront.get(0).crowdingDistanceValue                            = Double.MAX_VALUE;
             membersAtThisFront.get(membersAtThisFront.size()-1).crowdingDistanceValue  = Double.MAX_VALUE;
@@ -28,7 +28,7 @@ public class Front {
 
         }
 
-        Utils.insertionSortCrowding(membersAtThisFront);
+        Sorts.insertionSortCrowding(membersAtThisFront);
 
     }
 

@@ -21,5 +21,5 @@ public interface  Constants {
     int MAX_BINARY_LEN = 11;
 
     //FOR TEST ONLY
-    int SEED = 1;
+    int SEED = 59;
 }

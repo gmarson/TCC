@@ -12,6 +12,11 @@ public abstract class Utils {
 
     static Random random = new Random(Constants.SEED);
 
+    public static void setSeed(int SEED)
+    {
+        random = new Random(SEED);
+    }
+
     public static int getRandom(int min, int max)
     {
         max = max -1;
@@ -68,35 +73,7 @@ public abstract class Utils {
     }
 
 
-    public static void insertionSort(ArrayList<Member> members, int idOfFunctionToBeEvaluated)
-    {
-        for (int i = 0; i < members.size(); i++)
-        {
-            Member memberBeingCompared = members.get(i);
-            double valueOfMemberBeingCompared = memberBeingCompared.resultOfFunctions.get(idOfFunctionToBeEvaluated);
-            for (int j = i -1; j >= 0 && members.get(j).resultOfFunctions.get(idOfFunctionToBeEvaluated) > valueOfMemberBeingCompared ; j--)
-            {
-                members.set(j+1, members.get(j));
-                members.set(j,memberBeingCompared);
-            }
-        }
-    }
-
-    public static void insertionSortCrowding(ArrayList<Member> members)
-    {
-        for (int i = 0; i < members.size(); i++)
-        {
-            Member memberBeingCompared = members.get(i);
-            double valueOfMemberBeingCompared = memberBeingCompared.crowdingDistanceValue;
-            for (int j = i -1; j >= 0 && members.get(j).crowdingDistanceValue > valueOfMemberBeingCompared ; j--)
-            {
-                members.set(j+1, members.get(j));
-                members.set(j,memberBeingCompared);
-            }
-        }
-
-
-    }
+    
 
     public static double euclidianDistance(Member m1, Member m2)
     {
@@ -129,7 +106,6 @@ public abstract class Utils {
 
     private static void insertDataOnOrderedArray(double dataToBeInserted, ArrayList<Double> dataArray)
     {
-
         if (dataArray.isEmpty())
             dataArray.add(dataToBeInserted);
         else
@@ -142,10 +118,7 @@ public abstract class Utils {
                 i++;
                 if(i == dataArray.size()) break;
             }
-
             dataArray.add(i,dataToBeInserted);
-
-            //todo é aki, vai na fé que é aki  ˆˆˆ
 
         }
 
