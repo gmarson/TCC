@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public abstract class Fitness {
 
     static Matrix distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
+    
     public static void calculateStrength(Member member)
     {
         member.strength = member.solutionsThatThisMemberDominates.size();
@@ -20,26 +21,26 @@ public abstract class Fitness {
         }
     }
 
-    public static void calculateDensity(Member member, Population union, int indexOfMatrix)
+    public static void calculateDensity(Member member, Population generic, int indexOfMatrix)
     {
 
-        calculateDistanceBetweenMembers(member,union,indexOfMatrix);
+        calculateDistanceBetweenMembers(member,generic,indexOfMatrix);
         double sigma = calculateSigma(indexOfMatrix);
         member.density = 1 / (sigma + 2);
 
     }
 
-    public static void calculateDistanceBetweenMembers(Member member,Population union,int indexOfMatrix)
+    public static void calculateDistanceBetweenMembers(Member member,Population generic,int indexOfMatrix)
     {
-        Member mi = union.population.get(indexOfMatrix), mj;
+        Member mi = generic.population.get(indexOfMatrix), mj;
 
         for (int j = 0; j < distanceMatrix.distance[0].length; j++)
         {
             if(j > indexOfMatrix) break; // todo fiz essa linha pensando em otimzar. Vamos ver se dá.
-            mj = union.population.get(j);
+            mj = generic.population.get(j);
             distanceMatrix.distance[indexOfMatrix][j] = Utils.euclidianDistance(mi,mj);
         }
-        distanceMatrix.printMatrix(); //todo
+        
     }
 
     public static double calculateSigma(int indexOfMatrix)
@@ -63,6 +64,7 @@ public abstract class Fitness {
         }
 
     }
+
 
     public static void prepareForNextGen()
     {

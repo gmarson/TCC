@@ -21,6 +21,9 @@ public class Member {
     protected double strength = 0;
     protected double distanceFromClosestNeighbor;
 
+    //Both Variables
+    protected double key;
+
     public Member(double value)
     {
         this.value = value;

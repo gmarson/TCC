@@ -24,20 +24,12 @@ public class SPEA2 {
             union.fastNonDominatedSort();
             Fitness.calculateFitness(union);
 
-            archive.fronts.allFronts.add(0,union.getNonDominatedFront());
+            archive = union.getNonDominated();
+
             //todo verificar se os numeros estao em ordem de dominancia
             //todo nao vai pelo codigo do ruby, LA EH SO A LOGICA
-            if (archive.fronts.allFronts.get(0).membersAtThisFront.size() < Constants.ARCHIVE_SIZE)
-            {
-                //coloca mais
-                EnvironmentalSelection.populateWithRemainingBest(union,archive); //todo implementar
+            EnvironmentalSelection.environmentalSelection(p,archive);
 
-            }
-            else if(archive.fronts.allFronts.get(0).membersAtThisFront.size() > Constants.ARCHIVE_SIZE) //todo implementar
-            {
-                //truncamento
-                EnvironmentalSelection.removeMostSimilar(archive);
-            }
 
 
 

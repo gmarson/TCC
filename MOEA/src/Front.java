@@ -7,9 +7,7 @@ import java.util.Scanner;
  */
 public class Front {
     protected ArrayList<Member> membersAtThisFront = new ArrayList<>();
-
-
-
+    
     public void crowdingDistanceAssignment(){
 
         for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {

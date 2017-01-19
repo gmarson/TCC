@@ -45,7 +45,7 @@ public class Main {
     	pop.population.add(m6);
     	pop.population.add(m4);
 
-    	Sorts.quickSortMembersByFitness(pop);
+    	Sorts.quickSortMembersByKey(pop,"fitness");
 
     	Printer.printMembersWithFitness(pop);
     }

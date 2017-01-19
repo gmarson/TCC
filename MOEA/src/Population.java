@@ -125,15 +125,21 @@ public class Population {
         {
             this.population.add(member);
         }
-
     }
 
-    public Front getNonDominatedFront()
+    public Population getNonDominated()
     {
-        return this.fronts.allFronts.get(0);
+        Population newArchive = new Population();
+        for(Member member: this.population){
+            if(member.fitness < 1.0)
+                newArchive.population.add(member);
+        }
+
+        return newArchive;
     }
 
 
+    
 
 
 }

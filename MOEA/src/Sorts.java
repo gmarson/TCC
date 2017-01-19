@@ -3,9 +3,21 @@ import java.util.*;
 
 public class Sorts
 {
-	public static void quickSortMembersByFitness(Population pop) 
+	public static void quickSortMembersByKey(Population pop, String keyForValue)
 	{
-    	sort(pop.population, 0, pop.population.size() - 1);
+		if(keyForValue.equals("density")){
+			for(Member m: pop.population)
+			{
+				m.key = m.density;
+			}
+		}
+		else if(keyForValue.equals("fitness"))
+		{
+			for(Member m: pop.population)
+			{
+				m.key = m.fitness;
+			}
+		}	
 	}
 
 	public static void sort(ArrayList<Member> list, int from, int to) 
@@ -14,14 +26,14 @@ public class Sorts
 	        int pivot = from;
 	        int left = from + 1;
 	        int right = to;
-	        double pivotValue = list.get(pivot).fitness;
+	        double pivotValue = list.get(pivot).key;
 	        while (left <= right) {
 	            
-	            while (left <= to && pivotValue >= list.get(left).fitness) {
+	            while (left <= to && pivotValue >= list.get(left).key) {
 	                left++;
 	            }
 	            
-	            while (right > from && pivotValue < list.get(right).fitness) {
+	            while (right > from && pivotValue < list.get(right).key) {
 	                right--;
 	            }
 	            if (left < right) {
