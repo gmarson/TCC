@@ -14,32 +14,44 @@ public class SPEA2 {
         Population archive = new Population();
         Population union = new Population();
         Population selected = new Population();
-        Selection selectedFitness = new SelectionFitness();
+        Selection selectedFitness = new SelectionArchive();
 
         p.population = problem.generateRandomMembers();
 
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {
+            System.out.println("Geracao = "+ genCounter);//todo
             problem.evaluateAgainstObjectiveFunctions(p);
+            
+            System.out.println("population");//todo
+            Printer.printMembersWithValue(p);//todo
+            System.out.println("archive");//todo
+            Printer.printMembersWithFitness(archive);//todo
+
             union.mergeTwoPopulations(p,archive);
             union.fastNonDominatedSort();
+            
             Fitness.calculateFitness(union);
-
+                        
             archive = union.getNonDominated();
 
             //todo verificar se os numeros estao em ordem de dominancia
             //todo nao vai pelo codigo do ruby, LA EH SO A LOGICA
-            EnvironmentalSelection.environmentalSelection(p,archive);
+            archive = EnvironmentalSelection.environmentalSelection(p,archive);
 
             selected = selectedFitness.selectParents(archive);
+            System.out.println("selected no meio");//todo
+            Printer.printMembersWithValue(selected);//todo
 
-            Crossover crossover = new BinaryCrossover();
-            p = crossover.crossoverAndMutation(selected);
-
+            Crossover bCrossover = new BinaryCrossover();
+            p = bCrossover.crossoverAndMutation(selected);
 
             genCounter++;
             Fitness.prepareForNextGen();
+      
         }
+
+        Printer.printMembersWithValue(archive); //todo
     }
 
 

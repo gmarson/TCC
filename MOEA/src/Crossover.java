@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public interface Crossover {
 
     Population crossoverAndMutation(Population selected);
-
+    
 
 
 }

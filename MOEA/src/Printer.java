@@ -1,7 +1,16 @@
 public abstract class Printer
 {
+
+    public static void checkEmpty(Population p)
+    {
+        if(p.population.isEmpty())
+        {
+            System.out.println("Vazio");
+        }
+    }
 	public static void printMembersWithAppliedFunctions(Population p)
     {
+        checkEmpty(p);
         int i =0;
         for(Member m : p.population)
         {
@@ -15,6 +24,7 @@ public abstract class Printer
 
     public static void printMembersWithValue(Population p)
     {
+        checkEmpty(p);
         int i =0;
         for(Member m : p.population)
         {
@@ -25,6 +35,7 @@ public abstract class Printer
 
     public static void printMembersWithFitness(Population p)
     {
+        checkEmpty(p);
         int i =0;
         for(Member m : p.population)
         {

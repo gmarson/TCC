@@ -23,7 +23,6 @@ public abstract class Fitness {
 
     public static void calculateDensity(Member member, Population generic, int indexOfMatrix)
     {
-
         calculateDistanceBetweenMembers(member,generic,indexOfMatrix);
         double sigma = calculateSigma(indexOfMatrix);
         member.density = 1 / (sigma + 2);

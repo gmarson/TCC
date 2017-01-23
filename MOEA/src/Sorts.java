@@ -17,7 +17,8 @@ public class Sorts
 			{
 				m.key = m.fitness;
 			}
-		}	
+		}
+		sort(pop.population, 0, pop.population.size()-1 );	
 	}
 
 	public static void sort(ArrayList<Member> list, int from, int to) 

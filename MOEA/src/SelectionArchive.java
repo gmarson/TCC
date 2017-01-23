@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class SelectionFitness extends Selection
+public class SelectionArchive extends Selection
 {	
 	@Override
 	public Population selectParents(Population population)
@@ -27,7 +27,7 @@ public class SelectionFitness extends Selection
     {
         Population selected = new Population();
         ArrayList<Member> membersByTour;
-        for (int i = 0; i < Constants.CROSSOVER_RATE * archive.population.size(); i++) 
+        while(selected.population.size() < Constants.POPULATION_SIZE) 
         {
             membersByTour = super.makeCompetitors(archive);
             selected.population.add(returnWinnerCompetitor(membersByTour) );

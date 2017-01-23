@@ -52,7 +52,6 @@ public class NSGAII {
             {
                 sortedUnion.population.add(lastFrontToMergeWithPopulation.membersAtThisFront.get(i));
                 i--;
-
             }
 
 

@@ -9,14 +9,18 @@ public abstract class EnvironmentalSelection {
     {   
         Sorts.quickSortMembersByKey(union,"fitness");   
         int i = 0;
+
         while(environment.population.size() < Constants.ARCHIVE_SIZE)
         {
+            System.out.println("sizeEnv: "+environment.population.size()+"\nARCHIVE_SIZE: "+Constants.ARCHIVE_SIZE);//todo
             Member member = union.population.get(i);
+
             if (member.fitness >= 1.0) 
                 environment.population.add(member);
                  
             i++;
         }
+
 
         /*
         * Junta os dois pq a population eh o resultado do crossover do arquivo, portanto, ela mudou
@@ -50,7 +54,7 @@ public abstract class EnvironmentalSelection {
     }
 
 
-    public static void environmentalSelection(Population population, Population archive)
+    public static Population environmentalSelection(Population population, Population archive)
     {
         Population union = new Population();
         Population environment = new Population();
@@ -58,13 +62,25 @@ public abstract class EnvironmentalSelection {
         environment = union.getNonDominated();
 
         if(environment.population.size() < Constants.ARCHIVE_SIZE)
-        {
+        {   
+            System.out.println("preciso colocar mais indivíduos no arquivo"); //todo
+            System.out.println("Antes de por: ");//todo
+            Printer.printMembersWithFitness(environment); //todo
+
             populateWithRemainingBest(environment, union);
+
+            System.out.println("Depois de por: ");//todo
+            Printer.printMembersWithFitness(environment); // todo
         }
         else if(environment.population.size() > Constants.ARCHIVE_SIZE)
-        {
+        {  
+            System.out.println("preciso tirar individuos do arquivo"); //todo
             removeMostSimilar(environment);
         }
+        else
+            System.out.println("nao entrou em nenhum"); //todo
+
+        return environment;
 
     }
     

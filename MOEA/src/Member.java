@@ -15,11 +15,11 @@ public class Member {
     protected double crowdingDistanceValue;
 
     //SPEA2 variables
-    protected double rawFitness = 0;
-    protected double density = 0;
-    protected double fitness = 0;
-    protected double strength = 0;
-    protected double distanceFromClosestNeighbor;
+    protected double rawFitness = -1;
+    protected double density = -1;
+    protected double fitness = -1;
+    protected double strength = -1;
+    protected double distanceFromClosestNeighbor = -1;
 
     //Both Variables
     protected double key;

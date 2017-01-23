@@ -2,7 +2,9 @@ import java.util.ArrayList;
 
 /**
  * Created by gabrielm on 05/01/17.
+ * MADE ONLY FOR INTEGER FUNCTIONS
  */
+
 
 public class BinaryCrossover implements Crossover {
 
@@ -11,6 +13,8 @@ public class BinaryCrossover implements Crossover {
 
         Population children = new Population();
         ArrayList<Integer> pairOfChildren;
+
+    
         for (int i = 0, j =0; j < selected.population.size()/2; i+=2, j++) {
             Member m1 = selected.population.get(i);
             Member m2 = selected.population.get(i+1);
@@ -26,6 +30,8 @@ public class BinaryCrossover implements Crossover {
             children.addMember(new Member(pairOfChildren.get(0)));
             children.addMember(new Member(pairOfChildren.get(1)));
         }
+
+        
         return children;
     }
 

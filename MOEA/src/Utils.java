@@ -98,7 +98,7 @@ public abstract class Utils {
                 insertDataOnOrderedArray(dataToBeInserted,dataArray);
 
             }
-            System.out.println("Tamanho do j: "+j);//todo
+            
             j++;
         }
         return dataArray;
@@ -111,8 +111,7 @@ public abstract class Utils {
         else
         {
             int i=0;
-            System.out.println("Olha o meu data array "+dataArray);//todo
-            System.out.println("Data to be inserted: "+ dataToBeInserted);//todo
+            
             while(dataToBeInserted < dataArray.get(i))
             {
                 i++;
