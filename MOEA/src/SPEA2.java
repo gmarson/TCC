@@ -14,6 +14,7 @@ public class SPEA2 {
         Population archive = new Population();
         Population union = new Population();
         Population selected = new Population();
+        Selection selectedFitness = new SelectionFitness();
 
         p.population = problem.generateRandomMembers();
 
@@ -30,12 +31,11 @@ public class SPEA2 {
             //todo nao vai pelo codigo do ruby, LA EH SO A LOGICA
             EnvironmentalSelection.environmentalSelection(p,archive);
 
+            selected = selectedFitness.selectParents(archive);
 
+            Crossover crossover = new BinaryCrossover();
+            p = crossover.crossoverAndMutation(selected);
 
-
-
-            //todo falta selecao
-            //todo falta crossover e mutacao
 
             genCounter++;
             Fitness.prepareForNextGen();

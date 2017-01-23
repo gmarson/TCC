@@ -26,7 +26,6 @@ public class BinaryCrossover implements Crossover {
             children.addMember(new Member(pairOfChildren.get(0)));
             children.addMember(new Member(pairOfChildren.get(1)));
         }
-
         return children;
     }
 

@@ -8,8 +8,7 @@ public class Matrix {
     int size;
     double[][] distance;
 
-    
-    
+
     public Matrix(int rows, int columns) {
         this.rows =rows;
         this.columns = columns;

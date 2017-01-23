@@ -13,12 +13,14 @@ public class NSGAII {
         Population p = new Population();
         ProblemSCH problem = new ProblemSCH();
         Crossover binaryCrossover = new BinaryCrossover();
+        Selection selectRanked = new SelectionRank();
+        Selection selectRankCrowded = new SelectionRankCrowding();
 
         p.population = p.problem.generateRandomMembers();
         problem.evaluateAgainstObjectiveFunctions(p);
         p.fastNonDominatedSort();
 
-        Population selected = Selection.selectParentsByRank(p);
+        Population selected = selectRanked.selectParents(p);
         Population children = binaryCrossover.crossoverAndMutation(selected);
 
         sortedUnion = new Population();
@@ -42,7 +44,6 @@ public class NSGAII {
                 else
                     sortedUnion.addFrontToPopulation(front);
 
-
                 k++;
             }
 
@@ -55,7 +56,7 @@ public class NSGAII {
             }
 
 
-            selected = Selection.selectParentsByRankAndCrowding(sortedUnion);
+            selected = selectRankCrowded.selectParents(sortedUnion);
             p = sortedUnion;
             children = binaryCrossover.crossoverAndMutation(selected);
 

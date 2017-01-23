@@ -22,4 +22,5 @@ public interface  Constants {
 
     //FOR TEST ONLY
     int SEED = 59;
+    // 59 da treta no nsgaii
 }

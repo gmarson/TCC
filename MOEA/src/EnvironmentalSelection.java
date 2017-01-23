@@ -32,15 +32,15 @@ public abstract class EnvironmentalSelection {
         int positionOfSigma = (int) Math.floor(Math.sqrt((double)environment.population.size()));
         int MatrixSize = environment.population.size();
         distanceMatrix = new Matrix(MatrixSize, MatrixSize);
-        int indexOfMatrix = 0;
+        int indexOfMatrix;
         while(environment.population.size() > Constants.ARCHIVE_SIZE)
         {
+            indexOfMatrix =0;
             for(Member member: environment.population)
             {
                 Fitness.calculateDensity(member,environment,indexOfMatrix);
                 indexOfMatrix++;
             }
-            indexOfMatrix =0;
             Sorts.quickSortMembersByKey(environment,"density");
 
             environment.population.remove(0);
@@ -61,7 +61,7 @@ public abstract class EnvironmentalSelection {
         {
             populateWithRemainingBest(environment, union);
         }
-        else if(environment.population.size() >Constants.ARCHIVE_SIZE)
+        else if(environment.population.size() > Constants.ARCHIVE_SIZE)
         {
             removeMostSimilar(environment);
         }
