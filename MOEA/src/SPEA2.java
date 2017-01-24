@@ -22,14 +22,24 @@ public class SPEA2 {
         {
             System.out.println("GERACAO = "+ genCounter);//todo
 
-
             problem.evaluateAgainstObjectiveFunctions(p);
-            
+
             union.mergeTwoPopulations(p,archive);
-            union.fastNonDominatedSort();
-            
+
+
+            union.fastNonDominatedSort(); ///TODO O ERRO TA AKI BIXAO mas essa func tem que existir pra determinar a distancia
+            //todo do k-ésimo vizinho e é por dominancia msm. pensa no grafico
+            //OH VC PAROU TENTANDO DEBUGGAR ESSA FUNCAO AI DE CIMA (FASTNONDOMINATEDSORT)
+
+            System.out.println("union no spea2");//todo
+            Printer.printMembersWithValueAndFitness(union);//todo
+
+            System.out.println("arquivo antigo no spea2"); // todo
+            Printer.printMembersWithValueAndFitness(archive); //todo
+
             Fitness.calculateFitness(union);
-                        
+
+
             archive = union.getNonDominated();
             Printer.printPopulationArchiveAndUnion(p,archive,union);//todo
 

@@ -58,12 +58,16 @@ public abstract class Printer
 
     public static void printPopulationArchiveAndUnion(Population p, Population archive, Population union)
     {
+        System.out.println("");
         System.out.println("POPULACAO");
         printMembersWithValueAndFitness(p);
+        System.out.println("");
         System.out.println("ARQUIVO");
         printMembersWithValueAndFitness(archive);
+        System.out.println("");
         System.out.println("UNIAO");
         printMembersWithValueAndFitness(union);
+        System.out.println("");
     }
 
 }

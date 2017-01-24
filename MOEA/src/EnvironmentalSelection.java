@@ -10,7 +10,7 @@ public abstract class EnvironmentalSelection {
         Sorts.quickSortMembersByKey(union,"fitness");   
         int i = 0;
 
-        while(environment.population.size() < Constants.ARCHIVE_SIZE - 1)
+        while(environment.population.size() < Constants.ARCHIVE_SIZE )
         {
             Member member = union.population.get(i);
 
@@ -20,10 +20,12 @@ public abstract class EnvironmentalSelection {
             i++;
         }
 
+        System.out.println("depois de inserir ");
+        Printer.printMembersWithValueAndFitness(environment); //todo
 
         /*
         * Junta os dois pq a population eh o resultado do crossover do arquivo, portanto, ela mudou
-        * Entao a gnt junta os dois  e ordena por fitnnes pq ja vamos ter calculado tudo //todo no crossover instanciar todos os indivíduos para a pop
+        * Entao a gnt junta os dois  e ordena por fitnnes pq ja vamos ter calculado tudo
         * Aqui nao vai importar as fronteiras, aliás acho que as fronteiras nao importam no spea2, TENHO QUASE CTZ
         * Depois de juntar os dois vamos colocar os elementos deles na pop nova até que o tamnho do arquivo seja preenchido
         * */
@@ -58,9 +60,17 @@ public abstract class EnvironmentalSelection {
         Population environment = new Population();
         union.mergeTwoPopulations(population,archive); 
         environment = union.getNonDominated();
-        
-        System.out.println("environment"); //todo
+
+        System.out.println("Populaçao no environment");//todo
+        Printer.printMembersWithValueAndFitness(population);//todo
+        System.out.println("archive no environment");//todo
+        Printer.printMembersWithValueAndFitness(archive);//todo
+        System.out.println("union no Environment");//todo
+        Printer.printMembersWithValueAndFitness(union);//todo
+        System.out.println("Environment no environment"); //todo
         Printer.printMembersWithValue(environment); //todo
+
+
 
         if(environment.population.size() < Constants.ARCHIVE_SIZE)
         {   

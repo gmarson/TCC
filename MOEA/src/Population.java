@@ -113,11 +113,16 @@ public class Population {
 
     public void mergeTwoPopulations(Population currentPopulation, Population archive)
     {
+
+
         this.population = new ArrayList<>(); 
         ArrayList<Member> p1 = new ArrayList<>(currentPopulation.population);
         ArrayList<Member> p2 = new ArrayList<>(archive.population);
         this.population.addAll(p1);
         this.population.addAll(p2);
+
+        System.out.println("depois do merge");
+        Printer.printMembersWithValueAndFitness(this);
     }
 
     public void addFrontToPopulation(Front front){
@@ -130,18 +135,15 @@ public class Population {
 
     public Population getNonDominated()
     {
-        System.out.println("Dado a uniao ");//todo
-        Printer.printMembersWithValueAndFitness(this);//todo
         Population newArchive = new Population();
         for(Member member: this.population){
             if(member.fitness < 1.0)
                 newArchive.population.add(member);
         }
 
-        System.out.println("os selecionados sao "); //todo
-        Printer.printMembersWithValue(newArchive);//todo
-
-
         return newArchive;
     }
+
+
+
 }
