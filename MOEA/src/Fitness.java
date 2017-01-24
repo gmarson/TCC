@@ -33,10 +33,13 @@ public abstract class Fitness {
     {
         Member mi = generic.population.get(indexOfMatrix), mj;
 
+        
+
         for (int j = 0; j < distanceMatrix.distance[0].length; j++)
         {
             if(j > indexOfMatrix) break; // todo fiz essa linha pensando em otimzar. Vamos ver se dá.
             mj = generic.population.get(j);
+            System.out.println(indexOfMatrix); //todo
             distanceMatrix.distance[indexOfMatrix][j] = Utils.euclidianDistance(mi,mj);
         }
         
@@ -53,6 +56,7 @@ public abstract class Fitness {
     {
         int indexOfMatrix=0;
 
+        System.out.println("Tamanho da population union: "+union.population.size());//todo
         for(Member member: union.population)
         {
             calculateStrength(member);

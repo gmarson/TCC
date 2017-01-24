@@ -40,11 +40,13 @@ public class SPEA2 {
             archive = EnvironmentalSelection.environmentalSelection(p,archive);
 
             selected = selectedFitness.selectParents(archive);
-            System.out.println("selected no meio");//todo
-            Printer.printMembersWithValue(selected);//todo
+            
 
             Crossover bCrossover = new BinaryCrossover();
             p = bCrossover.crossoverAndMutation(selected);
+            System.out.println("populacao depois do crossover ");//todo
+            Printer.printMembersWithValue(p);//todo
+
 
             genCounter++;
             Fitness.prepareForNextGen();

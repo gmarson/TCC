@@ -109,10 +109,11 @@ public class Population {
         mergedPopulation.population = new ArrayList<>(this.population);
         mergedPopulation.population.addAll(another.population);
         return mergedPopulation;
-    }
+    }//todo mudar aki pq ta inconsistente com a funcao de baixo
 
     public void mergeTwoPopulations(Population currentPopulation, Population archive)
     {
+        this.population = new ArrayList<>(); 
         ArrayList<Member> p1 = new ArrayList<>(currentPopulation.population);
         ArrayList<Member> p2 = new ArrayList<>(archive.population);
         this.population.addAll(p1);
@@ -125,7 +126,7 @@ public class Population {
         {
             this.population.add(member);
         }
-    }
+    }//todo acho que um addAll substitui bem
 
     public Population getNonDominated()
     {

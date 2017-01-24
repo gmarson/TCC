@@ -1,6 +1,8 @@
 /**
  * Created by gabrielm on 12/01/17.
  */
+import java.text.DecimalFormat;
+
 public class Matrix {
 
     int rows;
@@ -35,9 +37,11 @@ public class Matrix {
 
     public void printMatrix()
     {
+        DecimalFormat df = new DecimalFormat("#.##");
+        
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j <columns ; j++) {
-                System.out.print(distance[i][j]+"  ");
+                System.out.print(df.format(distance[i][j])+"   ");
             }
             System.out.print("\n");
         }
