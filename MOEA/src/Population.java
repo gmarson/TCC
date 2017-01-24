@@ -130,17 +130,18 @@ public class Population {
 
     public Population getNonDominated()
     {
+        System.out.println("Dado a uniao ");//todo
+        Printer.printMembersWithValueAndFitness(this);//todo
         Population newArchive = new Population();
         for(Member member: this.population){
             if(member.fitness < 1.0)
                 newArchive.population.add(member);
         }
 
+        System.out.println("os selecionados sao "); //todo
+        Printer.printMembersWithValue(newArchive);//todo
+
+
         return newArchive;
     }
-
-
-    
-
-
 }

@@ -8,6 +8,7 @@ public abstract class Printer
             System.out.println("Vazio");
         }
     }
+    
 	public static void printMembersWithAppliedFunctions(Population p)
     {
         checkEmpty(p);
@@ -33,6 +34,17 @@ public abstract class Printer
         }
     }
 
+    public static void printMembersWithValueAndFitness(Population p)
+    {
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.value+"   Fitness = "+m.fitness);
+            i++;
+        }
+    }
+
     public static void printMembersWithFitness(Population p)
     {
         checkEmpty(p);
@@ -43,4 +55,15 @@ public abstract class Printer
             i++;
         }
     }
+
+    public static void printPopulationArchiveAndUnion(Population p, Population archive, Population union)
+    {
+        System.out.println("POPULACAO");
+        printMembersWithValueAndFitness(p);
+        System.out.println("ARQUIVO");
+        printMembersWithValueAndFitness(archive);
+        System.out.println("UNIAO");
+        printMembersWithValueAndFitness(union);
+    }
+
 }

@@ -20,37 +20,31 @@ public class SPEA2 {
 
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {
-            System.out.println("Geracao = "+ genCounter);//todo
+            System.out.println("GERACAO = "+ genCounter);//todo
+
+
             problem.evaluateAgainstObjectiveFunctions(p);
             
-            System.out.println("population");//todo
-            Printer.printMembersWithValue(p);//todo
-            System.out.println("archive");//todo
-            Printer.printMembersWithFitness(archive);//todo
-
             union.mergeTwoPopulations(p,archive);
             union.fastNonDominatedSort();
             
             Fitness.calculateFitness(union);
                         
             archive = union.getNonDominated();
+            Printer.printPopulationArchiveAndUnion(p,archive,union);//todo
 
             //todo verificar se os numeros estao em ordem de dominancia
-            //todo nao vai pelo codigo do ruby, LA EH SO A LOGICA
+            
+            System.out.println("Indo pro environmentalSelection");
             archive = EnvironmentalSelection.environmentalSelection(p,archive);
 
             selected = selectedFitness.selectParents(archive);
             
-
             Crossover bCrossover = new BinaryCrossover();
             p = bCrossover.crossoverAndMutation(selected);
-            System.out.println("populacao depois do crossover ");//todo
-            Printer.printMembersWithValue(p);//todo
-
 
             genCounter++;
             Fitness.prepareForNextGen();
-      
         }
 
         Printer.printMembersWithValue(archive); //todo

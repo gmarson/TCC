@@ -7,7 +7,7 @@ public interface  Constants {
     int POPULATION_SIZE =10;
     int MUTATION_RATE = 5;
     double CROSSOVER_RATE = 1;
-    double NUMBER_OF_GENERATIONS = 25;
+    double NUMBER_OF_GENERATIONS = 3;
     int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS

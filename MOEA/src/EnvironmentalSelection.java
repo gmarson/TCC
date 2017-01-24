@@ -10,9 +10,8 @@ public abstract class EnvironmentalSelection {
         Sorts.quickSortMembersByKey(union,"fitness");   
         int i = 0;
 
-        while(environment.population.size() < Constants.ARCHIVE_SIZE)
+        while(environment.population.size() < Constants.ARCHIVE_SIZE - 1)
         {
-            System.out.println("sizeEnv: "+environment.population.size()+"\nARCHIVE_SIZE: "+Constants.ARCHIVE_SIZE);//todo
             Member member = union.population.get(i);
 
             if (member.fitness >= 1.0) 
@@ -37,7 +36,7 @@ public abstract class EnvironmentalSelection {
         int MatrixSize = environment.population.size();
         distanceMatrix = new Matrix(MatrixSize, MatrixSize);
         int indexOfMatrix;
-        while(environment.population.size() > Constants.ARCHIVE_SIZE)
+        while(environment.population.size() != Constants.ARCHIVE_SIZE)
         {
             indexOfMatrix =0;
             for(Member member: environment.population)
@@ -49,7 +48,6 @@ public abstract class EnvironmentalSelection {
 
             environment.population.remove(0);
         }
-        //todo fica esperto pra ver se nao tem que limpar a matriz
         
     }
 
@@ -60,22 +58,24 @@ public abstract class EnvironmentalSelection {
         Population environment = new Population();
         union.mergeTwoPopulations(population,archive); 
         environment = union.getNonDominated();
+        
+        System.out.println("environment"); //todo
+        Printer.printMembersWithValue(environment); //todo
 
         if(environment.population.size() < Constants.ARCHIVE_SIZE)
         {   
             System.out.println("preciso colocar mais indivíduos no arquivo"); //todo
-            System.out.println("Antes de por: ");//todo
-            Printer.printMembersWithFitness(environment); //todo
-
+            System.out.println("tamanho antes de colocar: "+environment.population.size()); //todo
             populateWithRemainingBest(environment, union);
+            System.out.println("tamanho depois de colocar: "+environment.population.size()); //todo
 
-            System.out.println("Depois de por: ");//todo
-            Printer.printMembersWithFitness(environment); // todo
         }
         else if(environment.population.size() > Constants.ARCHIVE_SIZE)
         {  
             System.out.println("preciso tirar individuos do arquivo"); //todo
-            removeMostSimilar(environment);
+            System.out.println("tamanho antes de tirar: "+environment.population.size()); //todo
+            removeMostSimilar(environment); 
+            System.out.println("tamanho depois de tirar: "+environment.population.size());//todo
         }
         else
             System.out.println("nao entrou em nenhum"); //todo
