@@ -20,9 +20,6 @@ public abstract class EnvironmentalSelection {
             i++;
         }
 
-        System.out.println("depois de inserir ");
-        Printer.printMembersWithValueAndFitness(environment); //todo
-
         /*
         * Junta os dois pq a population eh o resultado do crossover do arquivo, portanto, ela mudou
         * Entao a gnt junta os dois  e ordena por fitnnes pq ja vamos ter calculado tudo
@@ -38,6 +35,7 @@ public abstract class EnvironmentalSelection {
         int MatrixSize = environment.population.size();
         distanceMatrix = new Matrix(MatrixSize, MatrixSize);
         int indexOfMatrix;
+        Fitness.buildMatrixFromEnvironment(environment);
         while(environment.population.size() != Constants.ARCHIVE_SIZE)
         {
             indexOfMatrix =0;
@@ -61,35 +59,16 @@ public abstract class EnvironmentalSelection {
         union.mergeTwoPopulations(population,archive); 
         environment = union.getNonDominated();
 
-        System.out.println("Populaçao no environment");//todo
-        Printer.printMembersWithValueAndFitness(population);//todo
-        System.out.println("archive no environment");//todo
-        Printer.printMembersWithValueAndFitness(archive);//todo
-        System.out.println("union no Environment");//todo
-        Printer.printMembersWithValueAndFitness(union);//todo
-        System.out.println("Environment no environment"); //todo
-        Printer.printMembersWithValue(environment); //todo
-
-
 
         if(environment.population.size() < Constants.ARCHIVE_SIZE)
         {   
-            System.out.println("preciso colocar mais indivíduos no arquivo"); //todo
-            System.out.println("tamanho antes de colocar: "+environment.population.size()); //todo
             populateWithRemainingBest(environment, union);
-            System.out.println("tamanho depois de colocar: "+environment.population.size()); //todo
-
         }
         else if(environment.population.size() > Constants.ARCHIVE_SIZE)
         {  
-            System.out.println("preciso tirar individuos do arquivo"); //todo
-            System.out.println("tamanho antes de tirar: "+environment.population.size()); //todo
-            removeMostSimilar(environment); 
-            System.out.println("tamanho depois de tirar: "+environment.population.size());//todo
+            removeMostSimilar(environment);  
         }
-        else
-            System.out.println("nao entrou em nenhum"); //todo
-
+        
         return environment;
 
     }

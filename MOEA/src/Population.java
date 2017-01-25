@@ -55,6 +55,7 @@ public class Population {
             {
                 checkConditionAndInsertToFront(member, sortedPopulation, currentRank);
                 member.numberOfSolutionsThatDominatesThisMember--;
+
             }
 
             if(shouldBuildRank())
@@ -113,16 +114,12 @@ public class Population {
 
     public void mergeTwoPopulations(Population currentPopulation, Population archive)
     {
-
-
         this.population = new ArrayList<>(); 
         ArrayList<Member> p1 = new ArrayList<>(currentPopulation.population);
         ArrayList<Member> p2 = new ArrayList<>(archive.population);
         this.population.addAll(p1);
         this.population.addAll(p2);
 
-        System.out.println("depois do merge");
-        Printer.printMembersWithValueAndFitness(this);
     }
 
     public void addFrontToPopulation(Front front){
@@ -138,7 +135,7 @@ public class Population {
         Population newArchive = new Population();
         for(Member member: this.population){
             if(member.fitness < 1.0)
-                newArchive.population.add(member);
+                newArchive.population.add(member.deepCopy());
         }
 
         return newArchive;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public abstract class Fitness {
 
     static Matrix distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
-    
+
     public static void calculateStrength(Member member)
     {
         member.strength = member.solutionsThatThisMemberDominates.size();
@@ -28,6 +28,7 @@ public abstract class Fitness {
         member.density = 1 / (sigma + 2);
 
     }
+
 
     public static void calculateDistanceBetweenMembers(Member member,Population generic,int indexOfMatrix)
     {
@@ -53,10 +54,6 @@ public abstract class Fitness {
     public static void calculateFitness(Population union)
     {
         int indexOfMatrix=0;
-
-        System.out.println("Populacao que ta chegando aki no calculo do fitness (union)"); //todo
-        Printer.printMembersWithValueAndFitness(union);//todo
-
         for(Member member: union.population)
         {
             calculateStrength(member);
@@ -65,16 +62,21 @@ public abstract class Fitness {
             member.fitness = member.rawFitness + member.density;
             indexOfMatrix++;
         }
-
-        System.out.println("Matriz de distancia ");//todo
-        distanceMatrix.printMatrix();//todo
-
     }
 
+
+
+    public static void buildMatrixFromEnvironment(Population environment)
+    {
+        int size = environment.population.size();
+        distanceMatrix = new Matrix(size,size);
+    }
 
     public static void prepareForNextGen()
     {
         distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
     }
+
+
 
 }

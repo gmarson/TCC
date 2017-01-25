@@ -20,38 +20,27 @@ public class SPEA2 {
 
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {
-            System.out.println("GERACAO = "+ genCounter);//todo
+            System.out.println("GERACAO = "+ genCounter+"===========================================");//todo
 
             problem.evaluateAgainstObjectiveFunctions(p);
 
             union.mergeTwoPopulations(p,archive);
 
-
-            union.fastNonDominatedSort(); ///TODO O ERRO TA AKI BIXAO mas essa func tem que existir pra determinar a distancia
-            //todo do k-ésimo vizinho e é por dominancia msm. pensa no grafico
-            //OH VC PAROU TENTANDO DEBUGGAR ESSA FUNCAO AI DE CIMA (FASTNONDOMINATEDSORT)
-
-            System.out.println("union no spea2");//todo
-            Printer.printMembersWithValueAndFitness(union);//todo
-
-            System.out.println("arquivo antigo no spea2"); // todo
-            Printer.printMembersWithValueAndFitness(archive); //todo
+            union.fastNonDominatedSort(); 
+           
 
             Fitness.calculateFitness(union);
 
-
-            archive = union.getNonDominated();
-            Printer.printPopulationArchiveAndUnion(p,archive,union);//todo
-
-            //todo verificar se os numeros estao em ordem de dominancia
+            archive = union.getNonDominated(); 
             
-            System.out.println("Indo pro environmentalSelection");
+            
+    
             archive = EnvironmentalSelection.environmentalSelection(p,archive);
-
+            
             selected = selectedFitness.selectParents(archive);
             
             Crossover bCrossover = new BinaryCrossover();
-            p = bCrossover.crossoverAndMutation(selected);
+            p = bCrossover.crossoverAndMutation(selected); 
 
             genCounter++;
             Fitness.prepareForNextGen();

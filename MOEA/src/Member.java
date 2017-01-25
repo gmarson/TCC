@@ -28,4 +28,18 @@ public class Member {
     {
         this.value = value;
     }
+
+    public Member deepCopy()
+    {
+        Member newMember = new Member(this.value);
+        newMember.rawFitness = this.rawFitness;
+        newMember.density = this.density;
+        newMember.fitness = this.fitness;
+        newMember.strength = this.strength;
+        newMember.distanceFromClosestNeighbor = this.distanceFromClosestNeighbor;
+        newMember.rawFitness = this.rawFitness;
+        newMember.resultOfFunctions = this.resultOfFunctions;
+
+        return newMember;
+    }
 }

@@ -34,6 +34,17 @@ public abstract class Printer
         }
     }
 
+    public static void printMembersWithValueAndDomination(Population p)
+    {
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.value+"Number of solutions that dominates this member = "+m.numberOfSolutionsThatDominatesThisMember);
+            i++;
+        }
+    }
+
     public static void printMembersWithValueAndFitness(Population p)
     {
         checkEmpty(p);
