@@ -46,7 +46,7 @@ public abstract class Fitness {
     {
         int positionOfSigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
         ArrayList<Double> orderedMatrixRow = Utils.returnOrderedArray(distanceMatrix, indexOfMatrix);
-        System.out.println("Order4ed : "+orderedMatrixRow);//todo
+        
         return orderedMatrixRow.get(positionOfSigma);
     }
 
@@ -63,7 +63,9 @@ public abstract class Fitness {
         }
     }
 
-
+    public static void setFirstMatrix(){
+        distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
+    }
 
     public static void buildMatrixFromEnvironment(Population environment)
     {

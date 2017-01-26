@@ -14,15 +14,7 @@ public class ProblemSCH implements Problem {
         ArrayList<Member> population =  new ArrayList<>();
         for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
             population.add(new Member(Utils.getRandom(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
-        }
-
-        population.remove(0);
-        population.remove(0);
-        population.remove(0);
-        population.add(new Member(1));
-        population.add(new Member(2));
-        population.add(new Member(0));
-        
+        }        
 
         return population;
     }
@@ -57,6 +49,28 @@ public class ProblemSCH implements Problem {
         return appliedValue;
     }
 
+    public void checkBestAnswerAppearances(Population p)
+    {
+        boolean one=false, two=false, zero =false;
+
+        for(Member m : p.population)
+        {
+            if(m.value == 0) zero =true;
+            if(m.value == 1) one =true;
+            if(m.value == 2) two=true;
+        }
+
+        if (zero) System.out.println("Apareceu o 0");
+        if (one)  System.out.println("Apareceu o 1");
+        if (two)  System.out.println("Apareceu o 2");
+            
+        
+            
+        
+            
+        
+
+    }
     
 
 }

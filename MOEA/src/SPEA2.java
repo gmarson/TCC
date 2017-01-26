@@ -15,6 +15,7 @@ public class SPEA2 {
         Population union = new Population();
         Population selected = new Population();
         Selection selectedFitness = new SelectionArchive();
+        ProblemSCH problemSCH = new ProblemSCH(); //todo
 
         p.population = problem.generateRandomMembers();
 
@@ -26,12 +27,9 @@ public class SPEA2 {
 
             union.mergeTwoPopulations(p,archive);
 
-
             union.fastNonDominatedSort(); 
            
             Fitness.calculateFitness(union);
-            System.out.println("Populacoes unidas: ");//todo
-            Printer.printMembersWithValueAndFitness(union);
 
             archive = union.getNonDominated(); 
     
@@ -44,11 +42,21 @@ public class SPEA2 {
 
             genCounter++;
             Fitness.prepareForNextGen();
+
+            System.out.println("No final da geracao (arquivo)");
+            problemSCH.checkBestAnswerAppearances(archive); //todo
+
         }
 
         Printer.printMembersWithValue(archive); //todo
+        
     }
 
+    public void nextRun()
+    {
+        Fitness.setFirstMatrix();
+        EnvironmentalSelection.setFirstMatrix();
+    }
 
 
 

@@ -7,7 +7,7 @@ public interface  Constants {
     int POPULATION_SIZE =10;
     int MUTATION_RATE = 5;
     double CROSSOVER_RATE = 1;
-    double NUMBER_OF_GENERATIONS = 5;
+    double NUMBER_OF_GENERATIONS = 15;
     int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS
@@ -22,6 +22,6 @@ public interface  Constants {
     int MAX_BINARY_LEN = 11;
 
     //FOR TEST ONLY
-    int SEED = 59;
+    int SEED = 34;
     
 }

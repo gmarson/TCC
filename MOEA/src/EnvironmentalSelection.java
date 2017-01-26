@@ -32,7 +32,6 @@ public abstract class EnvironmentalSelection {
     public static void removeMostSimilar(Population environment)
     {
 
-
         int positionOfSigma = (int) Math.floor(Math.sqrt((double)environment.population.size()));
         int indexOfMatrix;
         
@@ -45,13 +44,9 @@ public abstract class EnvironmentalSelection {
                 Fitness.calculateDensity(member,environment,indexOfMatrix);
                 indexOfMatrix++;
             }
-            Sorts.quickSortMembersByKey(environment,"density");
-            System.out.println("Environment dentro do removeMostSimilar" );
-            Printer.printMembersWithValueFitnessAndDensity(environment);
 
-            System.out.println("Removendo esse aki "+ environment.population.get(0).value);
-
-            environment.population.remove(0);
+            environment.population.remove(environment.population.size()-1);
+            //todo to na duvida se remove o primeiro ou o ultimo 
         }
         
     }
@@ -63,7 +58,9 @@ public abstract class EnvironmentalSelection {
         Population environment = new Population();
         union.mergeTwoPopulations(population,archive); 
         environment = union.getNonDominated();
-
+        System.out.println("No environmentalSelection imprimindo a uniao");///todo
+        ProblemSCH problemSCH = new ProblemSCH();
+        problemSCH.checkBestAnswerAppearances(union);
 
         if(environment.population.size() < Constants.ARCHIVE_SIZE)
         {   
@@ -78,6 +75,9 @@ public abstract class EnvironmentalSelection {
 
     }
     
-
+    public static void setFirstMatrix()
+    {
+        distanceMatrix = null;
+    }
 
 }
