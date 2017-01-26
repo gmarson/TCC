@@ -31,13 +31,14 @@ public abstract class EnvironmentalSelection {
 
     public static void removeMostSimilar(Population environment)
     {
+
+
         int positionOfSigma = (int) Math.floor(Math.sqrt((double)environment.population.size()));
-        int MatrixSize = environment.population.size();
-        distanceMatrix = new Matrix(MatrixSize, MatrixSize);
         int indexOfMatrix;
-        Fitness.buildMatrixFromEnvironment(environment);
+        
         while(environment.population.size() != Constants.ARCHIVE_SIZE)
         {
+            Fitness.buildMatrixFromEnvironment(environment);
             indexOfMatrix =0;
             for(Member member: environment.population)
             {
@@ -45,6 +46,10 @@ public abstract class EnvironmentalSelection {
                 indexOfMatrix++;
             }
             Sorts.quickSortMembersByKey(environment,"density");
+            System.out.println("Environment dentro do removeMostSimilar" );
+            Printer.printMembersWithValueFitnessAndDensity(environment);
+
+            System.out.println("Removendo esse aki "+ environment.population.get(0).value);
 
             environment.population.remove(0);
         }

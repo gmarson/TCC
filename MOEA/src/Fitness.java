@@ -33,13 +33,11 @@ public abstract class Fitness {
     public static void calculateDistanceBetweenMembers(Member member,Population generic,int indexOfMatrix)
     {
         Member mi = generic.population.get(indexOfMatrix), mj;
-
+       
         for (int j = 0; j < distanceMatrix.distance[0].length; j++)
-        {
-            if(j > indexOfMatrix) break;
+        { 
             mj = generic.population.get(j);
-            
-            distanceMatrix.distance[indexOfMatrix][j] = Utils.euclidianDistance(mi,mj);
+            distanceMatrix.distance[indexOfMatrix][j] = j!=indexOfMatrix? Utils.euclidianDistance(mi,mj) : 0;
         }
         
     }
@@ -48,6 +46,7 @@ public abstract class Fitness {
     {
         int positionOfSigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
         ArrayList<Double> orderedMatrixRow = Utils.returnOrderedArray(distanceMatrix, indexOfMatrix);
+        System.out.println("Order4ed : "+orderedMatrixRow);//todo
         return orderedMatrixRow.get(positionOfSigma);
     }
 

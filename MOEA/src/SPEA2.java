@@ -26,14 +26,14 @@ public class SPEA2 {
 
             union.mergeTwoPopulations(p,archive);
 
+
             union.fastNonDominatedSort(); 
            
-
             Fitness.calculateFitness(union);
+            System.out.println("Populacoes unidas: ");//todo
+            Printer.printMembersWithValueAndFitness(union);
 
             archive = union.getNonDominated(); 
-            
-            
     
             archive = EnvironmentalSelection.environmentalSelection(p,archive);
             

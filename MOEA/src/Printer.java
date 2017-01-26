@@ -56,6 +56,17 @@ public abstract class Printer
         }
     }
 
+    public static void printMembersWithValueFitnessAndDensity(Population p)
+    {
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.value+"   Fitness = "+m.fitness+"   Density = "+m.density);
+            i++;
+        }
+    }
+
     public static void printMembersWithFitness(Population p)
     {
         checkEmpty(p);
@@ -80,5 +91,6 @@ public abstract class Printer
         printMembersWithValueAndFitness(union);
         System.out.println("");
     }
+
 
 }

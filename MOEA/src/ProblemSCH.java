@@ -16,6 +16,13 @@ public class ProblemSCH implements Problem {
             population.add(new Member(Utils.getRandom(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
         }
 
+        population.remove(0);
+        population.remove(0);
+        population.remove(0);
+        population.add(new Member(1));
+        population.add(new Member(2));
+        population.add(new Member(0));
+        
 
         return population;
     }
