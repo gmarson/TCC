@@ -18,6 +18,13 @@ public class Sorts
 				m.key = m.fitness;
 			}
 		}
+		else if(keyForValue.equals("value"))
+		{
+			for(Member m: pop.population)
+			{
+				m.key = m.value;
+			}
+		}
 		sort(pop.population, 0, pop.population.size()-1 );	
 	}
 

@@ -25,6 +25,7 @@ public abstract class Fitness {
     {
         calculateDistanceBetweenMembers(member,generic,indexOfMatrix);
         double sigma = calculateSigma(indexOfMatrix);
+        member.sigma = sigma;
         member.density = 1 / (sigma + 2);
 
     }
@@ -77,6 +78,7 @@ public abstract class Fitness {
     {
         distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
     }
+
 
 
 

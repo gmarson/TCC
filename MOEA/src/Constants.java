@@ -4,14 +4,14 @@
 public interface  Constants {
 
     //ALL MOEAs CONSTANTS
-    int POPULATION_SIZE =10;
+    int POPULATION_SIZE =40;
     int MUTATION_RATE = 5;
     double CROSSOVER_RATE = 1;
-    double NUMBER_OF_GENERATIONS = 15;
+    double NUMBER_OF_GENERATIONS = 8;
     int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS
-    int ARCHIVE_SIZE = 4;
+    int ARCHIVE_SIZE = 20;
     int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
     int MAX_MATRIX_SIZE = DISTANCE_MATRIX_SIZE + POPULATION_SIZE;
 
@@ -22,6 +22,6 @@ public interface  Constants {
     int MAX_BINARY_LEN = 11;
 
     //FOR TEST ONLY
-    int SEED = 34;
+    int SEED = 2;
     
 }

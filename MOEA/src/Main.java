@@ -9,15 +9,13 @@ public class Main {
 
 
         SPEA2 spea2 = new SPEA2();
-        spea2.runAlgorithm();
+		spea2.runAlgorithm();
 
         
         /*for (int i=0;i<100 ;i++) {
         	System.out.println("PARA A SEMENTE = "+i);
         	Utils.setSeed(i);
-            spea2 = null;
-            spea2 = new SPEA2();
-        	spea2.runAlgorithm();
+            new SPEA2().runAlgorithm();
         }*/
         
         

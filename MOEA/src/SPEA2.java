@@ -43,8 +43,7 @@ public class SPEA2 {
             genCounter++;
             Fitness.prepareForNextGen();
 
-            System.out.println("No final da geracao (arquivo)");
-            problemSCH.checkBestAnswerAppearances(archive); //todo
+
 
         }
 
@@ -55,7 +54,6 @@ public class SPEA2 {
     public void nextRun()
     {
         Fitness.setFirstMatrix();
-        EnvironmentalSelection.setFirstMatrix();
     }
 
 

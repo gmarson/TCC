@@ -20,6 +20,7 @@ public class Member {
     protected double fitness = -1;
     protected double strength = -1;
     protected double distanceFromClosestNeighbor = -1;
+    protected double sigma = -1;
 
     //Both Variables
     protected double key;
