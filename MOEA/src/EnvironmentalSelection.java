@@ -46,14 +46,14 @@ public abstract class EnvironmentalSelection {
                 indexOfMatrix++;
             }
             Sorts.quickSortMembersByKey(environment,"density");
-            System.out.println("VAMOS VER A MATRIZ DE DISTANCIA? ");//todo
-            Fitness.distanceMatrix.printMatrix();//todo
+            //System.out.println("VAMOS VER A MATRIZ DE DISTANCIA? ");//todo
+            //Fitness.distanceMatrix.printMatrix();//todo
 
 
 
-            System.out.println("Removendo o ultimo ");//todo
-            Printer.printMembersWithValueFitnessAndDensity(environment);//todo
-            System.out.println("Sigma do ultimo: "+environment.population.get(environment.population.size()-1).sigma);//todo
+            //System.out.println("Removendo o ultimo ");//todo
+            //Printer.printMembersWithValueFitnessAndDensity(environment);//todo
+            //System.out.println("Sigma do ultimo: "+environment.population.get(environment.population.size()-1).sigma);//todo
 
             environment.population.remove(environment.population.size()-1);
             //todo to na duvida se remove o primeiro ou o ultimo 
@@ -68,8 +68,8 @@ public abstract class EnvironmentalSelection {
         Population environment = new Population();
         union.mergeTwoPopulations(population,archive); 
         environment = union.getNonDominated();
-        System.out.println("Union"); // todo
-        Printer.printMembersWithValueFitnessAndDensity(union); //todo
+        //System.out.println("Union"); // todo
+        //Printer.printMembersWithValueFitnessAndDensity(union); //todo
 
         if(environment.population.size() < Constants.ARCHIVE_SIZE)
         {   
@@ -78,8 +78,8 @@ public abstract class EnvironmentalSelection {
         }
         else if(environment.population.size() > Constants.ARCHIVE_SIZE)
         {
-            System.out.println("Environment"); // todo
-            Printer.printMembersWithValueFitnessAndDensity(environment); //todo
+            //System.out.println("Environment"); // todo
+            //Printer.printMembersWithValueFitnessAndDensity(environment); //todo
             removeMostSimilar(environment);
         }
         
