@@ -16,6 +16,7 @@ public class SPEA2 {
         Population selected = new Population();
         Selection selectedFitness = new SelectionArchive();
         ProblemSCH problemSCH = new ProblemSCH(); //todo
+        Crossover bCrossover = new BinaryCrossover();
 
         p.population = problem.generateRandomMembers();
 
@@ -23,28 +24,23 @@ public class SPEA2 {
         {
             System.out.println("GERACAO = "+ genCounter+"===========================================");//todo
 
-            problem.evaluateAgainstObjectiveFunctions(p);
-
             union.mergeTwoPopulations(p,archive);
 
-            union.fastNonDominatedSort(); 
+            problem.evaluateAgainstObjectiveFunctions(union);
+
+            union.fastNonDominatedSort();
            
             Fitness.calculateFitness(union);
-
-            archive = union.getNonDominated(); 
     
             archive = EnvironmentalSelection.environmentalSelection(p,archive);
             
             selected = selectedFitness.selectParents(archive);
-            
-            Crossover bCrossover = new BinaryCrossover();
+
             p = bCrossover.crossoverAndMutation(selected); 
 
             genCounter++;
             Fitness.prepareForNextGen();
-
-
-
+            
         }
 
         Printer.printMembersWithValue(archive); //todo
