@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by gabrielm on 16/01/17.
  */
@@ -29,37 +31,7 @@ public abstract class EnvironmentalSelection {
 
     }
 
-    public static void removeMostSimilar(Population environment)
-    {
 
-        int positionOfSigma = (int) Math.floor(Math.sqrt((double)environment.population.size()));
-        int indexOfMatrix;
-        
-        while(environment.population.size() != Constants.ARCHIVE_SIZE)
-        {
-            Fitness.buildMatrixFromEnvironment(environment);
-
-            indexOfMatrix =0;
-            for(Member member: environment.population)
-            {
-                Fitness.calculateDensity(member,environment,indexOfMatrix);
-                indexOfMatrix++;
-            }
-            Sorts.quickSortMembersByKey(environment,"density");
-            //System.out.println("VAMOS VER A MATRIZ DE DISTANCIA? ");//todo
-            //Fitness.distanceMatrix.printMatrix();//todo
-
-
-
-            //System.out.println("Removendo o ultimo ");//todo
-            //Printer.printMembersWithValueFitnessAndDensity(environment);//todo
-            //System.out.println("Sigma do ultimo: "+environment.population.get(environment.population.size()-1).sigma);//todo
-
-            environment.population.remove(environment.population.size()-1);
-            //todo to na duvida se remove o primeiro ou o ultimo 
-        }
-        
-    }
 
 
     public static Population environmentalSelection(Population population, Population archive)
@@ -68,8 +40,7 @@ public abstract class EnvironmentalSelection {
         Population environment = new Population();
         union.mergeTwoPopulations(population,archive); 
         environment = union.getNonDominated();
-        //System.out.println("Union"); // todo
-        //Printer.printMembersWithValueFitnessAndDensity(union); //todo
+
 
         if(environment.population.size() < Constants.ARCHIVE_SIZE)
         {   
@@ -86,7 +57,71 @@ public abstract class EnvironmentalSelection {
         return environment;
 
     }
-    
+
+
+    public static void removeMostSimilar(Population environment)
+    {
+
+        System.out.println("Tamanho do environment: "+environment.population.size());
+
+        while(environment.population.size() > Constants.ARCHIVE_SIZE)
+        {
+            System.out.println("E");
+            int indexOfMemberToBeExcluded = findMostCrowdedMember(environment);
+            environment.population.remove(indexOfMemberToBeExcluded);
+            Fitness.buildMatrixFromEnvironment(environment);
+            int i =0;
+            for (Member member: environment.population)
+            {
+                Fitness.calculateDistanceBetweenMembers(member,environment,i);
+                i++;
+            }
+        }
+
+        System.out.println("Tamanho do environment: "+environment.population.size());
+
+    }
+
+    public static int findMostCrowdedMember(Population environment){
+        double minimumDistance = Double.POSITIVE_INFINITY;
+        int minimumIndex = -1;
+
+        for (int i =0 ; i< Fitness.distanceMatrix.rows; i++)
+        {
+            ArrayList<Double> distanceArray = Fitness.distanceMatrix.getDistanceFromMemberIndex(i);
+
+            System.out.println(distanceArray.get(i));
+            if (distanceArray.get(i) < minimumDistance)
+            {
+                minimumDistance = distanceArray.get(i);
+                minimumIndex = i;
+            }
+            else if (distanceArray.get(i) == minimumDistance)
+            {
+                for (int k = 0; k < distanceArray.size(); k++) {
+                    double KthDistance1 = distanceArray.get(k);
+                    double KthDistance2 = Fitness.distanceMatrix.distance[minimumIndex][k];
+
+                    if (KthDistance1 < KthDistance2)
+                    {
+                        minimumIndex = i;
+                        break;
+                    }
+                    else if (KthDistance2 < KthDistance1)
+                    {
+                        break;
+                    }
+
+                }
+            }
+
+        }
+
+        return minimumIndex;
+
+
+    }
+
 
 
 }

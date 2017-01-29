@@ -2,6 +2,7 @@
  * Created by gabrielm on 12/01/17.
  */
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Matrix {
 
@@ -46,5 +47,25 @@ public class Matrix {
             System.out.print("\n");
         }
     }
-    
+
+    public int size()
+    {
+        return size;
+    }
+
+
+    public ArrayList<Double> getDistanceFromMemberIndex(int memberIndex)
+    {
+        ArrayList<Double> distanceArray = new ArrayList<>();
+        for (int i = 0; i < columns; i++) {
+            if (i != memberIndex)
+            {
+                distanceArray.add(distance[memberIndex][i]);
+            }
+        }
+
+        return distanceArray;
+
+    }
+
 }

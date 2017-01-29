@@ -10,7 +10,7 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    static Random random = new Random();
+    static Random random = new Random(Constants.SEED);
 
     public static void setSeed(int SEED)
     {
