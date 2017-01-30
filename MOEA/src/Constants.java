@@ -4,14 +4,14 @@
 public interface  Constants {
 
     //ALL MOEAs CONSTANTS
-    int POPULATION_SIZE =100; //6
+    int POPULATION_SIZE =10; //6
     int MUTATION_RATE = 5;
     double CROSSOVER_RATE = 1;
     double NUMBER_OF_GENERATIONS = 25; // nessa semente, com 20 ger tem 1 e 2 e com 25 tem 0 e 2. Que loucura.
     int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS
-    int ARCHIVE_SIZE = 60; //3
+    int ARCHIVE_SIZE = 4; //3
     int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
     int MAX_MATRIX_SIZE = DISTANCE_MATRIX_SIZE + POPULATION_SIZE;
 

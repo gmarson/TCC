@@ -36,6 +36,8 @@ public abstract class EnvironmentalSelection {
 
     public static Population environmentalSelection(Population population, Population archive)
     {
+
+
         Population union = new Population();
         Population environment = new Population();
         union.mergeTwoPopulations(population,archive); 
@@ -48,7 +50,8 @@ public abstract class EnvironmentalSelection {
 
         }
         else if(environment.population.size() > Constants.ARCHIVE_SIZE)
-        {
+        {   
+            System.out.println("RemoveMostSimilar"); //todo
             //System.out.println("Environment"); // todo
             //Printer.printMembersWithValueFitnessAndDensity(environment); //todo
             removeMostSimilar(environment);
@@ -62,11 +65,11 @@ public abstract class EnvironmentalSelection {
     public static void removeMostSimilar(Population environment)
     {
 
-        System.out.println("Tamanho do environment: "+environment.population.size());
+        System.out.println("Tamanho do environment: "+environment.population.size());//todo
 
         while(environment.population.size() > Constants.ARCHIVE_SIZE)
         {
-            System.out.println("E");
+            
             int indexOfMemberToBeExcluded = findMostCrowdedMember(environment);
             environment.population.remove(indexOfMemberToBeExcluded);
             Fitness.buildMatrixFromEnvironment(environment);
@@ -78,7 +81,7 @@ public abstract class EnvironmentalSelection {
             }
         }
 
-        System.out.println("Tamanho do environment: "+environment.population.size());
+        System.out.println("Tamanho do environment: "+environment.population.size()); //todo
 
     }
 
@@ -88,8 +91,13 @@ public abstract class EnvironmentalSelection {
 
         for (int i =0 ; i< Fitness.distanceMatrix.rows; i++)
         {
+            System.out.println("Tamanho da matrix: "+ Fitness.distanceMatrix.size());//todo
+            System.out.println("Linhas : "+ Fitness.distanceMatrix.rows);//todo
+            System.out.println("Colunas: "+ Fitness.distanceMatrix.columns);//todo
+            System.out.println("Index i: "+ i);//todo
+            Fitness.distanceMatrix.printMatrix();//todo
             ArrayList<Double> distanceArray = Fitness.distanceMatrix.getDistanceFromMemberIndex(i);
-
+            System.out.println("Distance array: "+distanceArray);//todo
             System.out.println(distanceArray.get(i));
             if (distanceArray.get(i) < minimumDistance)
             {
