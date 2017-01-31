@@ -95,15 +95,13 @@ public abstract class EnvironmentalSelection {
         while(archive.population.size() > 1 && distancia_a_analisar < firstSizeOfDistanceArray)
         {
             minimumDistance = archive.population(0).distances.get(distancia_a_analisar);
-            mostCrowdedMembers = new ArrayList<>();
-            mostCrowdedMembers.add(archive.population.get(0));
+            mostCrowdedMembers = Utils.newArrayWithMember(archive.population.get(0));
 
             for(int i =1; i< archive.size(); i++){
                 int distI = archive.population.get(i).distances.get(distancia_a_analisar);
                 
                 if (distI < minimumDistance) {
-                    mostCrowdedMembers = new ArrayList<>();
-                    mostCrowdedMembers.add(archive.population.get(i));
+                    mostCrowdedMembers = Utils.newArrayWithMember(archive.population.get(i));
                 }
                 else if(distI == minimumDistance)
                 {   
