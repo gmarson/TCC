@@ -122,4 +122,10 @@ public abstract class Utils {
         }
 
     }
+
+    //OH TAVA AKI PQ AI EU VOU TIRAR LINHAS DA OUTRA FUNCAO
+    private static ArrayList<Member> newArrayWithMember()
+    {
+
+    }
 }

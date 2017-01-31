@@ -27,9 +27,7 @@ public abstract class Fitness {
         double sigma = calculateSigma(indexOfMatrix);
         member.sigma = sigma;
         member.density = 1 / (sigma + 2);
-
     }
-
 
     public static void calculateDistanceBetweenMembers(Member member,Population generic,int indexOfMatrix)
     {
@@ -40,7 +38,7 @@ public abstract class Fitness {
             mj = generic.population.get(j);
             distanceMatrix.distance[indexOfMatrix][j] = j!=indexOfMatrix? Utils.euclidianDistance(mi,mj) : 0;
         }
-        
+
     }
 
     public static double calculateSigma(int indexOfMatrix)
@@ -79,7 +77,18 @@ public abstract class Fitness {
         distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
     }
 
+    public static void copyDistancesFromMatrixToMembers(Population p)
+    {
+        int indexOfMatrix = 0;
+        for (Member member: p.population ) {
+            for(int i=0;i<distanceMatrix.rows; i++)
+                if (indexOfMatrix != i) {
+                    Utils.insertDataOnOrderedArray(distanceMatrix.distance[indexOfMatrix][i],member.distaces);
+                }
 
+            indexOfMatrix++;
+        }
+    }
 
 
 }

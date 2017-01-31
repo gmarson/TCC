@@ -19,8 +19,8 @@ public class Member {
     protected double density = -1;
     protected double fitness = -1;
     protected double strength = -1;
-    protected double distanceFromClosestNeighbor = -1;
     protected double sigma = -1;
+    protected ArrayList<Double> distances = new ArrayList<>();
 
     //Both Variables
     protected double key;
@@ -37,9 +37,9 @@ public class Member {
         newMember.density = this.density;
         newMember.fitness = this.fitness;
         newMember.strength = this.strength;
-        newMember.distanceFromClosestNeighbor = this.distanceFromClosestNeighbor;
         newMember.rawFitness = this.rawFitness;
         newMember.resultOfFunctions = this.resultOfFunctions;
+        newMember.distances = this.distances;
 
         return newMember;
     }

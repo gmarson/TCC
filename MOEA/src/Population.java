@@ -40,6 +40,7 @@ public class Population {
             member.density = 0;
             member.rawFitness = 0;
             member.fitness = 0;
+            member.distances = new ArrayList<>();
         }
 
     }

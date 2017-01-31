@@ -61,7 +61,6 @@ public abstract class EnvironmentalSelection {
 
     }
 
-
     public static void removeMostSimilar(Population environment)
     {
 
@@ -70,8 +69,8 @@ public abstract class EnvironmentalSelection {
         while(environment.population.size() > Constants.ARCHIVE_SIZE)
         {
             
-            int indexOfMemberToBeExcluded = findMostCrowdedMember(environment);
-            environment.population.remove(indexOfMemberToBeExcluded);
+            Member memberToBeExcluded = findMostCrowdedMember(environment);
+            environment.population.remove(memberToBeExcluded);
             Fitness.buildMatrixFromEnvironment(environment);
             int i =0;
             for (Member member: environment.population)
@@ -85,47 +84,38 @@ public abstract class EnvironmentalSelection {
 
     }
 
-    public static int findMostCrowdedMember(Population environment){
-        double minimumDistance = Double.POSITIVE_INFINITY;
-        int minimumIndex = -1;
+    public static Member findMostCrowdedMember(Population archive){
+        ArrayList<Member> mostCrowdedMembers = new ArrayList<>();        
+        double minimumDistance;
+        int firstSizeOfDistanceArray = archive.population.size();
+        int distancia_a_analisar = 0;
 
-        for (int i =0 ; i< Fitness.distanceMatrix.rows; i++)
+        Fitness.copyDistancesFromMatrixToMembers(archive);
+
+        while(archive.population.size() > 1 && distancia_a_analisar < firstSizeOfDistanceArray)
         {
-            System.out.println("Tamanho da matrix: "+ Fitness.distanceMatrix.size());//todo
-            System.out.println("Linhas : "+ Fitness.distanceMatrix.rows);//todo
-            System.out.println("Colunas: "+ Fitness.distanceMatrix.columns);//todo
-            System.out.println("Index i: "+ i);//todo
-            Fitness.distanceMatrix.printMatrix();//todo
-            ArrayList<Double> distanceArray = Fitness.distanceMatrix.getDistanceFromMemberIndex(i);
-            System.out.println("Distance array: "+distanceArray);//todo
-            System.out.println(distanceArray.get(i));
-            if (distanceArray.get(i) < minimumDistance)
-            {
-                minimumDistance = distanceArray.get(i);
-                minimumIndex = i;
-            }
-            else if (distanceArray.get(i) == minimumDistance)
-            {
-                for (int k = 0; k < distanceArray.size(); k++) {
-                    double KthDistance1 = distanceArray.get(k);
-                    double KthDistance2 = Fitness.distanceMatrix.distance[minimumIndex][k];
+            minimumDistance = archive.population(0).distances.get(distancia_a_analisar);
+            mostCrowdedMembers = new ArrayList<>();
+            mostCrowdedMembers.add(archive.population.get(0));
 
-                    if (KthDistance1 < KthDistance2)
-                    {
-                        minimumIndex = i;
-                        break;
-                    }
-                    else if (KthDistance2 < KthDistance1)
-                    {
-                        break;
-                    }
-
+            for(int i =1; i< archive.size(); i++){
+                int distI = archive.population.get(i).distances.get(distancia_a_analisar);
+                
+                if (distI < minimumDistance) {
+                    mostCrowdedMembers = new ArrayList<>();
+                    mostCrowdedMembers.add(archive.population.get(i));
+                }
+                else if(distI == minimumDistance)
+                {   
+                    mostCrowdedMembers.add(archive.population.get(i));
                 }
             }
 
+            archive.population = mostCrowdedMembers;
+            distancia_a_analisar++;
         }
 
-        return minimumIndex;
+        return mostCrowdedMembers.get(0);
 
 
     }

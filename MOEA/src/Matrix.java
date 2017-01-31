@@ -58,14 +58,12 @@ public class Matrix {
     {
         ArrayList<Double> distanceArray = new ArrayList<>();
         for (int i = 0; i < columns; i++) {
-            if (i != memberIndex) // todo a treta ta aki, ele ta retornando uma menos por causa 
-            //todo do incide. Entao vamo fazer assim, vamo usar o pair pq ai eu retorno a lista dos values
-            //todo com o indice do individuo na matriz.
+            if (i != memberIndex)
             {
-                distanceArray.add(distance[memberIndex][i]);
+                Utils.insertDataOnOrderedArray(distance[memberIndex][i],distanceArray);
             }
         }
-        System.out.println("Ta ai a distancia: "+distanceArray);
+        
         return distanceArray;
 
     }
