@@ -9,7 +9,7 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    static Random random = new Random(Constants.SEED);
+    static Random random = new Random();
 
     public static void setSeed(int SEED)
     {
@@ -145,7 +145,7 @@ public abstract class Utils {
     public static ArrayList<Member> newArrayWithMember(Member member)
     {
         ArrayList<Member> mostCrowdedMembers = new ArrayList<>();
-        mostCrowdedMembers.add(member.deepCopy());
+        mostCrowdedMembers.add(member);
 
         return mostCrowdedMembers;
     }

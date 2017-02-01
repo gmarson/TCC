@@ -7,11 +7,11 @@ public interface  Constants {
     int POPULATION_SIZE =100; //6
     int MUTATION_RATE = 5;
     double CROSSOVER_RATE = 1;
-    double NUMBER_OF_GENERATIONS = 12; // nessa semente, com 20 ger tem 1 e 2 e com 25 tem 0 e 2. Que loucura.
+    double NUMBER_OF_GENERATIONS = 25; // nessa semente, com 20 ger tem 1 e 2 e com 25 tem 0 e 2. Que loucura.
     int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS
-    int ARCHIVE_SIZE = 60; //3
+    int ARCHIVE_SIZE = 10; //3
     int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
     int MAX_MATRIX_SIZE = DISTANCE_MATRIX_SIZE + POPULATION_SIZE;
 

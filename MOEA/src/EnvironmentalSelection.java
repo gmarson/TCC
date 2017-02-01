@@ -65,7 +65,7 @@ public abstract class EnvironmentalSelection {
     public static void removeMostSimilar(Population environment)
     {
 
-        System.out.println("Tamanho do environment antes de remover: "+environment.population.size());//todo
+        //System.out.println("Tamanho do environment antes de remover: "+environment.population.size());//todo
 
         while(environment.population.size() > Constants.ARCHIVE_SIZE)
         {
@@ -80,13 +80,16 @@ public abstract class EnvironmentalSelection {
             Member memberToBeExcluded = findMostCrowdedMember(new Population(environment));
             environment.population.remove(memberToBeExcluded);
 
+            //System.out.println("Tamanho do environment: "+environment.population.size());
+
+
         }
 
 
 
 
 
-        System.out.println("Tamanho do environment depois de remover: "+environment.population.size()); //todo
+        //System.out.println("Tamanho do environment depois de remover: "+environment.population.size()); //todo
 
 
 
@@ -95,40 +98,21 @@ public abstract class EnvironmentalSelection {
     public static Member findMostCrowdedMember(Population archive){
         Population mostCrowdedMembers = new Population();
         double minimumDistance;
-        int firstSizeOfDistanceArray = archive.population.size()-1;
+        int sizeOfDistanceArray = archive.population.size()-1;
         int distanceToProcess = 0;
-        boolean x = true; //todo
-
-        System.out.println("POP");//todo
-        Printer.printMembersWithValueAndFitness(archive);//todo
-
-        System.out.println("Vamos ver a Matriz? ");//todo
-        Fitness.distanceMatrix.printMatrix(); // todo
         Fitness.copyDistancesFromMatrixToMembers(archive);
 
 
-        Scanner s = new Scanner(System.in);//todo
-        for (Member member: archive.population)
-        {
-            if (member.value == 1) x= false;
-        }
-        if (x) {
-            s.nextLine(); //todo
-        }
-
-        //System.out.println("Environment inicial: ");//todo
-        //Printer.printMembersWithValueAndFitness(archive);//todo
-
-        while(archive.population.size() > 1 && distanceToProcess < firstSizeOfDistanceArray)
+        while(archive.population.size() > 1 && distanceToProcess < sizeOfDistanceArray)
         {
 
-            System.out.println("NOVO LACO");//todo
-            System.out.println("Tamanho do environment laco: "+archive.population.size()); //todo
+            //System.out.println("NOVO LACO");//todo
+            //System.out.println("Tamanho do environment laco: "+archive.population.size()); //todo
 
             minimumDistance = archive.population.get(0).distances.get(distanceToProcess);
-            System.out.println("Distance to Process: "+distanceToProcess);//todo
-            System.out.println("Array de distancia do indivíduo "+archive.population.get(distanceToProcess).value+"(value): "+archive.population.get(0).distances);//todo
-            System.out.println("Distancia minima: "+minimumDistance);//todo
+            //System.out.println("Distance to Process: "+distanceToProcess);//todo
+            //System.out.println("Array de distancia do indivíduo "+archive.population.get(distanceToProcess).value+"(value): "+archive.population.get(0).distances);//todo
+            //System.out.println("Distancia minima: "+minimumDistance);//todo
             mostCrowdedMembers.population = Utils.newArrayWithMember(archive.population.get(0));
 
             for(int i =1; i< archive.population.size(); i++){
@@ -139,23 +123,24 @@ public abstract class EnvironmentalSelection {
                 }
                 else if(distI == minimumDistance)
                 {   
-                    mostCrowdedMembers.population.add(archive.population.get(i).deepCopy());
+                    mostCrowdedMembers.population.add(archive.population.get(i));
                 }
             }
 
+            //System.out.println("Most Crowded Members: ");//todo
+            //Printer.printMembersWithValueAndDistance(mostCrowdedMembers);//todo
 
 
-
-            //TODO o erro eh que eu to diminuindo o array sem fazer controle do distanceToProcess
 
             archive.population = mostCrowdedMembers.population;
+            sizeOfDistanceArray = archive.population.size()-1;
             distanceToProcess++;
+            //System.out.println("Tamanho do environment final laco: "+archive.population.size()); //todo
         }
 
 
 
-        //System.out.println("Most Crowded Members: ");//todo
-        //Printer.printMembersWithValueAndDistance(mostCrowdedMembers);//todo
+
 
         //System.out.println("Populacao do arquivo ");//todo
         //Printer.printMembersWithValueAndFitness(archive);//todo
