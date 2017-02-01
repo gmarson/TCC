@@ -78,6 +78,18 @@ public abstract class Printer
         }
     }
 
+
+    public static void printMembersWithValueAndDistance(Population p){
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ ", value = "+m.value+"  distance: "+m.distances);
+            i++;
+        }
+    }
+
+
     public static void printPopulationArchiveAndUnion(Population p, Population archive, Population union)
     {
         System.out.println("");

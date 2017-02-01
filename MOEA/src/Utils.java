@@ -1,5 +1,4 @@
 
-import java.awt.*;
 import java.util.*;
 
 import static java.lang.Math.*;
@@ -95,7 +94,7 @@ public abstract class Utils {
             if (j != indexOfMatrix)
             {
                 dataToBeInserted = distanceMatrix.distance[indexOfMatrix][j];
-                insertDataOnOrderedArray(dataToBeInserted,dataArray);
+                insertDataOnDescresentOrderedArray(dataToBeInserted,dataArray);
 
             }
             
@@ -104,7 +103,7 @@ public abstract class Utils {
         return dataArray;
     }
 
-    private static void insertDataOnOrderedArray(double dataToBeInserted, ArrayList<Double> dataArray)
+    public static void insertDataOnDescresentOrderedArray(double dataToBeInserted, ArrayList<Double> dataArray)
     {
         if (dataArray.isEmpty())
             dataArray.add(dataToBeInserted);
@@ -123,10 +122,31 @@ public abstract class Utils {
 
     }
 
-
-    private static ArrayList<Member> newArrayWithMember()
+    public static void insertDataOnCrescentOrderedArray(double dataToBeInserted, ArrayList<Double> dataArray)
     {
-        mostCrowdedMembers = new ArrayList<>();
-        mostCrowdedMembers.add(archive.population.get(i));
+        if (dataArray.isEmpty())
+            dataArray.add(dataToBeInserted);
+        else
+        {
+            int i=0;
+
+            while(dataToBeInserted > dataArray.get(i))
+            {
+                i++;
+                if(i == dataArray.size()) break;
+            }
+            dataArray.add(i,dataToBeInserted);
+
+        }
+
+    }
+
+
+    public static ArrayList<Member> newArrayWithMember(Member member)
+    {
+        ArrayList<Member> mostCrowdedMembers = new ArrayList<>();
+        mostCrowdedMembers.add(member.deepCopy());
+
+        return mostCrowdedMembers;
     }
 }

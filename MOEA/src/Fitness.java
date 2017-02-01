@@ -23,13 +23,13 @@ public abstract class Fitness {
 
     public static void calculateDensity(Member member, Population generic, int indexOfMatrix)
     {
-        calculateDistanceBetweenMembers(member,generic,indexOfMatrix);
+        calculateDistanceBetweenMembers(generic,indexOfMatrix);
         double sigma = calculateSigma(indexOfMatrix);
         member.sigma = sigma;
         member.density = 1 / (sigma + 2);
     }
 
-    public static void calculateDistanceBetweenMembers(Member member,Population generic,int indexOfMatrix)
+    public static void calculateDistanceBetweenMembers(Population generic,int indexOfMatrix)
     {
         Member mi = generic.population.get(indexOfMatrix), mj;
        
@@ -83,7 +83,7 @@ public abstract class Fitness {
         for (Member member: p.population ) {
             for(int i=0;i<distanceMatrix.rows; i++)
                 if (indexOfMatrix != i) {
-                    Utils.insertDataOnOrderedArray(distanceMatrix.distance[indexOfMatrix][i],member.distaces);
+                    Utils.insertDataOnCrescentOrderedArray(distanceMatrix.distance[indexOfMatrix][i],member.distances);
                 }
 
             indexOfMatrix++;

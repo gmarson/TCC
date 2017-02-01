@@ -9,11 +9,19 @@ public class Population {
     protected ArrayList<Member> population = new ArrayList<>();
     protected Problem problem;
     protected Fronts fronts = new Fronts();
+
     protected static Dominance dominance = new Dominance();
 
     public Population()
     {
         this.problem = new ProblemSCH();
+    }
+
+    public Population(Population p)
+    {
+        this.problem = p.problem;
+        this.fronts = p.fronts;
+        this.population = p.population;
     }
 
     public void fastNonDominatedSort()

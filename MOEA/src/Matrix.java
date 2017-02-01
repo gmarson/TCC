@@ -60,7 +60,7 @@ public class Matrix {
         for (int i = 0; i < columns; i++) {
             if (i != memberIndex)
             {
-                Utils.insertDataOnOrderedArray(distance[memberIndex][i],distanceArray);
+                Utils.insertDataOnDescresentOrderedArray(distance[memberIndex][i],distanceArray);
             }
         }
         
