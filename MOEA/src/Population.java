@@ -7,19 +7,18 @@ import java.util.ArrayList;
 public class Population {
 
     protected ArrayList<Member> population = new ArrayList<>();
-    protected Problem problem;
+
     protected Fronts fronts = new Fronts();
 
     protected static Dominance dominance = new Dominance();
 
     public Population()
     {
-        this.problem = new ProblemSCH();
+
     }
 
     public Population(Population p)
     {
-        this.problem = p.problem;
         this.fronts = p.fronts;
         this.population = p.population;
     }
@@ -38,6 +37,7 @@ public class Population {
         this.fronts = new Fronts();
         for(Member member:population)
         {
+            //NSGAII
             member.numberOfSolutionsThatDominatesThisMember =0;
             member.solutionsThatThisMemberDominates = new ArrayList<>();
             member.rank = -1;
@@ -137,7 +137,7 @@ public class Population {
         {
             this.population.add(member);
         }
-    }//todo acho que um addAll substitui bem
+    }
 
     public Population getNonDominated()
     {

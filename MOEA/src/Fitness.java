@@ -14,14 +14,13 @@ public abstract class Fitness {
 
     public static void calculateRawFitness(Member memberToBeEvaluated, Population union)
     {
-        for (Member member: union.population)
-        {
-            if(member.solutionsThatThisMemberDominates.contains(memberToBeEvaluated))
+        for (Member member: union.population) {
+            if (member.solutionsThatThisMemberDominates.contains(memberToBeEvaluated))
                 memberToBeEvaluated.rawFitness += member.strength;
         }
     }
 
-    public static void calculateDensity(Member member, Population generic, int indexOfMatrix)
+    private static void calculateDensity(Member member, Population generic, int indexOfMatrix)
     {
         calculateDistanceBetweenMembers(generic,indexOfMatrix);
         double sigma = calculateSigma(indexOfMatrix);

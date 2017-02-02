@@ -6,7 +6,7 @@ import java.util.ArrayList;
  */
 
 
-public class BinaryCrossover implements Crossover {
+public class CrossoverBinary implements Crossover {
 
     @Override
     public Population crossoverAndMutation(Population selected){
@@ -31,11 +31,11 @@ public class BinaryCrossover implements Crossover {
             children.addMember(new Member(pairOfChildren.get(1)));
         }
 
-        
         return children;
     }
 
-    protected void binaryMutation(ArrayList<Integer> binaryNumber)
+
+    public void mutation(ArrayList<Integer> binaryNumber)
     {
         if(Utils.getRandom(1,100) <= Constants.MUTATION_RATE)
         {
@@ -75,8 +75,8 @@ public class BinaryCrossover implements Crossover {
         child1First.addAll(child2Second);
         child2First.addAll(child1Second);
 
-        binaryMutation(child1First);
-        binaryMutation(child2First);
+        mutation(child1First);
+        mutation(child2First);
 
         pairOfChildren.add(Utils.binaryToInteger(child1First));
         pairOfChildren.add(Utils.binaryToInteger(child2First));

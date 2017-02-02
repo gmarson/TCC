@@ -4,24 +4,23 @@
  */
 public class NSGAII {
 
-    public void runAlgorithm()
+    public void runAlgorithm(Problem problem)
     {
        
         Front lastFrontToMergeWithPopulation = null;
         int genCounter = 0;
         Population union, sortedUnion;
         Population p = new Population();
-        ProblemSCH problem = new ProblemSCH();
-        Crossover binaryCrossover = new BinaryCrossover();
+        problem = new ProblemSCH();
         Selection selectRanked = new SelectionRank();
         Selection selectRankCrowded = new SelectionRankCrowding();
 
-        p.population = p.problem.generateRandomMembers();
+        p.population = problem.generateRandomMembers();
         problem.evaluateAgainstObjectiveFunctions(p);
         p.fastNonDominatedSort();
 
         Population selected = selectRanked.selectParents(p);
-        Population children = binaryCrossover.crossoverAndMutation(selected);
+        Population children = problem.crossover.crossoverAndMutation(selected);
 
         sortedUnion = new Population();
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
@@ -57,7 +56,7 @@ public class NSGAII {
 
             selected = selectRankCrowded.selectParents(sortedUnion);
             p = sortedUnion;
-            children = binaryCrossover.crossoverAndMutation(selected);
+            children = problem.crossover.crossoverAndMutation(selected);
 
         }
 

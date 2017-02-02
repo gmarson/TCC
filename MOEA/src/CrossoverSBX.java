@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Created by gabrielm on 09/01/17.
  */
-public class SBXCrossover implements Crossover{
+public class CrossoverSBX implements Crossover{
 
     @Override
     public Population crossoverAndMutation(Population selected) {

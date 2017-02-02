@@ -1,24 +1,20 @@
+import com.sun.tools.internal.jxc.ap.Const;
+
 import java.util.ArrayList;
 
 /**
  * Created by gmarson on 12/21/2016.
  * TCC UFU
  */
-public class ProblemSCH implements Problem {
+public class ProblemSCH extends Problem {
 
-    public ProblemSCH(){}
-
-
-    @Override
-    public ArrayList<Member> generateRandomMembers() {
-        ArrayList<Member> population =  new ArrayList<>();
-        for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
-            population.add(new Member(Utils.getRandom(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
-        }        
-
-
-
-        return population;
+    public ProblemSCH()
+    {
+        crossover = new CrossoverBinary();
+        Constants.PROBLEM_SIZE = 2;
+        Constants.MAX_MEMBER_VALUE = 1000;
+        Constants.MIN_MEMBER_VALUE = -1000;
+        Constants.MAX_BINARY_LEN = 11;
     }
 
     @Override
@@ -29,7 +25,18 @@ public class ProblemSCH implements Problem {
         }
     }
 
+    @Override
+    public ArrayList<Member> generateRandomMembers() {
+        ArrayList<Member> population =  new ArrayList<>();
+        for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
+            population.add(new Member(Utils.getRandom(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
+        }        
 
+        return population;
+    }
+
+
+    @Override
     public void applyFunctions(Member member)
     {
         int valueOfMember = (int) member.value;
@@ -37,6 +44,7 @@ public class ProblemSCH implements Problem {
         member.resultOfFunctions.add(secondFunction(valueOfMember));
     }
 
+    @Override
     public double firstFunction(int valueOfMember)
     {
         double appliedValue;
@@ -44,6 +52,7 @@ public class ProblemSCH implements Problem {
         return appliedValue;
     }
 
+    @Override
     public double secondFunction(int valueOfMember)
     {
         double appliedValue;

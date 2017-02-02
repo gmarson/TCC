@@ -7,16 +7,14 @@ public class SPEA2 {
 
     Scanner s = new Scanner(System.in);
 
-    public void runAlgorithm(){
+    public void runAlgorithm(Problem problem){
         int genCounter = 0;
+
         Population p = new Population();
-        Problem problem = new ProblemSCH();
         Population archive = new Population();
         Population union = new Population();
         Population selected = new Population();
         Selection selectedFitness = new SelectionArchive();
-        ProblemSCH problemSCH = new ProblemSCH(); //todo
-        Crossover bCrossover = new BinaryCrossover();
 
         p.population = problem.generateRandomMembers();
 
@@ -36,7 +34,7 @@ public class SPEA2 {
             
             selected = selectedFitness.selectParents(archive);
 
-            p = bCrossover.crossoverAndMutation(selected); 
+            p = problem.crossover.crossoverAndMutation(selected);
 
             genCounter++;
             Fitness.prepareForNextGen();
