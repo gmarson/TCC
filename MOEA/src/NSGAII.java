@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by gmarson on 12/20/2016.
  * TCC UFU
@@ -11,7 +13,7 @@ public class NSGAII {
         int genCounter = 0;
         Population union, sortedUnion;
         Population p = new Population();
-        problem = new ProblemSCH();
+
         Selection selectRanked = new SelectionRank();
         Selection selectRankCrowded = new SelectionRankCrowding();
 
@@ -25,6 +27,7 @@ public class NSGAII {
         sortedUnion = new Population();
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {
+            System.out.println("GERACAO = "+ genCounter+"===========================================");
             genCounter++;
             problem.evaluateAgainstObjectiveFunctions(children);
             union = p.mergeWithCurrentPopulation(children);
@@ -61,9 +64,9 @@ public class NSGAII {
         }
 
         sortedUnion.fastNonDominatedSort();
-        System.out.println(sortedUnion.fronts.returnFirstFrontOccurances());
 
 
+        sortedUnion.fronts.printFirstFrontOccurances();
     }
 
 }

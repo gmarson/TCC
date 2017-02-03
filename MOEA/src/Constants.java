@@ -7,11 +7,11 @@ public abstract class  Constants {
     static int POPULATION_SIZE =100; //6
     static int MUTATION_RATE = 5;
     static double CROSSOVER_RATE = 1;
-    static double NUMBER_OF_GENERATIONS = 25; // nessa semente, com 20 ger tem 1 e 2 e com 25 tem 0 e 2. Que loucura.
+    static double NUMBER_OF_GENERATIONS = 100; // nessa semente, com 20 ger tem 1 e 2 e com 25 tem 0 e 2. Que loucura.
     static int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS
-    static int ARCHIVE_SIZE = 10; //3
+    static int ARCHIVE_SIZE = 60; //3
     static int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
     static int MAX_MATRIX_SIZE = DISTANCE_MATRIX_SIZE + POPULATION_SIZE;
 

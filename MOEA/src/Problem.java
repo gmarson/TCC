@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public abstract class  Problem {
 
-    static Crossover crossover;
+    Crossover crossover;
 
     public abstract void evaluateAgainstObjectiveFunctions(Population p);
     public abstract ArrayList<Member> generateRandomMembers();

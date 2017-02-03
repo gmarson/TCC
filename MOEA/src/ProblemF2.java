@@ -7,7 +7,7 @@ public class ProblemF2 extends  Problem {
 
     public ProblemF2()
     {
-
+        crossover = new CrossoverArithmetic();
         Constants.PROBLEM_SIZE = 2;
         Constants.MAX_MEMBER_VALUE = 10;
         Constants.MIN_MEMBER_VALUE = -10;
