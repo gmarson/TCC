@@ -21,8 +21,6 @@ public class Fronts {
 
             this.allFronts.get(currentRankOfMember).addMemberToFront(member);
         }
-
-
     }
 
     public void addNewFront(int currentRankOfMember)
@@ -49,14 +47,15 @@ public class Fronts {
         System.out.println("Populacao: "+i);
     }
 
-    public ArrayList<Double> returnFirstFrontOccurances() {
+    public void printFirstFrontOccurances() {
         ArrayList<Double> occurrances = new ArrayList<Double>();
         for (Member member:this.allFronts.get(0).membersAtThisFront)
         {
             if (!occurrances.contains(member.value)){
                 occurrances.add(member.value);
+                System.out.println(member.value);
             }
         }
-        return occurrances;
+
     }
 }

@@ -4,14 +4,15 @@ public class Main {
     public static void main(String[] args) {
         
 
-    	ProblemSCH sch = new ProblemSCH();
+    	Problem sch = new ProblemSCH();
+		Problem f2 = new ProblemF2();
 
-        //NSGAII nsgaii = new NSGAII();
-        //nsgaii.runAlgorithm(sch);
+        NSGAII nsgaii = new NSGAII();
+        nsgaii.runAlgorithm(f2);
 
 
-        SPEA2 spea2 = new SPEA2();
-		spea2.runAlgorithm(sch);
+        //SPEA2 spea2 = new SPEA2();
+		//spea2.runAlgorithm(f2);
 
         
         /*for (int i=0;i<100 ;i++) {
