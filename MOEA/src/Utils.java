@@ -22,6 +22,16 @@ public abstract class Utils {
         return random.nextInt((max - min) + 1) + min;
     }
 
+    public static ArrayList<Integer> getRandomBinaryArray(int sizeOfArray)
+    {
+        ArrayList<Integer> binaryArray = new ArrayList<>();
+        for (int i = 0; i < sizeOfArray; i++) {
+            binaryArray.add(getRandom(0,1));
+        }
+
+        return binaryArray;
+    }
+
     public static double getRandomDouble(double min, double max)
     {
         return min + (max - min) * random.nextDouble();

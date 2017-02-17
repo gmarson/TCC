@@ -11,15 +11,20 @@ public abstract class  Constants {
     static int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS
-    static int ARCHIVE_SIZE = 60; //3
+    static int ARCHIVE_SIZE = 60;
     static int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
     static int MAX_MATRIX_SIZE = DISTANCE_MATRIX_SIZE + POPULATION_SIZE;
 
     //PROBLEM CONSTANTS
-    static int PROBLEM_SIZE = 2;
-    static int MAX_MEMBER_VALUE = 1000;
-    static int MIN_MEMBER_VALUE = -1000;
-    static int MAX_BINARY_LEN = 11;
+    static int PROBLEM_SIZE;
+    static int MAX_MEMBER_VALUE;
+    static int MIN_MEMBER_VALUE;
+    static int MAX_BINARY_LEN;
+
+    //KNAPSACK PROBLEM ONLY
+    static int QTD_ITEMS;
+    static double BAG_CAPACITY;
+
 
     //FOR TEST ONLY
     static int SEED = 205;

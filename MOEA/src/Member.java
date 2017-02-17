@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Member {
 
     //NSGAII variables
-    protected double value;
     protected ArrayList<Double> resultOfFunctions = new ArrayList<>();
     protected ArrayList<Member> solutionsThatThisMemberDominates = new ArrayList<>();
     protected int numberOfSolutionsThatDominatesThisMember =0;
@@ -23,7 +22,11 @@ public class Member {
     protected ArrayList<Double> distances = new ArrayList<>();
 
     //Both Variables
+    protected double value;
     protected double key;
+    protected ArrayList<Integer> binaryValue;
+
+    public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 
     public Member(double value)
     {
@@ -43,4 +46,10 @@ public class Member {
 
         return newMember;
     }
+
+
+
+
+
+
 }
