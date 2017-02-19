@@ -34,13 +34,13 @@ public class ProblemF2 extends  Problem {
 
     @Override
     public void applyFunctions(Member member) {
-        int valueOfMember = (int) member.value;
-        member.resultOfFunctions.add(firstFunction(valueOfMember));
-        member.resultOfFunctions.add(secondFunction(valueOfMember));
+        member.resultOfFunctions.add(firstFunction(member));
+        member.resultOfFunctions.add(secondFunction(member));
     }
 
     @Override
-    public double firstFunction(int valueOfMember) {
+    public double firstFunction(Member member) {
+        int valueOfMember = (int) member.value;
         if(valueOfMember <= 1.0) return - valueOfMember;
         if(valueOfMember <= 3.0) return -2.0 + valueOfMember;
         if(valueOfMember <= 4.0) return 4.0 - valueOfMember;
@@ -49,8 +49,14 @@ public class ProblemF2 extends  Problem {
     }
 
     @Override
-    public double secondFunction(int valueOfMember) {
+    public double secondFunction(Member member) {
+        int valueOfMember = (int) member.value;
         return Math.pow(valueOfMember - 5.0 , 2);
+    }
+
+    @Override
+    public void printResolutionMessage() {
+        System.out.println("Para o problema F2 os melhores indivíduos são");
     }
 
 

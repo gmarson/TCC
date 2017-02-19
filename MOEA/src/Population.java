@@ -107,7 +107,6 @@ public class Population {
         return true;
     }
 
-
     public void addMember(Member member)
     {
         this.population.add(member);
@@ -119,7 +118,7 @@ public class Population {
         mergedPopulation.population = new ArrayList<>(this.population);
         mergedPopulation.population.addAll(another.population);
         return mergedPopulation;
-    }//todo mudar aki pq ta inconsistente com a funcao de baixo
+    }
 
     public void mergeTwoPopulations(Population currentPopulation, Population archive)
     {
@@ -128,6 +127,7 @@ public class Population {
         ArrayList<Member> p2 = new ArrayList<>(archive.population);
         this.population.addAll(p1);
         this.population.addAll(p2);
+
 
     }
 

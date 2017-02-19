@@ -34,13 +34,35 @@ public abstract class Printer
         }
     }
 
+    public static void printMembersWithBinaryValue(Population p)
+    {
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.binaryValue);
+            i++;
+        }
+    }
+
     public static void printMembersWithValueAndDomination(Population p)
     {
         checkEmpty(p);
         int i =0;
         for(Member m : p.population)
         {
-            System.out.println("Member "+i+ " = "+m.value+"Number of solutions that dominates this member = "+m.numberOfSolutionsThatDominatesThisMember);
+            System.out.println("Member "+i+ " = "+m.value+" Solutions that this member dominates = "+m.solutionsThatThisMemberDominates.size());
+            i++;
+        }
+    }
+
+    public static void printMembersWithValues(Population p)
+    {
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.value+"   BinaryValue = "+m.binaryValue);
             i++;
         }
     }
@@ -63,6 +85,17 @@ public abstract class Printer
         for(Member m : p.population)
         {
             System.out.println("Member "+i+ " = "+m.value+"   Fitness = "+m.fitness+"   Density = "+m.density);
+            i++;
+        }
+    }
+
+    public static void printMembersWithBinaryValueFitnessAndDensity(Population p)
+    {
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.binaryValue+"   Fitness = "+m.fitness+"   Density = "+m.density);
             i++;
         }
     }
@@ -102,6 +135,12 @@ public abstract class Printer
         System.out.println("UNIAO");
         printMembersWithValueAndFitness(union);
         System.out.println("");
+    }
+
+
+    public static void printFirstFront(Population p)
+    {
+        p.fronts.allFronts.get(0).printFront();
     }
 
 

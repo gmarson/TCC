@@ -5,13 +5,14 @@ public class Main {
 
         Problem sch = new ProblemSCH();
         Problem f2 = new ProblemF2();
+        Problem knapsack = new ProblemKnapsack();
 
-        NSGAII nsgaii = new NSGAII();
-        nsgaii.runAlgorithm(f2);
+        //NSGAII nsgaii = new NSGAII();
+        //nsgaii.runAlgorithm(f2);
 
 
-        //SPEA2 spea2 = new SPEA2();
-        //spea2.runAlgorithm(f2);
+        SPEA2 spea2 = new SPEA2();
+        spea2.runAlgorithm(knapsack);
 
         
         /*for (int i=0;i<100 ;i++) {

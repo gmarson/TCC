@@ -13,6 +13,13 @@ public class Dominance {
             {
                 mj = p.population.get(j);
 
+                /*mi.printMemberResultOfFunctions(); // todo
+                mj.printMemberResultOfFunctions(); // todo
+                System.out.println("o Primeiro dominou o segundo"+ dominates(mi,mj));//todo
+                System.out.println("O segundo dominou o primeiro"+dominates(mj,mi));//todo
+                System.out.println();
+                */
+
                 if(dominates(mi,mj))
                 {
                     mj.numberOfSolutionsThatDominatesThisMember++;
@@ -20,6 +27,7 @@ public class Dominance {
                 }
                 else if(dominates(mj,mi))
                 {
+
                     mi.numberOfSolutionsThatDominatesThisMember++;
                     mj.solutionsThatThisMemberDominates.add(mi);
                 }

@@ -21,7 +21,6 @@ public class CrossoverBinary implements Crossover {
 
             ArrayList<Integer> m1BinaryValue = Utils.toBinary((int)m1.value);
             ArrayList<Integer> m2BinaryValue = Utils.toBinary((int)m2.value);
-
             increaseToMaxBinaryLenSize(m1BinaryValue);
             increaseToMaxBinaryLenSize(m2BinaryValue);
 

@@ -13,7 +13,7 @@ public class SPEA2 {
         Population p = new Population();
         Population archive = new Population();
         Population union = new Population();
-        Population selected = new Population();
+        Population selected;
         Selection selectedFitness = new SelectionArchive();
 
         p.population = problem.generateRandomMembers();
@@ -27,29 +27,24 @@ public class SPEA2 {
             problem.evaluateAgainstObjectiveFunctions(union);
 
             union.fastNonDominatedSort();
-           
+
             Fitness.calculateFitness(union);
-    
+
             archive = EnvironmentalSelection.environmentalSelection(p,archive);
-            
+
             selected = selectedFitness.selectParents(archive);
 
             p = problem.crossover.crossoverAndMutation(selected);
 
             genCounter++;
             Fitness.prepareForNextGen();
-            
+
         }
 
-        Printer.printMembersWithValue(archive); //todo
+        problem.printResolutionMessage();
+        Printer.printMembersWithValues(archive); //todo
         
     }
-
-    public void nextRun()
-    {
-        Fitness.setFirstMatrix();
-    }
-
 
 
 }

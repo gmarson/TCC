@@ -6,6 +6,7 @@ import java.util.ArrayList;
  */
 public class NSGAII {
 
+    //todo diminuir o tamanho dessa funcao
     public void runAlgorithm(Problem problem)
     {
        
@@ -13,15 +14,17 @@ public class NSGAII {
         int genCounter = 0;
         Population union, sortedUnion;
         Population p = new Population();
-
         Selection selectRanked = new SelectionRank();
         Selection selectRankCrowded = new SelectionRankCrowding();
 
         p.population = problem.generateRandomMembers();
+
         problem.evaluateAgainstObjectiveFunctions(p);
+
         p.fastNonDominatedSort();
 
         Population selected = selectRanked.selectParents(p);
+
         Population children = problem.crossover.crossoverAndMutation(selected);
 
         sortedUnion = new Population();
@@ -45,7 +48,6 @@ public class NSGAII {
                 }
                 else
                     sortedUnion.addFrontToPopulation(front);
-
                 k++;
             }
 
@@ -56,7 +58,6 @@ public class NSGAII {
                 i--;
             }
 
-
             selected = selectRankCrowded.selectParents(sortedUnion);
             p = sortedUnion;
             children = problem.crossover.crossoverAndMutation(selected);
@@ -65,8 +66,9 @@ public class NSGAII {
 
         sortedUnion.fastNonDominatedSort();
 
+        problem.printResolutionMessage();
+        Printer.printFirstFront(sortedUnion);
 
-        sortedUnion.fronts.printFirstFrontOccurances();
     }
 
 }

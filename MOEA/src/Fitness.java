@@ -15,8 +15,9 @@ public abstract class Fitness {
     public static void calculateRawFitness(Member memberToBeEvaluated, Population union)
     {
         for (Member member: union.population) {
-            if (member.solutionsThatThisMemberDominates.contains(memberToBeEvaluated))
+            if (member.solutionsThatThisMemberDominates.contains(memberToBeEvaluated)){
                 memberToBeEvaluated.rawFitness += member.strength;
+            }
         }
     }
 
@@ -25,6 +26,7 @@ public abstract class Fitness {
         calculateDistanceBetweenMembers(generic,indexOfMatrix);
         double sigma = calculateSigma(indexOfMatrix);
         member.sigma = sigma;
+
         member.density = 1 / (sigma + 2);
     }
 
@@ -44,6 +46,7 @@ public abstract class Fitness {
     {
         int positionOfSigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
         ArrayList<Double> orderedMatrixRow = Utils.returnOrderedArray(distanceMatrix, indexOfMatrix);
+
         
         return orderedMatrixRow.get(positionOfSigma);
     }
@@ -56,6 +59,7 @@ public abstract class Fitness {
             calculateStrength(member);
             calculateRawFitness(member, union);
             calculateDensity(member, union, indexOfMatrix);
+
             member.fitness = member.rawFitness + member.density;
             indexOfMatrix++;
         }

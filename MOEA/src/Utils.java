@@ -9,7 +9,7 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    static Random random = new Random();
+    static Random random = new Random(Constants.SEED);
 
     public static void setSeed(int SEED)
     {
@@ -26,7 +26,7 @@ public abstract class Utils {
     {
         ArrayList<Integer> binaryArray = new ArrayList<>();
         for (int i = 0; i < sizeOfArray; i++) {
-            binaryArray.add(getRandom(0,1));
+            binaryArray.add(getRandom(0,2));
         }
 
         return binaryArray;
@@ -82,14 +82,14 @@ public abstract class Utils {
     }
 
 
-    
-
     public static double euclidianDistance(Member m1, Member m2)
     {
         double x1 = m1.resultOfFunctions.get(0);
         double y1 = m1.resultOfFunctions.get(1);
         double x2 = m2.resultOfFunctions.get(0);
         double y2 = m2.resultOfFunctions.get(1);
+
+
 
         return sqrt( pow( ( x1- x2) , 2 ) + pow( ( y1 - y2) , 2) );
     }

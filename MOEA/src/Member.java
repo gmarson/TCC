@@ -43,11 +43,25 @@ public class Member {
         newMember.rawFitness = this.rawFitness;
         newMember.resultOfFunctions = this.resultOfFunctions;
         newMember.distances = this.distances;
+        newMember.binaryValue = this.binaryValue;
 
         return newMember;
     }
 
 
+    public void declMember()
+    {
+        System.out.println("Member value: "+this.value+"\nMember Binary Value: "+this.binaryValue);
+    }
+
+
+    public void printMemberResultOfFunctions()
+    {
+        declMember();
+        for (int i = 0; i < resultOfFunctions.size(); i++) {
+            System.out.println("F"+i+"= "+resultOfFunctions.get(i));
+        }
+    }
 
 
 

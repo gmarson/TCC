@@ -33,6 +33,5 @@ public class SelectionArchive extends Selection
             selected.population.add(returnWinnerCompetitor(membersByTour) );
         }
         return selected;
-        //todo usei a fitness como criterio no spea2
     }
 }

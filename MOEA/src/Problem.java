@@ -13,8 +13,8 @@ public abstract class  Problem {
     public abstract ArrayList<Member> generateRandomMembers();
 
     public abstract void applyFunctions(Member member);
-    public abstract double firstFunction(int valueOfMember);
-    public abstract double secondFunction(int valueOfMember);
-
+    public abstract double firstFunction(Member member);
+    public abstract double secondFunction(Member member);
+    public abstract void printResolutionMessage();
 
 }

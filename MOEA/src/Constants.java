@@ -3,11 +3,13 @@
  */
 public abstract class  Constants {
 
+
+    //todo simplifica o problema
     //ALL MOEAs CONSTANTS
-    static int POPULATION_SIZE =100; //6
+    static int POPULATION_SIZE =100;
     static int MUTATION_RATE = 5;
     static double CROSSOVER_RATE = 1;
-    static double NUMBER_OF_GENERATIONS = 100; // nessa semente, com 20 ger tem 1 e 2 e com 25 tem 0 e 2. Que loucura.
+    static double NUMBER_OF_GENERATIONS = 25;
     static int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS

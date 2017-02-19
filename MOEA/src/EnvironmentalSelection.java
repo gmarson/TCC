@@ -8,7 +8,7 @@ public abstract class EnvironmentalSelection {
 
 
     private static void populateWithRemainingBest(Population environment, Population union)
-    {   
+    {
         Sorts.quickSortMembersByKey(union,"fitness");   
         int i = 0;
 
@@ -28,17 +28,22 @@ public abstract class EnvironmentalSelection {
     public static Population environmentalSelection(Population population, Population archive)
     {
 
+
         Population union = new Population();
-        Population environment = new Population();
-        union.mergeTwoPopulations(population,archive); 
+        Population environment;
+        union.mergeTwoPopulations(population,archive);
         environment = union.getNonDominated();
 
-        if(environment.population.size() < Constants.ARCHIVE_SIZE)
+        if(environment.population.size() < Constants.ARCHIVE_SIZE){
             populateWithRemainingBest(environment, union);
+        }
 
-        else if(environment.population.size() > Constants.ARCHIVE_SIZE)
+
+        else if(environment.population.size() > Constants.ARCHIVE_SIZE) {
+
             removeMostSimilar(environment);
 
+        }
         
         return environment;
 
@@ -46,6 +51,7 @@ public abstract class EnvironmentalSelection {
 
     private static void removeMostSimilar(Population environment)
     {
+
 
         while(environment.population.size() > Constants.ARCHIVE_SIZE)
         {
@@ -62,6 +68,7 @@ public abstract class EnvironmentalSelection {
 
         }
 
+
     }
 
     public static Member findMostCrowdedMember(Population archive){
@@ -70,6 +77,7 @@ public abstract class EnvironmentalSelection {
         int sizeOfDistanceArray = archive.population.size()-1;
         int distanceToProcess = 0;
         Fitness.copyDistancesFromMatrixToMembers(archive);
+
 
         while(archive.population.size() > 1 && distanceToProcess < sizeOfDistanceArray)
         {
@@ -91,9 +99,7 @@ public abstract class EnvironmentalSelection {
             distanceToProcess++;
 
         }
-
         return mostCrowdedMembers.population.get(0);
-
 
     }
 

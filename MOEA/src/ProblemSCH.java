@@ -38,26 +38,26 @@ public class ProblemSCH extends Problem {
     @Override
     public void applyFunctions(Member member)
     {
-        int valueOfMember = (int) member.value;
-        member.resultOfFunctions.add(firstFunction(valueOfMember));
-        member.resultOfFunctions.add(secondFunction(valueOfMember));
+        member.resultOfFunctions.add(firstFunction(member));
+        member.resultOfFunctions.add(secondFunction(member));
     }
 
     @Override
-    public double firstFunction(int valueOfMember)
+    public double firstFunction(Member member)
     {
-        double appliedValue;
-        appliedValue =  valueOfMember * valueOfMember;
-        return appliedValue;
+        return  member.value * member.value;
     }
 
     @Override
-    public double secondFunction(int valueOfMember)
+    public double secondFunction(Member member)
     {
-        double appliedValue;
-        valueOfMember = valueOfMember -2;
-        appliedValue =  valueOfMember * valueOfMember;
-        return appliedValue;
+        double valueOfMember = member.value -2;
+        return  valueOfMember * valueOfMember;
+    }
+
+    @Override
+    public void printResolutionMessage() {
+        System.out.println("Para o problema SCH os melhores indivíduos são");
     }
 
     public void checkBestAnswerAppearances(Population p)
@@ -74,12 +74,6 @@ public class ProblemSCH extends Problem {
         if (zero) System.out.println("Apareceu o 0");
         if (one)  System.out.println("Apareceu o 1");
         if (two)  System.out.println("Apareceu o 2");
-            
-        
-            
-        
-            
-        
 
     }
     
