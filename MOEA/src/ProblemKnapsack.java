@@ -12,7 +12,7 @@ public class ProblemKnapsack extends Problem{
     public ProblemKnapsack(){
         crossover = new CrossoverBinaryKnapsack();
         Constants.PROBLEM_SIZE = 2;
-        Constants.QTD_ITEMS = 10;
+        Constants.QTD_ITEMS = 3;
         Constants.BAG_CAPACITY = 100;
         this.buildItems();
     }
@@ -41,9 +41,21 @@ public class ProblemKnapsack extends Problem{
     @Override
     public void applyFunctions(Member member)
     {
-
         member.resultOfFunctions.add(firstFunction(member));
         member.resultOfFunctions.add(secondFunction(member));
+    }
+
+
+    public double caculateWeightGivenMember(Member member)
+    {
+        double totalWeight = 0;
+        for (int i = 0; i < Constants.QTD_ITEMS; i++) {
+            if (member.binaryValue.get(i) == 1)
+            {
+                totalWeight += items.get(i).weight;
+            }
+        }
+        return totalWeight;
     }
 
     @Override
@@ -58,7 +70,9 @@ public class ProblemKnapsack extends Problem{
             }
         }
 
-        return firstFunctionValue > Constants.BAG_CAPACITY? (2): (1/firstFunctionValue);
+        if( firstFunctionValue == 0) firstFunctionValue = 0.1;
+
+        return caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2): (1/firstFunctionValue);
 
     }
 
@@ -71,12 +85,13 @@ public class ProblemKnapsack extends Problem{
             if(member.binaryValue.get(j) == 1)
             {
                 secondFunctionValue += ProblemKnapsack.items.get(j).attributes.get(1);
+
             }
         }
 
-        if( member.resultOfFunctions.get(0) ==2) return 2;
+        if( secondFunctionValue == 0) secondFunctionValue = 0.1;
 
-        return secondFunctionValue == 0? (1/0.1) : (1/secondFunctionValue);
+        return caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/secondFunctionValue);
 
     }
 
@@ -126,8 +141,7 @@ public class ProblemKnapsack extends Problem{
         //todo tirar os castings depois
         public void createAttributesOfItems()
         {
-            this.attributes.add(0,this.weight);
-            for (int i = 1; i <Constants.PROBLEM_SIZE ; i++) {
+            for (int i = 0; i <Constants.PROBLEM_SIZE ; i++) {
                 this.attributes.add(i,(double)Utils.getRandom((int)MIN_ATTRIBUTE_VALUE_FOR_ITEM,(int)MAX_ATTRIBUTE_VALUE_FOR_ITEM));
             }
         }
@@ -135,7 +149,7 @@ public class ProblemKnapsack extends Problem{
         public void printItem()
         {
             System.out.println("Peso: "+this.weight);
-            for (int i = 1; i < attributes.size(); i++) {
+            for (int i = 0; i < attributes.size(); i++) {
                 System.out.println("Atributo "+i+" = "+attributes.get(i)+"\n");
             }
         }

@@ -9,7 +9,7 @@ public abstract class  Constants {
     static int POPULATION_SIZE =100;
     static int MUTATION_RATE = 5;
     static double CROSSOVER_RATE = 1;
-    static double NUMBER_OF_GENERATIONS = 25;
+    static double NUMBER_OF_GENERATIONS = 100;
     static int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS
@@ -29,6 +29,6 @@ public abstract class  Constants {
 
 
     //FOR TEST ONLY
-    static int SEED = 205;
+    static int SEED = 2; //todo com essa semente ta dando pau
     
 }

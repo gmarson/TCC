@@ -8,18 +8,11 @@ public class Main {
         Problem knapsack = new ProblemKnapsack();
 
         //NSGAII nsgaii = new NSGAII();
-        //nsgaii.runAlgorithm(f2);
-
+        //nsgaii.runAlgorithm(knapsack);
 
         SPEA2 spea2 = new SPEA2();
         spea2.runAlgorithm(knapsack);
 
-        
-        /*for (int i=0;i<100 ;i++) {
-            System.out.println("PARA A SEMENTE = "+i);
-        	Utils.setSeed(i);
-            new SPEA2().runAlgorithm();
-        }*/
 
 
     }
