@@ -11,8 +11,8 @@ public class ProblemKnapsack extends Problem{
 
     public ProblemKnapsack(){
         crossover = new CrossoverBinaryKnapsack();
-        Constants.PROBLEM_SIZE = 2;
-        Constants.QTD_ITEMS = 3;
+        Constants.PROBLEM_SIZE = 6;
+        Constants.QTD_ITEMS = 10;
         Constants.BAG_CAPACITY = 100;
         this.buildItems();
     }
@@ -43,6 +43,10 @@ public class ProblemKnapsack extends Problem{
     {
         member.resultOfFunctions.add(firstFunction(member));
         member.resultOfFunctions.add(secondFunction(member));
+        member.resultOfFunctions.add(thirdFunction(member));
+        member.resultOfFunctions.add(fourthFunction(member));
+        member.resultOfFunctions.add(fifthFunction(member));
+        member.resultOfFunctions.add(sixthFunction(member));
     }
 
 
@@ -93,6 +97,73 @@ public class ProblemKnapsack extends Problem{
 
         return caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/secondFunctionValue);
 
+    }
+
+    public double thirdFunction(Member member){
+        double thirdFunctionValue = 0;
+        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        {
+            if(member.binaryValue.get(j) == 1)
+            {
+                thirdFunctionValue += ProblemKnapsack.items.get(j).attributes.get(2);
+
+            }
+        }
+
+        if( thirdFunctionValue == 0) thirdFunctionValue = 0.1;
+
+        return caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/thirdFunctionValue);
+    }
+
+
+    public double fourthFunction(Member member){
+        double fourthFunctionValue = 0;
+        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        {
+            if(member.binaryValue.get(j) == 1)
+            {
+                fourthFunctionValue += ProblemKnapsack.items.get(j).attributes.get(3);
+
+            }
+        }
+
+        if( fourthFunctionValue == 0) fourthFunctionValue = 0.1;
+
+        return caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/fourthFunctionValue);
+    }
+
+    public double fifthFunction(Member member)
+    {
+        double fifthFunctionValue = 0;
+        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        {
+            if(member.binaryValue.get(j) == 1)
+            {
+                fifthFunctionValue += ProblemKnapsack.items.get(j).attributes.get(4);
+
+            }
+        }
+
+        if( fifthFunctionValue == 0) fifthFunctionValue = 0.1;
+
+        return caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/fifthFunctionValue);
+    }
+
+    public double sixthFunction(Member member)
+    {
+        double sixthFunctionValue = 0;
+        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        {
+            if(member.binaryValue.get(j) == 1)
+            {
+                sixthFunctionValue += ProblemKnapsack.items.get(j).attributes.get(5);
+
+            }
+        }
+
+        if( sixthFunctionValue == 0) sixthFunctionValue = 0.1;
+
+        return caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/sixthFunctionValue);
     }
 
     @Override

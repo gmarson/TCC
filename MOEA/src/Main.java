@@ -7,11 +7,11 @@ public class Main {
         Problem f2 = new ProblemF2();
         Problem knapsack = new ProblemKnapsack();
 
-        //NSGAII nsgaii = new NSGAII();
-        //nsgaii.runAlgorithm(knapsack);
+        NSGAII nsgaii = new NSGAII();
+        nsgaii.runAlgorithm(knapsack);
 
-        SPEA2 spea2 = new SPEA2();
-        spea2.runAlgorithm(knapsack);
+        //SPEA2 spea2 = new SPEA2();
+        //spea2.runAlgorithm(knapsack);
 
 
 
