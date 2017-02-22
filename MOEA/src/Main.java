@@ -1,17 +1,23 @@
+import NSGAII.NSGAII;
+import Population.*;
+import Problems.*;
+import Utilities.*;
+
+
 public class Main {
 
     public static void main(String[] args) {
 
 
         Problem sch = new ProblemSCH();
-        Problem f2 = new ProblemF2();
-        Problem knapsack = new ProblemKnapsack();
+        //Problem f2 = new ProblemF2();
+        //Problem knapsack = new ProblemKnapsack();
 
-        NSGAII nsgaii = new NSGAII();
-        nsgaii.runAlgorithm(knapsack);
+        //NSGAII nsgaii = new NSGAII();
+        //nsgaii.runAlgorithm(knapsack);
 
-        //SPEA2 spea2 = new SPEA2();
-        //spea2.runAlgorithm(knapsack);
+        SPEA2.SPEA2 spea2 = new SPEA2.SPEA2();
+        spea2.runAlgorithm(sch);
 
 
 
