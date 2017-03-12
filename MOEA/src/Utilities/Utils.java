@@ -77,6 +77,25 @@ public abstract class Utils {
         return valueOfMember;
     }
 
+    public static ArrayList<Integer> integerToBinary(int number, int sizeOfBinary){
+        ArrayList<Integer> binaryNumber = new ArrayList<>();
+        while(true){
+            if(number < 2)
+            {
+                binaryNumber.add(0,number);
+                for (int i = binaryNumber.size(); i < sizeOfBinary; i++) {
+                    binaryNumber.add(0,0);
+                }
+                return binaryNumber;
+            }
+            else {
+                binaryNumber.add(0,number % 2);
+                number = number / 2;
+            }
+
+        }
+    }
+
     private static int correctSignal(ArrayList<Integer> binary, int valueOfMember){
         if(binary.get(0) == 1)
             return valueOfMember * -1;

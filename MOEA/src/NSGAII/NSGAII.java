@@ -26,7 +26,7 @@ public class NSGAII {
         Selection selectRanked = new SelectionRank();
         Selection selectRankCrowded = new SelectionRankCrowding();
 
-        p.population = problem.generateRandomMembers();
+        p.population = problem.generateRandomMembers(Constants.POPULATION_SIZE);
 
         problem.evaluateAgainstObjectiveFunctions(p);
 

@@ -35,10 +35,10 @@ public class ProblemKnapsack extends Problem{
     }
 
     @Override
-    public ArrayList<Member> generateRandomMembers()
+    public ArrayList<Member> generateRandomMembers(int QtdMembers)
     {
         ArrayList<Member> population =  new ArrayList<>();
-        for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
+        for (int i = 0; i < QtdMembers; i++) {
             population.add(new Member(Utils.getRandomBinaryArray(Constants.QTD_ITEMS)));
         }
 

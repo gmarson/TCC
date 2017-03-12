@@ -2,7 +2,7 @@ package Utilities; /**
  * Created by gabrielm on 12/01/17.
  */
 import Utilities.Utils;
-
+import Constants.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -12,18 +12,37 @@ public class Matrix {
     public int columns;
     int size;
     public double[][] distance;
+    public int[][] maskHandler;
 
 
     public Matrix(int rows, int columns) {
-        this.rows =rows;
-        this.columns = columns;
-        this.size = rows * columns;
+        setDimensions(rows,columns);
         distance = new double[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j <columns ; j++) {
                 distance[i][j] = (i == j)? 0 :  -1;
             }
         }
+    }
+
+    public Matrix(int rows, int columns, boolean binary){
+        if(binary){
+            ArrayList<Integer> binaryNumber;
+            setDimensions(rows,columns);
+            maskHandler = new int[rows][columns];
+            for (int i = 0; i < rows; i++) {
+                binaryNumber = Utils.integerToBinary(i+1,Constants.PROBLEM_SIZE+1);
+                for (int j = columns-1; j >=0 ; j--) {
+                    maskHandler[i][j] = binaryNumber.get(j);
+                }
+            }
+        }
+    }
+
+    private void setDimensions(int rows, int columns){
+        this.rows =rows;
+        this.columns = columns;
+        this.size = rows * columns;
     }
 
     public void addNewDistance(int row, int column, double value)
@@ -40,14 +59,27 @@ public class Matrix {
 
     public void printMatrix()
     {
-        DecimalFormat df = new DecimalFormat("#.##");
-        
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j <columns ; j++) {
-                System.out.print(df.format(distance[i][j])+"   ");
+        if (distance != null)
+        {
+            DecimalFormat df = new DecimalFormat("#.##");
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j <columns ; j++) {
+                    System.out.print(df.format(distance[i][j])+"   ");
+                }
+                System.out.print("\n");
             }
-            System.out.print("\n");
         }
+        else
+        {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j <columns ; j++) {
+                    System.out.print((maskHandler[i][j])+"   ");
+                }
+                System.out.print("\n");
+            }
+        }
+
     }
 
     public int size()
@@ -56,18 +88,6 @@ public class Matrix {
     }
 
 
-    public ArrayList<Double> getDistanceFromMemberIndex(int memberIndex)
-    {
-        ArrayList<Double> distanceArray = new ArrayList<>();
-        for (int i = 0; i < columns; i++) {
-            if (i != memberIndex)
-            {
-                Utils.insertDataOnDescresentOrderedArray(distance[memberIndex][i],distanceArray);
-            }
-        }
-        
-        return distanceArray;
 
-    }
 
 }

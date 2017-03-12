@@ -16,7 +16,7 @@ public class ProblemSCH extends Problem {
     public ProblemSCH()
     {
         crossover = new CrossoverBinary();
-        Constants.PROBLEM_SIZE = 2;
+        Constants.PROBLEM_SIZE = 4;
         Constants.MAX_MEMBER_VALUE = 1000;
         Constants.MIN_MEMBER_VALUE = -1000;
         Constants.MAX_BINARY_LEN = 11;
@@ -31,9 +31,9 @@ public class ProblemSCH extends Problem {
     }
 
     @Override
-    public ArrayList<Member> generateRandomMembers() {
+    public ArrayList<Member> generateRandomMembers(int QtdMembers) {
         ArrayList<Member> population =  new ArrayList<>();
-        for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
+        for (int i = 0; i < QtdMembers; i++) {
             population.add(new Member(Utils.getRandom(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
         }        
 

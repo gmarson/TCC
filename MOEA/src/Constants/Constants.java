@@ -27,8 +27,14 @@ public abstract class  Constants {
     public static int QTD_ITEMS;
     public static double BAG_CAPACITY;
 
+    //ONLY AEMMT CONSTANTS
+    public static int QTD_TABLES;
+    public static int TABLE_SIZE = 10;
 
     //FOR TEST ONLY
     public static int SEED = 2;
-    
+
+
+
+
 }

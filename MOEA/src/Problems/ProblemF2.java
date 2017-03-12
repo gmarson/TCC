@@ -30,9 +30,9 @@ public class ProblemF2 extends  Problem {
     }
 
     @Override
-    public ArrayList<Member> generateRandomMembers() {
+    public ArrayList<Member> generateRandomMembers(int QtdMembers) {
         ArrayList<Member> population =  new ArrayList<>();
-        for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
+        for (int i = 0; i < QtdMembers; i++) {
             population.add(new Member(Utils.getRandomDouble(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
         }
 

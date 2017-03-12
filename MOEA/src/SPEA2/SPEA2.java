@@ -3,8 +3,7 @@ package SPEA2;
 import Constants.Constants;
 import Population.*;
 import Utilities.*;
-import Selections.Selection;
-import Selections.SelectionArchive;
+import Selections.*;
 import Problems.*;
 
 import java.util.Scanner;
@@ -25,7 +24,7 @@ public class SPEA2 {
         Population selected;
         Selection selectedFitness = new SelectionArchive();
 
-        p.population = problem.generateRandomMembers();
+        p.population = problem.generateRandomMembers(Constants.POPULATION_SIZE);
 
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {

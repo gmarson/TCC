@@ -2,7 +2,7 @@ import NSGAII.NSGAII;
 import Population.*;
 import Problems.*;
 import Utilities.*;
-
+import ManyObjective.*;
 
 public class Main {
 
@@ -14,10 +14,13 @@ public class Main {
         //Problem knapsack = new ProblemKnapsack();
 
         //NSGAII nsgaii = new NSGAII();
-        //nsgaii.runAlgorithm(knapsack);
+        //nsgaii.runAlgorithm(sch);
 
-        SPEA2.SPEA2 spea2 = new SPEA2.SPEA2();
-        spea2.runAlgorithm(sch);
+        //SPEA2.SPEA2 spea2 = new SPEA2.SPEA2();
+        //spea2.runAlgorithm(sch);
+
+        AEMMT aemmt = new AEMMT();
+        aemmt.runAlgorithm(sch);
 
 
 
