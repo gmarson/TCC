@@ -5,7 +5,6 @@ import Problems.*;
 import Utilities.*;
 
 
-import javax.swing.text.Utilities;
 import java.util.ArrayList;
 
 /**
@@ -13,23 +12,35 @@ import java.util.ArrayList;
  */
 public abstract class Tables {
 
-    public static Population parentPopulation;
-    public static ArrayList<Table> tables = new ArrayList<>();
-    public static Matrix maskHandler;
-    public static ArrayList<Integer> currentMask = new ArrayList<>();
+    public  static  Population parentPopulation;
+    public  static  ArrayList<Table> tables = new ArrayList<>();
+    private static  Matrix binaryRepresentationOfObjectives;
+    public  static  Matrix decimalRepresentationOfObjectives;
+    public  static  ArrayList<Integer> currentMask = new ArrayList<>();
 
-    public static int setQtdTables(int numberOfRemainingObjectives, int numberOfTables){
-        if(numberOfRemainingObjectives == 2 && Constants.PROBLEM_SIZE == 2) return 4;
-        else if (numberOfRemainingObjectives == 2 && Constants.PROBLEM_SIZE > 2) return 0;
-        else return setQtdTables(numberOfRemainingObjectives-1,numberOfTables) + numberOfTables*2;
+    public static int setQtdTables(){
 
+        int nonDominatedTable = 1;
+        int qtdTables =0;
+        for (int i = 1; i <=Constants.PROBLEM_SIZE ; i++) {
+            qtdTables += fact(Constants.PROBLEM_SIZE) / (fact(i) * fact(Constants.PROBLEM_SIZE - i));
+        }
+        return  qtdTables + nonDominatedTable;
     }
 
-    public static void buildTables(Population population){
-        Constants.QTD_TABLES = setQtdTables(Constants.PROBLEM_SIZE,4);
-        parentPopulation = population;
-        buildMask();
+    private static int fact(int n)
+    {
+        if(n==0 || n==1)
+            return 1;
 
+        return fact(n-1) * n;
+    }
+
+    public static void buildTables(Population population, Problem problem){
+        Constants.QTD_TABLES = setQtdTables();
+        parentPopulation = population;
+        System.out.println(Constants.QTD_TABLES);//todo
+        buildMasks();
 
 
 
@@ -37,22 +48,30 @@ public abstract class Tables {
         {
             updateCurrentMask(i);
             tables.add(new Table(currentMask));
+            System.out.println(tables.get(i).mask);
         }
-
 
     }
 
-    private static void buildMask() {
-        maskHandler = new Matrix(Constants.QTD_TABLES, Constants.PROBLEM_SIZE+1,true);
+    private static void buildMasks() {
+        binaryRepresentationOfObjectives = new Matrix(Constants.QTD_TABLES, Constants.PROBLEM_SIZE+1,true);
+        decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
 
     }
 
 
     private static void updateCurrentMask(int index){
         currentMask = new ArrayList<>();
-        for (int i = 0; i < maskHandler.columns; i++) {
-            currentMask.add(maskHandler.maskHandler[index][i]);
+        for (int i = 0; i < decimalRepresentationOfObjectives.columns; i++) {
+            int number = decimalRepresentationOfObjectives.decimalMatrix[index][i];
+            if (number != 0)
+                currentMask.add(number);
         }
+
+    }
+
+
+    public static void assignBestMembersToTables(){
 
     }
 

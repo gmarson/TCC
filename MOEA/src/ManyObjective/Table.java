@@ -1,7 +1,7 @@
 package ManyObjective;
 
+import Constants.*;
 import Population.*;
-
 import java.util.ArrayList;
 
 /**
@@ -17,7 +17,9 @@ public class Table {
 
     public Table(ArrayList<Integer> mask){
         this.mask = mask;
-        this.isNonDominatedTable = mask.get(mask.size()-1) == 1;
+        this.isNonDominatedTable = mask.size() == 0;
     }
+
+
 
 }

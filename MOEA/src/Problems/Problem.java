@@ -17,9 +17,9 @@ public abstract class  Problem {
     public abstract void evaluateAgainstObjectiveFunctions(Population p);
     public abstract ArrayList<Member> generateRandomMembers(int QtdMembers);
 
-    public abstract void applyFunctions(Member member);
-    public abstract double firstFunction(Member member);
-    public abstract double secondFunction(Member member);
+    abstract void applyFunctions(Member member);
+    abstract double firstFunction(Member member);
+    abstract double secondFunction(Member member);
     public abstract void printResolutionMessage();
 
 }

@@ -9,9 +9,9 @@ public class Main {
     public static void main(String[] args) {
 
 
-        Problem sch = new ProblemSCH();
+        //Problem sch = new ProblemSCH();
         //Problem f2 = new ProblemF2();
-        //Problem knapsack = new ProblemKnapsack();
+        Problem knapsack = new ProblemKnapsack();
 
         //NSGAII nsgaii = new NSGAII();
         //nsgaii.runAlgorithm(sch);
@@ -20,7 +20,7 @@ public class Main {
         //spea2.runAlgorithm(sch);
 
         AEMMT aemmt = new AEMMT();
-        aemmt.runAlgorithm(sch);
+        aemmt.runAlgorithm(knapsack);
 
 
 

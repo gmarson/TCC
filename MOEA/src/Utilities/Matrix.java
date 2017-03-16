@@ -1,7 +1,6 @@
 package Utilities; /**
  * Created by gabrielm on 12/01/17.
  */
-import Utilities.Utils;
 import Constants.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -12,7 +11,8 @@ public class Matrix {
     public int columns;
     int size;
     public double[][] distance;
-    public int[][] maskHandler;
+    public int[][] binaryMatrix;
+    public int[][] decimalMatrix;
 
 
     public Matrix(int rows, int columns) {
@@ -29,14 +29,30 @@ public class Matrix {
         if(binary){
             ArrayList<Integer> binaryNumber;
             setDimensions(rows,columns);
-            maskHandler = new int[rows][columns];
+            binaryMatrix = new int[rows][columns];
             for (int i = 0; i < rows; i++) {
                 binaryNumber = Utils.integerToBinary(i+1,Constants.PROBLEM_SIZE+1);
                 for (int j = columns-1; j >=0 ; j--) {
-                    maskHandler[i][j] = binaryNumber.get(j);
+                    binaryMatrix[i][j] = binaryNumber.get(j);
                 }
             }
         }
+    }
+
+    public Matrix(){}
+
+    public Matrix buildDecimalMatrixGivenBinary(){
+        Matrix decimal = new Matrix();
+        decimal.decimalMatrix = new int [this.rows][this.columns];
+        decimal.setDimensions(this.rows,this.columns);
+        for (int i = 0; i <this.rows ; i++) {
+            for (int j = this.columns-1, idOfObjective =1; j >0 ; j--, idOfObjective++) {
+                int number = this.binaryMatrix[i][j];
+                decimal.decimalMatrix[i][j] = number == 0? number : idOfObjective;
+            }
+        }
+
+        return decimal;
     }
 
     private void setDimensions(int rows, int columns){
@@ -70,11 +86,20 @@ public class Matrix {
                 System.out.print("\n");
             }
         }
+        else if(binaryMatrix != null)
+        {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j <columns ; j++) {
+                    System.out.print((binaryMatrix[i][j])+"   ");
+                }
+                System.out.print("\n");
+            }
+        }
         else
         {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j <columns ; j++) {
-                    System.out.print((maskHandler[i][j])+"   ");
+                    System.out.print((decimalMatrix[i][j])+"   ");
                 }
                 System.out.print("\n");
             }

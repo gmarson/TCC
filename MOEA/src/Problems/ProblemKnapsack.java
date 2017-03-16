@@ -18,7 +18,7 @@ public class ProblemKnapsack extends Problem{
 
     public ProblemKnapsack(){
         crossover = new CrossoverBinaryKnapsack();
-        Constants.PROBLEM_SIZE = 6;
+        Constants.PROBLEM_SIZE = 4;
         Constants.QTD_ITEMS = 10;
         Constants.BAG_CAPACITY = 100;
         this.buildItems();
@@ -48,12 +48,14 @@ public class ProblemKnapsack extends Problem{
     @Override
     public void applyFunctions(Member member)
     {
+        if(Constants.PROBLEM_SIZE <2) return ;
         member.resultOfFunctions.add(firstFunction(member));
         member.resultOfFunctions.add(secondFunction(member));
-        member.resultOfFunctions.add(thirdFunction(member));
-        member.resultOfFunctions.add(fourthFunction(member));
-        member.resultOfFunctions.add(fifthFunction(member));
-        member.resultOfFunctions.add(sixthFunction(member));
+
+        if(Constants.PROBLEM_SIZE == 3) member.resultOfFunctions.add(thirdFunction(member));
+        if(Constants.PROBLEM_SIZE == 4) member.resultOfFunctions.add(fourthFunction(member));
+        if(Constants.PROBLEM_SIZE == 5) member.resultOfFunctions.add(fifthFunction(member));
+        if(Constants.PROBLEM_SIZE == 6) member.resultOfFunctions.add(sixthFunction(member));
     }
 
 
