@@ -29,7 +29,7 @@ public abstract class  Constants {
 
     //ONLY AEMMT CONSTANTS
     public static int QTD_TABLES;
-    public static int TABLE_SIZE = 10;
+    public static int TABLE_SIZE;
 
     //FOR TEST ONLY
     public static int SEED = 2;

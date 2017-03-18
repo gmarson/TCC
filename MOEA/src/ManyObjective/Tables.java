@@ -17,6 +17,7 @@ public abstract class Tables {
     private static  Matrix binaryRepresentationOfObjectives;
     public  static  Matrix decimalRepresentationOfObjectives;
     public  static  ArrayList<Integer> currentMask = new ArrayList<>();
+   
 
     public static int setQtdTables(){
 
@@ -37,20 +38,21 @@ public abstract class Tables {
     }
 
     public static void buildTables(Population population, Problem problem){
+        setQtdMembersOfATable();
         Constants.QTD_TABLES = setQtdTables();
         parentPopulation = population;
-        System.out.println(Constants.QTD_TABLES);//todo
         buildMasks();
-
-
 
         for(int i=0;i<Constants.QTD_TABLES;i++)
         {
             updateCurrentMask(i);
             tables.add(new Table(currentMask));
-            System.out.println(tables.get(i).mask);
         }
 
+    }
+
+    private static void setQtdMembersOfATable(){
+        Constants.TABLE_SIZE = Constants.POPULATION_SIZE / 10;
     }
 
     private static void buildMasks() {
@@ -71,9 +73,39 @@ public abstract class Tables {
     }
 
 
-    public static void assignBestMembersToTables(){
+    public static void fillTablesAEMMT(){
+        parentPopulation.fastNonDominatedSort();
+
+        for(Table table: tables)
+        {
+            Population testPopulation = new Population(parentPopulation);
+            if (table.mask.size() <=1)
+            {
+                testPopulation.fastNonDominatedSort(table.mask);
+                if (table.mask.size() == 1)
+                    table.setBestMembersByRank(testPopulation);
+                else
+                    table.setBestMembersByRank(new Population(testPopulation.fronts.allFronts.get(0)));
+
+                Printer.printMembersWithAppliedFunctions(table.pop);//todo
+            }
+            else
+            {
+                Population.weightedAverage.establishWeightedAverageRelationsForTable(testPopulation,table.mask);
+
+                table.setBestMembersByWeightedAverage(testPopulation);
+                Printer.printMembersWithWeightedAverage(table.pop);//todo
+                System.out.println("Tamanho deesta bagaca:"+table.pop.population.size());
+            }
+
+        }
+
+
 
     }
 
+    public static void fillTablesAEMMD(){
+
+    }
 
 }

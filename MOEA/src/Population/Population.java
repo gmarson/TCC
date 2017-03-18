@@ -3,6 +3,7 @@ package Population;
 import Dominance.*;
 import java.util.ArrayList;
 import Fronts.*;
+import WeightedAverage.*;
 
 /**
  * Created by gmarson on 12/21/2016.
@@ -15,6 +16,7 @@ public class Population {
     public Fronts fronts = new Fronts();
 
     public static Dominance dominance = new Dominance();
+    public static WeightedAverage weightedAverage = new WeightedAverage();
 
     public Population()
     {
@@ -27,13 +29,25 @@ public class Population {
         this.population = p.population;
     }
 
+    public Population(Front front)
+    {
+        this.population = front.membersAtThisFront;
+    }
+
     public void fastNonDominatedSort()
     {
         resetAttributesAndFrontsForAllMembers();
-        dominance.establishDominanceForAllMembers(this);
+        dominance.establishDominanceForAllMembers(this,null);
         this.population =sortPopulationByDominance();
         this.fronts.buildOrderedFronts(this);
+    }
 
+    public void fastNonDominatedSort(ArrayList<Integer> maskOfObjectives)
+    {
+        resetAttributesAndFrontsForAllMembers();
+        dominance.establishDominanceForAllMembers(this,maskOfObjectives);
+        this.population =sortPopulationByDominance();
+        this.fronts.buildOrderedFronts(this);
     }
 
     public void resetAttributesAndFrontsForAllMembers()

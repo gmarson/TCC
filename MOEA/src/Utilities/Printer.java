@@ -20,8 +20,14 @@ public abstract class Printer
         for(Member m : p.population)
         {
             System.out.println("Population.Member "+i+ " = "+m.value);
-            System.out.println("F1 = "+m.resultOfFunctions.get(0));
-            System.out.println("F2 = "+m.resultOfFunctions.get(1));
+            int j=1;
+            for(Double d: m.resultOfFunctions)
+            {
+
+                System.out.println("F"+j+" = "+d);
+                j++;
+
+            }
             System.out.println("Rank = "+m.rank + "\n");
             i++;
         }
@@ -56,6 +62,16 @@ public abstract class Printer
         for(Member m : p.population)
         {
             System.out.println("Population.Member "+i+ " = "+m.value+" Solutions that this member dominates = "+m.solutionsThatThisMemberDominates.size());
+            i++;
+        }
+    }
+
+    public static void printMembersWithWeightedAverage(Population p){
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Population.Member "+i+ " = "+m.value+"   WeightedAverage = "+m.weightedAverage);
             i++;
         }
     }

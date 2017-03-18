@@ -16,7 +16,7 @@ public class ProblemSCH extends Problem {
     public ProblemSCH()
     {
         crossover = new CrossoverBinary();
-        Constants.PROBLEM_SIZE = 4;
+        Constants.PROBLEM_SIZE = 2;
         Constants.MAX_MEMBER_VALUE = 1000;
         Constants.MIN_MEMBER_VALUE = -1000;
         Constants.MAX_BINARY_LEN = 11;

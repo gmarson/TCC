@@ -173,6 +173,22 @@ public abstract class Utils {
 
     }
 
+    public static void insertMemberOnCrescentOrderedArrayByWeightedAverage(Member memberToBeInserted, ArrayList<Member> memberArray){
+        if (memberArray.isEmpty())
+            memberArray.add(memberToBeInserted);
+        else
+        {
+            int i=0;
+
+            while(memberToBeInserted.weightedAverage > memberArray.get(i).weightedAverage)
+            {
+                i++;
+                if(i == memberArray.size()) break;
+            }
+            memberArray.add(i,memberToBeInserted.deepCopy());
+
+        }
+    }
 
     public static ArrayList<Member> newArrayWithMember(Member member)
     {

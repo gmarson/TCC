@@ -11,14 +11,14 @@ import java.util.ArrayList;
 
 public class Member {
 
-    //NSGAII.NSGAII variables
+    //NSGAII variables
     public ArrayList<Double> resultOfFunctions = new ArrayList<>();
     public ArrayList<Member> solutionsThatThisMemberDominates = new ArrayList<>();
     public int numberOfSolutionsThatDominatesThisMember =0;
     public int rank = -1;
     public double crowdingDistanceValue;
 
-    //SPEA2.SPEA2 variables
+    //SPEA2 variables
     public double rawFitness = -1;
     public double density = -1;
     public double fitness = -1;
@@ -30,6 +30,9 @@ public class Member {
     public double value;
     public double key;
     public ArrayList<Integer> binaryValue;
+
+    //AEMMT Variables
+    public double weightedAverage=-1;
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 
@@ -49,6 +52,7 @@ public class Member {
         newMember.resultOfFunctions = this.resultOfFunctions;
         newMember.distances = this.distances;
         newMember.binaryValue = this.binaryValue;
+        newMember.weightedAverage = this.weightedAverage;
 
         return newMember;
     }
