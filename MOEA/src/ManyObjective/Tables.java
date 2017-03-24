@@ -86,16 +86,11 @@ public abstract class Tables {
                     table.setBestMembersByRank(testPopulation);
                 else
                     table.setBestMembersByRank(new Population(testPopulation.fronts.allFronts.get(0)));
-
-                Printer.printMembersWithAppliedFunctions(table.pop);//todo
             }
             else
             {
                 Population.weightedAverage.establishWeightedAverageRelationsForTable(testPopulation,table.mask);
-
                 table.setBestMembersByWeightedAverage(testPopulation);
-                Printer.printMembersWithWeightedAverage(table.pop);//todo
-                System.out.println("Tamanho deesta bagaca:"+table.pop.population.size());
             }
 
         }

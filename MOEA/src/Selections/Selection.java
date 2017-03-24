@@ -3,6 +3,7 @@ package Selections;
 import Constants.Constants;
 import Population.*;
 import Utilities.Utils;
+import ManyObjective.Table;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,17 @@ public abstract class Selection {
         }
         return membersByTour;
     }
+
+    protected  ArrayList<Table> makeCompetitors(ArrayList<Table> tables)
+    {
+        ArrayList<Table> tablesByTour = new ArrayList<>();
+        for (int i = 0; i < Constants.TOUR_SIZE; i++) {
+            int randomNumberForTournament = Utils.getRandom(0,tables.size());
+            tablesByTour.add(tables.get(randomNumberForTournament));
+        }
+        return  tablesByTour;
+    }
+
 
 
 }

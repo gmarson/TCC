@@ -1,6 +1,7 @@
 package Selections;
 
 import Constants.Constants;
+import ManyObjective.Table;
 import Population.*;
 
 import java.util.ArrayList;
@@ -39,5 +40,7 @@ public class SelectionRank extends Selection {
 
         return selected;
     }
+
+
 
 }
