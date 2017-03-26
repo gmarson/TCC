@@ -67,6 +67,8 @@ public class Population {
             member.rawFitness = 0;
             member.fitness = 0;
             member.distances = new ArrayList<>();
+
+
         }
 
     }
@@ -167,7 +169,5 @@ public class Population {
 
         return newArchive;
     }
-
-
 
 }

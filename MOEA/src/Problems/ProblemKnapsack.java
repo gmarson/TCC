@@ -18,7 +18,7 @@ public class ProblemKnapsack extends Problem{
 
     public ProblemKnapsack(){
         crossover = new CrossoverBinaryKnapsack();
-        Constants.PROBLEM_SIZE = 6;
+        Constants.PROBLEM_SIZE = 3;
         Constants.QTD_ITEMS = 10;
         Constants.BAG_CAPACITY = 100;
         this.buildItems();

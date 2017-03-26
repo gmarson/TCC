@@ -26,6 +26,7 @@ public abstract class Tables {
         for (int i = 1; i <=Constants.PROBLEM_SIZE ; i++) {
             qtdTables += fact(Constants.PROBLEM_SIZE) / (fact(i) * fact(Constants.PROBLEM_SIZE - i));
         }
+
         return  qtdTables + nonDominatedTable;
     }
 
@@ -92,11 +93,17 @@ public abstract class Tables {
                 Population.weightedAverage.establishWeightedAverageRelationsForTable(testPopulation,table.mask);
                 table.setBestMembersByWeightedAverage(testPopulation);
             }
-
+            System.out.println(table.pop.population.size());//todo
         }
 
 
 
+    }
+
+
+    public static void resetContributionAndConvergence(){
+        for (Table table: tables)
+            table.resetContributionAndConvergence();
     }
 
     public static void fillTablesAEMMD(){

@@ -33,6 +33,8 @@ public class Member {
 
     //AEMMT Variables
     public double weightedAverage=-1;
+    public ArrayList<Integer> parentTableMask1;
+    public ArrayList<Integer> parentTableMask2;
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 
@@ -56,22 +58,6 @@ public class Member {
 
         return newMember;
     }
-
-
-    public void declMember()
-    {
-        System.out.println("Population.Member value: "+this.value+"\nPopulation.Member Binary Value: "+this.binaryValue);
-    }
-
-
-    public void printMemberResultOfFunctions()
-    {
-        declMember();
-        for (int i = 0; i < resultOfFunctions.size(); i++) {
-            System.out.println("F"+i+"= "+resultOfFunctions.get(i));
-        }
-    }
-
 
 
 

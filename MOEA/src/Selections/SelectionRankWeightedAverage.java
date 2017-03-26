@@ -6,7 +6,6 @@ import Population.*;
 import Utilities.*;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 
-import javax.annotation.Generated;
 import java.util.ArrayList;
 
 /**
@@ -14,17 +13,30 @@ import java.util.ArrayList;
  */
 public class SelectionRankWeightedAverage extends Selection {
 
-    public Population selectParents(Table table1, Table table2){ //TODO chama-la
+
+    public Population selectParentsGivenAllTables(ArrayList<Table> tables){
+        ArrayList<Table> selectedTables =  this.selectTablesAEMMT(tables);
+        return this.selectParents(selectedTables.get(0),selectedTables.get(1));
+    }
+
+    private Population selectParents(Table table1, Table table2){
         Population p = new Population();
-        p.population = singleTournament(table1,table2);
+        ArrayList<Member> parents = singleTournament(table1,table2);
+        for (Member m:parents)
+        {
+            m.parentTableMask1 = table1.mask;
+            m.parentTableMask2 = table2.mask;
+
+        }
+
+        p.population = parents;
         return p;
     }
 
-    public ArrayList<Table> selectTablesAEMMT(ArrayList<Table> tables){return tournamentTables(tables);} // TODO chama-la
+    private ArrayList<Table> selectTablesAEMMT(ArrayList<Table> tables){return tournamentTables(tables);}
 
-    //TODO VAMOS VER SE TA TUDO CERTO NE
 
-    protected ArrayList<Member> singleTournament(Table table1, Table table2){
+    private ArrayList<Member> singleTournament(Table table1, Table table2){
         ArrayList<Member> selected = new ArrayList<>();
         ArrayList<Member> membersByTourFromTable1, membersByTourFromTable2;
 
@@ -50,7 +62,7 @@ public class SelectionRankWeightedAverage extends Selection {
     }
 
 
-    public ArrayList<Table> tournamentTables(ArrayList<Table> tables){
+    private ArrayList<Table> tournamentTables(ArrayList<Table> tables){
 
         ArrayList<Table> tablesByTourFirstGroup, tablesByTourSecondGroup;
         ArrayList<Table> selected = new ArrayList<>();
@@ -63,7 +75,7 @@ public class SelectionRankWeightedAverage extends Selection {
         return selected;
     }
 
-    public Table returnWinnerTable(ArrayList<Table> tablesByTour){
+    private Table returnWinnerTable(ArrayList<Table> tablesByTour){
         Table bestTable, opponentTable;
         bestTable = tablesByTour.get(0);
         for (int i = 1; i <tablesByTour.size() ; i++) {

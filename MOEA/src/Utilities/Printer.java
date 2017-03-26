@@ -76,6 +76,25 @@ public abstract class Printer
         }
     }
 
+    public static void printMembersWithWeightedAverageAndFunctions(Population p){
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Population.Member "+i+ " = "+m.value+"   WeightedAverage = "+m.weightedAverage);
+            int j=1;
+            for(Double d: m.resultOfFunctions)
+            {
+
+                System.out.println("F"+j+" = "+d);
+                j++;
+
+            }
+            System.out.println("Rank = "+m.rank + "\n");
+            i++;
+        }
+    }
+
     public static void printMembersWithValues(Population p)
     {
         checkEmpty(p);
