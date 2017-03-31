@@ -55,5 +55,15 @@ public class WeightedAverage {
 
     }
 
+    public static Member calculateWeightedAverageForSingleMember(Member member, ArrayList<Integer> maskOfTable){
+        double weightedSum=0.0;
+        for (int i = 0; i < maskOfTable.size(); i++) {
+            int position = maskOfTable.get(i)-1;
+            weightedSum += member.resultOfFunctions.get(position);
+        }
+        member.weightedAverage = weightedSum/maskOfTable.size();
+        return member.deepCopy();
+    }
+
 
 }

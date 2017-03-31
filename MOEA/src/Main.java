@@ -14,10 +14,10 @@ public class Main {
         Problem knapsack = new ProblemKnapsack();
 
         //NSGAII nsgaii = new NSGAII();
-        //nsgaii.runAlgorithm(sch);
+        //nsgaii.runAlgorithm(knapsack);
 
         //SPEA2.SPEA2 spea2 = new SPEA2.SPEA2();
-        //spea2.runAlgorithm(sch);
+        //spea2.runAlgorithm(knapsack);
 
         AEMMT aemmt = new AEMMT();
         aemmt.runAlgorithm(knapsack);

@@ -1,5 +1,7 @@
 package ManyObjective;
 
+import ManyObjective.TableFunctions.TableAEMMD;
+import ManyObjective.TableFunctions.TableFunctions;
 import Population.Population;
 import Problems.Problem;
 import Constants.*;
@@ -7,6 +9,7 @@ import Selections.*;
 import Utilities.Printer;
 import Population.*;
 import Utilities.Utils;
+import WeightedAverage.WeightedAverage;
 
 import java.util.ArrayList;
 
@@ -15,31 +18,41 @@ import java.util.ArrayList;
  */
 public class AEMMD {
 
-
+    public static int genCounter=1;
 
     public void runAlgorithm(Problem problem)
     {
+        TableAEMMD tableAEMMD = new TableAEMMD();
+        Population p = new Population();
+        p.population = problem.generateRandomMembers(Constants.POPULATION_SIZE);
+        problem.evaluateAgainstObjectiveFunctions(p);
+        TableFunctions.buildTables(p,problem);
+        tableAEMMD.fillTables();
 
-    }
 
 
-    //todo implementar e chamar crossover antes de entrar aki
-    public void insertMemberOnTables(Member newMember){
+        while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
 
-        for(Table table: Tables.tables)
-        {
-            Member worstMemberOfTable = table.pop.population.get(table.pop.population.size() -1);
-            if (worstMemberOfTable.weightedAverage > newMember.weightedAverage)
-            {
-                table.pop.population.remove(worstMemberOfTable);
-                Utils.insertMemberOnCrescentOrderedArrayByWeightedAverage(newMember,table.pop.population);
-                table.convergence++;
-            }
+            //System.out.println("Generation "+genCounter);
+            if (genCounter % 50 ==0) TableFunctions.resetContributionAndConvergence();
+
+            SelectionRankWeightedAverage aemmtSelection = new SelectionRankWeightedAverage();
+            Population parentsPopulation = aemmtSelection.selectParentsGivenAllTables(TableFunctions.tables);
+            Population children = problem.crossover.crossoverAndMutation(parentsPopulation);
+            tableAEMMD.copyMaskToChildren(parentsPopulation, children);
+            tableAEMMD.insertMemberOnTables(children.population.get(0), problem);
+            genCounter++;
 
         }
 
+        problem.printResolutionMessage();
+        Printer.printTables();//todo
 
     }
+
+
+
+
 
 
 
@@ -51,7 +64,7 @@ public class AEMMD {
     *    ou seja, se em uma tabela eu tenho os objetivos a e b entao o melhor individuo eh aquele que tem a menor media entre esses
     *    dois objetivos
     *
-    *    NO AEMMD todas as tabelas são por dominância
+    *    XXX NO AEMMD todas as tabelas são por dominância
     *
     *    XXX o cruzamento eh feito com um torneio para eleger as tabelas e outro torneio para eleger os dois indivíduoos, cada um contido
     *    em cada tabela. é natural que existam mais quantidade de gerações para esse tipo de algoritmo. Vamos testar com 1000 mas os manos do doutorado
@@ -65,9 +78,6 @@ public class AEMMD {
     *   a tabela de nao dominados eh calculada dando a pop inicial e vendo os nao dominados dela. A cada novo individuo,  eu vejo se ele
     *   domina todos os outros da pop nao dominada,  se ele domina entao ele vira a pop nao dominada, se ele nao domina e é dominado por algum
     *   outro individuo, ele nao será inserido lá, se ele nao domina e nao eh dominado ele sera inserido.
-    *
-    *
-    *   //TODO lembrar de colocar as variaveis do aemmd em resetAttributesAndFrontsForAllMembers()
     * */
 
 }

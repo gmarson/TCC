@@ -15,25 +15,20 @@ import Utilities.Printer;
  */
 public class NSGAII {
 
-    //todo diminuir o tamanho dessa funcao
+    private Front lastFrontToMergeWithPopulation = null;
+    private int genCounter = 0;
+    private Population union, sortedUnion;
+    private Population p = new Population();
+    private Selection selectRanked = new SelectionRank();
+    private Selection selectRankCrowded = new SelectionRankCrowding();
+
+
     public void runAlgorithm(Problem problem)
     {
-       
-        Front lastFrontToMergeWithPopulation = null;
-        int genCounter = 0;
-        Population union, sortedUnion;
-        Population p = new Population();
-        Selection selectRanked = new SelectionRank();
-        Selection selectRankCrowded = new SelectionRankCrowding();
-
         p.population = problem.generateRandomMembers(Constants.POPULATION_SIZE);
-
         problem.evaluateAgainstObjectiveFunctions(p);
-
         p.fastNonDominatedSort();
-
         Population selected = selectRanked.selectParents(p);
-
         Population children = problem.crossover.crossoverAndMutation(selected);
 
         sortedUnion = new Population();
@@ -41,6 +36,7 @@ public class NSGAII {
         {
             System.out.println("GERACAO = "+ genCounter+"===========================================");
             genCounter++;
+
             problem.evaluateAgainstObjectiveFunctions(children);
             union = p.mergeWithCurrentPopulation(children);
             union.fastNonDominatedSort();
@@ -74,8 +70,8 @@ public class NSGAII {
         }
 
         sortedUnion.fastNonDominatedSort();
-
         problem.printResolutionMessage();
+        Problem.removeSimilar(sortedUnion.fronts.allFronts.get(0),problem);
         Printer.printFirstFront(sortedUnion);
 
     }

@@ -69,6 +69,7 @@ public class Population {
             member.distances = new ArrayList<>();
 
 
+
         }
 
     }
@@ -159,7 +160,7 @@ public class Population {
         }
     }
 
-    public Population getNonDominated()
+    public Population getNonDominatedSPEA2()
     {
         Population newArchive = new Population();
         for(Member member: this.population){
@@ -169,5 +170,6 @@ public class Population {
 
         return newArchive;
     }
+
 
 }

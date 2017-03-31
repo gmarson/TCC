@@ -49,7 +49,7 @@ public class Table {
         }
     }
 
-    protected void resetContributionAndConvergence(){
+    public void resetContributionAndConvergence(){
         this.contribution = 0;
         this.convergence = 0;
     }
@@ -60,15 +60,6 @@ public class Table {
     }
 
 
-    protected boolean equalsMask(ArrayList<Integer> aMask)
-    {
-        if (aMask.size() != this.mask.size()) return false;
 
-        for (int i = 0; i < this.mask.size(); i++) {
-            if (this.mask.get(i).equals(aMask.get(i))) return false;
-        }
-
-        return true;
-    }
 
 }

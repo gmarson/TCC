@@ -1,29 +1,33 @@
-package ManyObjective;
-import Constants.*;
+package ManyObjective.TableFunctions;
+
+import Constants.Constants;
+import ManyObjective.*;
 import Population.*;
 import Problems.*;
-import Utilities.*;
-
+import Utilities.Matrix;
 
 import java.util.ArrayList;
 
 /**
- * Created by gabrielm on 07/03/17.
+ * Created by gabrielm on 30/03/17.
  */
-public abstract class Tables {
+public abstract class TableFunctions {
 
-    public  static  Population parentPopulation;
-    public  static  ArrayList<Table> tables = new ArrayList<>();
-    private static  Matrix binaryRepresentationOfObjectives;
-    public  static  Matrix decimalRepresentationOfObjectives;
-    public  static  ArrayList<Integer> currentMask = new ArrayList<>();
-   
+    abstract public void fillTables();
+    abstract public void insertMemberOnTables(Member newMember, Problem problem);
 
-    public static int setQtdTables(){
+    static  Population parentPopulation;
+    public static ArrayList<Table> tables = new ArrayList<>();
+    private static Matrix binaryRepresentationOfObjectives;
+    private  static  Matrix decimalRepresentationOfObjectives;
+    private static  ArrayList<Integer> currentMask = new ArrayList<>();
+    public  static TableAEMMT tableAEMMT = new TableAEMMT();
+
+    private static int setQtdTables(){
 
         int nonDominatedTable = 1;
         int qtdTables =0;
-        for (int i = 1; i <=Constants.PROBLEM_SIZE ; i++) {
+        for (int i = 1; i <= Constants.PROBLEM_SIZE ; i++) {
             qtdTables += fact(Constants.PROBLEM_SIZE) / (fact(i) * fact(Constants.PROBLEM_SIZE - i));
         }
 
@@ -74,31 +78,7 @@ public abstract class Tables {
     }
 
 
-    public static void fillTablesAEMMT(){
-        parentPopulation.fastNonDominatedSort();
 
-        for(Table table: tables)
-        {
-            Population testPopulation = new Population(parentPopulation);
-            if (table.mask.size() <=1)
-            {
-                testPopulation.fastNonDominatedSort(table.mask);
-                if (table.mask.size() == 1)
-                    table.setBestMembersByRank(testPopulation);
-                else
-                    table.setBestMembersByRank(new Population(testPopulation.fronts.allFronts.get(0)));
-            }
-            else
-            {
-                Population.weightedAverage.establishWeightedAverageRelationsForTable(testPopulation,table.mask);
-                table.setBestMembersByWeightedAverage(testPopulation);
-            }
-            System.out.println(table.pop.population.size());//todo
-        }
-
-
-
-    }
 
 
     public static void resetContributionAndConvergence(){
@@ -106,8 +86,12 @@ public abstract class Tables {
             table.resetContributionAndConvergence();
     }
 
-    public static void fillTablesAEMMD(){
 
+    public void copyMaskToChildren(Population parentsPopulation, Population children){
+        for (int i = 0; i < parentsPopulation.population.size(); i++) {
+            children.population.get(i).parentTableMask1 = parentsPopulation.population.get(i).parentTableMask1;
+            children.population.get(i).parentTableMask2 = parentsPopulation.population.get(i).parentTableMask2;
+        }
     }
 
 }

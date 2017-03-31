@@ -38,7 +38,7 @@ public abstract class EnvironmentalSelection {
         Population union = new Population();
         Population environment;
         union.mergeTwoPopulations(population,archive);
-        environment = union.getNonDominated();
+        environment = union.getNonDominatedSPEA2();
 
         if(environment.population.size() < Constants.ARCHIVE_SIZE){
             populateWithRemainingBest(environment, union);

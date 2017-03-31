@@ -69,8 +69,12 @@ public class Front {
             System.out.println("Vector Value: "+member.binaryValue);
             System.out.println("Rank: "+member.rank);
             System.out.println("Crowding: "+member.crowdingDistanceValue);
-            System.out.println("F1 = "+member.resultOfFunctions.get(0));
-            System.out.println("F2 = "+member.resultOfFunctions.get(1));
+            int j =0;
+            for (Double d: member.resultOfFunctions){
+                System.out.println("F"+j+" = "+d);
+                j++;
+            }
+
             i++;
             System.out.println();
 
@@ -94,5 +98,6 @@ public class Front {
             s.nextLine();
         }
     }
+
 
 }
