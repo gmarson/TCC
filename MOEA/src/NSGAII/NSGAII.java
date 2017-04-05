@@ -25,7 +25,7 @@ public class NSGAII {
 
     public void runAlgorithm(Problem problem)
     {
-        p.population = problem.generateRandomMembers(Constants.POPULATION_SIZE);
+        p.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(p);
         p.fastNonDominatedSort();
         Population selected = selectRanked.selectParents(p);

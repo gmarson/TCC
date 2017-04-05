@@ -1,8 +1,9 @@
-import NSGAII.NSGAII;
 import Population.*;
 import Problems.*;
 import Utilities.*;
 import ManyObjective.*;
+
+import java.io.IOException;
 
 public class Main {
 
@@ -11,7 +12,9 @@ public class Main {
 
         //Problem sch = new ProblemSCH();
         //Problem f2 = new ProblemF2();
-        Problem knapsack = new ProblemKnapsack();
+        //Problem knapsack = new ProblemKnapsack();
+
+        Problem knapsackFromFile = new ProblemKnapsackFromFile("KP/KP_p-3_n-10_ins-1.dat");
 
         //NSGAII nsgaii = new NSGAII();
         //nsgaii.runAlgorithm(knapsack);
@@ -20,9 +23,10 @@ public class Main {
         //spea2.runAlgorithm(knapsack);
 
         AEMMT aemmt = new AEMMT();
-        aemmt.runAlgorithm(knapsack);
+        aemmt.runAlgorithm(knapsackFromFile);
 
-
+        //AEMMD aemmd = new AEMMD();
+        //aemmd.runAlgorithm(knapsackFromFile);
 
     }
 

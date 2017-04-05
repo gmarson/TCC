@@ -3,12 +3,13 @@ package Selections;
 import Constants.Constants;
 import ManyObjective.Table;
 import Population.*;
+import javafx.scene.control.Tab;
 
 import java.util.ArrayList;
 
 public class SelectionRank extends Selection {
 
-	@Override
+    @Override
 	public Population selectParents(Population population)
     {
         return tournament(population);
@@ -40,7 +41,6 @@ public class SelectionRank extends Selection {
 
         return selected;
     }
-
 
 
 }

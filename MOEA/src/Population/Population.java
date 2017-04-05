@@ -1,6 +1,8 @@
 package Population;
 
 import Dominance.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import Fronts.*;
 import WeightedAverage.*;
@@ -9,7 +11,7 @@ import WeightedAverage.*;
  * Created by gmarson on 12/21/2016.
  * TCC UFU
  */
-public class Population {
+public class Population implements Serializable {
 
     public ArrayList<Member> population = new ArrayList<>();
 

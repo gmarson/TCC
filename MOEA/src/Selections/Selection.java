@@ -13,6 +13,8 @@ import java.util.ArrayList;
  */
 public abstract class Selection {
 
+    private static SelectionTables selectionTables = new SelectionTables();
+
     public abstract Population selectParents(Population population);
     protected abstract Member returnWinnerCompetitor(ArrayList<Member> membersByTour);
     protected abstract Population tournament(Population population);
@@ -38,6 +40,17 @@ public abstract class Selection {
         return  tablesByTour;
     }
 
+    public static Population selectParents(Table table1, Table table2){
+        Population p = new Population();
+        ArrayList<Member> parents = selectionTables.singleTournament(table1,table2);
+        for (Member m:parents)
+        {
+            m.parentTableMask1 = table1.mask;
+            m.parentTableMask2 = table2.mask;
+        }
 
+        p.population = parents;
+        return p;
+    }
 
 }

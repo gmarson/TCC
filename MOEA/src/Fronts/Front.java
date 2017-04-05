@@ -4,6 +4,7 @@ import Constants.Constants;
 import Population.Member;
 import Utilities.Sorts;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ import java.util.Scanner;
  * Created by gmarson on 12/21/2016.
  * TCC UFU
  */
-public class Front {
+public class Front implements Serializable{
     public ArrayList<Member> membersAtThisFront = new ArrayList<>();
     
     public void crowdingDistanceAssignment(){

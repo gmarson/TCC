@@ -4,6 +4,8 @@ import Constants.*;
 import ManyObjective.*;
 import Population.*;
 import Problems.*;
+import Selections.SelectionRankWeightedAverage;
+import Selections.SelectionTables;
 import Utilities.*;
 import WeightedAverage.*;
 
@@ -14,6 +16,7 @@ import java.util.ArrayList;
  */
 public class TableAEMMT extends TableFunctions{
 
+    public static int genCounter=1;
 
     @Override
     public void fillTables(){
@@ -67,7 +70,28 @@ public class TableAEMMT extends TableFunctions{
         if (shouldIncrease) increaseContribution(positionsToIncrease);
     }
 
-    boolean insertionForWeightedAverageTable(Table table, Member newMember) {
+    @Override
+    public void mainLoop(Problem problem) {
+        while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
+
+            //System.out.println("Generation "+genCounter);
+            if (genCounter % 50 ==0) TableFunctions.resetContributionAndConvergence();
+
+            SelectionTables selectionTables = new SelectionTables();
+
+            ArrayList<Table> parentTables = selectionTables.selectTables(tables,"AEMMT");
+            Population parentsPopulation = SelectionRankWeightedAverage.selectParents(parentTables.get(0),parentTables.get(1));
+            Population children = problem.crossover.crossoverAndMutation(parentsPopulation);
+            super.copyMaskToChildren(parentsPopulation, children);
+            this.insertMemberOnTables(children.population.get(0), problem);
+            genCounter++;
+
+        }
+
+    }
+
+
+    private boolean insertionForWeightedAverageTable(Table table, Member newMember) {
 
         Member worstMemberOfTable = table.pop.population.get(Constants.TABLE_SIZE-1);
         if (worstMemberOfTable.weightedAverage > newMember.weightedAverage){
@@ -82,7 +106,7 @@ public class TableAEMMT extends TableFunctions{
     }
 
 
-    boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
+    private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
         table.pop.addMember(newMember);
         table.pop.fastNonDominatedSort();
 

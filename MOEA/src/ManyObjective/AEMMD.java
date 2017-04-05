@@ -5,45 +5,27 @@ import ManyObjective.TableFunctions.TableFunctions;
 import Population.Population;
 import Problems.Problem;
 import Constants.*;
-import Selections.*;
 import Utilities.Printer;
-import Population.*;
-import Utilities.Utils;
-import WeightedAverage.WeightedAverage;
-
-import java.util.ArrayList;
 
 /**
  * Created by gabrielm on 07/03/17.
  */
 public class AEMMD {
 
-    public static int genCounter=1;
+
 
     public void runAlgorithm(Problem problem)
     {
         TableAEMMD tableAEMMD = new TableAEMMD();
         Population p = new Population();
-        p.population = problem.generateRandomMembers(Constants.POPULATION_SIZE);
+        p.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(p);
         TableFunctions.buildTables(p,problem);
         tableAEMMD.fillTables();
 
+        tableAEMMD.mainLoop(problem);
 
 
-        while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
-
-            //System.out.println("Generation "+genCounter);
-            if (genCounter % 50 ==0) TableFunctions.resetContributionAndConvergence();
-
-            SelectionRankWeightedAverage aemmtSelection = new SelectionRankWeightedAverage();
-            Population parentsPopulation = aemmtSelection.selectParentsGivenAllTables(TableFunctions.tables);
-            Population children = problem.crossover.crossoverAndMutation(parentsPopulation);
-            tableAEMMD.copyMaskToChildren(parentsPopulation, children);
-            tableAEMMD.insertMemberOnTables(children.population.get(0), problem);
-            genCounter++;
-
-        }
 
         problem.printResolutionMessage();
         Printer.printTables();//todo

@@ -2,13 +2,14 @@ package Fronts;
 
 import Population.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by gmarson on 12/21/2016.
  * TCC UFU
  */
-public class Fronts {
+public class Fronts implements Serializable{
     public  ArrayList<Front> allFronts = new ArrayList<>();
 
 

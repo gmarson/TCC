@@ -3,8 +3,10 @@ package Problems;
 import Constants.*;
 import Crossover.CrossoverBinaryKnapsack;
 import Population.*;
+import Utilities.Reader;
 import Utilities.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 public class ProblemKnapsack extends Problem{
 
 
-    public static ArrayList<KnapsackItem> items = new ArrayList<>();
+    public  ArrayList<KnapsackItem> items = new ArrayList<>();
 
 
     public ProblemKnapsack(){
@@ -23,6 +25,8 @@ public class ProblemKnapsack extends Problem{
         Constants.BAG_CAPACITY = 100;
         this.buildItems();
     }
+
+
 
     @Override
     public void evaluateAgainstObjectiveFunctions(Population p)
@@ -35,7 +39,7 @@ public class ProblemKnapsack extends Problem{
     }
 
     @Override
-    public ArrayList<Member> generateRandomMembers(int QtdMembers)
+    public ArrayList<Member> generateMembers(int QtdMembers)
     {
         ArrayList<Member> population =  new ArrayList<>();
         for (int i = 0; i < QtdMembers; i++) {
@@ -59,7 +63,7 @@ public class ProblemKnapsack extends Problem{
     }
 
 
-    public double caculateWeightGivenMember(Member member)
+    private double caculateWeightGivenMember(Member member)
     {
         double totalWeight = 0;
         for (int i = 0; i < Constants.QTD_ITEMS; i++) {
@@ -79,7 +83,7 @@ public class ProblemKnapsack extends Problem{
         {
             if (member.binaryValue.get(j) == 1)
             {
-                firstFunctionValue += ProblemKnapsack.items.get(j).attributes.get(0);
+                firstFunctionValue += this.items.get(j).attributes.get(0);
             }
         }
 
@@ -97,7 +101,7 @@ public class ProblemKnapsack extends Problem{
         {
             if(member.binaryValue.get(j) == 1)
             {
-                secondFunctionValue += ProblemKnapsack.items.get(j).attributes.get(1);
+                secondFunctionValue += this.items.get(j).attributes.get(1);
 
             }
         }
@@ -114,7 +118,7 @@ public class ProblemKnapsack extends Problem{
         {
             if(member.binaryValue.get(j) == 1)
             {
-                thirdFunctionValue += ProblemKnapsack.items.get(j).attributes.get(2);
+                thirdFunctionValue += this.items.get(j).attributes.get(2);
 
             }
         }
@@ -131,7 +135,7 @@ public class ProblemKnapsack extends Problem{
         {
             if(member.binaryValue.get(j) == 1)
             {
-                fourthFunctionValue += ProblemKnapsack.items.get(j).attributes.get(3);
+                fourthFunctionValue += this.items.get(j).attributes.get(3);
 
             }
         }
@@ -148,7 +152,7 @@ public class ProblemKnapsack extends Problem{
         {
             if(member.binaryValue.get(j) == 1)
             {
-                fifthFunctionValue += ProblemKnapsack.items.get(j).attributes.get(4);
+                fifthFunctionValue += this.items.get(j).attributes.get(4);
 
             }
         }
@@ -165,7 +169,7 @@ public class ProblemKnapsack extends Problem{
         {
             if(member.binaryValue.get(j) == 1)
             {
-                sixthFunctionValue += ProblemKnapsack.items.get(j).attributes.get(5);
+                sixthFunctionValue += this.items.get(j).attributes.get(5);
 
             }
         }
@@ -177,18 +181,20 @@ public class ProblemKnapsack extends Problem{
 
     @Override
     public void printResolutionMessage() {
-        System.out.println("Dado os seguintes intens: ");
+        System.out.println("Dado os seguintes itens: ");
         this.printItems();
         System.out.println("Os melhores indivíduos foram ");
 
     }
 
-    public void buildItems()
+    private void buildItems()
     {
         for (int i = 0; i < Constants.QTD_ITEMS; i++) {
             items.add(new KnapsackItem());
         }
     }
+
+
 
     public void printItems()
     {
@@ -200,45 +206,6 @@ public class ProblemKnapsack extends Problem{
             i++;
         }
     }
-
-    public class KnapsackItem{
-        public double weight;
-        public ArrayList<Double> attributes = new ArrayList<>(); //lucro e por ai vai
-
-        private double MAX_ATTRIBUTE_VALUE_FOR_ITEM = 10;
-        private double MIN_ATTRIBUTE_VALUE_FOR_ITEM = 1;
-        private double MAX_WEIGHT = 100;
-        private double MIN_WEIGHT = 1;
-
-        //todo tirar os castings depois
-        public KnapsackItem()
-        {
-            this.weight =  Utils.getRandom((int)MIN_WEIGHT,(int)MAX_WEIGHT);
-            this.createAttributesOfItems();
-        }
-
-
-        //todo tirar os castings depois
-        public void createAttributesOfItems()
-        {
-            for (int i = 0; i <Constants.PROBLEM_SIZE ; i++) {
-                this.attributes.add(i,(double)Utils.getRandom((int)MIN_ATTRIBUTE_VALUE_FOR_ITEM,(int)MAX_ATTRIBUTE_VALUE_FOR_ITEM));
-            }
-        }
-
-        public void printItem()
-        {
-            System.out.println("Peso: "+this.weight);
-            for (int i = 0; i < attributes.size(); i++) {
-                System.out.println("Atributo "+i+" = "+attributes.get(i)+"\n");
-            }
-        }
-
-
-    }
-
-
-
 
 
 }

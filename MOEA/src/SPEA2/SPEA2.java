@@ -24,7 +24,7 @@ public class SPEA2 {
         Population selected;
         Selection selectedFitness = new SelectionArchive();
 
-        p.population = problem.generateRandomMembers(Constants.POPULATION_SIZE);
+        p.population = problem.generateMembers(Constants.POPULATION_SIZE);
 
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {

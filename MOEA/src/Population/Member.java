@@ -1,5 +1,6 @@
 package Population;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 
 
-public class Member {
+public class Member implements Serializable{
 
     //NSGAII variables
     public ArrayList<Double> resultOfFunctions = new ArrayList<>();

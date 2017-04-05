@@ -15,7 +15,7 @@ public abstract class  Problem {
     public Crossover crossover;
 
     public abstract void evaluateAgainstObjectiveFunctions(Population p);
-    public abstract ArrayList<Member> generateRandomMembers(int QtdMembers);
+    public abstract ArrayList<Member> generateMembers(int QtdMembers);
 
     public abstract void applyFunctions(Member member);
     abstract double firstFunction(Member member);

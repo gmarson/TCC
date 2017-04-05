@@ -15,13 +15,14 @@ public abstract class TableFunctions {
 
     abstract public void fillTables();
     abstract public void insertMemberOnTables(Member newMember, Problem problem);
+    abstract public void mainLoop(Problem problem);
+
 
     static  Population parentPopulation;
     public static ArrayList<Table> tables = new ArrayList<>();
     private static Matrix binaryRepresentationOfObjectives;
     private  static  Matrix decimalRepresentationOfObjectives;
     private static  ArrayList<Integer> currentMask = new ArrayList<>();
-    public  static TableAEMMT tableAEMMT = new TableAEMMT();
 
     private static int setQtdTables(){
 
@@ -76,10 +77,6 @@ public abstract class TableFunctions {
         }
 
     }
-
-
-
-
 
     public static void resetContributionAndConvergence(){
         for (Table table: tables)
