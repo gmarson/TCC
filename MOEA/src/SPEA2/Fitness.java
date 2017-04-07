@@ -71,7 +71,7 @@ public abstract class Fitness {
         }
     }
 
-    public static void setFirstMatrix(){
+    public static void eraseMatrix(){
         distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
     }
 

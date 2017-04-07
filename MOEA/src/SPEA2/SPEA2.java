@@ -14,15 +14,16 @@ import java.util.Scanner;
 public class SPEA2 {
 
     Scanner s = new Scanner(System.in);
+    int genCounter = 0;
+
+    Population p = new Population();
+    public Population archive = new Population();
+    Population union = new Population();
+    Population selected;
+    Selection selectedFitness = new SelectionArchive();
 
     public void runAlgorithm(Problem problem){
-        int genCounter = 0;
 
-        Population p = new Population();
-        Population archive = new Population();
-        Population union = new Population();
-        Population selected;
-        Selection selectedFitness = new SelectionArchive();
 
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
 
@@ -49,10 +50,18 @@ public class SPEA2 {
 
         }
 
-        problem.printResolutionMessage();
+        //problem.printResolutionMessage();
         Printer.printMembersWithValues(archive); //todo
-        
+        reset();
     }
 
-
+    private void reset(){
+        genCounter = 0;
+        p = new Population();
+        archive = new Population();
+        union = new Population();
+        selected = null;
+        selectedFitness = new SelectionArchive();
+        Fitness.eraseMatrix();
+    }
 }

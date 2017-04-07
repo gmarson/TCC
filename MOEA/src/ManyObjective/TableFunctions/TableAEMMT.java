@@ -128,4 +128,11 @@ public class TableAEMMT extends TableFunctions{
         tables.get(positionsToIncrease.get(1)).contribution++;
 
     }
+
+    @Override
+    public void reset(){
+        super.reset();
+        genCounter = 1;
+    }
+
 }

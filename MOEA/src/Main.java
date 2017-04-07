@@ -1,32 +1,83 @@
+import Constants.Constants;
+import ManyObjective.TableFunctions.TableFunctions;
 import Population.*;
 import Problems.*;
 import Utilities.*;
+import NSGAII.*;
+import Fronts.*;
+import SPEA2.*;
 import ManyObjective.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
 
 
+        getBestPossibleParettoOfAGS();
+
         //Problem sch = new ProblemSCH();
         //Problem f2 = new ProblemF2();
         //Problem knapsack = new ProblemKnapsack();
 
-        Problem knapsackFromFile = new ProblemKnapsackFromFile("KP/KP_p-3_n-10_ins-1.dat");
+        //Problem knapsackFromFile = new ProblemKnapsackFromFile("KP/KP_p-3_n-10_ins-1.dat");
+
 
         //NSGAII nsgaii = new NSGAII();
-        //nsgaii.runAlgorithm(knapsack);
+        //nsgaii.runAlgorithm(knapsackFromFile);
 
-        //SPEA2.SPEA2 spea2 = new SPEA2.SPEA2();
-        //spea2.runAlgorithm(knapsack);
+        //SPEA2 spea2 = new SPEA2();
+        //spea2.runAlgorithm(knapsackFromFile);
 
-        AEMMT aemmt = new AEMMT();
-        aemmt.runAlgorithm(knapsackFromFile);
+        //AEMMT aemmt = new AEMMT();
+        //aemmt.runAlgorithm(knapsackFromFile);
 
         //AEMMD aemmd = new AEMMD();
         //aemmd.runAlgorithm(knapsackFromFile);
+
+    }
+
+
+    static ArrayList<Front>  getBestPossibleParettoOfAGS(){
+        NSGAII nsgaii = new NSGAII();
+        SPEA2 spea2 = new SPEA2();
+        AEMMT aemmt = new AEMMT();
+
+        Problem knapsackFromFile = new ProblemKnapsackFromFile("KP/KP_p-3_n-10_ins-1.dat");
+        knapsackFromFile.printResolutionMessage();
+
+        Population spea2Paretto = new Population();
+        Population nsgaiiParetto = new Population();
+        Population aemmtParetto = new Population();
+
+        for (int i = 0; i < 2; i++) {
+
+            nsgaii.runAlgorithm(knapsackFromFile);
+            ArrayList<Member> nsgaiiMembers = nsgaii.sortedUnion.getFirstFrontMembers();
+            nsgaiiParetto.population.addAll(nsgaiiMembers);
+
+            spea2.runAlgorithm(knapsackFromFile);
+            ArrayList<Member> spea2Members = spea2.archive.getFirstFrontMembers(); //todo tem que ver se o archive ja nao a fronteira
+            spea2Paretto.population.addAll(spea2Members);
+
+            Constants.NUMBER_OF_GENERATIONS *= 100;
+
+            aemmt.runAlgorithm(knapsackFromFile);
+            ArrayList<Member> aemmtMembers = TableFunctions.tables.get(TableFunctions.tables.size()-1).pop.population;
+            aemmtParetto.population.addAll(aemmtMembers);
+
+            Constants.NUMBER_OF_GENERATIONS /= 100;
+
+
+        }
+
+
+        return null;
+    }
+
+    void buildParettoUsingAlgorithms(ArrayList<Front> separetedParettoFronts){
 
     }
 
@@ -58,4 +109,27 @@ public class Main {
 
         Printer.printMembersWithFitness(pop);
     }
+
+
+    public void writeAndRead(){
+
+        //TIRADO DO AEMMT
+        /*try {
+            Serializer.writeObject("AEMMT",p);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        Population teste = new Population();
+        try{
+            teste = Serializer.readObject("AEMMT");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }*/
+    }
+
+
 }

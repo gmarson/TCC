@@ -18,7 +18,7 @@ public abstract class TableFunctions {
     abstract public void mainLoop(Problem problem);
 
 
-    static  Population parentPopulation;
+    static Population parentPopulation;
     public static ArrayList<Table> tables = new ArrayList<>();
     private static Matrix binaryRepresentationOfObjectives;
     private  static  Matrix decimalRepresentationOfObjectives;
@@ -43,7 +43,7 @@ public abstract class TableFunctions {
         return fact(n-1) * n;
     }
 
-    public static void buildTables(Population population, Problem problem){
+    public static void buildTables(Population population){
         setQtdMembersOfATable();
         Constants.QTD_TABLES = setQtdTables();
         parentPopulation = population;
@@ -64,9 +64,7 @@ public abstract class TableFunctions {
     private static void buildMasks() {
         binaryRepresentationOfObjectives = new Matrix(Constants.QTD_TABLES, Constants.PROBLEM_SIZE+1,true);
         decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
-
     }
-
 
     private static void updateCurrentMask(int index){
         currentMask = new ArrayList<>();
@@ -89,6 +87,15 @@ public abstract class TableFunctions {
             children.population.get(i).parentTableMask1 = parentsPopulation.population.get(i).parentTableMask1;
             children.population.get(i).parentTableMask2 = parentsPopulation.population.get(i).parentTableMask2;
         }
+    }
+
+    public void reset(){
+        parentPopulation = null;
+        tables = new ArrayList<>();
+        binaryRepresentationOfObjectives = null;
+        decimalRepresentationOfObjectives = null;
+        currentMask = new ArrayList<>();
+
     }
 
 }

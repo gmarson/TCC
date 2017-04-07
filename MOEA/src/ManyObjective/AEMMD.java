@@ -1,6 +1,7 @@
 package ManyObjective;
 
 import ManyObjective.TableFunctions.TableAEMMD;
+import ManyObjective.TableFunctions.TableAEMMT;
 import ManyObjective.TableFunctions.TableFunctions;
 import Population.Population;
 import Problems.Problem;
@@ -20,18 +21,20 @@ public class AEMMD {
         Population p = new Population();
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(p);
-        TableFunctions.buildTables(p,problem);
+        TableFunctions.buildTables(p);
         tableAEMMD.fillTables();
 
         tableAEMMD.mainLoop(problem);
 
-
-
+        //todo FALTA POR O RESET AKI
         problem.printResolutionMessage();
         Printer.printTables();//todo
 
     }
 
+    private void reset(){
+        new TableAEMMD().reset();
+    }
 
 
 

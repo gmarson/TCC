@@ -69,5 +69,10 @@ public class TableAEMMD extends  TableFunctions{
         }
     }
 
+    @Override
+    public void reset(){
+        super.reset();
+        genCounter = 1;
+    }
 
 }

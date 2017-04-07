@@ -37,7 +37,30 @@ public abstract class Printer
         }
 
     }
-    
+
+    public static void printNonDominatedTable(){
+        for (Table table: TableFunctions.tables){
+            if (table.isNonDominatedTable){
+                System.out.println("Tabela:"+ table.mask);
+                int i =1;
+                for(Member member: table.pop.population)
+                {
+                    int j=1;
+                    System.out.println("Member: "+i+" VALUE = "+ member.value);
+                    System.out.println("Member: "+i+" BINARYVALUE = "+ member.binaryValue);
+
+                    for (Double d: member.resultOfFunctions)
+                    {
+                        System.out.println("Function = "+ j+" = "+d);
+                        j++;
+                    }
+                    i++;
+                }
+                System.out.println();
+            }
+        }
+    }
+
 	public static void printMembersWithAppliedFunctions(Population p)
     {
         checkEmpty(p);

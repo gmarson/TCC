@@ -32,6 +32,7 @@ public abstract class Utils {
         for (int i = 0; i < sizeOfArray; i++) {
             binaryArray.add(getRandom(0,2));
         }
+
         return binaryArray;
     }
 

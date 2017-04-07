@@ -17,7 +17,8 @@ public class NSGAII {
 
     private Front lastFrontToMergeWithPopulation = null;
     private int genCounter = 0;
-    private Population union, sortedUnion;
+    private Population union;
+    public Population sortedUnion;
     private Population p = new Population();
     private Selection selectRanked = new SelectionRank();
     private Selection selectRankCrowded = new SelectionRankCrowding();
@@ -26,6 +27,7 @@ public class NSGAII {
     public void runAlgorithm(Problem problem)
     {
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
+        Printer.printMembersWithBinaryValue(p);//todo
         problem.evaluateAgainstObjectiveFunctions(p);
         p.fastNonDominatedSort();
         Population selected = selectRanked.selectParents(p);
@@ -70,10 +72,20 @@ public class NSGAII {
         }
 
         sortedUnion.fastNonDominatedSort();
-        problem.printResolutionMessage();
+        //problem.printResolutionMessage();
         Problem.removeSimilar(sortedUnion.fronts.allFronts.get(0),problem);
         Printer.printFirstFront(sortedUnion);
+        reset();
+    }
 
+    private void reset(){
+        lastFrontToMergeWithPopulation = null;
+        genCounter = 0;
+        union = null;
+        sortedUnion = null;
+        p = new Population();
+        selectRanked = new SelectionRank();
+        selectRankCrowded = new SelectionRankCrowding();
     }
 
 }
