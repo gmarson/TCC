@@ -9,6 +9,8 @@ import Fronts.*;
 import SPEA2.*;
 import ManyObjective.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,20 +21,19 @@ public class Main {
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
+    public static String windowsPathRead = "MOEA/KP_p-3_n-10_ins-1Paretto.dat";
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        currentDirectory();
         //writeParettoFromProblem();
         String file = fileName + parettoName + extension;
-        Population parettoPopulation = readParettoFromFile(file);
-
-
+        Population parettoPopulation = readParettoFromFile(windowsPathRead);
 
 
         //Problem problem = new ProblemSCH();
         //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        Problem problem = new ProblemKnapsackFromFile(directoryName+fileName+extension);
+        Problem problem = new ProblemKnapsackFromFile("MOEA/KP/"+fileName+extension);
 
 
         NSGAII nsgaii = new NSGAII();
@@ -147,7 +148,12 @@ public class Main {
         return paretto;
     }
 
-
+    public static void currentDirectory(){
+        String curDir = System.getProperty("user.dir");
+        File GradeList = new File("GradeList.txt");
+        System.out.println("Current sys dir: " + curDir);
+        System.out.println("Current abs dir: " + GradeList.getAbsolutePath());
+    }
 
 
 
