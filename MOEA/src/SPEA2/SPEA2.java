@@ -7,7 +7,7 @@ import Selections.*;
 import Problems.*;
 
 import java.util.Scanner;
-
+import Fronts.*;
 /** 
  * Created by gabrielm on 09/01/17.
  */
@@ -21,6 +21,7 @@ public class SPEA2 {
     Population union = new Population();
     Population selected;
     Selection selectedFitness = new SelectionArchive();
+    public Front paretto = new Front();
 
     public void runAlgorithm(Problem problem){
 
@@ -51,7 +52,8 @@ public class SPEA2 {
         }
 
         //problem.printResolutionMessage();
-        Printer.printMembersWithValues(archive); //todo
+        //Printer.printMembersWithValues(archive); //todo
+        saveParetto(problem);
         reset();
     }
 
@@ -63,5 +65,12 @@ public class SPEA2 {
         selected = null;
         selectedFitness = new SelectionArchive();
         Fitness.eraseMatrix();
+    }
+
+
+    private void saveParetto(Problem problem){
+        archive.fastNonDominatedSort();
+        paretto = archive.getFirstFront();
+        Problem.removeSimilar(paretto,problem);
     }
 }

@@ -16,8 +16,8 @@ public abstract class Printer
         }
     }
 
-    public static void printTables(){
-        for (Table table: TableFunctions.tables){
+    public static void printTables(TableFunctions tableFunctions){
+        for (Table table: tableFunctions.getTables()){
             System.out.println("Tabela:"+ table.mask);
             int i =1;
             for(Member member: table.pop.population)
@@ -38,8 +38,8 @@ public abstract class Printer
 
     }
 
-    public static void printNonDominatedTable(){
-        for (Table table: TableFunctions.tables){
+    public static void printNonDominatedTable(TableFunctions tableFunctions){
+        for (Table table: tableFunctions.getTables()){
             if (table.isNonDominatedTable){
                 System.out.println("Tabela:"+ table.mask);
                 int i =1;

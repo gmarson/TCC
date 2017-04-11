@@ -1,5 +1,6 @@
 package ManyObjective;
 
+import Fronts.Front;
 import ManyObjective.TableFunctions.TableAEMMD;
 import ManyObjective.TableFunctions.TableAEMMT;
 import ManyObjective.TableFunctions.TableFunctions;
@@ -13,30 +14,41 @@ import Utilities.Printer;
  */
 public class AEMMD {
 
+    TableAEMMD tableAEMMD = new TableAEMMD();
+    Population p = new Population();
+    public Front paretto = new Front();
 
 
     public void runAlgorithm(Problem problem)
     {
-        TableAEMMD tableAEMMD = new TableAEMMD();
-        Population p = new Population();
+
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(p);
-        TableFunctions.buildTables(p);
+        TableFunctions.buildTables(p,tableAEMMD);
         tableAEMMD.fillTables();
 
         tableAEMMD.mainLoop(problem);
 
-        //todo FALTA POR O RESET AKI
-        problem.printResolutionMessage();
-        Printer.printTables();//todo
+
+
+        Printer.printNonDominatedTable(tableAEMMD);//todo
+
+        saveParetto(problem);
+        reset();
 
     }
 
     private void reset(){
-        new TableAEMMD().reset();
+        tableAEMMD = new TableAEMMD();
+        p = new Population();
+        tableAEMMD.reset();
+
     }
 
-
+    private void saveParetto(Problem problem){
+        paretto.membersAtThisFront.addAll(tableAEMMD.tables.get(tableAEMMD.tables.size()-1).pop.population);
+        //Problem.removeSimilar(paretto,problem);
+    }
 
 
 

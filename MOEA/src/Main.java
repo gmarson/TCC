@@ -1,5 +1,6 @@
 import Constants.Constants;
 import ManyObjective.TableFunctions.TableFunctions;
+import PerformanceMetrics.Erro;
 import Population.*;
 import Problems.*;
 import Utilities.*;
@@ -11,62 +12,95 @@ import ManyObjective.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class Main {
+
+    private static String fileName = "KP_p-3_n-10_ins-1";
+    private static String extension = ".dat";
+    private static String parettoName = "Paretto";
+    private static String directoryName ="KP/" ;
 
     public static void main(String[] args) {
 
-
-        getBestPossibleParettoOfAGS();
-
-        //Problem sch = new ProblemSCH();
-        //Problem f2 = new ProblemF2();
-        //Problem knapsack = new ProblemKnapsack();
-
-        //Problem knapsackFromFile = new ProblemKnapsackFromFile("KP/KP_p-3_n-10_ins-1.dat");
+        //writeParettoFromProblem();
+        String file = fileName + parettoName + extension;
+        Population parettoPopulation = readParettoFromFile(file);
 
 
-        //NSGAII nsgaii = new NSGAII();
-        //nsgaii.runAlgorithm(knapsackFromFile);
 
-        //SPEA2 spea2 = new SPEA2();
-        //spea2.runAlgorithm(knapsackFromFile);
 
-        //AEMMT aemmt = new AEMMT();
-        //aemmt.runAlgorithm(knapsackFromFile);
+        //Problem problem = new ProblemSCH();
+        //Problem problem = new ProblemF2();
+        //Problem problem = new ProblemKnapsack();
+        Problem problem = new ProblemKnapsackFromFile(directoryName+fileName+extension);
 
-        //AEMMD aemmd = new AEMMD();
-        //aemmd.runAlgorithm(knapsackFromFile);
+
+        NSGAII nsgaii = new NSGAII();
+        SPEA2 spea2 = new SPEA2();
+        AEMMT aemmt = new AEMMT();
+        AEMMD aemmd = new AEMMD();
+
+
+        //nsgaii.runAlgorithm(problem);
+        spea2.runAlgorithm(problem);
+        //aemmt.runAlgorithm(problem);
+        //aemmd.runAlgorithm(problem);
+
+
+        Erro erro = new Erro(problem);
+        erro.messageBeforeResult();
+        Population newPopulation = new Population();
+
+        if(!nsgaii.paretto.membersAtThisFront.isEmpty())
+            newPopulation.population = nsgaii.paretto.membersAtThisFront;
+        else if (!spea2.paretto.membersAtThisFront.isEmpty())
+            newPopulation.population = spea2.paretto.membersAtThisFront;
+        else if (!aemmt.paretto.membersAtThisFront.isEmpty())
+            newPopulation.population = aemmt.paretto.membersAtThisFront;
+        else if (!aemmd.paretto.membersAtThisFront.isEmpty())
+            newPopulation.population = aemmd.paretto.membersAtThisFront;
+
+
+
+        System.out.println(erro.estimateBasedOnMetric(newPopulation,parettoPopulation));
+
 
     }
 
 
-    static ArrayList<Front>  getBestPossibleParettoOfAGS(){
+    private static Population  getBestPossibleParettoOfAGS(){
         NSGAII nsgaii = new NSGAII();
         SPEA2 spea2 = new SPEA2();
         AEMMT aemmt = new AEMMT();
+        AEMMD aemmd = new AEMMD();
 
-        Problem knapsackFromFile = new ProblemKnapsackFromFile("KP/KP_p-3_n-10_ins-1.dat");
-        knapsackFromFile.printResolutionMessage();
+        Problem problem = new ProblemKnapsackFromFile(directoryName+fileName+extension);
+        //Problem problem = new ProblemSCH();
+        //Problem problem = new ProblemF2();
+        //Problem problem = new ProblemKnapsack();
 
-        Population spea2Paretto = new Population();
-        Population nsgaiiParetto = new Population();
-        Population aemmtParetto = new Population();
+        Front nsgaiiMembers = new Front();
+        Front spea2Members  = new Front();
+        Front aemmtMembers  = new Front();
+        Front aemmdMembers  = new Front();
 
+        problem.printResolutionMessage();
         for (int i = 0; i < 2; i++) {
 
-            nsgaii.runAlgorithm(knapsackFromFile);
-            ArrayList<Member> nsgaiiMembers = nsgaii.sortedUnion.getFirstFrontMembers();
-            nsgaiiParetto.population.addAll(nsgaiiMembers);
+            //nsgaii.runAlgorithm(problem);
+            //nsgaiiMembers = nsgaii.paretto;
 
-            spea2.runAlgorithm(knapsackFromFile);
-            ArrayList<Member> spea2Members = spea2.archive.getFirstFrontMembers(); //todo tem que ver se o archive ja nao a fronteira
-            spea2Paretto.population.addAll(spea2Members);
+            //spea2.runAlgorithm(problem);
+            //spea2Members = spea2.paretto;
 
             Constants.NUMBER_OF_GENERATIONS *= 100;
 
-            aemmt.runAlgorithm(knapsackFromFile);
-            ArrayList<Member> aemmtMembers = TableFunctions.tables.get(TableFunctions.tables.size()-1).pop.population;
-            aemmtParetto.population.addAll(aemmtMembers);
+            //aemmt.runAlgorithm(problem);
+            //aemmtMembers = aemmt.paretto;
+
+
+            aemmd.runAlgorithm(problem);
+            aemmdMembers = aemmd.paretto;
 
             Constants.NUMBER_OF_GENERATIONS /= 100;
 
@@ -74,62 +108,47 @@ public class Main {
         }
 
 
-        return null;
-    }
+        Population allFrontsMembers = new Population();
+        allFrontsMembers.population.addAll(spea2Members.membersAtThisFront);
+        allFrontsMembers.population.addAll(aemmtMembers.membersAtThisFront);
+        allFrontsMembers.population.addAll(aemmdMembers.membersAtThisFront);
+        allFrontsMembers.population.addAll(nsgaiiMembers.membersAtThisFront);
 
-    void buildParettoUsingAlgorithms(ArrayList<Front> separetedParettoFronts){
+        allFrontsMembers.fastNonDominatedSort();
 
-    }
 
-    private void testFunction() {
-        Population pop = new Population();
-        Member m1, m2, m3, m4, m5, m6;
+        Problem.removeSimilar(allFrontsMembers.fronts.allFronts.get(0),problem);
+        allFrontsMembers.population = allFrontsMembers.fronts.allFronts.get(0).membersAtThisFront;
 
-        m1 = new Member(0);
-        m1.fitness = 0;
-        m2 = new Member(1);
-        m2.fitness = 1;
-        m3 = new Member(2);
-        m3.fitness = 2;
-        m4 = new Member(-3);
-        m4.fitness = -3;
-        m5 = new Member(4);
-        m5.fitness = 4;
-        m6 = new Member(5);
-        m6.fitness = 5;
-
-        pop.population.add(m2);
-        pop.population.add(m1);
-        pop.population.add(m5);
-        pop.population.add(m3);
-        pop.population.add(m6);
-        pop.population.add(m4);
-
-        Sorts.quickSortMembersByKey(pop, "fitness");
-
-        Printer.printMembersWithFitness(pop);
+        return allFrontsMembers;
     }
 
 
-    public void writeAndRead(){
 
-        //TIRADO DO AEMMT
-        /*try {
-            Serializer.writeObject("AEMMT",p);
-        }
-        catch (Exception e){
+    private static void writeParettoFromProblem(){
+        Population parettoOfAGS = getBestPossibleParettoOfAGS();
+        try {
+            Serializer.writeObject(fileName+parettoName+extension,parettoOfAGS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
 
-        Population teste = new Population();
+    private static Population readParettoFromFile(String fileName){
+        Population paretto = new Population();
         try{
-            teste = Serializer.readObject("AEMMT");
+            paretto = Serializer.readObject(fileName);
         }
         catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
+
+        return paretto;
     }
+
+
+
 
 
 }

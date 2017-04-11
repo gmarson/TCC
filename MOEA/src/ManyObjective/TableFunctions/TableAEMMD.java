@@ -5,7 +5,6 @@ import ManyObjective.*;
 import Population.*;
 import Problems.*;
 import Selections.SelectionRank;
-import Selections.SelectionRankWeightedAverage;
 import Selections.SelectionTables;
 
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 public class TableAEMMD extends  TableFunctions{
 
     private static int genCounter=1;
+    public ArrayList<Table> tables = new ArrayList<>();
 
     @Override
     public void fillTables() {
@@ -35,16 +35,18 @@ public class TableAEMMD extends  TableFunctions{
     public void insertMemberOnTables(Member newMember, Problem problem) {
         problem.applyFunctions(newMember);
 
-        for (Table table :TableFunctions.tables)
+        for (Table table :this.tables)
         {
 
             table.pop.addMember(newMember);
             table.pop.fastNonDominatedSort(table.mask);
 
-            if (Problem.memberIsPresent(table.pop.fronts.allFronts.get(0),newMember)){
+            if (Problem.instanceOfMemberIsPresent(table.pop.fronts.allFronts.get(0),newMember)){
                 table.convergence++;
             }
 
+
+            Problem.removeSimilar(table.pop.fronts.allFronts.get(0),problem);
             table.pop.population = table.pop.fronts.allFronts.get(0).membersAtThisFront;
 
 
@@ -55,8 +57,8 @@ public class TableAEMMD extends  TableFunctions{
     public void mainLoop(Problem problem) {
         while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
 
-            System.out.println("Generation "+genCounter);
-            if (genCounter % 50 ==0) TableFunctions.resetContributionAndConvergence();
+            //System.out.println("Generation "+genCounter);
+            if (genCounter % 50 ==0) TableFunctions.resetContributionAndConvergence(this);
 
             SelectionTables selectionTables = new SelectionTables();
             ArrayList<Table> parentTables = selectionTables.selectTables(tables,"AEMMD");
@@ -70,8 +72,19 @@ public class TableAEMMD extends  TableFunctions{
     }
 
     @Override
+    public void addTable(ArrayList<Integer> mask) {
+        tables.add(new Table(mask));
+    }
+
+    @Override
+    public ArrayList<Table> getTables() {
+        return tables;
+    }
+
+    @Override
     public void reset(){
         super.reset();
+        tables = new ArrayList<>();
         genCounter = 1;
     }
 

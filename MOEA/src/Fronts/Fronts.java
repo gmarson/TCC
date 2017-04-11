@@ -25,6 +25,7 @@ public class Fronts implements Serializable{
 
             this.allFronts.get(currentRankOfMember).addMemberToFront(member);
         }
+
     }
 
     public void addNewFront(int currentRankOfMember)

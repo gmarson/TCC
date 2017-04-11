@@ -173,8 +173,8 @@ public class Population implements Serializable {
         return newArchive;
     }
 
-    public ArrayList<Member> getFirstFrontMembers(){
-        return this.fronts.allFronts.get(0).membersAtThisFront;
+    public Front getFirstFront(){
+        return this.fronts.allFronts.get(0);
     }
 
 }

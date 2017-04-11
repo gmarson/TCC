@@ -17,7 +17,7 @@ public abstract class  Constants {
     public static int ARCHIVE_SIZE = 60;
     public static int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
 
-    //ONLY AEMMT CONSTANTS
+    //ONLY AEMMT AND AEMMD CONSTANTS
     public static int QTD_TABLES;
     public static int TABLE_SIZE;
 

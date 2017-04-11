@@ -23,6 +23,8 @@ public class NSGAII {
     private Selection selectRanked = new SelectionRank();
     private Selection selectRankCrowded = new SelectionRankCrowding();
 
+    public Front paretto = new Front();
+
 
     public void runAlgorithm(Problem problem)
     {
@@ -71,10 +73,12 @@ public class NSGAII {
 
         }
 
-        sortedUnion.fastNonDominatedSort();
-        //problem.printResolutionMessage();
-        Problem.removeSimilar(sortedUnion.fronts.allFronts.get(0),problem);
-        Printer.printFirstFront(sortedUnion);
+
+        saveParetto(problem);
+
+        //problem.printResolutionMessage(); //todo
+        Printer.printFirstFront(sortedUnion); //todo
+
         reset();
     }
 
@@ -86,6 +90,12 @@ public class NSGAII {
         p = new Population();
         selectRanked = new SelectionRank();
         selectRankCrowded = new SelectionRankCrowding();
+    }
+
+    private void saveParetto(Problem problem){
+        sortedUnion.fastNonDominatedSort();
+        paretto = sortedUnion.getFirstFront();
+        Problem.removeSimilar(paretto,problem);
     }
 
 }

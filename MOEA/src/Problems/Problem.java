@@ -22,7 +22,7 @@ public abstract class  Problem {
     abstract double secondFunction(Member member);
     public abstract void printResolutionMessage();
 
-    public static boolean memberIsPresent(Front f, Member member){
+    public static boolean instanceOfMemberIsPresent(Front f, Member member){
         for(Member m: f.membersAtThisFront)
         {
             if (m == member) return  true;
@@ -31,9 +31,33 @@ public abstract class  Problem {
 
     }
 
+
+    public static boolean valueOfMemberIsPresent(Member member, Population p, Problem problem){
+        if(ProblemKnapsack.class.isInstance(problem) || ProblemKnapsackFromFile.class.isInstance(problem))
+            return checkUsingBinaryValue( member,  p);
+        else
+            return checkUsingDecimalValue( member,  p);
+    }
+
+    private static boolean checkUsingBinaryValue(Member member, Population p){
+        for(Member m: p.population)
+        {
+            if (m.binaryValue == member.binaryValue) return  true;
+        }
+        return false;
+    }
+
+    private static boolean checkUsingDecimalValue(Member member, Population p){
+        for(Member m: p.population)
+        {
+            if (m.value == member.value) return  true;
+        }
+        return false;
+    }
+
     private static ArrayList<Member> removeUsingBinaryValue(Front f){
-        ArrayList<Member> members = new ArrayList<Member>();
-        boolean shouldAdd = true;
+        ArrayList<Member> members = new ArrayList<>();
+        boolean shouldAdd;
         members.add(f.membersAtThisFront.get(0));
         for (int i = 1; i < f.membersAtThisFront.size(); i++) {
 
@@ -55,8 +79,8 @@ public abstract class  Problem {
     }
 
     private static ArrayList<Member> removeUsingDecimalValue(Front f){
-        ArrayList<Member> members = new ArrayList<Member>();
-        boolean shouldAdd = true;
+        ArrayList<Member> members = new ArrayList<>();
+        boolean shouldAdd;
         members.add(f.membersAtThisFront.get(0));
         for (int i = 1; i < f.membersAtThisFront.size(); i++) {
 
@@ -77,9 +101,8 @@ public abstract class  Problem {
         return  members;
     }
 
-    public  static void removeSimilar(Front f, Problem problem){
-        if(ProblemKnapsack.class.isInstance(problem))
-
+    public static void removeSimilar(Front f, Problem problem){
+        if(ProblemKnapsack.class.isInstance(problem) || ProblemKnapsackFromFile.class.isInstance(problem))
             f.membersAtThisFront = removeUsingBinaryValue(f);
         else
             f.membersAtThisFront = removeUsingDecimalValue(f);

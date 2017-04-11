@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class TableAEMMT extends TableFunctions{
 
     public static int genCounter=1;
+    public ArrayList<Table> tables = new ArrayList<>();
 
     @Override
     public void fillTables(){
@@ -45,7 +46,7 @@ public class TableAEMMT extends TableFunctions{
 
     @Override
     public void insertMemberOnTables(Member newMember, Problem problem) {
-        boolean shouldIncrease = false;
+        boolean shouldIncreaseContribution = false;
         ArrayList<Integer> positionsToIncrease = new ArrayList<>();
         int tablePosition = 0;
         problem.applyFunctions(newMember);
@@ -54,10 +55,10 @@ public class TableAEMMT extends TableFunctions{
         {
 
             if (table.isNonDominatedTable)
-                shouldIncrease = insertionForNonDominatedTable(table, newMember, problem);
+                shouldIncreaseContribution = insertionForNonDominatedTable(table, newMember, problem);
 
             else
-                shouldIncrease = insertionForWeightedAverageTable(table,newMember);
+                shouldIncreaseContribution = insertionForWeightedAverageTable(table,newMember);
 
 
             if (table.mask.equals(newMember.parentTableMask1) || table.mask.equals(newMember.parentTableMask2))
@@ -67,7 +68,7 @@ public class TableAEMMT extends TableFunctions{
 
         }
 
-        if (shouldIncrease) increaseContribution(positionsToIncrease);
+        if (shouldIncreaseContribution) increaseContribution(positionsToIncrease);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class TableAEMMT extends TableFunctions{
         while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
 
             //System.out.println("Generation "+genCounter);
-            if (genCounter % 50 ==0) TableFunctions.resetContributionAndConvergence();
+            if (genCounter % 50 ==0) TableFunctions.resetContributionAndConvergence(this);
 
             SelectionTables selectionTables = new SelectionTables();
 
@@ -107,18 +108,20 @@ public class TableAEMMT extends TableFunctions{
 
 
     private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
+        boolean shouldIncreaseContribution = false;
+
         table.pop.addMember(newMember);
         table.pop.fastNonDominatedSort();
 
-        if (Problem.memberIsPresent(table.pop.fronts.allFronts.get(0),newMember)){
-            return true;
+        if (Problem.instanceOfMemberIsPresent(table.pop.fronts.allFronts.get(0),newMember)){
+            shouldIncreaseContribution = true;
         }
 
         Problem.removeSimilar(table.pop.fronts.allFronts.get(0),problem);
         table.pop.population = table.pop.fronts.allFronts.get(0).membersAtThisFront;
 
 
-        return false;
+        return shouldIncreaseContribution;
     }
 
     private void increaseContribution(ArrayList<Integer> positionsToIncrease)
@@ -133,6 +136,20 @@ public class TableAEMMT extends TableFunctions{
     public void reset(){
         super.reset();
         genCounter = 1;
+        tables = new ArrayList<>();
     }
+
+
+    @Override
+    public void addTable(ArrayList<Integer> mask){
+        tables.add(new Table(mask));
+    }
+
+    @Override
+    public ArrayList<Table> getTables() {
+        return this.tables;
+    }
+
+
 
 }

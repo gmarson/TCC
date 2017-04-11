@@ -16,13 +16,15 @@ public abstract class TableFunctions {
     abstract public void fillTables();
     abstract public void insertMemberOnTables(Member newMember, Problem problem);
     abstract public void mainLoop(Problem problem);
+    abstract public void addTable(ArrayList<Integer> mask);
+    abstract public ArrayList<Table> getTables();
 
 
     static Population parentPopulation;
-    public static ArrayList<Table> tables = new ArrayList<>();
+
     private static Matrix binaryRepresentationOfObjectives;
-    private  static  Matrix decimalRepresentationOfObjectives;
-    private static  ArrayList<Integer> currentMask = new ArrayList<>();
+    private static Matrix decimalRepresentationOfObjectives;
+    private static ArrayList<Integer> currentMask = new ArrayList<>();
 
     private static int setQtdTables(){
 
@@ -43,7 +45,7 @@ public abstract class TableFunctions {
         return fact(n-1) * n;
     }
 
-    public static void buildTables(Population population){
+    public static void buildTables(Population population, TableFunctions tableFunctions){
         setQtdMembersOfATable();
         Constants.QTD_TABLES = setQtdTables();
         parentPopulation = population;
@@ -52,7 +54,7 @@ public abstract class TableFunctions {
         for(int i=0;i<Constants.QTD_TABLES;i++)
         {
             updateCurrentMask(i);
-            tables.add(new Table(currentMask));
+            tableFunctions.addTable(currentMask);
         }
 
     }
@@ -76,8 +78,8 @@ public abstract class TableFunctions {
 
     }
 
-    public static void resetContributionAndConvergence(){
-        for (Table table: tables)
+    public static void resetContributionAndConvergence(TableFunctions tableFunctions){
+        for (Table table: tableFunctions.getTables())
             table.resetContributionAndConvergence();
     }
 
@@ -91,7 +93,6 @@ public abstract class TableFunctions {
 
     public void reset(){
         parentPopulation = null;
-        tables = new ArrayList<>();
         binaryRepresentationOfObjectives = null;
         decimalRepresentationOfObjectives = null;
         currentMask = new ArrayList<>();
