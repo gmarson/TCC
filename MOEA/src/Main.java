@@ -42,9 +42,9 @@ public class Main {
 
 
         //nsgaii.runAlgorithm(problem);
-        spea2.runAlgorithm(problem);
+        //spea2.runAlgorithm(problem);
         //aemmt.runAlgorithm(problem);
-        //aemmd.runAlgorithm(problem);
+        aemmd.runAlgorithm(problem);
 
 
         Erro erro = new Erro(problem);

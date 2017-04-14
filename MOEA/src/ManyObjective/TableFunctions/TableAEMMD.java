@@ -82,6 +82,37 @@ public class TableAEMMD extends  TableFunctions{
     }
 
     @Override
+    int setQtdTables() {
+        int singleObjectiveTables = Constants.POPULATION_SIZE;
+        int qtdTables =0;
+        for (int i = 1; i <= Constants.PROBLEM_SIZE ; i++) {
+            qtdTables += TableFunctions.fact(Constants.PROBLEM_SIZE) / (fact(i) * fact(Constants.PROBLEM_SIZE - i));
+        }
+
+        return  qtdTables - singleObjectiveTables;
+    }
+
+
+    @Override
+    public void buildTables(Population population, TableFunctions tableFunctions){
+        TableFunctions.setQtdMembersOfATable();
+        Constants.QTD_TABLES = this.setQtdTables();
+        parentPopulation = population;
+        TableFunctions.buildMasks();
+
+        int i=0;
+        while(i<Constants.QTD_TABLES) {
+            TableFunctions.updateCurrentMask(i);
+            if(TableFunctions.currentMask.size() !=1) {
+                tableFunctions.addTable(TableFunctions.currentMask);
+                System.out.println(currentMask); //todo
+                i++;
+            }
+        }
+    }
+
+
+    @Override
     public void reset(){
         super.reset();
         tables = new ArrayList<>();

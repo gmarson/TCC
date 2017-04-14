@@ -19,6 +19,8 @@ public class TableAEMMT extends TableFunctions{
     public static int genCounter=1;
     public ArrayList<Table> tables = new ArrayList<>();
 
+
+
     @Override
     public void fillTables(){
         parentPopulation.fastNonDominatedSort();
@@ -150,6 +152,33 @@ public class TableAEMMT extends TableFunctions{
         return this.tables;
     }
 
+    @Override
+    int setQtdTables() {
+
+        int nonDominatedTable = 1;
+        int qtdTables =0;
+        for (int i = 1; i <= Constants.PROBLEM_SIZE ; i++) {
+            qtdTables += TableFunctions.fact(Constants.PROBLEM_SIZE) / (fact(i) * fact(Constants.PROBLEM_SIZE - i));
+        }
+
+        return  qtdTables + nonDominatedTable;
+
+    }
+
+    @Override
+    public void buildTables(Population population, TableFunctions tableFunctions){
+        TableFunctions.setQtdMembersOfATable();
+        Constants.QTD_TABLES = this.setQtdTables();
+        parentPopulation = population;
+        TableFunctions.buildMasks();
+
+        for(int i=0;i<Constants.QTD_TABLES;i++)
+        {
+            TableFunctions.updateCurrentMask(i);
+            tableFunctions.addTable(TableFunctions.currentMask);
+        }
+
+    }
 
 
 }
