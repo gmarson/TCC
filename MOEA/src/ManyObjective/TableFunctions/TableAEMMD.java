@@ -83,7 +83,7 @@ public class TableAEMMD extends  TableFunctions{
 
     @Override
     int setQtdTables() {
-        int singleObjectiveTables = Constants.POPULATION_SIZE;
+        int singleObjectiveTables = Constants.PROBLEM_SIZE;
         int qtdTables =0;
         for (int i = 1; i <= Constants.PROBLEM_SIZE ; i++) {
             qtdTables += TableFunctions.fact(Constants.PROBLEM_SIZE) / (fact(i) * fact(Constants.PROBLEM_SIZE - i));
@@ -92,24 +92,45 @@ public class TableAEMMD extends  TableFunctions{
         return  qtdTables - singleObjectiveTables;
     }
 
+    @Override
+    void updateCurrentMask(int index){
+        currentMask = new ArrayList<>();
+        for (int i = 0; i < decimalRepresentationOfObjectives.columns; i++) {
+            int number = decimalRepresentationOfObjectives.decimalMatrix[index][i];
+            if (number != 0)
+                currentMask.add(number);
+        }
+    }
 
     @Override
-    public void buildTables(Population population, TableFunctions tableFunctions){
+    public void buildTables(Population population){
         TableFunctions.setQtdMembersOfATable();
         Constants.QTD_TABLES = this.setQtdTables();
         parentPopulation = population;
-        TableFunctions.buildMasks();
+        TableFunctions.buildMasks(4);
 
-        int i=0;
-        while(i<Constants.QTD_TABLES) {
-            TableFunctions.updateCurrentMask(i);
-            if(TableFunctions.currentMask.size() !=1) {
-                tableFunctions.addTable(TableFunctions.currentMask);
-                System.out.println(currentMask); //todo
+        this.updateCurrentMask(0);
+        int i =0;
+        int tableCounter = 0;
+        while(tableCounter<Constants.QTD_TABLES )
+        {
+            this.updateCurrentMask(i);
+            while (currentMask.size() ==1 || currentMask.size() == Constants.PROBLEM_SIZE){
                 i++;
+                this.updateCurrentMask(i);
             }
+
+
+            this.addTable(TableFunctions.currentMask);
+            tableCounter++;
+
+
+            i++;
+
         }
+
     }
+
 
 
     @Override

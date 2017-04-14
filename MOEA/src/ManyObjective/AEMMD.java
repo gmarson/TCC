@@ -24,7 +24,7 @@ public class AEMMD {
 
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(p);
-        TableFunctions.buildTables(p,tableAEMMD);
+        tableAEMMD.buildTables(p);
         tableAEMMD.fillTables();
 
         tableAEMMD.mainLoop(problem);

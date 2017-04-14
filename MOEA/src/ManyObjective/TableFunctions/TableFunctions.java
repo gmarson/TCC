@@ -5,6 +5,7 @@ import ManyObjective.*;
 import Population.*;
 import Problems.*;
 import Utilities.Matrix;
+import com.sun.org.apache.bcel.internal.generic.POP;
 
 import java.util.ArrayList;
 
@@ -19,12 +20,12 @@ public abstract class TableFunctions {
     abstract public void addTable(ArrayList<Integer> mask);
     abstract public ArrayList<Table> getTables();
     abstract int setQtdTables();
-    abstract public void buildTables(Population population, TableFunctions tableFunctions);
-
+    abstract void updateCurrentMask(int index);
+    abstract public void buildTables(Population population);
     static Population parentPopulation;
 
-    private static Matrix binaryRepresentationOfObjectives;
-    private static Matrix decimalRepresentationOfObjectives;
+    static Matrix binaryRepresentationOfObjectives;
+    static Matrix decimalRepresentationOfObjectives;
     static ArrayList<Integer> currentMask = new ArrayList<>();
 
 
@@ -48,14 +49,9 @@ public abstract class TableFunctions {
         decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
     }
 
-    static void updateCurrentMask(int index){
-        currentMask = new ArrayList<>();
-        for (int i = 0; i < decimalRepresentationOfObjectives.columns; i++) {
-            int number = decimalRepresentationOfObjectives.decimalMatrix[index][i];
-            if (number != 0)
-                currentMask.add(number);
-        }
-
+    static void buildMasks(int moreColumns){
+        binaryRepresentationOfObjectives = new Matrix(Constants.QTD_TABLES + moreColumns, Constants.PROBLEM_SIZE+1,true);
+        decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
     }
 
     public static void resetContributionAndConvergence(TableFunctions tableFunctions){

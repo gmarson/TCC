@@ -46,6 +46,7 @@ public class TableAEMMT extends TableFunctions{
 
     }
 
+
     @Override
     public void insertMemberOnTables(Member newMember, Problem problem) {
         boolean shouldIncreaseContribution = false;
@@ -166,7 +167,16 @@ public class TableAEMMT extends TableFunctions{
     }
 
     @Override
-    public void buildTables(Population population, TableFunctions tableFunctions){
+    void updateCurrentMask(int index){
+        currentMask = new ArrayList<>();
+        for (int i = 0; i < decimalRepresentationOfObjectives.columns; i++) {
+            int number = decimalRepresentationOfObjectives.decimalMatrix[index][i];
+            if (number != 0)
+                currentMask.add(number);
+        }
+    }
+
+    public void buildTables(Population population ){
         TableFunctions.setQtdMembersOfATable();
         Constants.QTD_TABLES = this.setQtdTables();
         parentPopulation = population;
@@ -174,8 +184,8 @@ public class TableAEMMT extends TableFunctions{
 
         for(int i=0;i<Constants.QTD_TABLES;i++)
         {
-            TableFunctions.updateCurrentMask(i);
-            tableFunctions.addTable(TableFunctions.currentMask);
+            this.updateCurrentMask(i);
+            this.addTable(TableFunctions.currentMask);
         }
 
     }

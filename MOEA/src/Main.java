@@ -22,18 +22,43 @@ public class Main {
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
     public static String windowsPathRead = "MOEA/KP_p-3_n-10_ins-1Paretto.dat";
+    public static String macPathRead = fileName+parettoName+extension;
+    public static String macPathGetProblemFrom = directoryName+fileName+extension;
 
     public static void main(String[] args) throws Exception {
+        normal();
+
+    }
+
+    private static void normal(){
+        //Problem problem = new ProblemSCH();
+        //Problem problem = new ProblemF2();
+        //Problem problem = new ProblemKnapsack();
+        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+
+
+        NSGAII nsgaii = new NSGAII();
+        SPEA2 spea2 = new SPEA2();
+        AEMMT aemmt = new AEMMT();
+        AEMMD aemmd = new AEMMD();
+
+
+        //nsgaii.runAlgorithm(problem);
+        //spea2.runAlgorithm(problem);
+        //aemmt.runAlgorithm(problem);
+        aemmd.runAlgorithm(problem);
+
+    }
+
+    private static void compareToParettoFront(){
         currentDirectory();
-        //writeParettoFromProblem();
-        String file = fileName + parettoName + extension;
-        Population parettoPopulation = readParettoFromFile(windowsPathRead);
+        Population parettoPopulation = readParettoFromFile(macPathRead);
 
 
         //Problem problem = new ProblemSCH();
         //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        Problem problem = new ProblemKnapsackFromFile("MOEA/KP/"+fileName+extension);
+        Problem problem = new ProblemKnapsackFromFile(macPathRead);
 
 
         NSGAII nsgaii = new NSGAII();
@@ -64,8 +89,6 @@ public class Main {
 
 
         System.out.println(erro.estimateBasedOnMetric(newPopulation,parettoPopulation));
-
-
     }
 
 
