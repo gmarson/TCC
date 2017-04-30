@@ -9,6 +9,7 @@ import Fronts.*;
 import SPEA2.*;
 import ManyObjective.*;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,36 +18,39 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private static String fileName = "KP_p-3_n-10_ins-1";
+    private static String fileName = "KP_p-5_n-10_ins-10";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
-    public static String windowsPathRead = "MOEA/KP_p-3_n-10_ins-1Paretto.dat";
+    public static String windowsPathRead = "MOEA/"+fileName+"Paretto.dat";
     public static String macPathRead = fileName+parettoName+extension;
-    public static String macPathGetProblemFrom = directoryName+fileName+extension;
+    public static String macPathGetProblemFrom = "MOEA/"+directoryName+fileName+extension;
+    private static ProgressBar progressBar;
 
     public static void main(String[] args) throws Exception {
+
+
+
+
         normal();
 
     }
 
     private static void normal(){
-        //Problem problem = new ProblemSCH();
+        Problem problem = new ProblemSCH();
         //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        //Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+
+        //NSGAII algorithm = new NSGAII();
+        SPEA2 algorithm = new SPEA2();
+        //AEMMT algorithm = new AEMMT();
+        //AEMMD algorithm = new AEMMD();
+        //MOEAD algorithm = new MOEAD();
 
 
-        NSGAII nsgaii = new NSGAII();
-        SPEA2 spea2 = new SPEA2();
-        AEMMT aemmt = new AEMMT();
-        AEMMD aemmd = new AEMMD();
+        algorithm.runAlgorithm(problem);
 
-
-        //nsgaii.runAlgorithm(problem);
-        //spea2.runAlgorithm(problem);
-        //aemmt.runAlgorithm(problem);
-        aemmd.runAlgorithm(problem);
 
     }
 
@@ -54,24 +58,19 @@ public class Main {
         currentDirectory();
         Population parettoPopulation = readParettoFromFile(macPathRead);
 
-
-        //Problem problem = new ProblemSCH();
-        //Problem problem = new ProblemF2();
-        //Problem problem = new ProblemKnapsack();
-        Problem problem = new ProblemKnapsackFromFile(macPathRead);
-
+        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         NSGAII nsgaii = new NSGAII();
         SPEA2 spea2 = new SPEA2();
         AEMMT aemmt = new AEMMT();
         AEMMD aemmd = new AEMMD();
 
-
         //nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
-        //aemmt.runAlgorithm(problem);
-        aemmd.runAlgorithm(problem);
 
+        Constants.NUMBER_OF_GENERATIONS *=100;
+        //aemmt.runAlgorithm(problem);
+        //aemmd.runAlgorithm(problem);
 
         Erro erro = new Erro(problem);
         erro.messageBeforeResult();
@@ -87,51 +86,49 @@ public class Main {
             newPopulation.population = aemmd.paretto.membersAtThisFront;
 
 
-
         System.out.println(erro.estimateBasedOnMetric(newPopulation,parettoPopulation));
     }
 
-
+    //Do not call this
     private static Population  getBestPossibleParettoOfAGS(){
+        int numberOfRounds = 10;
+
         NSGAII nsgaii = new NSGAII();
         SPEA2 spea2 = new SPEA2();
         AEMMT aemmt = new AEMMT();
         AEMMD aemmd = new AEMMD();
 
-        Problem problem = new ProblemKnapsackFromFile(directoryName+fileName+extension);
-        //Problem problem = new ProblemSCH();
-        //Problem problem = new ProblemF2();
-        //Problem problem = new ProblemKnapsack();
+        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         Front nsgaiiMembers = new Front();
         Front spea2Members  = new Front();
         Front aemmtMembers  = new Front();
         Front aemmdMembers  = new Front();
 
-        problem.printResolutionMessage();
-        for (int i = 0; i < 2; i++) {
+        progressBar = new ProgressBar((double) numberOfRounds);
 
-            //nsgaii.runAlgorithm(problem);
-            //nsgaiiMembers = nsgaii.paretto;
+        for (int i = 0; i < numberOfRounds; i++) {
 
-            //spea2.runAlgorithm(problem);
-            //spea2Members = spea2.paretto;
+            nsgaii.runAlgorithm(problem);
+            nsgaiiMembers = nsgaii.paretto;
+
+            spea2.runAlgorithm(problem);
+            spea2Members = spea2.paretto;
 
             Constants.NUMBER_OF_GENERATIONS *= 100;
 
-            //aemmt.runAlgorithm(problem);
-            //aemmtMembers = aemmt.paretto;
-
+            aemmt.runAlgorithm(problem);
+            aemmtMembers = aemmt.paretto;
 
             aemmd.runAlgorithm(problem);
             aemmdMembers = aemmd.paretto;
 
             Constants.NUMBER_OF_GENERATIONS /= 100;
-
+            progressBar.addJobDone();
 
         }
 
-
+        problem.printResolutionMessage();
         Population allFrontsMembers = new Population();
         allFrontsMembers.population.addAll(spea2Members.membersAtThisFront);
         allFrontsMembers.population.addAll(aemmtMembers.membersAtThisFront);
@@ -143,11 +140,10 @@ public class Main {
 
         Problem.removeSimilar(allFrontsMembers.fronts.allFronts.get(0),problem);
         allFrontsMembers.population = allFrontsMembers.fronts.allFronts.get(0).membersAtThisFront;
+        Printer.printMembersWithBinaryValue(allFrontsMembers);
 
         return allFrontsMembers;
     }
-
-
 
     private static void writeParettoFromProblem(){
         Population parettoOfAGS = getBestPossibleParettoOfAGS();
@@ -156,6 +152,8 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
 
@@ -171,7 +169,7 @@ public class Main {
         return paretto;
     }
 
-    public static void currentDirectory(){
+    static void currentDirectory(){
         String curDir = System.getProperty("user.dir");
         File GradeList = new File("GradeList.txt");
         System.out.println("Current sys dir: " + curDir);

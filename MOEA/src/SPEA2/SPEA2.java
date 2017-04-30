@@ -14,13 +14,13 @@ import Fronts.*;
 public class SPEA2 {
 
     Scanner s = new Scanner(System.in);
-    int genCounter = 0;
+    private int genCounter = 0;
 
-    Population p = new Population();
-    public Population archive = new Population();
-    Population union = new Population();
-    Population selected;
-    Selection selectedFitness = new SelectionArchive();
+    private Population p = new Population();
+    private Population archive = new Population();
+    private Population union = new Population();
+    private Population selected;
+    private Selection selectedFitness = new SelectionArchive();
     public Front paretto = new Front();
 
     public void runAlgorithm(Problem problem){
@@ -30,9 +30,11 @@ public class SPEA2 {
 
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {
-            System.out.println("GERACAO = "+ genCounter+"===========================================");//todo
+            //System.out.println("GERACAO = "+ genCounter+"===========================================");//todo
 
             union.mergeTwoPopulations(p,archive);
+
+            union.clearObjectiveFunctions();
 
             problem.evaluateAgainstObjectiveFunctions(union);
 
@@ -51,8 +53,8 @@ public class SPEA2 {
 
         }
 
-        //problem.printResolutionMessage();
-        //Printer.printMembersWithValues(archive); //todo
+        problem.printResolutionMessage();
+        Printer.printMembersWithValues(archive); //todo
         saveParetto(problem);
         reset();
     }

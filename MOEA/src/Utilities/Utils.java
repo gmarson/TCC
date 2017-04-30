@@ -13,7 +13,7 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    static Random random = new Random();
+    static Random random = new Random(Constants.SEED);
 
     public static void setSeed(int SEED)
     {
@@ -63,6 +63,25 @@ public abstract class Utils {
         return binaryNymber;
     }
 
+    public static double[] randSum(int size, double totalSum) {
+        Random rand = new Random();
+        double randNums[] = new double[size], sum = 0;
+
+        for (int i = 0; i < randNums.length; i++) {
+            randNums[i] = rand.nextDouble();
+            sum += randNums[i];
+        }
+
+        for (int i = 0; i < randNums.length; i++) {
+            randNums[i] /= sum * totalSum;
+        }
+
+
+
+
+        return randNums;
+    }
+
     public static int binaryToInteger(ArrayList<Integer> binary)
     {
         int valueOfMember=0;
@@ -107,14 +126,16 @@ public abstract class Utils {
 
     public static double euclidianDistance(Member m1, Member m2)
     {
-        double x1 = m1.resultOfFunctions.get(0);
-        double y1 = m1.resultOfFunctions.get(1);
-        double x2 = m2.resultOfFunctions.get(0);
-        double y2 = m2.resultOfFunctions.get(1);
+        double result=0.0, difference;
 
+        for (int i = 0; i <m1.resultOfFunctions.size() ; i++) {
+            difference = m1.resultOfFunctions.get(i) - m2.resultOfFunctions.get(i);
+            result += pow (difference,2);
+        }
 
+        return sqrt(result);
 
-        return sqrt( pow( ( x1- x2) , 2 ) + pow( ( y1 - y2) , 2) );
+        //return sqrt( pow( ( x1- x2) , 2 ) + pow( ( y1 - y2) , 2) );
     }
 
     public static ArrayList<Double> returnOrderedArray(Matrix distanceMatrix, int indexOfMatrix)
