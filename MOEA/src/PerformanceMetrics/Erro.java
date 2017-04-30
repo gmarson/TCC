@@ -31,7 +31,7 @@ public class Erro extends Metrics{
 
         }
 
-        return Ei / population.population.size();
+        return (Ei / population.population.size()) * 100;
     }
 
 
