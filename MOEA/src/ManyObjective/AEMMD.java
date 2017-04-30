@@ -31,7 +31,7 @@ public class AEMMD {
 
 
 
-        Printer.printNonDominatedTable(tableAEMMD);//todo
+        //Printer.printNonDominatedTable(tableAEMMD);//todo
 
         saveParetto(problem);
         reset();

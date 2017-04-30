@@ -18,7 +18,7 @@ public class TableAEMMT extends TableFunctions{
 
     public static int genCounter=1;
     public ArrayList<Table> tables = new ArrayList<>();
-
+    public boolean shouldRestrictSizeForNonDominatedTable  = true;
 
 
     @Override
@@ -35,6 +35,7 @@ public class TableAEMMT extends TableFunctions{
                     table.setBestMembersByRank(testPopulation);
                 else
                     table.setBestMembersByRank(new Population(testPopulation.fronts.allFronts.get(0)));
+                    // aqui tbm acaba sendo pelo valor isolado do objetivo
             }
             else
             {
@@ -45,7 +46,6 @@ public class TableAEMMT extends TableFunctions{
         }
 
     }
-
 
     @Override
     public void insertMemberOnTables(Member newMember, Problem problem) {

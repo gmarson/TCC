@@ -107,7 +107,7 @@ public class TableAEMMD extends  TableFunctions{
         TableFunctions.setQtdMembersOfATable();
         Constants.QTD_TABLES = this.setQtdTables();
         parentPopulation = population;
-        TableFunctions.buildMasks(4);
+        TableFunctions.buildMasks(Constants.PROBLEM_SIZE +1);
 
         this.updateCurrentMask(0);
         int i =0;
@@ -115,23 +115,18 @@ public class TableAEMMD extends  TableFunctions{
         while(tableCounter<Constants.QTD_TABLES )
         {
             this.updateCurrentMask(i);
-            while (currentMask.size() ==1 || currentMask.size() == Constants.PROBLEM_SIZE){
+            while (currentMask.size() == 1 || currentMask.size() == Constants.PROBLEM_SIZE){
                 i++;
                 this.updateCurrentMask(i);
+                //update porque o aemmd nao tem as tabelas de um só objetivo
             }
-
 
             this.addTable(TableFunctions.currentMask);
             tableCounter++;
 
-
             i++;
-
         }
-
     }
-
-
 
     @Override
     public void reset(){
