@@ -10,7 +10,7 @@ public abstract class  Constants {
     public static int POPULATION_SIZE =100;
     public static int MUTATION_RATE = 5;
     public static double CROSSOVER_RATE = 1;
-    public static double NUMBER_OF_GENERATIONS = 25;
+    public static double NUMBER_OF_GENERATIONS = 100;
     public static int TOUR_SIZE =3;
 
     //ONLY SPEA2 CONSTANTS

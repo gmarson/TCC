@@ -1,5 +1,8 @@
 package Population;
 
+import Constants.Constants;
+import Utilities.Utils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -36,6 +39,11 @@ public class Member implements Serializable{
     public double weightedAverage=-1;
     public ArrayList<Integer> parentTableMask1;
     public ArrayList<Integer> parentTableMask2;
+
+
+    //MOEA-D Variables
+    public final double[] weightVector = Utils.randSum(Constants.PROBLEM_SIZE,1.0);
+    public double solution = -1.0;
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 

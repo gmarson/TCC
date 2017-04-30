@@ -71,7 +71,6 @@ public class Population implements Serializable {
             member.distances = new ArrayList<>();
 
 
-
         }
 
     }
@@ -177,4 +176,10 @@ public class Population implements Serializable {
         return this.fronts.allFronts.get(0);
     }
 
+    public void clearObjectiveFunctions() {
+        for(Member member: this.population)
+        {
+            member.resultOfFunctions = new ArrayList<>();
+        }
+    }
 }
