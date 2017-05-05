@@ -18,6 +18,10 @@ public class MOEAD {
     public void runAlgorithm(Problem problem)
     {
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
+        Neighboring.createWeightVectorForPopulation(p);
+        Solution.setSolutionForPopulation(p);
+        Neighboring.setNeighboursOfAllMembers(p);
+
 
 
 
@@ -33,5 +37,11 @@ public class MOEAD {
 
         //Problem.removeSimilar(paretto,problem);
     }
+
+
+    /*
+    * Ressalvas:
+    * o calculo de vizinhanca é feito somente calculando-se o vetor de pesos
+    * */
 
 }

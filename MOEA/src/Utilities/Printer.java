@@ -16,6 +16,25 @@ public abstract class Printer
         }
     }
 
+
+    public static void printNeighboring(Population p){
+
+
+        for(Member m : p.population){
+            System.out.print("Membro de vetor de distancia: ");
+            for (int i = 0; i <m.weightVector.length ; i++) {
+                System.out.print(m.weightVector[i]+" ");
+            }
+
+            System.out.println("\nDistancia dos membros na vizinhanca");
+            for (Member childMember : m.distanceFromClosestMembers)
+            {
+                System.out.println(childMember.distanceFromParentMember);
+            }
+
+        }
+    }
+
     public static void printTables(TableFunctions tableFunctions){
         for (Table table: tableFunctions.getTables()){
             System.out.println("Tabela:"+ table.mask);

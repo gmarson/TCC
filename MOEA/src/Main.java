@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private static String fileName = "KP_p-5_n-10_ins-10";
+    private static String fileName = "KP_p-3_n-10_ins-1";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
@@ -29,24 +29,24 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        spaceOfObjectives();
 
-
-
-        normal();
+        //writeParettoFromProblem();
+        //normal();
 
     }
 
     private static void normal(){
-        Problem problem = new ProblemSCH();
+        //Problem problem = new ProblemSCH();
         //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        //Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         //NSGAII algorithm = new NSGAII();
-        SPEA2 algorithm = new SPEA2();
+        //SPEA2 algorithm = new SPEA2();
         //AEMMT algorithm = new AEMMT();
         //AEMMD algorithm = new AEMMD();
-        //MOEAD algorithm = new MOEAD();
+        MOEAD algorithm = new MOEAD();
 
 
         algorithm.runAlgorithm(problem);
@@ -167,6 +167,7 @@ public class Main {
         }
 
         return paretto;
+
     }
 
     static void currentDirectory(){
@@ -177,5 +178,10 @@ public class Main {
     }
 
 
+
+    static void spaceOfObjectives(){
+        Population p = readParettoFromFile(macPathRead);
+        Printer.printMembersWithAppliedFunctions(p);
+    }
 
 }

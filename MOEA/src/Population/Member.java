@@ -5,6 +5,8 @@ import Utilities.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by gmarson on 12/21/2016.
@@ -42,8 +44,11 @@ public class Member implements Serializable{
 
 
     //MOEA-D Variables
-    public final double[] weightVector = Utils.randSum(Constants.PROBLEM_SIZE,1.0);
+    public double[] weightVector;
     public double solution = -1.0;
+    public double distanceFromParentMember = -1.0;
+    public ArrayList<Member> distanceFromClosestMembers = new ArrayList<Member>();
+
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 
@@ -64,6 +69,9 @@ public class Member implements Serializable{
         newMember.distances = this.distances;
         newMember.binaryValue = this.binaryValue;
         newMember.weightedAverage = this.weightedAverage;
+        newMember.weightVector = this.weightVector;
+        newMember.solution = this.solution;
+        newMember.distanceFromParentMember = this.distanceFromParentMember;
 
         return newMember;
     }

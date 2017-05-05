@@ -53,8 +53,8 @@ public class SPEA2 {
 
         }
 
-        problem.printResolutionMessage();
-        Printer.printMembersWithValues(archive); //todo
+        ///problem.printResolutionMessage();
+        //Printer.printMembersWithValues(archive); //todo
         saveParetto(problem);
         reset();
     }

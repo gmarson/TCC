@@ -29,7 +29,6 @@ public class NSGAII {
     public void runAlgorithm(Problem problem)
     {
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
-        Printer.printMembersWithBinaryValue(p);//todo
         problem.evaluateAgainstObjectiveFunctions(p);
         p.fastNonDominatedSort();
         Population selected = selectRanked.selectParents(p);
@@ -38,7 +37,7 @@ public class NSGAII {
         sortedUnion = new Population();
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {
-            System.out.println("GERACAO = "+ genCounter+"===========================================");
+            //System.out.println("GERACAO = "+ genCounter+"===========================================");//todo
             genCounter++;
 
             problem.evaluateAgainstObjectiveFunctions(children);
@@ -77,7 +76,7 @@ public class NSGAII {
         saveParetto(problem);
 
         //problem.printResolutionMessage(); //todo
-        Printer.printFirstFront(sortedUnion); //todo
+        //Printer.printFirstFront(sortedUnion); //todo
 
         reset();
     }

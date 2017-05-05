@@ -18,7 +18,6 @@ public class TableAEMMT extends TableFunctions{
 
     public static int genCounter=1;
     public ArrayList<Table> tables = new ArrayList<>();
-    public boolean shouldRestrictSizeForNonDominatedTable  = true;
 
 
     @Override

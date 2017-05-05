@@ -9,7 +9,7 @@ import Utilities.Utils;
  */
 public class ScalarOptimization {
 
-    public static void weightedSum(Population p){
+    public static void weightedSumApproach(Population p){
         int i =0;
         for(Member member : p.population){
             member.solution += (member.weightVector[i]* member.resultOfFunctions.get(i));
