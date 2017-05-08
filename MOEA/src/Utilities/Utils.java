@@ -76,9 +76,6 @@ public abstract class Utils {
             randNums[i] /= sum * totalSum;
         }
 
-
-
-
         return randNums;
     }
 

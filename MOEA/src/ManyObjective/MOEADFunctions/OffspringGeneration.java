@@ -33,15 +33,13 @@ public class OffspringGeneration {
 
             if (Neighboring.shouldReplace(parentMember,child)) {
                 copyAttributes(parentMember, child);
-                MOEAD.nonDominatedPopulation.addMember(parentMember);
+                MOEAD.nonDominatedPopulation.addMember(parentMember); //todo colocar se for nao dominado
+                //todo verificar se é igual antes de pôr
 
             }
 
             populationWithSingleMember.population.remove(0);
-
         }
-
-
     }
 
     private static void copyAttributes(Member parentMember, Member child) {

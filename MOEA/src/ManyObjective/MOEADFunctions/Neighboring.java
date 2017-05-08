@@ -27,6 +27,7 @@ public class Neighboring {
 
             childMember.distanceFromParentMember = Constants.DEFAULT_DISTANCE_VALUE;
         }
+        //todo diminuir comparacoes
     }
 
     public static void setNeighboursOfAllMembers(Population population){
@@ -34,10 +35,7 @@ public class Neighboring {
         {
             setClosestNeighbours(parentMember,population);
         }
-
-
     }
-
 
 
     public static void createWeightVectorForPopulation(Population population) {
@@ -79,14 +77,6 @@ public class Neighboring {
 
         opponentMember.weightVector = parentMember.weightVector;
         SolutionWeightedSum.calculateSolution(opponentMember);
-
-
-        if (opponentMember.value == 0){
-            Scanner s = new Scanner(System.in);
-
-            System.out.println(opponentMember.solution < parentMember.solution);
-            s.nextLine();
-        }
 
         return opponentMember.solution < parentMember.solution;
     }
