@@ -24,8 +24,10 @@ public class OffspringGeneration {
 
     public static void updateNeighboring(Population population, Problem problem){
         Population populationWithSingleMember = new Population();
-        for (Member parentMember : population.population)
-        {
+
+        for (int i = 0; i < population.population.size(); i++) {
+
+            Member parentMember = population.population.get(i);
             populationWithSingleMember.addMember(parentMember);
             Member child = generateChildGivenMember(populationWithSingleMember, problem);
 
@@ -36,7 +38,9 @@ public class OffspringGeneration {
             }
 
             populationWithSingleMember.population.remove(0);
+
         }
+
 
     }
 
