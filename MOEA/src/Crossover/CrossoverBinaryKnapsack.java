@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by gabrielm on 18/02/17.
  */
+
 public class CrossoverBinaryKnapsack implements Crossover {
 
     @Override

@@ -29,18 +29,18 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        spaceOfObjectives();
-
+        //spaceOfObjectives();
         //writeParettoFromProblem();
-        //normal();
+
+        normal();
 
     }
 
     private static void normal(){
-        //Problem problem = new ProblemSCH();
+        Problem problem = new ProblemSCH();
         //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        //Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         //NSGAII algorithm = new NSGAII();
         //SPEA2 algorithm = new SPEA2();

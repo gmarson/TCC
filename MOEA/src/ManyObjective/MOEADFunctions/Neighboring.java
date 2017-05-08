@@ -6,7 +6,7 @@ import Population.Population;
 import Utilities.Printer;
 import Utilities.Utils;
 
-import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by gabrielm on 30/04/17.
@@ -35,7 +35,7 @@ public class Neighboring {
             setClosestNeighbours(parentMember,population);
         }
 
-        Printer.printNeighboring(population);
+
     }
 
 
@@ -71,6 +71,24 @@ public class Neighboring {
             int indexToBeRemoved = parentMember.distanceFromClosestMembers.size()-1;
             parentMember.distanceFromClosestMembers.remove(indexToBeRemoved);
         }
+    }
+
+
+    public static boolean shouldReplace(Member parentMember, Member opponentMember){
+
+
+        opponentMember.weightVector = parentMember.weightVector;
+        SolutionWeightedSum.calculateSolution(opponentMember);
+
+
+        if (opponentMember.value == 0){
+            Scanner s = new Scanner(System.in);
+
+            System.out.println(opponentMember.solution < parentMember.solution);
+            s.nextLine();
+        }
+
+        return opponentMember.solution < parentMember.solution;
     }
 
 }

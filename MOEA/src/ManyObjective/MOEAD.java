@@ -1,10 +1,11 @@
 package ManyObjective;
 
 import Constants.Constants;
-import Fronts.Front;
 import ManyObjective.MOEADFunctions.*;
 import Population.Population;
 import Problems.Problem;
+import Utilities.Printer;
+import Utilities.ProgressBar;
 
 
 /**
@@ -12,19 +13,31 @@ import Problems.Problem;
  */
 public class MOEAD {
 
+    public static Population nonDominatedPopulation;
     Population p = new Population();
+    private int genCounter = 0;
 
 
     public void runAlgorithm(Problem problem)
     {
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
         Neighboring.createWeightVectorForPopulation(p);
-        Solution.setSolutionForPopulation(p);
+        problem.evaluateAgainstObjectiveFunctions(p);
+        SolutionWeightedSum.calculateSolutionForPopulation(p);
+        nonDominatedPopulation = new Population(p);
+
         Neighboring.setNeighboursOfAllMembers(p);
+        while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
+            OffspringGeneration.updateNeighboring(p,problem);
+            nonDominatedPopulation.fastNonDominatedSort();
+            nonDominatedPopulation.population = nonDominatedPopulation.fronts.allFronts.get(0).membersAtThisFront;
+            genCounter++;
+            System.out.print(genCounter+" ");//todo
 
+        }
 
-
+        Printer.printMembersWithAppliedFunctions(nonDominatedPopulation);//todo
     }
 
     private void reset(){
@@ -39,9 +52,5 @@ public class MOEAD {
     }
 
 
-    /*
-    * Ressalvas:
-    * o calculo de vizinhanca é feito somente calculando-se o vetor de pesos
-    * */
 
 }
