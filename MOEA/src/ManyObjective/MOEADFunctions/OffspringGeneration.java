@@ -5,6 +5,8 @@ import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighboring;
 
+
+
 /**
  * Created by gabrielm on 06/05/17.
  */
@@ -27,19 +29,30 @@ public class OffspringGeneration {
 
         for (int i = 0; i < population.population.size(); i++) {
 
-            Member parentMember = population.population.get(i);
+
+            Member parentMember = population.population.get(i).deepCopy();
             populationWithSingleMember.addMember(parentMember);
-            Member child = generateChildGivenMember(populationWithSingleMember, problem);
+            Member newMember = generateChildGivenMember(populationWithSingleMember, problem);
 
-            if (Neighboring.shouldReplace(parentMember,child)) {
-                copyAttributes(parentMember, child);
-                MOEAD.nonDominatedPopulation.addMember(parentMember);
+            for (int j = 0; j < parentMember.closestMembers.size(); j++) {
 
+                Member currentMember = parentMember.closestMembers.get(j);
+
+                if (Neighboring.shouldReplace(currentMember,newMember)) {
+                    copyAttributes(currentMember, newMember);
+                    MOEAD.nonDominatedPopulation.addMemberWhithouClosestMembers(currentMember.deepCopy());
+
+                }
             }
 
-            populationWithSingleMember.population.remove(0);
+
+
+            populationWithSingleMember = new Population();
 
         }
+
+
+
 
 
     }

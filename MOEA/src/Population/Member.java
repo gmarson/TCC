@@ -47,7 +47,7 @@ public class Member implements Serializable{
     public double[] weightVector;
     public double solution = -1.0;
     public double distanceFromParentMember = -1.0;
-    public ArrayList<Member> distanceFromClosestMembers = new ArrayList<Member>();
+    public ArrayList<Member> closestMembers = new ArrayList<Member>();
 
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
@@ -72,7 +72,7 @@ public class Member implements Serializable{
         newMember.weightVector = this.weightVector;
         newMember.solution = this.solution;
         newMember.distanceFromParentMember = this.distanceFromParentMember;
-
+        newMember.closestMembers = this.closestMembers;
         return newMember;
     }
 

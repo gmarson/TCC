@@ -17,8 +17,9 @@ public class SelectionNeighboring extends  Selection {
         int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOUR_QTD);
 
         Population parentPopulation = new Population();
-        parentPopulation.addMember(populationWithSingleMember.population.get(0).distanceFromClosestMembers.get(position1stMember));
-        parentPopulation.addMember(populationWithSingleMember.population.get(0).distanceFromClosestMembers.get(position2dnMember));
+
+        parentPopulation.addMember(populationWithSingleMember.population.get(0).closestMembers.get(position1stMember));
+        parentPopulation.addMember(populationWithSingleMember.population.get(0).closestMembers.get(position2dnMember));
 
         return parentPopulation;
     }

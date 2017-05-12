@@ -2,10 +2,12 @@ package ManyObjective;
 
 import Constants.Constants;
 import ManyObjective.MOEADFunctions.*;
-import Population.Population;
+import Population.*;
 import Problems.Problem;
 import Utilities.Printer;
 import Utilities.ProgressBar;
+
+import java.util.ArrayList;
 
 
 /**
@@ -25,7 +27,10 @@ public class MOEAD {
         problem.evaluateAgainstObjectiveFunctions(p);
         SolutionWeightedSum.calculateSolutionForPopulation(p);
         Neighboring.setNeighboursOfAllMembers(p);
-        nonDominatedPopulation = new Population(p);
+
+
+
+        nonDominatedPopulation.population = new ArrayList<Member>(p.population);
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
@@ -35,10 +40,13 @@ public class MOEAD {
             nonDominatedPopulation.population = nonDominatedPopulation.fronts.allFronts.get(0).membersAtThisFront;
 
             genCounter++;
-            System.out.print(genCounter+" ");//todo
+
 
         }
 
+
+        Problem.removeSimilar(nonDominatedPopulation.fronts.allFronts.get(0),problem);
+        nonDominatedPopulation.population = nonDominatedPopulation.fronts.allFronts.get(0).membersAtThisFront;
         Printer.printMembersWithAppliedFunctions(nonDominatedPopulation);//todo
     }
 

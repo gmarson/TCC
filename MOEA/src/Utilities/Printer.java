@@ -27,7 +27,7 @@ public abstract class Printer
             }
 
             System.out.println("\nDistancia dos membros na vizinhanca");
-            for (Member childMember : m.distanceFromClosestMembers)
+            for (Member childMember : m.closestMembers)
             {
                 System.out.println(childMember.distanceFromParentMember);
             }
