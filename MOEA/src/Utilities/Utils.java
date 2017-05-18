@@ -63,7 +63,7 @@ public abstract class Utils {
         return binaryNymber;
     }
 
-    public static double[] randSum(int size, double totalSum) {
+    public static double[] getWeightVector(int size, double totalSum) {
         Random rand = new Random();
         double randNums[] = new double[size], sum = 0;
 
@@ -75,8 +75,6 @@ public abstract class Utils {
         for (int i = 0; i < randNums.length; i++) {
             randNums[i] /= sum * totalSum;
         }
-
-
 
 
         return randNums;
@@ -139,8 +137,8 @@ public abstract class Utils {
 
     public static double euclidianDistanceBasedOnDistanceVector(Member parentMember, Member childMember){
         double result = 0.0, difference;
-        for (int i = 0; i < parentMember.weightVector.length; i++) {
-            difference = parentMember.weightVector[i] - childMember.weightVector[i];
+        for (int i = 0; i < parentMember.weightVector.vector.length; i++) {
+            difference = parentMember.weightVector.vector[i] - childMember.weightVector.vector[i];
             result += pow(difference,2);
         }
         return sqrt(result);
