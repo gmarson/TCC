@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Main {
@@ -31,26 +32,31 @@ public class Main {
 
         //spaceOfObjectives();
         //writeParettoFromProblem();
-
+        //compareToParettoFront();
         normal();
-
     }
 
+
+
     private static void normal(){
-        Problem problem = new ProblemSCH();
+        //Problem problem = new ProblemSCH();
         //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        //Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         //NSGAII algorithm = new NSGAII();
-        //SPEA2 algorithm = new SPEA2();
+        SPEA2 algorithm = new SPEA2();
         //AEMMT algorithm = new AEMMT();
         //AEMMD algorithm = new AEMMD();
-        MOEAD algorithm = new MOEAD();
+        //MOEAD algorithm = new MOEAD();
 
+        int x =50;
+        int counter = 0;
 
-        algorithm.runAlgorithm(problem);
-
+        while (counter < x) {
+            algorithm.runAlgorithm(problem);
+            counter++;
+        }
 
     }
 
@@ -64,9 +70,11 @@ public class Main {
         SPEA2 spea2 = new SPEA2();
         AEMMT aemmt = new AEMMT();
         AEMMD aemmd = new AEMMD();
+        MOEAD moead = new MOEAD();
 
         //nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
+        moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS *=100;
         //aemmt.runAlgorithm(problem);
@@ -84,6 +92,8 @@ public class Main {
             newPopulation.population = aemmt.paretto.membersAtThisFront;
         else if (!aemmd.paretto.membersAtThisFront.isEmpty())
             newPopulation.population = aemmd.paretto.membersAtThisFront;
+        else if (!moead.paretto.membersAtThisFront.isEmpty())
+            newPopulation.population = moead.paretto.membersAtThisFront;
 
 
         System.out.println(erro.estimateBasedOnMetric(newPopulation,parettoPopulation));
@@ -97,6 +107,7 @@ public class Main {
         SPEA2 spea2 = new SPEA2();
         AEMMT aemmt = new AEMMT();
         AEMMD aemmd = new AEMMD();
+        MOEAD moead = new MOEAD();
 
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
@@ -104,6 +115,7 @@ public class Main {
         Front spea2Members  = new Front();
         Front aemmtMembers  = new Front();
         Front aemmdMembers  = new Front();
+        Front moeadMembers  = new Front();
 
         progressBar = new ProgressBar((double) numberOfRounds);
 
@@ -114,6 +126,9 @@ public class Main {
 
             spea2.runAlgorithm(problem);
             spea2Members = spea2.paretto;
+
+            moead.runAlgorithm(problem);
+            moeadMembers = moead.paretto;
 
             Constants.NUMBER_OF_GENERATIONS *= 100;
 
@@ -134,6 +149,7 @@ public class Main {
         allFrontsMembers.population.addAll(aemmtMembers.membersAtThisFront);
         allFrontsMembers.population.addAll(aemmdMembers.membersAtThisFront);
         allFrontsMembers.population.addAll(nsgaiiMembers.membersAtThisFront);
+        allFrontsMembers.population.addAll(moeadMembers.membersAtThisFront);
 
         allFrontsMembers.fastNonDominatedSort();
 

@@ -44,10 +44,10 @@ public class Member implements Serializable{
 
 
     //MOEA-D Variables
-    public double[] weightVector;
+    public WeightVector weightVector ;
     public double solution = -1.0;
     public double distanceFromParentMember = -1.0;
-    public ArrayList<Member> closestMembers = new ArrayList<Member>();
+    public ArrayList<Member> closestMembers = new ArrayList<>();
 
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
