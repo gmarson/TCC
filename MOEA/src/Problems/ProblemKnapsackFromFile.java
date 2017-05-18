@@ -31,7 +31,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
         Constants.QTD_ITEMS = Reader.numberOfItems;
         Constants.BAG_CAPACITY = Reader.totalWeight;
         this.buildItemsFromFile();
-
+        Constants.MUTATION_RATE = 2/items.size();
 
     }
 
