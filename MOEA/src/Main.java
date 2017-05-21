@@ -1,6 +1,7 @@
 import Constants.Constants;
 import ManyObjective.TableFunctions.TableFunctions;
 import PerformanceMetrics.Erro;
+import PerformanceMetrics.ParetoSubset;
 import Population.*;
 import Problems.*;
 import Utilities.*;
@@ -32,23 +33,23 @@ public class Main {
 
         //spaceOfObjectives();
         //writeParettoFromProblem();
-        //compareToParettoFront();
-        normal();
+        compareToParettoFront();
+        //normal();
     }
 
 
 
     private static void normal(){
         //Problem problem = new ProblemSCH();
-        //Problem problem = new ProblemF2();
+        Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        //Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         //NSGAII algorithm = new NSGAII();
-        SPEA2 algorithm = new SPEA2();
+        //SPEA2 algorithm = new SPEA2();
         //AEMMT algorithm = new AEMMT();
         //AEMMD algorithm = new AEMMD();
-        //MOEAD algorithm = new MOEAD();
+        MOEAD algorithm = new MOEAD();
 
         int x =50;
         int counter = 0;
@@ -72,17 +73,20 @@ public class Main {
         AEMMD aemmd = new AEMMD();
         MOEAD moead = new MOEAD();
 
-        //nsgaii.runAlgorithm(problem);
+        nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
-        moead.runAlgorithm(problem);
+        //moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS *=100;
         //aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
+
         Erro erro = new Erro(problem);
-        erro.messageBeforeResult();
+        ParetoSubset paretoSubset = new ParetoSubset(problem);
+
         Population newPopulation = new Population();
+
 
         if(!nsgaii.paretto.membersAtThisFront.isEmpty())
             newPopulation.population = nsgaii.paretto.membersAtThisFront;
@@ -96,7 +100,11 @@ public class Main {
             newPopulation.population = moead.paretto.membersAtThisFront;
 
 
+        erro.messageBeforeResult();
         System.out.println(erro.estimateBasedOnMetric(newPopulation,parettoPopulation));
+        paretoSubset.messageBeforeResult();
+        System.out.println(paretoSubset.estimateBasedOnMetric(newPopulation,parettoPopulation));
+
     }
 
     //Do not call this

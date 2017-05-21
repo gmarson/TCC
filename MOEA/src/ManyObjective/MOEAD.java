@@ -18,7 +18,7 @@ public class MOEAD {
     public static Population nonDominatedPopulation = new Population();
     Population p = new Population();
     private int genCounter = 0;
-    public static Front paretto = new Front();
+    public Front paretto = new Front();
 
 
     public void runAlgorithm(Problem problem)
@@ -57,7 +57,7 @@ public class MOEAD {
 
 
 
-        Printer.printMembersWithBinaryValue(aux);//todo
+        //Printer.printMembersWithBinaryValue(aux);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo
         reset();
     }

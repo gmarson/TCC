@@ -19,6 +19,7 @@ public class ParetoSubset extends Metrics{
         double gotRight = 0.0;
         for (Member normalMember: population.population)
         {
+
             if ( isIn(normalMember,bestPareto))
             {
                 gotRight++;
@@ -36,19 +37,20 @@ public class ParetoSubset extends Metrics{
     private boolean isIn(Member normalMember, Population bestPareto){
         for (Member paretoMember: bestPareto.population)
         {
-            if (isEqual(normalMember, paretoMember)) return true;
+            if (checkEqual(normalMember, paretoMember)) return true;
         }
         return false;
     }
 
-    private  boolean isEqual(Member normalMember, Member paretoMember){
-        for (int i = 0; i < normalMember.resultOfFunctions.size(); i++) {
-            if (normalMember.resultOfFunctions.get(i) != paretoMember.resultOfFunctions.get(i))  return false;
+    private boolean checkEqual(Member normalMember, Member paretoMember) {
+        for (int i = 0; i < normalMember.binaryValue.size(); i++) {
+            if ((int) normalMember.binaryValue.get(i) != (int) paretoMember.binaryValue.get(i))
+            {
+                return false;
+            }
         }
-
-
-
         return true;
     }
+
 
 }

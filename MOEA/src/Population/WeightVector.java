@@ -3,12 +3,13 @@ package Population;
 import Constants.Constants;
 import Utilities.Utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by gabrielm on 13/05/17.
  */
-public class WeightVector{
+public class WeightVector implements Serializable{
 
 
     public double[] vector;

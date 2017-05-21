@@ -37,7 +37,7 @@ public class NSGAII {
         sortedUnion = new Population();
         while(genCounter < Constants.NUMBER_OF_GENERATIONS)
         {
-            System.out.println("GERACAO = "+ genCounter+"===========================================");
+            //System.out.println("GERACAO = "+ genCounter+"===========================================");
             genCounter++;
 
             problem.evaluateAgainstObjectiveFunctions(children);
