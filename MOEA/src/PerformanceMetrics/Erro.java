@@ -37,7 +37,7 @@ public class Erro extends Metrics{
 
     @Override
     public void messageBeforeResult(){
-        System.out.println("Taxa de erro é: " );
+        System.out.println("(er) Porcentagem dos elementos da fronteira de paretto que dominam a fronteira normal: " );
     }
 
 

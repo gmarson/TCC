@@ -60,6 +60,9 @@ public class OffspringGeneration {
 
         childMember.weightVector = parentWeightVector;
         neighboringMember.weightVector = parentWeightVector;
+
+
+
         SolutionWeightedSum.calculateSolution(childMember);
         SolutionWeightedSum.calculateSolution(neighboringMember);
 

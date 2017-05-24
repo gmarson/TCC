@@ -31,7 +31,7 @@ public class ParetoSubset extends Metrics{
 
     @Override
     public void messageBeforeResult() {
-        System.out.println("Porcentagem dos elementos da fronteira achada que estão na fronteira de pareto");
+        System.out.println("(ps) Porcentagem dos elementos da fronteira achada que estão na fronteira de pareto");
     }
 
     private boolean isIn(Member normalMember, Population bestPareto){

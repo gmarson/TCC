@@ -1,6 +1,7 @@
 import Constants.Constants;
 import ManyObjective.TableFunctions.TableFunctions;
 import PerformanceMetrics.Erro;
+import PerformanceMetrics.GenerationalDistance;
 import PerformanceMetrics.ParetoSubset;
 import Population.*;
 import Problems.*;
@@ -33,15 +34,15 @@ public class Main {
 
         //spaceOfObjectives();
         //writeParettoFromProblem();
-        compareToParettoFront();
-        //normal();
+        //compareToParettoFront();
+        normal();
     }
 
 
 
     private static void normal(){
-        //Problem problem = new ProblemSCH();
-        Problem problem = new ProblemF2();
+        Problem problem = new ProblemSCH();
+        //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
         //Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
@@ -62,7 +63,7 @@ public class Main {
     }
 
     private static void compareToParettoFront(){
-        currentDirectory();
+
         Population parettoPopulation = readParettoFromFile(macPathRead);
 
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
@@ -84,6 +85,7 @@ public class Main {
 
         Erro erro = new Erro(problem);
         ParetoSubset paretoSubset = new ParetoSubset(problem);
+        GenerationalDistance generationalDistance = new GenerationalDistance(problem);
 
         Population newPopulation = new Population();
 
@@ -104,6 +106,9 @@ public class Main {
         System.out.println(erro.estimateBasedOnMetric(newPopulation,parettoPopulation));
         paretoSubset.messageBeforeResult();
         System.out.println(paretoSubset.estimateBasedOnMetric(newPopulation,parettoPopulation));
+        generationalDistance.messageBeforeResult();
+        System.out.println(generationalDistance.estimateBasedOnMetric(newPopulation,parettoPopulation));
+
 
     }
 
