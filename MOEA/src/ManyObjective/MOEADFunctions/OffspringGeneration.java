@@ -5,49 +5,68 @@ import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighboring;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
 /**
  * Created by gabrielm on 06/05/17.
  */
 public class OffspringGeneration {
 
-    public static Member generateChildGivenMember(Population populationWithSingleMember, Problem problem){
+    public static Member generateChildGivenNeighboring(ArrayList<Member> parentNeighboring, Problem problem){
 
-        SelectionNeighboring selectionNeighboring = new SelectionNeighboring();
-        Population parentPopulation = selectionNeighboring.selectParents(populationWithSingleMember);
-        Population childPopulation = problem.crossover.crossoverAndMutation(parentPopulation);
+        Population parentsPopulation = SelectionNeighboring.selectParents(parentNeighboring);
+        Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
-        Member child = childPopulation.population.get(0);
+        childPopulation.fastNonDominatedSort();
 
-        return child;
+        return childPopulation.population.get(0);
     }
 
 
     public static void updateNeighboring(Population population, Problem problem){
-        Population populationWithSingleMember = new Population();
 
-        for (int i = 0; i < population.population.size(); i++) {
+        for (Member parent : population.population)
+        {
+            Member childMember = generateChildGivenNeighboring (parent.closestMembers , problem);
 
-            Member parentMember = population.population.get(i);
-            populationWithSingleMember.addMember(parentMember);
-            Member child = generateChildGivenMember(populationWithSingleMember, problem);
+            tryAddingChildToNeighboring(parent,childMember);
 
-            if (Neighboring.shouldReplace(parentMember,child)) {
-                copyAttributes(parentMember, child);
-                MOEAD.nonDominatedPopulation.addMember(parentMember); //todo colocar se for nao dominado
-                //todo verificar se é igual antes de pôr
+        }
 
+    }
+
+    private static void tryAddingChildToNeighboring(Member parent, Member childMember){
+
+
+        for (int i = 0; i < parent.closestMembers.size(); i++) {
+
+            Member neighboringMember = parent.closestMembers.get(i);
+
+
+            if (shouldReplaceMember(childMember,neighboringMember, parent.weightVector))
+            {
+
+                parent.closestMembers.set(i,childMember);
+                MOEAD.nonDominatedPopulation.addMember(childMember);
             }
-
-            populationWithSingleMember.population.remove(0);
         }
     }
 
-    private static void copyAttributes(Member parentMember, Member child) {
-        parentMember.solution = child.solution;
-        parentMember.resultOfFunctions = child.resultOfFunctions;
-        parentMember.binaryValue = child.binaryValue;
-        parentMember.value = child.value;
-    }
 
+    private static boolean shouldReplaceMember(Member childMember, Member neighboringMember,WeightVector parentWeightVector){
+
+
+        childMember.weightVector = parentWeightVector;
+        neighboringMember.weightVector = parentWeightVector;
+
+
+
+        SolutionWeightedSum.calculateSolution(childMember);
+        SolutionWeightedSum.calculateSolution(neighboringMember);
+
+        return childMember.solution < neighboringMember.solution;
+    }
 
 }

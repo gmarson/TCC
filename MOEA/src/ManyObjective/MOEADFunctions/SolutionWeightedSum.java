@@ -10,9 +10,9 @@ import java.util.Scanner;
 public class SolutionWeightedSum {
 
     public static void calculateSolution(Member member){
-        member.solution =0.0;
+        member.solution = 0.0;
         for (int i = 0; i < member.resultOfFunctions.size(); i++) {
-            member.solution = member.solution +  (member.resultOfFunctions.get(i) * member.weightVector[i]);
+            member.solution = member.solution +  (member.resultOfFunctions.get(i) * member.weightVector.vector[i]);
         }
 
     }

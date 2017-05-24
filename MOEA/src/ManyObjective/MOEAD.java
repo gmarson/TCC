@@ -1,12 +1,13 @@
 package ManyObjective;
 
 import Constants.Constants;
-import Fronts.Front;
 import ManyObjective.MOEADFunctions.*;
-import Population.Population;
+import Population.*;
 import Problems.Problem;
 import Utilities.Printer;
-import Utilities.ProgressBar;
+import Fronts.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
@@ -27,7 +28,9 @@ public class MOEAD {
         problem.evaluateAgainstObjectiveFunctions(p);
         SolutionWeightedSum.calculateSolutionForPopulation(p);
         Neighboring.setNeighboursOfAllMembers(p);
-        nonDominatedPopulation = new Population(p);
+
+
+        nonDominatedPopulation.population = new ArrayList<Member>(p.population);
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
@@ -37,31 +40,39 @@ public class MOEAD {
             nonDominatedPopulation.population = nonDominatedPopulation.fronts.allFronts.get(0).membersAtThisFront;
 
             genCounter++;
-            System.out.print(genCounter+" ");//todo
 
         }
 
 
-        System.out.println();
 
         saveParetto(problem);
-        Printer.printMembersWithAppliedFunctions(nonDominatedPopulation);//todo
+        Population aux = new Population();
+        aux.population = paretto.membersAtThisFront;
+        Scanner s = new Scanner(System.in);
 
+            Printer.printMembersValue(aux);//todo
+            //Printer.printNeighboring(p);//todo
+            //s.nextLine();
+
+
+
+
+        //Printer.printMembersWithBinaryValue(aux);//todo
+        //Printer.printMembersWithAppliedFunctions(aux);//todo
         reset();
     }
 
+
     private void reset(){
-        nonDominatedPopulation = new Population();
         p = new Population();
         genCounter = 0;
-
+        nonDominatedPopulation = new Population();
     }
 
     private void saveParetto(Problem problem){
+        Problem.removeSimilar(nonDominatedPopulation.getFirstFront(),problem);
         paretto = new Front();
-        Problem.removeSimilar(nonDominatedPopulation.fronts.allFronts.get(0),problem);
-        paretto.membersAtThisFront = nonDominatedPopulation.fronts.allFronts.get(0).membersAtThisFront;
-
+        paretto = nonDominatedPopulation.fronts.allFronts.get(0);
     }
 
 

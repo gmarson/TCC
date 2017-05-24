@@ -4,6 +4,8 @@ import ManyObjective.*;
 import ManyObjective.TableFunctions.TableFunctions;
 import Population.*;
 
+import java.util.ArrayList;
+
 
 public abstract class Printer
 {
@@ -22,14 +24,30 @@ public abstract class Printer
 
         for(Member m : p.population){
             System.out.print("Membro de vetor de distancia: ");
-            for (int i = 0; i <m.weightVector.length ; i++) {
-                System.out.print(m.weightVector[i]+" ");
+            for (int i = 0; i <m.weightVector.vector.length ; i++) {
+                System.out.print(m.weightVector.vector[i]+" ");
             }
 
-            System.out.println("\nDistancia dos membros na vizinhanca");
-            for (Member childMember : m.distanceFromClosestMembers)
+            System.out.println("\nValor dos membros na vizinhanca");
+            for (Member childMember : m.closestMembers)
             {
-                System.out.println(childMember.distanceFromParentMember);
+                System.out.println(childMember.value);
+            }
+
+        }
+    }
+
+    public static void printNeighboringBinary(Population p){
+        for(Member m : p.population){
+            System.out.print("Membro de vetor de distancia: ");
+            for (int i = 0; i <m.weightVector.vector.length ; i++) {
+                System.out.print(m.weightVector.vector[i]+" ");
+            }
+
+            System.out.println("\nValor dos membros na vizinhanca");
+            for (Member childMember : m.closestMembers)
+            {
+                System.out.println(childMember.binaryValue);
             }
 
         }
@@ -78,6 +96,16 @@ public abstract class Printer
                 System.out.println();
             }
         }
+    }
+
+    public static void printMembersValue(Population p)
+    {
+        ArrayList<Double> values = new ArrayList<>();
+        for(Member m : p.population)
+        {
+            values.add(m.value);
+        }
+        System.out.println(values);
     }
 
 	public static void printMembersWithAppliedFunctions(Population p)
@@ -249,6 +277,49 @@ public abstract class Printer
         p.fronts.allFronts.get(0).printFront();
     }
 
+    public static void printMemberWithClosestMembers(Member m ){
+        System.out.println("Membro de valor: "+m.value);
+        System.out.println("Solution: "+m.solution);
+        System.out.print("Vetor de Pesos: ");
+        for(Double d:m.weightVector.vector)
+            System.out.print(d+" ");
+        System.out.println("\nFuncões objetivo: ");
+
+        int j=0;
+        for(Double d: m.resultOfFunctions)
+        {
+
+            System.out.println("F"+j+" = "+d);
+            j++;
+
+        }
+
+        for(Member me: m.closestMembers){
+            System.out.println("Valor do Membro: "+ me.value);
+            System.out.println("Distancia para o pai: "+me.distanceFromParentMember);
+            System.out.println("Solution: "+me.solution);
+            System.out.print("Vetor de Pesos: ");
+            for(Double d:me.weightVector.vector)
+                System.out.print(d+" ");
+
+            System.out.println("\nFuncões objetivo: ");
+
+            j=0;
+            for(Double d: me.resultOfFunctions)
+            {
+
+                System.out.println("F"+j+" = "+d);
+                j++;
+
+            }
 
 
+            System.out.println("OS SEGUINTE ATRIBUTOS DEVEM SER NULOS OU VAZIOS");
+            System.out.println("Closest Members: "+me.closestMembers);
+
+
+
+            System.out.println();
+        }
+    }
 }

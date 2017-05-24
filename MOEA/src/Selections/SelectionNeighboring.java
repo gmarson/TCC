@@ -11,17 +11,21 @@ import java.util.ArrayList;
  */
 public class SelectionNeighboring extends  Selection {
 
-    @Override
-    public Population selectParents(Population populationWithSingleMember) {
+
+
+    public static Population selectParents(ArrayList<Member> neighboring)
+    {
         int position1stMember = Utils.getRandom(0,Constants.NEIGHBOUR_QTD);
         int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOUR_QTD);
+        Population parentsPopulation = new Population();
 
-        Population parentPopulation = new Population();
-        parentPopulation.addMember(populationWithSingleMember.population.get(0).distanceFromClosestMembers.get(position1stMember));
-        parentPopulation.addMember(populationWithSingleMember.population.get(0).distanceFromClosestMembers.get(position2dnMember));
-
-        return parentPopulation;
+        parentsPopulation.addMember(neighboring.get(position1stMember).deepCopy());
+        parentsPopulation.addMember(neighboring.get(position2dnMember).deepCopy());
+        return parentsPopulation;
     }
+
+    @Override
+    public Population selectParents(Population populationWithSingleMember) { return null; }
 
     @Override
     protected Member returnWinnerCompetitor(ArrayList<Member> membersByTour) {

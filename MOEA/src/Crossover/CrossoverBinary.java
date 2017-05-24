@@ -3,6 +3,7 @@ package Crossover;
 import Constants.Constants;
 import Utilities.*;
 import Population.*;
+
 import java.util.ArrayList;
 
 /**
@@ -26,8 +27,8 @@ public class CrossoverBinary implements Crossover {
 
             ArrayList<Integer> m1BinaryValue = Utils.toBinary((int)m1.value);
             ArrayList<Integer> m2BinaryValue = Utils.toBinary((int)m2.value);
-            increaseToMaxBinaryLenSize(m1BinaryValue);
-            increaseToMaxBinaryLenSize(m2BinaryValue);
+
+            makeBinariesSameSize(m1BinaryValue,m2BinaryValue);
 
             pairOfChildren = makeChildren(m1BinaryValue,m2BinaryValue);
 
@@ -39,7 +40,7 @@ public class CrossoverBinary implements Crossover {
     }
 
 
-    public void mutation(ArrayList<Integer> binaryNumber)
+    private void mutation(ArrayList<Integer> binaryNumber)
     {
         if(Utils.getRandom(1,100) <= Constants.MUTATION_RATE)
         {
@@ -51,7 +52,16 @@ public class CrossoverBinary implements Crossover {
         }
     }
 
-    protected void increaseToMaxBinaryLenSize(ArrayList<Integer> binary)
+    private void makeBinariesSameSize(ArrayList<Integer> m1BinaryValue, ArrayList<Integer> m2BinaryValue){
+        int m1Size = m1BinaryValue.size(), m2Size = m2BinaryValue.size();
+
+        if (m1Size > m2Size)
+            increaseToSameSize(m2BinaryValue,m1Size - m2Size);
+        else if (m2Size > m1Size)
+            increaseToSameSize(m1BinaryValue,m2Size - m1Size);
+    }
+
+    private void increaseToSameSize(ArrayList<Integer> binary, int differenceBetweenSizes)
     {
         boolean haveToCorrectSignal = false;
         if(binary.get(0) == 1)
@@ -60,15 +70,16 @@ public class CrossoverBinary implements Crossover {
             haveToCorrectSignal = true;
         }
 
-        for (int i = 0; i < Constants.MAX_BINARY_LEN; i++) {
+        for (int i = 0; i < differenceBetweenSizes; i++) {
             binary.add(0,0);
         }
         if (haveToCorrectSignal) binary.set(0,1);
     }
 
-    protected ArrayList<Integer> makeChildren(ArrayList<Integer> binary1, ArrayList<Integer> binary2)
+
+    private ArrayList<Integer> makeChildren(ArrayList<Integer> binary1, ArrayList<Integer> binary2)
     {
-        int cutoff =  Utils.getRandom(0, Constants.MAX_BINARY_LEN);
+        int cutoff =  Utils.getRandom(0, binary1.size());
 
         ArrayList<Integer> pairOfChildren   = new ArrayList<>();
         ArrayList<Integer> child1First      = new ArrayList<>(binary1.subList(0, cutoff));
@@ -86,6 +97,5 @@ public class CrossoverBinary implements Crossover {
         pairOfChildren.add(Utils.binaryToInteger(child2First));
 
         return pairOfChildren;
-
     }
 }

@@ -24,6 +24,7 @@ public class ProblemKnapsack extends Problem{
         Constants.QTD_ITEMS = 10;
         Constants.BAG_CAPACITY = 100;
         this.buildItems();
+        Constants.MUTATION_RATE = 2/items.size();
     }
 
 
@@ -48,6 +49,8 @@ public class ProblemKnapsack extends Problem{
 
         return population;
     }
+
+
 
     @Override
     public void applyFunctions(Member member)
