@@ -39,29 +39,36 @@ public class OffspringGeneration {
 
     private static void tryAddingChildToNeighboring(Member parent, Member childMember){
 
+        if (shouldReplaceMember(childMember,parent))
+        {
+            parent.solution = childMember.solution;
+            parent.value = childMember.value;
+            parent.binaryValue = childMember.binaryValue;
+            MOEAD.nonDominatedPopulation.addMember(childMember);
+
+
+        }
 
         for (int i = 0; i < parent.closestMembers.size(); i++) {
 
             Member neighboringMember = parent.closestMembers.get(i);
 
-
-            if (shouldReplaceMember(childMember,neighboringMember, parent.weightVector))
+            if (shouldReplaceMember(childMember,neighboringMember))
             {
+                neighboringMember.binaryValue = childMember.binaryValue;
+                neighboringMember.value = childMember.value;
+                neighboringMember.solution = childMember.solution;
 
-                parent.closestMembers.set(i,childMember);
                 MOEAD.nonDominatedPopulation.addMember(childMember);
             }
         }
+
+        //System.out.println("Tamanho da vizinhanca: "+parent.closestMembers.size() );//todo
     }
 
-
-    private static boolean shouldReplaceMember(Member childMember, Member neighboringMember,WeightVector parentWeightVector){
-
-
-        childMember.weightVector = parentWeightVector;
-        neighboringMember.weightVector = parentWeightVector;
-
-
+    private static boolean shouldReplaceMember(Member childMember, Member neighboringMember)
+    {
+        childMember.weightVector = neighboringMember.weightVector;
 
         SolutionWeightedSum.calculateSolution(childMember);
         SolutionWeightedSum.calculateSolution(neighboringMember);

@@ -74,9 +74,9 @@ public class Main {
         AEMMD aemmd = new AEMMD();
         MOEAD moead = new MOEAD();
 
-        nsgaii.runAlgorithm(problem);
+        //nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
-        //moead.runAlgorithm(problem);
+        moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS *=100;
         //aemmt.runAlgorithm(problem);

@@ -50,12 +50,9 @@ public class MOEAD {
         aux.population = paretto.membersAtThisFront;
         Scanner s = new Scanner(System.in);
 
-            Printer.printMembersValue(aux);//todo
-            //Printer.printNeighboring(p);//todo
-            //s.nextLine();
-
-
-
+        Printer.printMembersValue(aux);//todo
+        //Printer.printNeighboring(p);//todo
+        //s.nextLine();
 
         //Printer.printMembersWithBinaryValue(aux);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo
