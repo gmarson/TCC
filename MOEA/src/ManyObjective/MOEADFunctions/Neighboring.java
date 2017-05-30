@@ -79,20 +79,4 @@ public class Neighboring {
             parentMember.closestMembers.add(index,memberToBeInserted);
         }
     }
-
-
-    public static boolean shouldReplace(Member parentMember, Member opponentMember){
-
-
-        opponentMember.weightVector = parentMember.weightVector;
-        SolutionWeightedSum.calculateSolution(opponentMember);
-
-        return opponentMember.solution < parentMember.solution;
-    }
-
-
-
-
-
-
 }

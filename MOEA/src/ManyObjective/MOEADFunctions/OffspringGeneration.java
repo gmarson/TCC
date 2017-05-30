@@ -48,6 +48,7 @@ public class OffspringGeneration {
 
 
         }
+        // adicionei esse trecho acimca
 
         for (int i = 0; i < parent.closestMembers.size(); i++) {
 
