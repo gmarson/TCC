@@ -6,7 +6,6 @@ import Problems.Problem;
 import Selections.SelectionNeighboring;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -21,60 +20,77 @@ public class OffspringGeneration {
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
         childPopulation.fastNonDominatedSort();
 
+
         return childPopulation.population.get(0);
     }
 
 
     public static void updateNeighboring(Population population, Problem problem){
 
-        for (Member parent : population.population)
+        for (int i = 0; i < population.population.size(); i++)
         {
+            Member parent = population.population.get(i);
             Member childMember = generateChildGivenNeighboring (parent.closestMembers , problem);
 
-            tryAddingChildToNeighboring(parent,childMember);
+            insertion(parent,childMember,population,i);
 
         }
 
     }
 
-    private static void tryAddingChildToNeighboring(Member parent, Member childMember){
-
-        if (shouldReplaceMember(childMember,parent))
+    private static void insertion(Member parent, Member child, Population population,int indexOf){
+        calculateSolutions(parent,child);
+        if (parent.solution > child.solution)
         {
-            parent.solution = childMember.solution;
-            parent.value = childMember.value;
-            parent.binaryValue = childMember.binaryValue;
-            MOEAD.nonDominatedPopulation.addMember(childMember);
-
-
+            replaceMember(parent,child,population,indexOf);
+            addToMOEADNonDominatedPopulation(child);
         }
-        // adicionei esse trecho acimca
 
-        for (int i = 0; i < parent.closestMembers.size(); i++) {
+        insertOnNeighborhood(parent,child);
 
-            Member neighboringMember = parent.closestMembers.get(i);
+    }
 
-            if (shouldReplaceMember(childMember,neighboringMember))
+
+
+    private static void insertOnNeighborhood(Member parent, Member child) {
+        for (int i = 0; i < parent.closestMembers.size(); i++)
+        {
+            Member neighborhoodMember = parent.closestMembers.get(i);
+
+            calculateSolutions(neighborhoodMember,child);
+            if (neighborhoodMember.solution > child.solution)
             {
-                neighboringMember.binaryValue = childMember.binaryValue;
-                neighboringMember.value = childMember.value;
-                neighboringMember.solution = childMember.solution;
+                replaceMember(parent.closestMembers, i, child);
+                addToMOEADNonDominatedPopulation(child);
 
-                MOEAD.nonDominatedPopulation.addMember(childMember);
             }
+
         }
 
-        //System.out.println("Tamanho da vizinhanca: "+parent.closestMembers.size() );//todo
     }
 
-    private static boolean shouldReplaceMember(Member childMember, Member neighboringMember)
-    {
-        childMember.weightVector = neighboringMember.weightVector;
+    private static void replaceMember(Member parent, Member child, Population population,int indexOf) {
 
-        SolutionWeightedSum.calculateSolution(childMember);
-        SolutionWeightedSum.calculateSolution(neighboringMember);
+        child.closestMembers = parent.closestMembers;
+        population.population.remove(indexOf);
+        population.population.add(0,child.deepCopy());
 
-        return childMember.solution < neighboringMember.solution;
     }
+
+    private static void replaceMember(ArrayList<Member> closestMembers, int indexOfNeighborhoodMember, Member child) {
+        closestMembers.remove(indexOfNeighborhoodMember);
+        closestMembers.add(child);
+    }
+
+    private static void calculateSolutions(Member parent, Member child){
+        child.weightVector = parent.weightVector;
+        SolutionWeightedSum.calculateSolution(child);
+
+    }
+
+    private static void addToMOEADNonDominatedPopulation(Member member){
+        MOEAD.nonDominatedPopulation.addMember(member.deepCopy());
+    }
+
 
 }

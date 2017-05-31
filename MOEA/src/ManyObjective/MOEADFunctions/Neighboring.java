@@ -44,9 +44,10 @@ public class Neighboring {
         }
     }
 
-    public static void tryToAdd(Member parentMember, Member memberToBeInserted){
+    private static void tryToAdd(Member parentMember, Member memberToBeInserted){
         memberToBeInserted.closestMembers = new ArrayList<Member>();
         ArrayList<Member> closestMembersFromParent = parentMember.closestMembers;
+
         if (closestMembersFromParent.isEmpty()) {
             closestMembersFromParent.add(memberToBeInserted);
         }
