@@ -56,9 +56,16 @@ public class Main {
         int x =50;
         int counter = 0;
 
-        while (counter < x) {
-            algorithm.runAlgorithm(problem);
-            counter++;
+        if (AEMMD.class.isInstance(algorithm) || AEMMT.class.isInstance(algorithm)){
+            Constants.NUMBER_OF_GENERATIONS *= 100;
+        }
+
+
+            while (counter < x) {
+
+
+                algorithm.runAlgorithm(problem);
+                counter++;
         }
 
     }

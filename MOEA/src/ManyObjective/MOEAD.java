@@ -24,19 +24,12 @@ public class MOEAD {
     public void runAlgorithm(Problem problem)
     {
         moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
-
         Neighboring.createWeightVectorForPopulation(moeadPopulation);
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
         SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
         Neighboring.setNeighboursOfAllMembers(moeadPopulation);
 
         populateNonDominatedPopulation();
-
-        //TODO vc melhorou bastante o alg mas ainda falta algo pra melhorar mais ainda o desempenho dele,
-        //todo tem algum erro escodido por ai , vamos achá-lo amanhã !
-        //todo continue fazendo o q vc ta fazendo que acho que da bom
-        //todo se nao der, é só explorar outras frentes!
-        //todo EU HEI DE VENCER!
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
@@ -54,33 +47,11 @@ public class MOEAD {
         Population aux = new Population();
         aux.population = paretto.membersAtThisFront;
 
-        Scanner s = new Scanner(System.in);
 
-
-
-        Printer.printMembersValue(aux);//todo
-
-        /*if (aux.population.size() < 3)
-        {
-            System.out.println("imprimindo nondominatedpopulation");
-            Printer.printMembersValue(nonDominatedPopulation);
-
-            System.out.println("imprimindo p");
-            for (Member member : moeadPopulation.population)
-            {
-                System.out.println(member.value);
-            }
-
-            System.out.println("Resultado ");
-
-            Printer.printNeighboring(moeadPopulation);//todo
-            s.nextLine();//todo
-        }*/
-        //Printer.printNeighboring(moeadPopulation);//todo
-        //s.nextLine();
-
+        //Printer.printMembersValue(aux);//todo
         //Printer.printMembersWithBinaryValue(aux);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo
+
         reset();
     }
 

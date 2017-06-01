@@ -19,6 +19,19 @@ public abstract class Printer
     }
 
 
+    public static void printOneNeighboring(Member m){
+        System.out.print("Membro de vetor de distancia: ");
+        for (int i = 0; i <m.weightVector.vector.length ; i++) {
+            System.out.print(m.weightVector.vector[i]+" ");
+        }
+
+        System.out.println("\nValor dos membros na vizinhanca");
+        for (Member childMember : m.closestMembers)
+        {
+            System.out.println(childMember.value);
+        }
+    }
+
     public static void printNeighboring(Population p){
 
 

@@ -76,6 +76,7 @@ public class NSGAII {
         saveParetto(problem);
 
         //problem.printResolutionMessage(); //todo
+        //Problem.removeSimilar(sortedUnion.getFirstFront(),problem);//todo
         //Printer.printFirstFront(sortedUnion); //todo
 
         reset();

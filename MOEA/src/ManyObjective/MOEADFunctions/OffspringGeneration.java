@@ -4,8 +4,11 @@ import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighboring;
+import Utilities.Printer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 
 /**
@@ -60,6 +63,7 @@ public class OffspringGeneration {
             calculateSolutions(neighborhoodMember,child);
             if (neighborhoodMember.solution > child.solution)
             {
+
                 replaceMember(parent.closestMembers, i, child);
                 addToMOEADNonDominatedPopulation(child);
 
@@ -70,16 +74,14 @@ public class OffspringGeneration {
     }
 
     private static void replaceMember(Member parent, Member child, Population population,int indexOf) {
-
         child.closestMembers = parent.closestMembers;
-        population.population.remove(indexOf);
-        population.population.add(0,child.deepCopy());
+        population.population.set(indexOf,child.deepCopy());
+
 
     }
 
     private static void replaceMember(ArrayList<Member> closestMembers, int indexOfNeighborhoodMember, Member child) {
-        closestMembers.remove(indexOfNeighborhoodMember);
-        closestMembers.add(child);
+        closestMembers.set(indexOfNeighborhoodMember,child.deepCopy());
     }
 
     private static void calculateSolutions(Member parent, Member child){

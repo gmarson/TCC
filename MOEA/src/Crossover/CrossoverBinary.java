@@ -4,6 +4,7 @@ import Constants.Constants;
 import Utilities.*;
 import Population.*;
 
+import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 
 /**
@@ -14,13 +15,15 @@ import java.util.ArrayList;
 
 public class CrossoverBinary implements Crossover {
 
+    private final static int MINIMAL_BINARY_LEN = 2;
+
     @Override
     public Population crossoverAndMutation(Population selected){
 
         Population children = new Population();
         ArrayList<Integer> pairOfChildren;
 
-    
+
         for (int i = 0, j =0; j < selected.population.size()/2; i+=2, j++) {
             Member m1 = selected.population.get(i);
             Member m2 = selected.population.get(i+1);
@@ -54,11 +57,28 @@ public class CrossoverBinary implements Crossover {
 
     private void makeBinariesSameSize(ArrayList<Integer> m1BinaryValue, ArrayList<Integer> m2BinaryValue){
         int m1Size = m1BinaryValue.size(), m2Size = m2BinaryValue.size();
+        int m1m2 = m1Size - m2Size;
+        int m2m1 = m2Size - m1Size;
 
-        if (m1Size > m2Size)
+
+
+        if (m1Size > m2Size){
             increaseToSameSize(m2BinaryValue,m1Size - m2Size);
-        else if (m2Size > m1Size)
+        }
+        else if (m2Size > m1Size){
             increaseToSameSize(m1BinaryValue,m2Size - m1Size);
+        }
+        else
+        {
+            if (m1Size == MINIMAL_BINARY_LEN)
+            {
+                increaseToSameSize(m2BinaryValue,Constants.MAX_BINARY_LEN - m1Size);
+                increaseToSameSize(m1BinaryValue,Constants.MAX_BINARY_LEN - m1Size);
+            }
+        }
+
+
+
     }
 
     private void increaseToSameSize(ArrayList<Integer> binary, int differenceBetweenSizes)
@@ -79,6 +99,7 @@ public class CrossoverBinary implements Crossover {
 
     private ArrayList<Integer> makeChildren(ArrayList<Integer> binary1, ArrayList<Integer> binary2)
     {
+
         int cutoff =  Utils.getRandom(0, binary1.size());
 
         ArrayList<Integer> pairOfChildren   = new ArrayList<>();
