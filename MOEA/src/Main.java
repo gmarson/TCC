@@ -80,7 +80,7 @@ public class Main {
         //spea2.runAlgorithm(problem);
         //moead.runAlgorithm(problem);
 
-        Constants.NUMBER_OF_GENERATIONS *=160;
+        Constants.NUMBER_OF_GENERATIONS *=100;
         aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
