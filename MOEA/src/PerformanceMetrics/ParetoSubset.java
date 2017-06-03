@@ -8,30 +8,35 @@ import Problems.Problem;
  */
 public class ParetoSubset extends Metrics{
 
-
+    private double gotRight;
+    private double result;
     public ParetoSubset(Problem problem) {
         super(problem);
+        gotRight = 0.0;
+        result = 0.0;
     }
 
-    @Override
-    public double estimateBasedOnMetric(Population population, Population bestPareto) {
 
-        double gotRight = 0.0;
+    @Override
+    public void estimateBasedOnMetric(Population population, Population bestPareto) {
+
         for (Member normalMember: population.population)
         {
 
             if ( isIn(normalMember,bestPareto))
             {
-                gotRight++;
+                this.gotRight++;
             }
         }
-        return (gotRight / (double) bestPareto.population.size()) * 100;
+        result =  (this.gotRight / (double) bestPareto.population.size()) * 100;
     }
 
 
     @Override
-    public void messageBeforeResult() {
-        System.out.println("(ps) Porcentagem dos elementos da fronteira achada que estão na fronteira de pareto");
+    public void messageAfterProcess() {
+        System.out.println("(ps) Porcentagem dos elementos da fronteira achada que estão na fronteira de pareto: "+result);
+        System.out.println("(ps - qtd) Quantidade dos elementos da fronteira achada que estão na fronteira de pareto: "+gotRight);
+
     }
 
     private boolean isIn(Member normalMember, Population bestPareto){

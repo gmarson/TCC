@@ -11,14 +11,16 @@ import static java.lang.Math.sqrt;
  */
 public class GenerationalDistance extends Metrics{
 
+    private double result;
 
     public GenerationalDistance(Problem problem) {
         super(problem);
+        result = 0.0;
     }
 
     @Override
-    public double estimateBasedOnMetric(Population population, Population bestParetto) {
-        Double result = 0.0;
+    public void estimateBasedOnMetric(Population population, Population bestParetto) {
+
         double currentEuclidianDistance;
         double shortestDistance = Double.MAX_VALUE;
 
@@ -33,11 +35,11 @@ public class GenerationalDistance extends Metrics{
             result += shortestDistance;
         }
         
-        return sqrt(result) / (double) population.population.size();
+        result =  sqrt(result) / (double) population.population.size();
     }
 
     @Override
-    public void messageBeforeResult() {
-        System.out.println("(gd) Somatório das menores distâncias: ");
+    public void messageAfterProcess() {
+        System.out.println("(gd) Somatório das menores distâncias: "+result);
     }
 }

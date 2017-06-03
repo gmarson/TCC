@@ -10,8 +10,8 @@ public abstract class Metrics {
 
 
     Problem problem;
-    abstract public double estimateBasedOnMetric(Population population, Population bestParetto);
-    abstract public void messageBeforeResult();
+    abstract public void estimateBasedOnMetric(Population population, Population bestParetto);
+    abstract public void messageAfterProcess();
 
     public Metrics(Problem problem){
         this.problem = problem;

@@ -1,5 +1,4 @@
 import Constants.Constants;
-import ManyObjective.TableFunctions.TableFunctions;
 import PerformanceMetrics.Erro;
 import PerformanceMetrics.GenerationalDistance;
 import PerformanceMetrics.ParetoSubset;
@@ -11,17 +10,12 @@ import Fronts.*;
 import SPEA2.*;
 import ManyObjective.*;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Main {
 
-    private static String fileName = "KP_p-3_n-10_ins-1";
+    private static String fileName = "KP_p-7_n-50_ins-10";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
@@ -34,8 +28,8 @@ public class Main {
 
         //spaceOfObjectives();
         //writeParettoFromProblem();
-        //compareToParettoFront();
-        normal();
+        compareToParettoFront();
+        //normal();
 
     }
 
@@ -84,10 +78,10 @@ public class Main {
 
         //nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
-        moead.runAlgorithm(problem);
+        //moead.runAlgorithm(problem);
 
-        Constants.NUMBER_OF_GENERATIONS *=100;
-        //aemmt.runAlgorithm(problem);
+        Constants.NUMBER_OF_GENERATIONS *=160;
+        aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
 
@@ -110,13 +104,15 @@ public class Main {
             newPopulation.population = moead.paretto.membersAtThisFront;
 
 
-        erro.messageBeforeResult();
-        System.out.println(erro.estimateBasedOnMetric(newPopulation,parettoPopulation));
-        paretoSubset.messageBeforeResult();
-        System.out.println(paretoSubset.estimateBasedOnMetric(newPopulation,parettoPopulation));
-        generationalDistance.messageBeforeResult();
-        System.out.println(generationalDistance.estimateBasedOnMetric(newPopulation,parettoPopulation));
 
+        erro.estimateBasedOnMetric(newPopulation,parettoPopulation);
+        erro.messageAfterProcess();
+
+        paretoSubset.estimateBasedOnMetric(newPopulation,parettoPopulation);
+        paretoSubset.messageAfterProcess();
+
+        generationalDistance.estimateBasedOnMetric(newPopulation,parettoPopulation);
+        generationalDistance.messageAfterProcess();
 
     }
 

@@ -9,12 +9,15 @@ import Problems.*;
  */
 public class Erro extends Metrics{
 
+    private double result;
+
     public Erro(Problem problem) {
         super(problem);
+        result = 0.0;
     }
 
     @Override
-    public double estimateBasedOnMetric(Population population, Population bestParetto){
+    public void estimateBasedOnMetric(Population population, Population bestParetto){
 
         //super.problem.evaluateAgainstObjectiveFunctions(population);
         //super.problem.evaluateAgainstObjectiveFunctions(bestParetto);
@@ -31,13 +34,13 @@ public class Erro extends Metrics{
 
         }
 
-        return (Ei / population.population.size()) * 100;
+        result =  (Ei / population.population.size()) * 100;
     }
 
 
     @Override
-    public void messageBeforeResult(){
-        System.out.println("(er) Porcentagem dos elementos da fronteira de paretto que dominam a fronteira normal: " );
+    public void messageAfterProcess(){
+        System.out.println("(er) Porcentagem dos elementos da fronteira de paretto que dominam a fronteira normal: "+result );
     }
 
 

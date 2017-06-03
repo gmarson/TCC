@@ -13,7 +13,7 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    static Random random = new Random();
+    private static Random random = new Random();
 
     public static void setSeed(int SEED)
     {
