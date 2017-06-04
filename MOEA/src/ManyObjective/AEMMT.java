@@ -2,15 +2,9 @@ package ManyObjective;
 
 import Fronts.Front;
 import ManyObjective.TableFunctions.TableAEMMT;
-import ManyObjective.TableFunctions.TableFunctions;
 import Population.Population;
 import Problems.*;
 import Constants.*;
-import Selections.Selection;
-import Utilities.Printer;
-import Utilities.Serializer;
-
-import java.io.Serializable;
 
 /**
  * Created by gabrielm on 07/03/17.
@@ -47,7 +41,7 @@ public class AEMMT {
     }
 
     private void saveParetto(Problem problem){
-        paretto.membersAtThisFront = tableAEMMT.tables.get(tableAEMMT.tables.size()-1).pop.population;
+        paretto.membersAtThisFront = tableAEMMT.tables.get(tableAEMMT.tables.size()-1).tablePopulation.population;
         //Problem.removeSimilar(paretto,problem);
     }
 

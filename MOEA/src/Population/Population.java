@@ -47,8 +47,8 @@ public class Population implements Serializable {
     public void fastNonDominatedSort(ArrayList<Integer> maskOfObjectives)
     {
         resetAttributesAndFrontsForAllMembers();
-        dominance.establishDominanceForAllMembers(this,maskOfObjectives);
-        this.population =sortPopulationByDominance();
+        dominance.establishDominanceForAllMembers(this, maskOfObjectives);
+        this.population = sortPopulationByDominance();
         this.fronts.buildOrderedFronts(this);
     }
 
@@ -75,7 +75,7 @@ public class Population implements Serializable {
 
     }
 
-    public ArrayList<Member> sortPopulationByDominance()
+    private ArrayList<Member> sortPopulationByDominance()
     {
         ArrayList<Member> sortedPopulation = new ArrayList<Member>();
         int currentRank = 0;

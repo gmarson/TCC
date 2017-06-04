@@ -6,8 +6,10 @@ import Population.*;
 import Problems.*;
 import Selections.SelectionRank;
 import Selections.SelectionTables;
+import Utilities.Printer;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by gabrielm on 30/03/17.
@@ -23,53 +25,72 @@ public class TableAEMMD extends  TableFunctions{
 
         for(Table table: tables)
         {
-            Population testPopulation = new Population(parentPopulation);
+            Population auxPopulation = new Population(parentPopulation);
 
-            testPopulation.fastNonDominatedSort(table.mask);
-            table.setBestMembersByRank(new Population(testPopulation.fronts.allFronts.get(0)));
+
+            auxPopulation.fastNonDominatedSort(table.mask);
+            table.setBestMembersByRank(new Population(auxPopulation.getFirstFront()));
 
         }
     }
 
     @Override
     public void insertMemberOnTables(Member newMember, Problem problem) {
-        problem.applyFunctions(newMember);
+
+
+        Scanner s  = new Scanner(System.in);//todo
+        //Printer.printTables(this);//todo
 
         for (Table table :this.tables)
         {
 
-            table.pop.addMember(newMember);
-            table.pop.fastNonDominatedSort(table.mask);
+            table.tablePopulation.addMember(newMember.deepCopy());
+            table.tablePopulation.fastNonDominatedSort(table.mask);
 
-            if (Problem.instanceOfMemberIsPresent(table.pop.fronts.allFronts.get(0),newMember)){
+            if (Problem.instanceOfMemberIsPresent(table.tablePopulation.getFirstFront(),newMember)){
                 table.convergence++;
             }
 
 
-            Problem.removeSimilar(table.pop.fronts.allFronts.get(0),problem);
-            table.pop.population = table.pop.fronts.allFronts.get(0).membersAtThisFront;
+            Problem.removeSimilar(table.tablePopulation.getFirstFront(),problem);
+            table.tablePopulation.population = table.tablePopulation.getFirstFront().membersAtThisFront;
 
 
         }
+
+        //Printer.printTables(this);//todo
+        //s.nextLine();//todo
     }
 
     @Override
     public void mainLoop(Problem problem) {
+        Scanner s = new Scanner(System.in);//todo
+        SelectionTables selectionTables = new SelectionTables();
+
         while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
 
-            //System.out.println("Generation "+genCounter);
-            if (genCounter % 50 ==0) TableFunctions.resetContributionAndConvergence(this);
 
-            SelectionTables selectionTables = new SelectionTables();
+            if (genCounter % 50 == 0) TableFunctions.resetContributionAndConvergence(this);
+
             ArrayList<Table> parentTables = selectionTables.selectTables(tables,"AEMMD");
             Population parentsPopulation = SelectionRank.selectParents(parentTables.get(0),parentTables.get(1));
             Population children = problem.crossover.crossoverAndMutation(parentsPopulation);
+            recalculateObjectiveFunctions(problem, children);
             super.copyMaskToChildren(parentsPopulation, children);
             this.insertMemberOnTables(children.population.get(0), problem);
             genCounter++;
 
         }
     }
+
+    private void recalculateObjectiveFunctions(Problem problem, Population children) {
+        for (Member m: children.population)
+        {
+            m.resultOfFunctions = new ArrayList<>();
+        }
+        problem.evaluateAgainstObjectiveFunctions(children);
+    }
+
 
     @Override
     public void addTable(ArrayList<Integer> mask) {
@@ -132,7 +153,7 @@ public class TableAEMMD extends  TableFunctions{
     public void reset(){
         super.reset();
         tables = new ArrayList<>();
-        genCounter = 1;
+        genCounter = 0;
     }
 
 }

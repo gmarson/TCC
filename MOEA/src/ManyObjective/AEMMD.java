@@ -2,19 +2,19 @@ package ManyObjective;
 
 import Fronts.Front;
 import ManyObjective.TableFunctions.TableAEMMD;
-import ManyObjective.TableFunctions.TableAEMMT;
-import ManyObjective.TableFunctions.TableFunctions;
 import Population.Population;
 import Problems.Problem;
 import Constants.*;
 import Utilities.Printer;
+
+import java.util.Scanner;
 
 /**
  * Created by gabrielm on 07/03/17.
  */
 public class AEMMD {
 
-    TableAEMMD tableAEMMD = new TableAEMMD();
+    public static TableAEMMD tableAEMMD = new TableAEMMD();
     Population p = new Population();
     public Front paretto = new Front();
 
@@ -24,15 +24,15 @@ public class AEMMD {
 
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(p);
+
+
         tableAEMMD.buildTables(p);
+
         tableAEMMD.fillTables();
 
         tableAEMMD.mainLoop(problem);
 
-
-
-        //Printer.printNonDominatedTable(tableAEMMD);//todo
-
+        Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
         saveParetto(problem);
         reset();
 
@@ -46,7 +46,7 @@ public class AEMMD {
     }
 
     private void saveParetto(Problem problem){
-        paretto.membersAtThisFront.addAll(tableAEMMD.tables.get(tableAEMMD.tables.size()-1).pop.population);
+        paretto.membersAtThisFront.addAll(tableAEMMD.tables.get(tableAEMMD.tables.size()-1).tablePopulation.population);
         //Problem.removeSimilar(paretto,problem);
     }
 
@@ -54,7 +54,7 @@ public class AEMMD {
 
 
     /*
-    *    XXX a tabela tem um tamanho fixo, inicialmente a pop inicial será 10x o tamanho de cada tabela
+    *    XXX a tabela tem um tamanho fixo, inicialmente a tablePopulation inicial será 10x o tamanho de cada tabela
     *    Ex.: se a tablea eh 10 entao a populacao inicial eh 100
     *
     *    XXX As tabelas que avaliam um objetivo só são avaliadas por dominância, ao passo que as demais sao avaliadas por ponderacao
@@ -72,8 +72,8 @@ public class AEMMD {
     *
     *    NO AEMMD as tabelas que recebem os filhos tem o grau aumentado em 1 e nao as que geram eles
     *
-    *   a tabela de nao dominados eh calculada dando a pop inicial e vendo os nao dominados dela. A cada novo individuo,  eu vejo se ele
-    *   domina todos os outros da pop nao dominada,  se ele domina entao ele vira a pop nao dominada, se ele nao domina e é dominado por algum
+    *   a tabela de nao dominados eh calculada dando a tablePopulation inicial e vendo os nao dominados dela. A cada novo individuo,  eu vejo se ele
+    *   domina todos os outros da tablePopulation nao dominada,  se ele domina entao ele vira a tablePopulation nao dominada, se ele nao domina e é dominado por algum
     *   outro individuo, ele nao será inserido lá, se ele nao domina e nao eh dominado ele sera inserido.
     * */
 

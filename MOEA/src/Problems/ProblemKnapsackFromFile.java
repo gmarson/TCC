@@ -86,7 +86,8 @@ public class ProblemKnapsackFromFile  extends  Problem{
                 }
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
-            functionToBeInserted = caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/functionToBeInserted);
+
+            functionToBeInserted = caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (Double.MAX_VALUE) : (1/functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
 
@@ -123,7 +124,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
 
     private double caculateWeightGivenMember(Member member)
     {
-        double totalWeight = 0;
+        double totalWeight = 0.0;
         for (int i = 0; i < Constants.QTD_ITEMS; i++) {
             if (member.binaryValue.get(i) == 1)
             {

@@ -32,8 +32,8 @@ public class SelectionTables extends  Selection{
         ArrayList<Member> selected = new ArrayList<>();
         ArrayList<Member> membersByTourFromTable1, membersByTourFromTable2;
 
-        membersByTourFromTable1 = super.makeCompetitors(table1.pop);
-        membersByTourFromTable2 = super.makeCompetitors(table2.pop);
+        membersByTourFromTable1 = super.makeCompetitors(table1.tablePopulation);
+        membersByTourFromTable2 = super.makeCompetitors(table2.tablePopulation);
         selected.add(selectionRankWeightedAverage.returnWinnerCompetitor(membersByTourFromTable1));
         selected.add(selectionRankWeightedAverage.returnWinnerCompetitor(membersByTourFromTable2));
 

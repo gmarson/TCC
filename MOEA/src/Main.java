@@ -28,24 +28,23 @@ public class Main {
 
         //spaceOfObjectives();
         //writeParettoFromProblem();
-        compareToParettoFront();
-        //normal();
+        //compareToParettoFront();
+        normal();
 
     }
 
 
-
     private static void normal(){
-        Problem problem = new ProblemSCH();
+        //Problem problem = new ProblemSCH();
         //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        //Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
-        //NSGAII algorithm = new NSGAII();
+        NSGAII algorithm = new NSGAII();
         //SPEA2 algorithm = new SPEA2();
         //AEMMT algorithm = new AEMMT();
         //AEMMD algorithm = new AEMMD();
-        MOEAD algorithm = new MOEAD();
+        //MOEAD algorithm = new MOEAD();
 
         int x =50;
         int counter = 0;
@@ -81,8 +80,8 @@ public class Main {
         //moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS *=100;
-        aemmt.runAlgorithm(problem);
-        //aemmd.runAlgorithm(problem);
+        //aemmt.runAlgorithm(problem);
+        aemmd.runAlgorithm(problem);
 
 
         Erro erro = new Erro(problem);

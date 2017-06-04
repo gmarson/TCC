@@ -19,7 +19,7 @@ public class Erro extends Metrics{
     @Override
     public void estimateBasedOnMetric(Population population, Population bestParetto){
 
-        //super.problem.evaluateAgainstObjectiveFunctions(population);
+        //super.problem.evaluateAgainstObjectiveFunctions(tablePopulation);
         //super.problem.evaluateAgainstObjectiveFunctions(bestParetto);
 
         Dominance d = new Dominance();

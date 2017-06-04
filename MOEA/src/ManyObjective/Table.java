@@ -3,14 +3,13 @@ package ManyObjective;
 import Constants.*;
 import Population.*;
 import java.util.ArrayList;
-import Utilities.*;
 
 /**
  * Created by gabrielm on 11/03/17.
  */
 public class Table {
 
-    public Population pop = new Population();
+    public Population tablePopulation = new Population();
     public int contribution = 0;
     public int convergence = 0;
     public ArrayList<Integer> mask;
@@ -27,14 +26,14 @@ public class Table {
 
         Member m;
 
-        while(pop.population.size() < Constants.TABLE_SIZE && testPopulation.population.size() > 0)
+        while(tablePopulation.population.size() < Constants.TABLE_SIZE && testPopulation.population.size() > 0)
         {
 
             m = testPopulation.population.get(0).deepCopy();
 
             if (mask.size() ==1) applyWeightedAverageInSingleObjectiveMember(m);
 
-            pop.population.add(m);
+            tablePopulation.population.add(m);
             testPopulation.population.remove(0);
 
         }
@@ -43,8 +42,8 @@ public class Table {
     }
 
     public void setBestMembersByWeightedAverage(Population testPopulation){
-        while(pop.population.size() < Constants.TABLE_SIZE){
-            pop.population.add(testPopulation.population.get(0));
+        while(tablePopulation.population.size() < Constants.TABLE_SIZE){
+            tablePopulation.population.add(testPopulation.population.get(0));
             testPopulation.population.remove(0);
         }
     }

@@ -24,7 +24,7 @@ public abstract class TableFunctions {
     abstract public void buildTables(Population population);
     static Population parentPopulation;
 
-    static Matrix binaryRepresentationOfObjectives;
+    private static Matrix binaryRepresentationOfObjectives;
     static Matrix decimalRepresentationOfObjectives;
     static ArrayList<Integer> currentMask = new ArrayList<>();
 
@@ -54,13 +54,12 @@ public abstract class TableFunctions {
         decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
     }
 
-    public static void resetContributionAndConvergence(TableFunctions tableFunctions){
+    static void resetContributionAndConvergence(TableFunctions tableFunctions){
         for (Table table: tableFunctions.getTables())
             table.resetContributionAndConvergence();
     }
 
-
-    public void copyMaskToChildren(Population parentsPopulation, Population children){
+    void copyMaskToChildren(Population parentsPopulation, Population children){
         for (int i = 0; i < parentsPopulation.population.size(); i++) {
             children.population.get(i).parentTableMask1 = parentsPopulation.population.get(i).parentTableMask1;
             children.population.get(i).parentTableMask2 = parentsPopulation.population.get(i).parentTableMask2;
