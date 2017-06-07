@@ -134,10 +134,7 @@ public class Population implements Serializable {
         this.population.add(member);
     }
 
-    public void addMemberWhithouClosestMembers(Member member){
-        member.closestMembers = new ArrayList<Member>();
-        addMember(member);
-    }
+
 
     public Population mergeWithCurrentPopulation(Population another)
     {

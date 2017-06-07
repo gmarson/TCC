@@ -48,6 +48,7 @@ public class MOEAD {
         aux.population = paretto.membersAtThisFront;
 
 
+        //System.out.println("Tamanho: "+aux.population.size());//todo
         //Printer.printMembersValue(aux);//todo
         //Printer.printMembersWithBinaryValue(aux);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo

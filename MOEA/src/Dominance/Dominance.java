@@ -1,7 +1,6 @@
 package Dominance;
 
 import Constants.*;
-import ManyObjective.Table;
 import Population.*;
 import java.util.ArrayList;
 /**
@@ -9,14 +8,17 @@ import java.util.ArrayList;
  */
 public class Dominance {
 
-    public static boolean haveToUseMask = false;
-    public static ArrayList<Integer> currentMask;
+    private static boolean haveToUseMask = false;
+    private static ArrayList<Integer> currentMask;
+    private static ArrayList<Integer> testMask;
 
     public void establishDominanceForAllMembers(Population p, ArrayList<Integer> maskOfObjectives)
     {
+        //testMask = maskOfObjectives;
         Member mi,mj;
         haveToUseMask = !(maskOfObjectives == null || maskOfObjectives.isEmpty());
         currentMask = haveToUseMask? maskOfObjectives: null;
+
 
         for(int i =0; i< p.population.size();i++)
         {
@@ -28,17 +30,19 @@ public class Dominance {
 
             }
         }
+
     }
 
 
     private void establishDominanceForCoupleOfMembers(Member mi, Member mj){
 
-        if(haveToUseMask? dominatesWithMask(mi,mj) : dominates(mi,mj))
+
+        if(haveToUseMask? dominatesMask(mi,mj) : dominates(mi,mj))
         {
             mj.numberOfSolutionsThatDominatesThisMember++;
             mi.solutionsThatThisMemberDominates.add(mj);
         }
-        else if(haveToUseMask? dominatesWithMask(mj,mi) : dominates(mj,mi))
+        else if(haveToUseMask? dominatesMask(mj,mi) : dominates(mj,mi))
         {
             mi.numberOfSolutionsThatDominatesThisMember++;
             mj.solutionsThatThisMemberDominates.add(mi);
@@ -47,6 +51,7 @@ public class Dominance {
 
     public boolean dominates(Member m1, Member m2)
     {
+        //if (testMask.isEmpty()) System.out.println("OI");//todo
         boolean better = false;
 
         for (int i = 0; i < Constants.PROBLEM_SIZE ; i++) {
@@ -62,15 +67,16 @@ public class Dominance {
     }
 
 
-    //will also work for AEMMD
-    public boolean dominatesWithMask(Member m1, Member m2){
+    private boolean dominatesMask(Member m1, Member m2){
         boolean better = false;
         int currentPosition;
 
-        for (int i = 0; i < currentMask.size() ; i++) {
-            currentPosition = currentMask.get(i)-1;
 
-            if(m1.resultOfFunctions.get(currentPosition) <= m2.resultOfFunctions.get(currentPosition))
+
+        for (Integer maskValue : currentMask) {
+            currentPosition = maskValue - 1;
+
+            if (m1.resultOfFunctions.get(currentPosition) <= m2.resultOfFunctions.get(currentPosition))
                 better = m1.resultOfFunctions.get(currentPosition) < m2.resultOfFunctions.get(currentPosition);
             else
                 return false;
@@ -79,7 +85,6 @@ public class Dominance {
 
         return better;
     }
-
 
 
 

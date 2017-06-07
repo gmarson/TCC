@@ -13,8 +13,9 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    private static Random random = new Random();
+    private static Random random = new Random(Constants.SEED);
 
+    private static Scanner s = new Scanner(System.in);
     public static void setSeed(int SEED)
     {
         random = new Random(SEED);
@@ -224,5 +225,10 @@ public abstract class Utils {
         mostCrowdedMembers.add(member);
 
         return mostCrowdedMembers;
+    }
+
+
+    public static void stop(){
+        s.nextLine();
     }
 }

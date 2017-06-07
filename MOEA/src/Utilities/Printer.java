@@ -70,7 +70,7 @@ public abstract class Printer
         for (Table table: tableFunctions.getTables()){
             System.out.println("Tabela:"+ table.mask);
             int i =1;
-            for(Member member: table.pop.population)
+            for(Member member: table.tablePopulation.population)
             {
                 int j=1;
                 System.out.println("Member: "+i+" VALUE = "+ member.value);
@@ -88,12 +88,29 @@ public abstract class Printer
 
     }
 
+    public static void printBinaryValuesNonDominatedTable(TableFunctions tableFunctions){
+        for (Table table: tableFunctions.getTables()){
+            if (table.isNonDominatedTable){
+                System.out.println("Tabela:"+ table.mask);
+                System.out.println("Quantidade de elementos: "+table.tablePopulation.population.size());
+                int i =1;
+                for(Member member: table.tablePopulation.population)
+                {
+                    System.out.println("Member: "+i+" BINARYVALUE = "+ member.binaryValue);
+
+                    i++;
+                }
+                System.out.println();
+            }
+        }
+    }
+
     public static void printNonDominatedTable(TableFunctions tableFunctions){
         for (Table table: tableFunctions.getTables()){
             if (table.isNonDominatedTable){
                 System.out.println("Tabela:"+ table.mask);
                 int i =1;
-                for(Member member: table.pop.population)
+                for(Member member: table.tablePopulation.population)
                 {
                     int j=1;
                     System.out.println("Member: "+i+" VALUE = "+ member.value);
@@ -121,13 +138,32 @@ public abstract class Printer
         System.out.println(values);
     }
 
+    public static void printBinaryMembersWithAppliedFunctions(Population p){
+        checkEmpty(p);
+        int i =0;
+        for(Member m : p.population)
+        {
+            System.out.println("Member "+i+ " = "+m.binaryValue);
+            int j=1;
+            for(Double d: m.resultOfFunctions)
+            {
+
+                System.out.println("F"+j+" = "+d);
+                j++;
+
+            }
+            System.out.println("Rank = "+m.rank + "\n");
+            i++;
+        }
+    }
+
 	public static void printMembersWithAppliedFunctions(Population p)
     {
         checkEmpty(p);
         int i =0;
         for(Member m : p.population)
         {
-            System.out.println("Population.Member "+i+ " = "+m.value);
+            System.out.println("Member "+i+ " = "+m.value);
             int j=1;
             for(Double d: m.resultOfFunctions)
             {

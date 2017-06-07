@@ -83,22 +83,6 @@ public class Front implements Serializable{
         System.out.println();
     }
 
-    public void checkNumbers(Member member)
-    {
-        Scanner s = new Scanner(System.in);
-        if (member.value == 1) {
-            System.out.println("Apareceu o 1");
-            s.nextLine();
-        }
-        if(member.value ==2) {
-            System.out.println("Apareceu o 2");
-            s.nextLine();
-        }
-        if (member.value == 0){
-            System.out.println("Apareceu o 0");
-            s.nextLine();
-        }
-    }
 
 
 }

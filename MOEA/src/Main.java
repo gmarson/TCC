@@ -40,10 +40,10 @@ public class Main {
         //Problem problem = new ProblemKnapsack();
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
-        NSGAII algorithm = new NSGAII();
+        //NSGAII algorithm = new NSGAII();
         //SPEA2 algorithm = new SPEA2();
         //AEMMT algorithm = new AEMMT();
-        //AEMMD algorithm = new AEMMD();
+        AEMMD algorithm = new AEMMD();
         //MOEAD algorithm = new MOEAD();
 
         int x =50;
