@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 
-public class Member implements Serializable{
+public class Member implements Serializable, Cloneable{
 
     //NSGAII variables
     public ArrayList<Double> resultOfFunctions = new ArrayList<>();
@@ -65,17 +65,44 @@ public class Member implements Serializable{
         newMember.fitness = this.fitness;
         newMember.strength = this.strength;
         newMember.rawFitness = this.rawFitness;
-        newMember.resultOfFunctions = this.resultOfFunctions;
-        newMember.distances = this.distances;
-        newMember.binaryValue = this.binaryValue;
         newMember.weightedAverage = this.weightedAverage;
-        newMember.weightVector = this.weightVector;
         newMember.solution = this.solution;
         newMember.distanceFromParentMember = this.distanceFromParentMember;
-        newMember.closestMembers = this.closestMembers;
+
+
+        for (Double d :this.resultOfFunctions)
+        {
+            newMember.resultOfFunctions.add(new Double(d));
+        }
+
+        for (Double d: this.distances)
+        {
+            newMember.distances.add(new Double(d));
+        }
+
+        newMember.binaryValue = new ArrayList<>();
+        for (Integer i: this.binaryValue)
+        {
+            newMember.binaryValue.add(new Integer(i));
+        }
+
+        if (this.weightVector != null)
+            newMember.weightVector = new WeightVector(this.weightVector);
+
+        for (Member m:this.closestMembers)
+        {
+            newMember.closestMembers.add(m.deepCopy());
+        }
+
         return newMember;
     }
 
-
+    public void printMember(){
+        System.out.println("Value: "+value);
+        System.out.println("Binary value: "+binaryValue );
+        for (int i = 0; i < resultOfFunctions.size(); i++) {
+            System.out.println("F"+i+" = "+resultOfFunctions.get(i));
+        }
+    }
 
 }

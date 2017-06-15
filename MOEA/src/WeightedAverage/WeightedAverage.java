@@ -42,27 +42,26 @@ public class WeightedAverage {
 
 
 
-    public void setWeightedAverage(Member member)
+    private void setWeightedAverage(Member member)
     {
         double weightedSum= 0.0;
 
-        for (int i = 0; i < this.currentMask.size() ; i++) {
-            int position = this.currentMask.get(i)-1;
-            weightedSum += member.resultOfFunctions.get(position);
+        for (int i = 0; i < member.resultOfFunctions.size() ; i++) {
+            weightedSum += member.resultOfFunctions.get(i);
 
         }
-        member.weightedAverage = weightedSum/this.currentMask.size();
+        member.weightedAverage = weightedSum/member.resultOfFunctions.size();
 
     }
 
-    public static Member calculateWeightedAverageForSingleMember(Member member, ArrayList<Integer> maskOfTable){
+    public static Member calculateWeightedAverageForSingleMember(Member member){
         double weightedSum=0.0;
-        for (int i = 0; i < maskOfTable.size(); i++) {
-            int position = maskOfTable.get(i)-1;
-            weightedSum += member.resultOfFunctions.get(position);
+        for (int i = 0; i < member.resultOfFunctions.size(); i++) {
+
+            weightedSum += member.resultOfFunctions.get(i);
         }
-        member.weightedAverage = weightedSum/maskOfTable.size();
-        return member.deepCopy();
+        member.weightedAverage = weightedSum/member.resultOfFunctions.size();
+        return member;
     }
 
 

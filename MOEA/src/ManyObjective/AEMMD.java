@@ -6,6 +6,7 @@ import Population.Population;
 import Problems.Problem;
 import Constants.*;
 import Utilities.Printer;
+import Utilities.Utils;
 
 import java.util.Scanner;
 
@@ -23,18 +24,19 @@ public class AEMMD {
     {
 
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
-        problem.evaluateAgainstObjectiveFunctions(p);
 
 
         tableAEMMD.buildTables(p);
 
-        tableAEMMD.fillTables();
+
+        tableAEMMD.fillTables(problem,p);
+
 
         tableAEMMD.mainLoop(problem);
 
 
         //Printer.printTables(tableAEMMD);//todo
-        Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
+        //Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
         saveParetto(problem);
         reset();
 

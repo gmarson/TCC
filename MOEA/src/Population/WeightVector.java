@@ -19,6 +19,12 @@ public class WeightVector implements Serializable{
         vector = this.generateWeightVector();
     }
 
+    public WeightVector(WeightVector wv)
+    {
+        this.vector = wv.vector;
+        this.TOTAL_SUM = wv.TOTAL_SUM;
+    }
+
     private double[] generateWeightVector(){
         ArrayList<Double> numbers = new ArrayList<>();
 
@@ -36,6 +42,8 @@ public class WeightVector implements Serializable{
 
         return weightVector;
     }
+
+
 
 
 }

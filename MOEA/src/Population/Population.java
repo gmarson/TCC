@@ -11,7 +11,7 @@ import WeightedAverage.*;
  * Created by gmarson on 12/21/2016.
  * TCC UFU
  */
-public class Population implements Serializable {
+public class Population implements Serializable, Cloneable {
 
     public ArrayList<Member> population = new ArrayList<>();
 
@@ -23,6 +23,16 @@ public class Population implements Serializable {
     public Population()
     {
 
+    }
+
+    public Population deepCopy(){
+        Population pop = new Population();
+        for (Member member : population)
+        {
+            pop.addMember(member.deepCopy());
+        }
+
+        return  pop;
     }
 
     public Population(Population p)

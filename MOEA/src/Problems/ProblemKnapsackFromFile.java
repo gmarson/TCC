@@ -8,7 +8,6 @@ import Utilities.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Created by gabrielm on 04/04/17.
@@ -33,6 +32,14 @@ public class ProblemKnapsackFromFile  extends  Problem{
         this.buildItemsFromFile();
         Constants.MUTATION_RATE = 2/items.size();
 
+    }
+
+    @Override
+    public void evaluateAgainstMask(Population p, ArrayList<Integer> mask){
+        for (int i = 0; i < p.population.size(); i++) {
+            Member member = p.population.get(i);
+            this.applyFunctionsGivenMask(member,mask);
+        }
     }
 
     @Override
@@ -73,7 +80,6 @@ public class ProblemKnapsackFromFile  extends  Problem{
     @Override
     public void applyFunctions(Member member) {
         if(Constants.PROBLEM_SIZE <2) return ;
-        Scanner s  = new Scanner(System.in);
 
         for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {
 
@@ -87,10 +93,36 @@ public class ProblemKnapsackFromFile  extends  Problem{
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
 
-            functionToBeInserted = caculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (Double.MAX_VALUE) : (1/functionToBeInserted);
+            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (Double.MAX_VALUE) : (1/functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
 
+    }
+
+    @Override
+    public void applyFunctionsGivenMask(Member member , ArrayList<Integer> mask){
+        if (mask.isEmpty()){
+            applyFunctions(member);
+            return;
+        }
+
+        if(Constants.PROBLEM_SIZE <2) return ;
+
+        for (int i = 0; i < mask.size(); i++) {
+
+            double functionToBeInserted = 0.0;
+            for (int j = 0; j < Constants.QTD_ITEMS; j++)
+            {
+                if (member.binaryValue.get(j) == 1)
+                {
+                    functionToBeInserted += this.items.get(j).attributes.get(mask.get(i)-1);
+                }
+            }
+            if( functionToBeInserted == 0) functionToBeInserted = 0.1;
+
+            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (Double.MAX_VALUE) : (1/functionToBeInserted);
+            member.resultOfFunctions.add(functionToBeInserted);
+        }
     }
 
     private void buildItemsFromFile(){
@@ -122,7 +154,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
         }
     }
 
-    private double caculateWeightGivenMember(Member member)
+    private double calculateWeightGivenMember(Member member)
     {
         double totalWeight = 0.0;
         for (int i = 0; i < Constants.QTD_ITEMS; i++) {
@@ -133,4 +165,6 @@ public class ProblemKnapsackFromFile  extends  Problem{
         }
         return totalWeight;
     }
+
+
 }

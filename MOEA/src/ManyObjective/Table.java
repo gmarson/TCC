@@ -2,6 +2,8 @@ package ManyObjective;
 
 import Constants.*;
 import Population.*;
+import Utilities.Printer;
+
 import java.util.ArrayList;
 
 /**
@@ -22,29 +24,35 @@ public class Table {
     }
 
 
-    public void setBestMembersByRank(Population testPopulation) {
+    public void setBestMembersForSingleObjectiveTables(){
 
-        Member m;
+        Printer.printBinaryMembersWithAppliedFunctions(tablePopulation);//todo
 
-        while(tablePopulation.population.size() < Constants.TABLE_SIZE && testPopulation.population.size() > 0)
+        while (tablePopulation.population.size() > Constants.TABLE_SIZE)
         {
-
-            m = testPopulation.population.get(0).deepCopy();
-
-            if (mask.size() ==1) applyWeightedAverageInSingleObjectiveMember(m);
-
-            tablePopulation.population.add(m);
-            testPopulation.population.remove(0);
-
+            tablePopulation.population.remove(0); //todo nao eh index 0 Pq ele eh o melhor. eh o ultimo indexx!!
         }
 
+        System.out.println(mask);//todo
+        Printer.printBinaryMembersWithAppliedFunctions(tablePopulation);//todo
 
     }
 
-    public void setBestMembersByWeightedAverage(Population testPopulation){
-        while(tablePopulation.population.size() < Constants.TABLE_SIZE){
-            tablePopulation.population.add(testPopulation.population.get(0));
-            testPopulation.population.remove(0);
+    public void setBestMembersForNonDominatedTable() {
+
+        while(tablePopulation.population.size() > Constants.TABLE_SIZE)
+        {
+            tablePopulation.population.remove(0); //todo nao eh index 0 Pq ele eh o melhor. eh o ultimo indexx!!
+        }
+
+        if (mask.size() ==1) applyWeightedAverageForPopulation();
+
+    }
+
+    public void setBestMembersByWeightedAverage(){
+        while(tablePopulation.population.size() > Constants.TABLE_SIZE){
+
+            tablePopulation.population.remove(0); //todo nao eh index 0 Pq ele eh o melhor. eh o ultimo indexx!!
         }
     }
 
@@ -53,9 +61,15 @@ public class Table {
         this.convergence = 0;
     }
 
+    private void applyWeightedAverageForPopulation(){
+        for (Member m : tablePopulation.population){
+            applyWeightedAverageInSingleObjectiveMember(m);
+        }
+    }
+
     private void applyWeightedAverageInSingleObjectiveMember(Member member){
 
-        member.weightedAverage = member.resultOfFunctions.get(mask.get(0)-1);
+        member.weightedAverage = member.resultOfFunctions.get(0);
     }
 
 

@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class ProblemF2 extends  Problem {
 
+
+
     public ProblemF2()
     {
         crossover = new CrossoverArithmetic();
@@ -67,4 +69,9 @@ public class ProblemF2 extends  Problem {
     }
 
 
+    @Override
+    public void evaluateAgainstMask(Population p, ArrayList<Integer> mask){}
+
+    @Override
+    public void applyFunctionsGivenMask(Member member , ArrayList<Integer> mask){}
 }

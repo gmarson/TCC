@@ -15,9 +15,13 @@ public abstract class  Problem {
     public Crossover crossover;
 
     public abstract void evaluateAgainstObjectiveFunctions(Population p);
+    public abstract void evaluateAgainstMask(Population p, ArrayList<Integer> mask);
+
     public abstract ArrayList<Member> generateMembers(int QtdMembers);
 
     public abstract void applyFunctions(Member member);
+    public abstract void applyFunctionsGivenMask(Member member , ArrayList<Integer> mask);
+
     abstract double firstFunction(Member member);
     abstract double secondFunction(Member member);
     public abstract void printResolutionMessage();
@@ -42,7 +46,10 @@ public abstract class  Problem {
     private static boolean checkUsingBinaryValue(Member member, Population p){
         for(Member m: p.population)
         {
-            if (m.binaryValue == member.binaryValue) return  true;
+            if (m.binaryValue.equals( member.binaryValue))
+            {
+                return  true;
+            }
         }
         return false;
     }

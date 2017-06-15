@@ -9,6 +9,8 @@ import Problems.*;
 import Selections.SelectionRank;
 import Selections.SelectionTables;
 import Utilities.Printer;
+import Utilities.Utils;
+import com.sun.java.browser.plugin2.DOM;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,28 +21,31 @@ import java.util.Scanner;
 public class TableAEMMD extends  TableFunctions{
 
     private static int genCounter=0;
-    public ArrayList<Table> tables = new ArrayList<>();
+    public static ArrayList<Table> tables = new ArrayList<>();
 
     @Override
-    public void fillTables() {
-        parentPopulation.fastNonDominatedSort();
+    public void fillTables(Problem problem,Population p) {
 
         for(Table table: tables)
         {
-            parentPopulation.fastNonDominatedSort(table.mask);
-            table.tablePopulation.population = parentPopulation.getFirstFront().membersAtThisFront;
+            table.tablePopulation = p.deepCopy();
 
-            //table.setBestMembersByRank(new Population(parentPopulation.getFirstFront()));
+            problem.evaluateAgainstMask(table.tablePopulation,table.mask);
 
+            table.tablePopulation.fastNonDominatedSort();
+            table.tablePopulation.population = table.tablePopulation.getFirstFront().membersAtThisFront;
 
         }
+
     }
 
     @Override
     public void insertMemberOnTables(Member newMember, Problem problem) {
 
-        for (Table table :this.tables)
+        for (Table table :tables)
         {
+            newMember.resultOfFunctions = new ArrayList<>();
+            problem.applyFunctionsGivenMask(newMember,table.mask);
 
             if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem))
             {
@@ -48,31 +53,15 @@ public class TableAEMMD extends  TableFunctions{
             }
             else
             {
-//                if (table.isNonDominatedTable) {
-//                    System.out.println("antes de fastnondominatedsort");//todo
-//                    for (Front f : table.tablePopulation.fronts.allFronts) {
-//                        f.printFront();
-//                    }
-//                }
 
                 table.tablePopulation.addMember(newMember.deepCopy());
 
-                table.tablePopulation.fastNonDominatedSort(table.mask);
-
-//                if (table.isNonDominatedTable) {
-//                    System.out.println("depois de fastnondominatedsort");//todo
-//                    for (Front f : table.tablePopulation.fronts.allFronts) {
-//                        f.printFront();
-//                    }
-//                    s.nextLine();//todo
-//                }
+                table.tablePopulation.fastNonDominatedSort();
 
                 Problem.removeSimilar(table.tablePopulation.getFirstFront(),problem);
                 table.tablePopulation.population = table.tablePopulation.getFirstFront().membersAtThisFront;
 
-                if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)) table.convergence++;
             }
-
 
         }
 
@@ -85,18 +74,17 @@ public class TableAEMMD extends  TableFunctions{
 
         while(genCounter < Constants.NUMBER_OF_GENERATIONS ) {
 
+            //System.out.println("GenCounter: "+genCounter);//todo
 
             if (genCounter % 50 == 0) TableFunctions.resetContributionAndConvergence(this);
 
             ArrayList<Table> parentTables = selectionTables.selectTables(tables,"AEMMD");
             Population parentsPopulation = SelectionRank.selectParents(parentTables.get(0),parentTables.get(1));
             Population children = problem.crossover.crossoverAndMutation(parentsPopulation);
-            recalculateObjectiveFunctions(problem, children);
-
-
 
             this.insertMemberOnTables(children.population.get(0), problem);
             genCounter++;
+
 
         }
     }
@@ -145,7 +133,6 @@ public class TableAEMMD extends  TableFunctions{
     public void buildTables(Population population){
         TableFunctions.setQtdMembersOfATable();
         Constants.QTD_TABLES = this.setQtdTables();
-        parentPopulation = population;
         TableFunctions.buildMasks(Constants.PROBLEM_SIZE +1);
 
         this.updateCurrentMask(0);
@@ -173,5 +160,43 @@ public class TableAEMMD extends  TableFunctions{
         tables = new ArrayList<>();
         genCounter = 0;
     }
+
+    public void testDomination(){
+        int i=0;
+        int shoudBeWoried = 0;
+        Dominance d = new Dominance();
+        for (Table table : tables){
+            if (tables.get(i).isNonDominatedTable)
+            {
+                Table ndt = tables.get(i);
+                for (int j = 0; j < tables.size(); j++) {
+
+                    if (!tables.get(j).isNonDominatedTable){
+
+                        for (Member m : tables.get(j).tablePopulation.population){
+
+                            for (Member ndtm : ndt.tablePopulation.population)
+                            {
+                                if (d.dominates(m,ndtm)){
+                                    shoudBeWoried++;
+                                }
+                                else {
+                                    break;
+                                }
+                            }
+                            if (shoudBeWoried == ndt.tablePopulation.population.size())
+                            {
+                                System.out.println("tem algo de errado!");
+                            }
+
+                            shoudBeWoried = 0;
+                        }
+                    }
+                }
+            }
+            i++;
+        }
+    }
+
 
 }

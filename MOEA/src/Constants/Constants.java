@@ -3,11 +3,13 @@ package Constants;
 
 /**
  * Created by gabrielm on 10/01/17.
+ * Project : TCC.
  */
+
 public abstract class  Constants {
 
     //ALL MOEAs CONSTANTS
-    public static int POPULATION_SIZE =100;
+    public static int POPULATION_SIZE =50;
     public static int MUTATION_RATE = 5;
     public static double CROSSOVER_RATE = 1;
     public static double NUMBER_OF_GENERATIONS = 100;

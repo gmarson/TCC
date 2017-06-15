@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public abstract class TableFunctions {
 
-    abstract public void fillTables();
+    abstract public void fillTables(Problem problem, Population p);
     abstract public void insertMemberOnTables(Member newMember, Problem problem);
     abstract public void mainLoop(Problem problem);
     abstract public void addTable(ArrayList<Integer> mask);
@@ -22,7 +22,7 @@ public abstract class TableFunctions {
     abstract int setQtdTables();
     abstract void updateCurrentMask(int index);
     abstract public void buildTables(Population population);
-    static Population parentPopulation;
+
 
     private static Matrix binaryRepresentationOfObjectives;
     static Matrix decimalRepresentationOfObjectives;
@@ -67,7 +67,7 @@ public abstract class TableFunctions {
     }
 
     public void reset(){
-        parentPopulation = null;
+
         binaryRepresentationOfObjectives = null;
         decimalRepresentationOfObjectives = null;
         currentMask = new ArrayList<>();

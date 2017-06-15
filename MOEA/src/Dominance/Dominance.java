@@ -10,11 +10,10 @@ public class Dominance {
 
     private static boolean haveToUseMask = false;
     private static ArrayList<Integer> currentMask;
-    private static ArrayList<Integer> testMask;
 
     public void establishDominanceForAllMembers(Population p, ArrayList<Integer> maskOfObjectives)
     {
-        //testMask = maskOfObjectives;
+
         Member mi,mj;
         haveToUseMask = !(maskOfObjectives == null || maskOfObjectives.isEmpty());
         currentMask = haveToUseMask? maskOfObjectives: null;
@@ -51,10 +50,11 @@ public class Dominance {
 
     public boolean dominates(Member m1, Member m2)
     {
-        //if (testMask.isEmpty()) System.out.println("OI");//todo
+        if (m1.resultOfFunctions.size() != m2.resultOfFunctions.size()) System.out.println("Deu treta! em Dominance");
+
         boolean better = false;
 
-        for (int i = 0; i < Constants.PROBLEM_SIZE ; i++) {
+        for (int i = 0; i < m1.resultOfFunctions.size() ; i++) {
 
             if(m1.resultOfFunctions.get(i) <= m2.resultOfFunctions.get(i))
                 better = m1.resultOfFunctions.get(i) < m2.resultOfFunctions.get(i);

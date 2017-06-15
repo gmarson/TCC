@@ -1,6 +1,7 @@
 import Constants.Constants;
 import PerformanceMetrics.Erro;
 import PerformanceMetrics.GenerationalDistance;
+import PerformanceMetrics.InvertedError;
 import PerformanceMetrics.ParetoSubset;
 import Population.*;
 import Problems.*;
@@ -15,13 +16,13 @@ import java.io.File;
 
 public class Main {
 
-    private static String fileName = "KP_p-7_n-50_ins-10";
+    private static String fileName = "KP_p-3_n-10_ins-1";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
     public static String windowsPathRead = "MOEA/"+fileName+"Paretto.dat";
-    public static String macPathRead = fileName+parettoName+extension;
-    public static String macPathGetProblemFrom = "MOEA/"+directoryName+fileName+extension;
+    private static String macPathRead = fileName+parettoName+extension;
+    private static String macPathGetProblemFrom = "MOEA/"+directoryName+fileName+extension;
     private static ProgressBar progressBar;
 
     public static void main(String[] args) throws Exception {
@@ -42,8 +43,8 @@ public class Main {
 
         //NSGAII algorithm = new NSGAII();
         //SPEA2 algorithm = new SPEA2();
-        //AEMMT algorithm = new AEMMT();
-        AEMMD algorithm = new AEMMD();
+        AEMMT algorithm = new AEMMT();
+        //AEMMD algorithm = new AEMMD();
         //MOEAD algorithm = new MOEAD();
 
         int x =50;
@@ -53,12 +54,9 @@ public class Main {
             Constants.NUMBER_OF_GENERATIONS *= 100;
         }
 
-
-            while (counter < x) {
-
-
-                algorithm.runAlgorithm(problem);
-                counter++;
+        while (counter < x) {
+            algorithm.runAlgorithm(problem);
+            counter++;
         }
 
     }
@@ -66,6 +64,7 @@ public class Main {
     private static void compareToParettoFront(){
 
         Population parettoPopulation = readParettoFromFile(macPathRead);
+
 
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
@@ -82,6 +81,7 @@ public class Main {
         Constants.NUMBER_OF_GENERATIONS *=100;
         //aemmt.runAlgorithm(problem);
         aemmd.runAlgorithm(problem);
+
 
 
         Erro erro = new Erro(problem);
@@ -112,6 +112,7 @@ public class Main {
 
         generationalDistance.estimateBasedOnMetric(newPopulation,parettoPopulation);
         generationalDistance.messageAfterProcess();
+
 
     }
 

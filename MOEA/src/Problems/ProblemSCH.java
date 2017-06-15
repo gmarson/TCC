@@ -82,6 +82,12 @@ public class ProblemSCH extends Problem {
         if (two)  System.out.println("Apareceu o 2");
 
     }
-    
+
+
+    @Override
+    public void evaluateAgainstMask(Population p, ArrayList<Integer> mask){}
+
+    @Override
+    public void applyFunctionsGivenMask(Member member , ArrayList<Integer> mask){}
 
 }
