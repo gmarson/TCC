@@ -9,14 +9,16 @@ import Selections.SelectionTables;
 import Utilities.*;
 import WeightedAverage.*;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by gabrielm on 30/03/17.
  */
 public class TableAEMMT extends TableFunctions{
 
-    private static int genCounter=1;
+    private static int genCounter=0;
     public static ArrayList<Table> tables = new ArrayList<>();
 
 
@@ -29,11 +31,10 @@ public class TableAEMMT extends TableFunctions{
 
             problem.evaluateAgainstMask(table.tablePopulation,table.mask);
 
-            if (table.mask.size() <=1)
+            if (table.mask.length <=1)
             {
-
                 table.tablePopulation.fastNonDominatedSort();
-                if (table.mask.size() == 1)
+                if (table.mask.length == 1)
                 {
                     table.setBestMembersForSingleObjectiveTables();
                 }
@@ -42,16 +43,17 @@ public class TableAEMMT extends TableFunctions{
                     table.tablePopulation.population = table.tablePopulation.getFirstFront().membersAtThisFront;
                     table.setBestMembersForNonDominatedTable();
                 }
-
             }
             else
             {
-                Population.weightedAverage.establishWeightedAverageRelationsForTable(table.tablePopulation,table.mask);
+                Population.weightedAverage.establishWeightedAverageRelationsForTable(table.tablePopulation);
                 table.setBestMembersByWeightedAverage();
             }
 
         }
 
+        //Printer.printTables(this);//todo
+        //Utils.stop();//todo
 
     }
 
@@ -116,7 +118,7 @@ public class TableAEMMT extends TableFunctions{
                 haveToIncreaseContribution = true;
 
 
-            if (table.mask.equals(newMember.parentTableMask1) || table.mask.equals(newMember.parentTableMask2))
+            if (Arrays.equals(table.mask, newMember.parentTableMask1) || Arrays.equals(table.mask, newMember.parentTableMask2))
                 positionsToIncrease.add(tablePosition);
 
             tablePosition++;
@@ -180,7 +182,7 @@ public class TableAEMMT extends TableFunctions{
 
 
     @Override
-    public void addTable(ArrayList<Integer> mask){
+    public void addTable(int[] mask){
         tables.add(new Table(mask));
     }
 
@@ -204,11 +206,16 @@ public class TableAEMMT extends TableFunctions{
 
     @Override
     void updateCurrentMask(int index){
-        currentMask = new ArrayList<>();
-        for (int i = 0; i < decimalRepresentationOfObjectives.columns; i++) {
+        int sizeOfMask = decimalRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow[index];
+        currentMask = new int[sizeOfMask];
+
+        for (int i = 0, j=0; i < decimalRepresentationOfObjectives.columns; i++) {
             int number = decimalRepresentationOfObjectives.decimalMatrix[index][i];
-            if (number != 0)
-                currentMask.add(number);
+
+            if (number != 0){
+                currentMask[j] = number;
+                j++;
+            }
         }
     }
 
@@ -222,6 +229,7 @@ public class TableAEMMT extends TableFunctions{
             this.updateCurrentMask(i);
             this.addTable(TableFunctions.currentMask);
         }
+
 
     }
 

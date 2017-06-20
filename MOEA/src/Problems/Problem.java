@@ -15,12 +15,12 @@ public abstract class  Problem {
     public Crossover crossover;
 
     public abstract void evaluateAgainstObjectiveFunctions(Population p);
-    public abstract void evaluateAgainstMask(Population p, ArrayList<Integer> mask);
+    public abstract void evaluateAgainstMask(Population p, int[] mask);
 
     public abstract ArrayList<Member> generateMembers(int QtdMembers);
 
     public abstract void applyFunctions(Member member);
-    public abstract void applyFunctionsGivenMask(Member member , ArrayList<Integer> mask);
+    public abstract void applyFunctionsGivenMask(Member member , int[] mask);
 
     abstract double firstFunction(Member member);
     abstract double secondFunction(Member member);

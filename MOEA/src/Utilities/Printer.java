@@ -1,10 +1,12 @@
 package Utilities;
 
 import ManyObjective.*;
+import ManyObjective.TableFunctions.TableAEMMT;
 import ManyObjective.TableFunctions.TableFunctions;
 import Population.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public abstract class Printer
@@ -68,7 +70,7 @@ public abstract class Printer
 
     public static void printTables(TableFunctions tableFunctions){
         for (Table table: tableFunctions.getTables()){
-            System.out.println("Tabela:"+ table.mask);
+            System.out.println("Tabela:"+ Arrays.toString(table.mask));
             int i =1;
             for(Member member: table.tablePopulation.population)
             {
@@ -91,7 +93,7 @@ public abstract class Printer
     public static void printBinaryValuesNonDominatedTable(TableFunctions tableFunctions){
         for (Table table: tableFunctions.getTables()){
             if (table.isNonDominatedTable){
-                System.out.println("Tabela:"+ table.mask);
+                System.out.println("Tabela:"+ Arrays.toString(table.mask));
                 System.out.println("Quantidade de elementos: "+table.tablePopulation.population.size());
                 int i =1;
                 for(Member member: table.tablePopulation.population)
@@ -108,7 +110,7 @@ public abstract class Printer
     public static void printNonDominatedTable(TableFunctions tableFunctions){
         for (Table table: tableFunctions.getTables()){
             if (table.isNonDominatedTable){
-                System.out.println("Tabela:"+ table.mask);
+                System.out.println("Tabela:"+ Arrays.toString(table.mask));
                 int i =1;
                 for(Member member: table.tablePopulation.population)
                 {
@@ -396,5 +398,12 @@ public abstract class Printer
                 printInfoTable(t);
         }
 
+    }
+
+    public static void printMasks(TableFunctions tableFunctions) {
+        for (Table table : tableFunctions.getTables())
+        {
+            System.out.println(Arrays.toString(table.mask));
+        }
     }
 }

@@ -35,7 +35,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
     }
 
     @Override
-    public void evaluateAgainstMask(Population p, ArrayList<Integer> mask){
+    public void evaluateAgainstMask(Population p, int[] mask){
         for (int i = 0; i < p.population.size(); i++) {
             Member member = p.population.get(i);
             this.applyFunctionsGivenMask(member,mask);
@@ -100,22 +100,22 @@ public class ProblemKnapsackFromFile  extends  Problem{
     }
 
     @Override
-    public void applyFunctionsGivenMask(Member member , ArrayList<Integer> mask){
-        if (mask.isEmpty()){
+    public void applyFunctionsGivenMask(Member member , int[] mask){
+        if (mask.length == 0){
             applyFunctions(member);
             return;
         }
 
         if(Constants.PROBLEM_SIZE <2) return ;
 
-        for (int i = 0; i < mask.size(); i++) {
+        for (int i = 0; i < mask.length; i++) {
 
             double functionToBeInserted = 0.0;
             for (int j = 0; j < Constants.QTD_ITEMS; j++)
             {
                 if (member.binaryValue.get(j) == 1)
                 {
-                    functionToBeInserted += this.items.get(j).attributes.get(mask.get(i)-1);
+                    functionToBeInserted += this.items.get(j).attributes.get(mask[i] - 1);
                 }
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;

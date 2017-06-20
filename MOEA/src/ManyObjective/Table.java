@@ -14,26 +14,21 @@ public class Table {
     public Population tablePopulation = new Population();
     public int contribution = 0;
     public int convergence = 0;
-    public ArrayList<Integer> mask;
+    public int[] mask;
     public boolean isNonDominatedTable;
 
-
-    public Table(ArrayList<Integer> mask){
+    public Table(int[] mask){
         this.mask = mask;
-        this.isNonDominatedTable = mask.size() == 0;
+        this.isNonDominatedTable = mask.length == 0;
     }
 
 
     public void setBestMembersForSingleObjectiveTables(){
-
         while (tablePopulation.population.size() > Constants.TABLE_SIZE)
         {
             int size = tablePopulation.population.size()-1;
             tablePopulation.population.remove(size);
         }
-
-
-
     }
 
     public void setBestMembersForNonDominatedTable() {
@@ -44,7 +39,7 @@ public class Table {
             tablePopulation.population.remove(size);
         }
 
-        if (mask.size() ==1) applyWeightedAverageForPopulation();
+        if (mask.length ==1) applyWeightedAverageForPopulation();
 
     }
 

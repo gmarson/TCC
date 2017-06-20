@@ -12,14 +12,9 @@ import java.util.ArrayList;
  */
 public class WeightedAverage {
 
-
-    public ArrayList<Integer> currentMask;
-
-
-    public void setWeightedAverageForAllMembers(Population population, ArrayList<Integer> mask)
+    public void setWeightedAverageForAllMembers(Population population)
     {
         Member member;
-        currentMask = mask;
 
         for (int i = 0; i < population.population.size(); i++) {
             member = population.population.get(i);
@@ -28,8 +23,8 @@ public class WeightedAverage {
 
     }
 
-    public void establishWeightedAverageRelationsForTable(Population population,ArrayList<Integer> mask){
-        setWeightedAverageForAllMembers(population,mask);
+    public void establishWeightedAverageRelationsForTable(Population population){
+        setWeightedAverageForAllMembers(population);
 
         ArrayList<Member> orderedArray = new ArrayList<>();
         for(Member member:population.population){
@@ -39,8 +34,6 @@ public class WeightedAverage {
         population.population = new ArrayList<Member>(orderedArray);
 
     }
-
-
 
     private void setWeightedAverage(Member member)
     {

@@ -15,8 +15,8 @@ import java.util.Scanner;
  */
 public class AEMMD {
 
-    public static TableAEMMD tableAEMMD = new TableAEMMD();
-    Population p = new Population();
+    private static TableAEMMD tableAEMMD = new TableAEMMD();
+    private Population p = new Population();
     public Front paretto = new Front();
 
 
@@ -36,7 +36,7 @@ public class AEMMD {
 
 
         //Printer.printTables(tableAEMMD);//todo
-        //Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
+        Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
         saveParetto(problem);
         reset();
 
@@ -50,7 +50,7 @@ public class AEMMD {
     }
 
     private void saveParetto(Problem problem){
-        paretto.membersAtThisFront.addAll(tableAEMMD.tables.get(tableAEMMD.tables.size()-1).tablePopulation.population);
+        paretto.membersAtThisFront.addAll(TableAEMMD.tables.get(TableAEMMD.tables.size()-1).tablePopulation.population);
         //Problem.removeSimilar(paretto,problem);
     }
 

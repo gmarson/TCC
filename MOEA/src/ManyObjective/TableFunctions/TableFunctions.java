@@ -17,7 +17,7 @@ public abstract class TableFunctions {
     abstract public void fillTables(Problem problem, Population p);
     abstract public void insertMemberOnTables(Member newMember, Problem problem);
     abstract public void mainLoop(Problem problem);
-    abstract public void addTable(ArrayList<Integer> mask);
+    abstract public void addTable(int[] mask);
     abstract public ArrayList<Table> getTables();
     abstract int setQtdTables();
     abstract void updateCurrentMask(int index);
@@ -25,7 +25,7 @@ public abstract class TableFunctions {
 
     private static Matrix binaryRepresentationOfObjectives;
     static Matrix decimalRepresentationOfObjectives;
-    static ArrayList<Integer> currentMask = new ArrayList<>();
+    static int[] currentMask = new int[0];
 
     static int fact(int n)
     {
@@ -42,11 +42,13 @@ public abstract class TableFunctions {
     static void buildMasks() {
         binaryRepresentationOfObjectives = new Matrix(Constants.QTD_TABLES, Constants.PROBLEM_SIZE+1,true);
         decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
+        decimalRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow = binaryRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow;
     }
 
     static void buildMasks(int moreColumns){
         binaryRepresentationOfObjectives = new Matrix(Constants.QTD_TABLES + moreColumns, Constants.PROBLEM_SIZE+1,true);
         decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
+        decimalRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow = binaryRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow;
     }
 
     static void resetContributionAndConvergence(TableFunctions tableFunctions){
@@ -65,7 +67,7 @@ public abstract class TableFunctions {
 
         binaryRepresentationOfObjectives = null;
         decimalRepresentationOfObjectives = null;
-        currentMask = new ArrayList<>();
+        currentMask = new int[0];
 
     }
 

@@ -99,7 +99,7 @@ public class TableAEMMD extends  TableFunctions{
 
 
     @Override
-    public void addTable(ArrayList<Integer> mask) {
+    public void addTable(int[] mask) {
         tables.add(new Table(mask));
     }
 
@@ -121,11 +121,16 @@ public class TableAEMMD extends  TableFunctions{
 
     @Override
     void updateCurrentMask(int index){
-        currentMask = new ArrayList<>();
-        for (int i = 0; i < decimalRepresentationOfObjectives.columns; i++) {
+        int sizeOfMask = decimalRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow[index];
+        currentMask = new int[sizeOfMask];
+        for (int i = 0, j=0; i < decimalRepresentationOfObjectives.columns; i++) {
             int number = decimalRepresentationOfObjectives.decimalMatrix[index][i];
             if (number != 0)
-                currentMask.add(number);
+            {
+                currentMask[j] = number;
+                j++;
+            }
+
         }
     }
 
@@ -141,7 +146,7 @@ public class TableAEMMD extends  TableFunctions{
         while(tableCounter<Constants.QTD_TABLES )
         {
             this.updateCurrentMask(i);
-            while (currentMask.size() == 1 || currentMask.size() == Constants.PROBLEM_SIZE){
+            while (currentMask.length == 1 || currentMask.length == Constants.PROBLEM_SIZE){
                 i++;
                 this.updateCurrentMask(i);
 

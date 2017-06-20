@@ -13,7 +13,7 @@ public class Matrix {
     public double[][] distance;
     public int[][] binaryMatrix;
     public int[][] decimalMatrix;
-
+    public int[] sizeOfNonZeroElementsInDecimalMatrixRow;
 
     public Matrix(int rows, int columns) {
         setDimensions(rows,columns);
@@ -44,12 +44,23 @@ public class Matrix {
     public Matrix buildDecimalMatrixGivenBinary(){
         Matrix decimal = new Matrix();
         decimal.decimalMatrix = new int [this.rows][this.columns];
+        sizeOfNonZeroElementsInDecimalMatrixRow = new int[this.rows];
         decimal.setDimensions(this.rows,this.columns);
+
         for (int i = 0; i <this.rows ; i++) {
+            int nonZeroElements = 0;
+
             for (int j = this.columns-1, idOfObjective =1; j >0 ; j--, idOfObjective++) {
                 int number = this.binaryMatrix[i][j];
+
+                if (number != 0)
+                    nonZeroElements++;
+
+
+
                 decimal.decimalMatrix[i][j] = number == 0? number : idOfObjective;
             }
+            sizeOfNonZeroElementsInDecimalMatrixRow[i] = nonZeroElements;
         }
 
         return decimal;

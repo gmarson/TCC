@@ -80,7 +80,7 @@ public class Population implements Serializable, Cloneable {
 
     private ArrayList<Member> sortPopulationByDominance()
     {
-        ArrayList<Member> sortedPopulation = new ArrayList<Member>();
+        ArrayList<Member> sortedPopulation = new ArrayList<>();
         int currentRank = 0;
 
         while(stopConditionSort() == false)

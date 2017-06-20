@@ -100,8 +100,10 @@ public class SelectionTables extends  Selection{
     protected Member returnWinnerCompetitor(ArrayList<Member> membersByTour) {
         return null;
     }
+
     @Override @Ignore
     protected Population tournament(Population population) {
         return null;
     }
+
 }

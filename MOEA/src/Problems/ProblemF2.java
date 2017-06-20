@@ -70,8 +70,8 @@ public class ProblemF2 extends  Problem {
 
 
     @Override
-    public void evaluateAgainstMask(Population p, ArrayList<Integer> mask){}
+    public void evaluateAgainstMask(Population p, int[] mask){}
 
     @Override
-    public void applyFunctionsGivenMask(Member member , ArrayList<Integer> mask){}
+    public void applyFunctionsGivenMask(Member member , int[] mask){}
 }

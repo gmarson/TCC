@@ -39,8 +39,8 @@ public class Member implements Serializable, Cloneable{
 
     //AEMMT Variables
     public double weightedAverage=-1;
-    public ArrayList<Integer> parentTableMask1;
-    public ArrayList<Integer> parentTableMask2;
+    public int[] parentTableMask1;
+    public int[] parentTableMask2;
 
 
     //MOEA-D Variables
