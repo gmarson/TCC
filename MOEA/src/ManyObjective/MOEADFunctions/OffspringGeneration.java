@@ -4,11 +4,8 @@ import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighboring;
-import Utilities.Printer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 
 
 /**
@@ -16,7 +13,7 @@ import java.util.Scanner;
  */
 public class OffspringGeneration {
 
-    public static Member generateChildGivenNeighboring(ArrayList<Member> parentNeighboring, Problem problem){
+    private static Member generateChildGivenNeighboring(ArrayList<Member> parentNeighboring, Problem problem){
 
         Population parentsPopulation = SelectionNeighboring.selectParents(parentNeighboring);
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
@@ -45,17 +42,18 @@ public class OffspringGeneration {
         calculateSolutions(parent,child);
         if (parent.solution > child.solution)
         {
-            replaceMember(parent,child,population,indexOf);
-            addToMOEADNonDominatedPopulation(child);
+            replaceMember(parent,child.deepCopy(),population,indexOf);
+            addToMOEADNonDominatedPopulation(child.deepCopy());
         }
 
-        insertOnNeighborhood(parent,child);
+        tryToInsertOnNeighborhood(parent,child);
 
     }
 
 
 
-    private static void insertOnNeighborhood(Member parent, Member child) {
+    private static void tryToInsertOnNeighborhood(Member parent, Member child) {
+
         for (int i = 0; i < parent.closestMembers.size(); i++)
         {
             Member neighborhoodMember = parent.closestMembers.get(i);
@@ -63,9 +61,9 @@ public class OffspringGeneration {
             calculateSolutions(neighborhoodMember,child);
             if (neighborhoodMember.solution > child.solution)
             {
-
                 replaceMember(parent.closestMembers, i, child);
-                addToMOEADNonDominatedPopulation(child);
+
+                addToMOEADNonDominatedPopulation(child.deepCopy());
 
             }
 
@@ -73,9 +71,17 @@ public class OffspringGeneration {
 
     }
 
+    private static void clearUnnecessaryFields(Member member) {
+        member.solution = -1.0;
+        member.weightVector = null;
+        member.closestMembers = null;
+        member.distances = null;
+    }
+
     private static void replaceMember(Member parent, Member child, Population population,int indexOf) {
         child.closestMembers = parent.closestMembers;
-        population.population.set(indexOf,child.deepCopy());
+        population.population.set(indexOf,child);
+        parent = null;
 
 
     }
@@ -91,7 +97,8 @@ public class OffspringGeneration {
     }
 
     private static void addToMOEADNonDominatedPopulation(Member member){
-        MOEAD.nonDominatedPopulation.addMember(member.deepCopy());
+        clearUnnecessaryFields(member);
+        MOEAD.nonDominatedPopulation.addMember(member);
     }
 
 

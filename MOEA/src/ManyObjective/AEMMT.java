@@ -12,8 +12,8 @@ import Utilities.Printer;
  */
 public class AEMMT {
 
-    public TableAEMMT tableAEMMT = new TableAEMMT();
-    Population p = new Population();
+    private TableAEMMT tableAEMMT = new TableAEMMT();
+    private Population p = new Population();
     public Front paretto = new Front();
 
     public void runAlgorithm(Problem problem)
@@ -29,7 +29,9 @@ public class AEMMT {
 
         //problem.printResolutionMessage();//todo
         //Printer.printNonDominatedTable(tableAEMMT);//todo
-        Printer.printBinaryValuesNonDominatedTable(tableAEMMT);//todo
+        //Printer.printBinaryValuesNonDominatedTable(tableAEMMT);//todo
+        Printer.printBinaryMembers(TableAEMMT.tables.get(TableAEMMT.tables.size()-1).tablePopulation); //todo
+
         saveParetto(problem);
 
         reset();
@@ -43,7 +45,7 @@ public class AEMMT {
     }
 
     private void saveParetto(Problem problem){
-        paretto.membersAtThisFront = tableAEMMT.tables.get(tableAEMMT.tables.size()-1).tablePopulation.population;
+        paretto.membersAtThisFront = TableAEMMT.tables.get(TableAEMMT.tables.size()-1).tablePopulation.population;
         //Problem.removeSimilar(paretto,problem);
     }
 

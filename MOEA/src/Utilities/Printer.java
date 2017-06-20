@@ -188,7 +188,7 @@ public abstract class Printer
         }
     }
 
-    public static void printMembersWithBinaryValue(Population p)
+    public static void printBinaryMembers(Population p)
     {
         checkEmpty(p);
         int i =0;
@@ -370,5 +370,31 @@ public abstract class Printer
 
             System.out.println();
         }
+    }
+
+    private static void printInfoTable(Table t){
+        System.out.println("Tabela: "+t.mask);
+        System.out.println("Is Non Dominated Table? "+t.isNonDominatedTable);
+        System.out.println("Size: "+t.tablePopulation.population.size());
+        System.out.println("Contribution: "+t.contribution);
+        System.out.println("Convergence: "+t.convergence);
+        System.out.println();
+    }
+
+    public static void printTablesInfos(ArrayList<Table> tables) {
+        for (Table t : tables)
+        {
+            printInfoTable(t);
+        }
+
+    }
+
+    public static void printOnlyScoredTables(ArrayList<Table> tables) {
+        for (Table t : tables)
+        {
+            if (t.convergence != 0 || t.contribution != 0)
+                printInfoTable(t);
+        }
+
     }
 }

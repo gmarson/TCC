@@ -49,20 +49,13 @@ public class Population implements Serializable, Cloneable {
     public void fastNonDominatedSort()
     {
         resetAttributesAndFrontsForAllMembers();
-        dominance.establishDominanceForAllMembers(this,null);
+        dominance.establishDominanceForAllMembers(this);
         this.population =sortPopulationByDominance();
         this.fronts.buildOrderedFronts(this);
     }
 
-    public void fastNonDominatedSort(ArrayList<Integer> maskOfObjectives)
-    {
-        resetAttributesAndFrontsForAllMembers();
-        dominance.establishDominanceForAllMembers(this, maskOfObjectives);
-        this.population = sortPopulationByDominance();
-        this.fronts.buildOrderedFronts(this);
-    }
 
-    public void resetAttributesAndFrontsForAllMembers()
+    private void resetAttributesAndFrontsForAllMembers()
     {
         this.fronts = new Fronts();
         for(Member member:population)

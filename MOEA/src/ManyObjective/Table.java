@@ -26,15 +26,13 @@ public class Table {
 
     public void setBestMembersForSingleObjectiveTables(){
 
-        Printer.printBinaryMembersWithAppliedFunctions(tablePopulation);//todo
-
         while (tablePopulation.population.size() > Constants.TABLE_SIZE)
         {
-            tablePopulation.population.remove(0); //todo nao eh index 0 Pq ele eh o melhor. eh o ultimo indexx!!
+            int size = tablePopulation.population.size()-1;
+            tablePopulation.population.remove(size);
         }
 
-        System.out.println(mask);//todo
-        Printer.printBinaryMembersWithAppliedFunctions(tablePopulation);//todo
+
 
     }
 
@@ -42,7 +40,8 @@ public class Table {
 
         while(tablePopulation.population.size() > Constants.TABLE_SIZE)
         {
-            tablePopulation.population.remove(0); //todo nao eh index 0 Pq ele eh o melhor. eh o ultimo indexx!!
+            int size = tablePopulation.population.size()-1;
+            tablePopulation.population.remove(size);
         }
 
         if (mask.size() ==1) applyWeightedAverageForPopulation();
@@ -50,9 +49,10 @@ public class Table {
     }
 
     public void setBestMembersByWeightedAverage(){
-        while(tablePopulation.population.size() > Constants.TABLE_SIZE){
-
-            tablePopulation.population.remove(0); //todo nao eh index 0 Pq ele eh o melhor. eh o ultimo indexx!!
+        while(tablePopulation.population.size() > Constants.TABLE_SIZE)
+        {
+            int size = tablePopulation.population.size()-1;
+            tablePopulation.population.remove(size);
         }
     }
 

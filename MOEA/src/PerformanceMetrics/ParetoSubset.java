@@ -2,6 +2,7 @@ package PerformanceMetrics;
 
 import Population.*;
 import Problems.Problem;
+import Utilities.Printer;
 
 /**
  * Created by gabrielm on 04/05/17.
@@ -20,6 +21,8 @@ public class ParetoSubset extends Metrics{
     @Override
     public void estimateBasedOnMetric(Population population, Population bestPareto) {
 
+        Printer.printBinaryMembers(population);//todo
+
         for (Member normalMember: population.population)
         {
             if ( isIn(normalMember,bestPareto))
@@ -27,7 +30,7 @@ public class ParetoSubset extends Metrics{
                 this.gotRight++;
             }
         }
-        result =  (this.gotRight / (double) bestPareto.population.size()) * 100;
+        result =  ((double) this.gotRight / (double) bestPareto.population.size()) * 100.00;
     }
 
 
@@ -43,14 +46,5 @@ public class ParetoSubset extends Metrics{
         return Problem.valueOfMemberIsPresent(normalMember, bestPareto, problem);
 
     }
-
-    private boolean checkEqual(Member normalMember, Member paretoMember) {
-        for (int i = 0; i < normalMember.binaryValue.size(); i++) {
-            if (paretoMember.binaryValue.get(i) != normalMember.binaryValue.get(i))
-                return false;
-        }
-        return true;
-    }
-
 
 }

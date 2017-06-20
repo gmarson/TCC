@@ -16,7 +16,7 @@ import java.io.File;
 
 public class Main {
 
-    private static String fileName = "KP_p-3_n-10_ins-1";
+    private static String fileName = "KP_p-7_n-50_ins-10";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
@@ -47,11 +47,11 @@ public class Main {
         //AEMMD algorithm = new AEMMD();
         //MOEAD algorithm = new MOEAD();
 
-        int x =50;
+        int x =1;
         int counter = 0;
 
         if (AEMMD.class.isInstance(algorithm) || AEMMT.class.isInstance(algorithm)){
-            Constants.NUMBER_OF_GENERATIONS *= 100;
+            Constants.NUMBER_OF_GENERATIONS = 300000;
         }
 
         while (counter < x) {
@@ -76,12 +76,11 @@ public class Main {
 
         //nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
-        //moead.runAlgorithm(problem);
+        moead.runAlgorithm(problem);
 
-        Constants.NUMBER_OF_GENERATIONS *=100;
+        Constants.NUMBER_OF_GENERATIONS = 30000;
         //aemmt.runAlgorithm(problem);
-        aemmd.runAlgorithm(problem);
-
+        //aemmd.runAlgorithm(problem);
 
 
         Erro erro = new Erro(problem);
@@ -102,8 +101,6 @@ public class Main {
         else if (!moead.paretto.membersAtThisFront.isEmpty())
             newPopulation.population = moead.paretto.membersAtThisFront;
 
-
-
         erro.estimateBasedOnMetric(newPopulation,parettoPopulation);
         erro.messageAfterProcess();
 
@@ -119,6 +116,7 @@ public class Main {
     //Do not call this
     private static Population  getBestPossibleParettoOfAGS(){
         int numberOfRounds = 10;
+        Population allFrontsMembers = new Population();
 
         NSGAII nsgaii = new NSGAII();
         SPEA2 spea2 = new SPEA2();
@@ -127,53 +125,40 @@ public class Main {
         MOEAD moead = new MOEAD();
 
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
-
-        Front nsgaiiMembers = new Front();
-        Front spea2Members  = new Front();
-        Front aemmtMembers  = new Front();
-        Front aemmdMembers  = new Front();
-        Front moeadMembers  = new Front();
-
         progressBar = new ProgressBar((double) numberOfRounds);
 
         for (int i = 0; i < numberOfRounds; i++) {
 
+            Constants.NUMBER_OF_GENERATIONS = 400;
+
             nsgaii.runAlgorithm(problem);
-            nsgaiiMembers = nsgaii.paretto;
+            allFrontsMembers.population.addAll(nsgaii.paretto.membersAtThisFront);
 
             spea2.runAlgorithm(problem);
-            spea2Members = spea2.paretto;
+            allFrontsMembers.population.addAll(spea2.paretto.membersAtThisFront);
 
             moead.runAlgorithm(problem);
-            moeadMembers = moead.paretto;
+            allFrontsMembers.population.addAll( moead.paretto.membersAtThisFront);
 
-            Constants.NUMBER_OF_GENERATIONS *= 100;
-
+            Constants.NUMBER_OF_GENERATIONS = 30000;
             aemmt.runAlgorithm(problem);
-            aemmtMembers = aemmt.paretto;
+            allFrontsMembers.population.addAll(aemmt.paretto.membersAtThisFront);
 
             aemmd.runAlgorithm(problem);
-            aemmdMembers = aemmd.paretto;
+            allFrontsMembers.population.addAll(aemmd.paretto.membersAtThisFront);
 
-            Constants.NUMBER_OF_GENERATIONS /= 100;
             progressBar.addJobDone();
+
+            allFrontsMembers.fastNonDominatedSort();
+            Problem.removeSimilar(allFrontsMembers.fronts.allFronts.get(0),problem);
+            allFrontsMembers.population = allFrontsMembers.fronts.allFronts.get(0).membersAtThisFront;
+
 
         }
 
         problem.printResolutionMessage();
-        Population allFrontsMembers = new Population();
-        allFrontsMembers.population.addAll(spea2Members.membersAtThisFront);
-        allFrontsMembers.population.addAll(aemmtMembers.membersAtThisFront);
-        allFrontsMembers.population.addAll(aemmdMembers.membersAtThisFront);
-        allFrontsMembers.population.addAll(nsgaiiMembers.membersAtThisFront);
-        allFrontsMembers.population.addAll(moeadMembers.membersAtThisFront);
-
-        allFrontsMembers.fastNonDominatedSort();
-
-
-        Problem.removeSimilar(allFrontsMembers.fronts.allFronts.get(0),problem);
-        allFrontsMembers.population = allFrontsMembers.fronts.allFronts.get(0).membersAtThisFront;
-        Printer.printMembersWithBinaryValue(allFrontsMembers);
+        //Printer.printBinaryMembers(allFrontsMembers);
+        System.out.println("ALL FRONTS SIZE: "+allFrontsMembers.population.size());
 
         return allFrontsMembers;
     }

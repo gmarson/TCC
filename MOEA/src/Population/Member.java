@@ -18,9 +18,8 @@ import java.util.Map;
 public class Member implements Serializable, Cloneable{
 
     //NSGAII variables
-    public ArrayList<Double> resultOfFunctions = new ArrayList<>();
     public ArrayList<Member> solutionsThatThisMemberDominates = new ArrayList<>();
-    public int numberOfSolutionsThatDominatesThisMember =0;
+    public int numberOfSolutionsThatDominatesThisMember = 0;
     public int rank = -1;
     public double crowdingDistanceValue;
 
@@ -36,6 +35,7 @@ public class Member implements Serializable, Cloneable{
     public double value;
     public double key;
     public ArrayList<Integer> binaryValue;
+    public ArrayList<Double> resultOfFunctions = new ArrayList<>();
 
     //AEMMT Variables
     public double weightedAverage=-1;
@@ -47,7 +47,7 @@ public class Member implements Serializable, Cloneable{
     public WeightVector weightVector ;
     public double solution = -1.0;
     public double distanceFromParentMember = -1.0;
-    public ArrayList<Member> closestMembers = new ArrayList<>();
+    public ArrayList<Member> closestMembers;
 
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
@@ -89,9 +89,12 @@ public class Member implements Serializable, Cloneable{
         if (this.weightVector != null)
             newMember.weightVector = new WeightVector(this.weightVector);
 
-        for (Member m:this.closestMembers)
-        {
-            newMember.closestMembers.add(m.deepCopy());
+        if (closestMembers != null && !closestMembers.isEmpty()) {
+            newMember.closestMembers = new ArrayList<>();
+            for (Member m : this.closestMembers) {
+
+                newMember.closestMembers.add(m.deepCopy());
+            }
         }
 
         return newMember;

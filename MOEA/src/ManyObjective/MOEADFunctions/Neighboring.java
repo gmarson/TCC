@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class Neighboring {
 
 
-    public static void setClosestNeighbours(Member parentMember, Population population){
+    private static void setClosestNeighbours(Member parentMember, Population population){
 
         for(Member childMember: population.population)
         {
@@ -32,6 +32,7 @@ public class Neighboring {
     public static void setNeighboursOfAllMembers(Population population){
         for (Member parentMember: population.population)
         {
+            parentMember.closestMembers = new ArrayList<>();
             setClosestNeighbours(parentMember,population);
         }
 
@@ -45,23 +46,20 @@ public class Neighboring {
     }
 
     private static void tryToAdd(Member parentMember, Member memberToBeInserted){
-        memberToBeInserted.closestMembers = new ArrayList<Member>();
-        ArrayList<Member> closestMembersFromParent = parentMember.closestMembers;
-
-        if (closestMembersFromParent.isEmpty()) {
-            closestMembersFromParent.add(memberToBeInserted);
+        if (parentMember.closestMembers.isEmpty()) {
+            parentMember.closestMembers.add(memberToBeInserted);
         }
         else
         {
-            for (int i = 0; i < closestMembersFromParent.size(); i++) {
-                if(closestMembersFromParent.get(i).distanceFromParentMember > memberToBeInserted.distanceFromParentMember)
+            for (int i = 0; i < parentMember.closestMembers.size(); i++) {
+                if(parentMember.closestMembers.get(i).distanceFromParentMember > memberToBeInserted.distanceFromParentMember)
                 {
                     addIfNear(parentMember,memberToBeInserted,i);
                     break;
                 }
             }
 
-            if(closestMembersFromParent.size() < Constants.NEIGHBOUR_QTD)
+            if(parentMember.closestMembers.size() < Constants.NEIGHBOUR_QTD)
                 parentMember.closestMembers.add(memberToBeInserted);
 
         }

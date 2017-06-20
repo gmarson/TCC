@@ -23,12 +23,9 @@ public abstract class TableFunctions {
     abstract void updateCurrentMask(int index);
     abstract public void buildTables(Population population);
 
-
     private static Matrix binaryRepresentationOfObjectives;
     static Matrix decimalRepresentationOfObjectives;
     static ArrayList<Integer> currentMask = new ArrayList<>();
-
-
 
     static int fact(int n)
     {
@@ -37,8 +34,6 @@ public abstract class TableFunctions {
 
         return fact(n-1) * n;
     }
-
-
 
     static void setQtdMembersOfATable(){
         Constants.TABLE_SIZE = Constants.POPULATION_SIZE / 10;

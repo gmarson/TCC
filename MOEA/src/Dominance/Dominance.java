@@ -8,16 +8,10 @@ import java.util.ArrayList;
  */
 public class Dominance {
 
-    private static boolean haveToUseMask = false;
-    private static ArrayList<Integer> currentMask;
-
-    public void establishDominanceForAllMembers(Population p, ArrayList<Integer> maskOfObjectives)
+    public void establishDominanceForAllMembers(Population p)
     {
 
         Member mi,mj;
-        haveToUseMask = !(maskOfObjectives == null || maskOfObjectives.isEmpty());
-        currentMask = haveToUseMask? maskOfObjectives: null;
-
 
         for(int i =0; i< p.population.size();i++)
         {
@@ -36,12 +30,12 @@ public class Dominance {
     private void establishDominanceForCoupleOfMembers(Member mi, Member mj){
 
 
-        if(haveToUseMask? dominatesMask(mi,mj) : dominates(mi,mj))
+        if(dominates(mi,mj))
         {
             mj.numberOfSolutionsThatDominatesThisMember++;
             mi.solutionsThatThisMemberDominates.add(mj);
         }
-        else if(haveToUseMask? dominatesMask(mj,mi) : dominates(mj,mi))
+        else if(dominates(mj,mi))
         {
             mi.numberOfSolutionsThatDominatesThisMember++;
             mj.solutionsThatThisMemberDominates.add(mi);
@@ -65,28 +59,6 @@ public class Dominance {
 
         return better;
     }
-
-
-    private boolean dominatesMask(Member m1, Member m2){
-        boolean better = false;
-        int currentPosition;
-
-
-
-        for (Integer maskValue : currentMask) {
-            currentPosition = maskValue - 1;
-
-            if (m1.resultOfFunctions.get(currentPosition) <= m2.resultOfFunctions.get(currentPosition))
-                better = m1.resultOfFunctions.get(currentPosition) < m2.resultOfFunctions.get(currentPosition);
-            else
-                return false;
-
-        }
-
-        return better;
-    }
-
-
 
 
 }

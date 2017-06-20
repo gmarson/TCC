@@ -1,6 +1,5 @@
 package Constants;
 
-
 /**
  * Created by gabrielm on 10/01/17.
  * Project : TCC.
@@ -9,11 +8,11 @@ package Constants;
 public abstract class  Constants {
 
     //ALL MOEAs CONSTANTS
-    public static int POPULATION_SIZE =50;
+    public static int POPULATION_SIZE =150;
     public static int MUTATION_RATE = 5;
     public static double CROSSOVER_RATE = 1;
-    public static double NUMBER_OF_GENERATIONS = 100;
-    public static int TOUR_SIZE = 3;
+    public static double NUMBER_OF_GENERATIONS = 400;
+    public static int TOUR_SIZE = 4;
 
     //ONLY SPEA2 CONSTANTS
     public static int ARCHIVE_SIZE = 60;

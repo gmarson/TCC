@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class MOEAD {
 
     public static Population nonDominatedPopulation = new Population();
-    Population moeadPopulation = new Population();
+    private Population moeadPopulation = new Population();
     private int genCounter = 0;
     public Front paretto = new Front();
 
@@ -28,11 +28,11 @@ public class MOEAD {
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
         SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
         Neighboring.setNeighboursOfAllMembers(moeadPopulation);
-
         populateNonDominatedPopulation();
 
-        while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
+
+        while (genCounter < Constants.NUMBER_OF_GENERATIONS){
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
             nonDominatedPopulation.fastNonDominatedSort();
@@ -50,7 +50,7 @@ public class MOEAD {
 
         //System.out.println("Tamanho: "+aux.population.size());//todo
         //Printer.printMembersValue(aux);//todo
-        //Printer.printMembersWithBinaryValue(aux);//todo
+        //Printer.printBinaryMembers(aux);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo
 
         reset();

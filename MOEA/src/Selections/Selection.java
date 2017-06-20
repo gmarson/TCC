@@ -19,7 +19,7 @@ public abstract class Selection {
     protected abstract Member returnWinnerCompetitor(ArrayList<Member> membersByTour);
     protected abstract Population tournament(Population population);
 
-    protected ArrayList<Member> makeCompetitors(Population p)
+    ArrayList<Member> makeCompetitors(Population p)
     {
         ArrayList<Member> membersByTour = new ArrayList<>();
         for (int j = 0; j < Constants.TOUR_SIZE; j++)
@@ -30,7 +30,7 @@ public abstract class Selection {
         return membersByTour;
     }
 
-    protected  ArrayList<Table> makeCompetitors(ArrayList<Table> tables)
+    ArrayList<Table> makeCompetitors(ArrayList<Table> tables)
     {
         ArrayList<Table> tablesByTour = new ArrayList<>();
         for (int i = 0; i < Constants.TOUR_SIZE; i++) {
