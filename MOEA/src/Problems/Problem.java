@@ -4,6 +4,8 @@ import Crossover.Crossover;
 import Population.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
 import Fronts.*;
 
 /**
@@ -68,11 +70,11 @@ public abstract class  Problem {
         members.add(f.membersAtThisFront.get(0));
         for (int i = 1; i < f.membersAtThisFront.size(); i++) {
 
-            Member memberToBeInserted= f.membersAtThisFront.get(i);
+            Member memberToBeInserted = f.membersAtThisFront.get(i);
             shouldAdd = true;
 
             for (int j = 0; j < members.size(); j++) {
-                if (memberToBeInserted.binaryValue.equals(members.get(j).binaryValue)){
+                if (!shouldAdd(memberToBeInserted, members.get(j))){
                     shouldAdd = false;
                     break;
                 }
@@ -83,6 +85,14 @@ public abstract class  Problem {
 
         }
         return  members;
+    }
+
+    private static boolean shouldAdd(Member memberToBeInserted, Member member) {
+        for (int i = 0; i < memberToBeInserted.binaryValue.size(); i++) {
+            if (!Objects.equals(memberToBeInserted.binaryValue.get(i), member.binaryValue.get(i)))
+                return false;
+        }
+        return true;
     }
 
     private static ArrayList<Member> removeUsingDecimalValue(Front f){

@@ -52,7 +52,7 @@ public class TableAEMMT extends TableFunctions{
 
         }
 
-        //Printer.printTables(this);//todo
+        Printer.printTables(this);//todo
         //Utils.stop();//todo
 
     }

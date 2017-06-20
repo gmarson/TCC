@@ -30,7 +30,7 @@ public class AEMMT {
         //problem.printResolutionMessage();//todo
         //Printer.printNonDominatedTable(tableAEMMT);//todo
         //Printer.printBinaryValuesNonDominatedTable(tableAEMMT);//todo
-        Printer.printBinaryMembers(TableAEMMT.tables.get(TableAEMMT.tables.size()-1).tablePopulation); //todo
+        Printer.printTables(tableAEMMT);//todo
 
         saveParetto(problem);
 
