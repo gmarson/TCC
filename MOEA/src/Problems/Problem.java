@@ -4,7 +4,6 @@ import Crossover.Crossover;
 import Population.*;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import Fronts.*;
 
@@ -48,7 +47,7 @@ public abstract class  Problem {
     private static boolean checkUsingBinaryValue(Member member, Population p){
         for(Member m: p.population)
         {
-            if (m.binaryValue.equals( member.binaryValue))
+            if (isEqual(m,member))
             {
                 return  true;
             }
@@ -74,7 +73,7 @@ public abstract class  Problem {
             shouldAdd = true;
 
             for (int j = 0; j < members.size(); j++) {
-                if (!shouldAdd(memberToBeInserted, members.get(j))){
+                if (isEqual(memberToBeInserted, members.get(j))){
                     shouldAdd = false;
                     break;
                 }
@@ -87,9 +86,9 @@ public abstract class  Problem {
         return  members;
     }
 
-    private static boolean shouldAdd(Member memberToBeInserted, Member member) {
+    private static boolean isEqual(Member memberToBeInserted, Member member) {
         for (int i = 0; i < memberToBeInserted.binaryValue.size(); i++) {
-            if (!Objects.equals(memberToBeInserted.binaryValue.get(i), member.binaryValue.get(i)))
+            if ((int)member.binaryValue.get(i) != (int)memberToBeInserted.binaryValue.get(i))
                 return false;
         }
         return true;

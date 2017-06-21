@@ -77,6 +77,7 @@ public abstract class Printer
                 int j=1;
                 System.out.println("Member: "+i+" VALUE = "+ member.value);
                 System.out.println("Member: "+i+" BINARYVALUE = "+ member.binaryValue);
+                System.out.println("WA : "+member.weightedAverage);
 
                 for (Double d: member.resultOfFunctions)
                 {
@@ -375,7 +376,7 @@ public abstract class Printer
     }
 
     private static void printInfoTable(Table t){
-        System.out.println("Tabela: "+t.mask);
+        System.out.println("Tabela: "+ Arrays.toString(t.mask));
         System.out.println("Is Non Dominated Table? "+t.isNonDominatedTable);
         System.out.println("Size: "+t.tablePopulation.population.size());
         System.out.println("Contribution: "+t.contribution);

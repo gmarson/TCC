@@ -81,6 +81,8 @@ public class ProblemKnapsackFromFile  extends  Problem{
     public void applyFunctions(Member member) {
         if(Constants.PROBLEM_SIZE <2) return ;
 
+        member.resultOfFunctions = new ArrayList<>();
+
         for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {
 
             double functionToBeInserted = 0.0;

@@ -23,17 +23,8 @@ public class Table {
     }
 
 
-    public void setBestMembersForSingleObjectiveTables(){
+    public void bestMembersForMonoObjectiveAndNonDominatedTables(){
         while (tablePopulation.population.size() > Constants.TABLE_SIZE)
-        {
-            int size = tablePopulation.population.size()-1;
-            tablePopulation.population.remove(size);
-        }
-    }
-
-    public void setBestMembersForNonDominatedTable() {
-
-        while(tablePopulation.population.size() > Constants.TABLE_SIZE)
         {
             int size = tablePopulation.population.size()-1;
             tablePopulation.population.remove(size);
@@ -42,6 +33,8 @@ public class Table {
         if (mask.length ==1) applyWeightedAverageForPopulation();
 
     }
+
+
 
     public void setBestMembersByWeightedAverage(){
         while(tablePopulation.population.size() > Constants.TABLE_SIZE)

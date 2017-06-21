@@ -9,7 +9,6 @@ import Selections.SelectionTables;
 import Utilities.*;
 import WeightedAverage.*;
 
-import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,21 +27,17 @@ public class TableAEMMT extends TableFunctions{
         for(Table table: tables)
         {
             table.tablePopulation = p.deepCopy();
-
             problem.evaluateAgainstMask(table.tablePopulation,table.mask);
 
             if (table.mask.length <=1)
             {
                 table.tablePopulation.fastNonDominatedSort();
-                if (table.mask.length == 1)
-                {
-                    table.setBestMembersForSingleObjectiveTables();
-                }
-                else
+                if (table.mask.length == 0)
                 {
                     table.tablePopulation.population = table.tablePopulation.getFirstFront().membersAtThisFront;
-                    table.setBestMembersForNonDominatedTable();
                 }
+
+                table.bestMembersForMonoObjectiveAndNonDominatedTables();
             }
             else
             {
@@ -63,7 +58,7 @@ public class TableAEMMT extends TableFunctions{
     public void mainLoop(Problem problem) {
         while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
 
-            //System.out.println("Generation "+genCounter);//todo
+            System.out.println("Generation "+genCounter);//todo
             if (genCounter % 50 ==0)
                 TableFunctions.resetContributionAndConvergence(this);
 
@@ -76,8 +71,6 @@ public class TableAEMMT extends TableFunctions{
 
             Population children = problem.crossover.crossoverAndMutation(parentsPopulation);
 
-            recalculateObjectiveFunctions(problem,children);
-
             super.copyMaskToChildren(parentsPopulation, children);
 
             this.insertMemberOnTables(children.population.get(0), problem);
@@ -85,9 +78,9 @@ public class TableAEMMT extends TableFunctions{
             genCounter++;
 
 
-
             //Printer.printTablesInfos(tables);//todo
-            //Utils.stop();//todo
+
+
 
 //          System.out.println(TableAEMMT.tables.get(TableAEMMT.tables.size()-1).tablePopulation.population.size());//todo
 
@@ -101,17 +94,14 @@ public class TableAEMMT extends TableFunctions{
         ArrayList<Integer> positionsToIncrease = new ArrayList<>();
         int tablePosition = 0;
 
-
         for (Table table : tables)
         {
-
             if (table.isNonDominatedTable)
             {
                 shoudIncreaseContribution = insertionForNonDominatedTable(table, newMember.deepCopy(), problem);
-
             }
             else {
-                shoudIncreaseContribution = insertionForWeightedAverageTable(table, newMember.deepCopy());
+                shoudIncreaseContribution = insertionForWeightedAverageTable(table, newMember.deepCopy(), problem);
             }
 
             if (shoudIncreaseContribution)
@@ -124,18 +114,23 @@ public class TableAEMMT extends TableFunctions{
             tablePosition++;
 
         }
-
         if (haveToIncreaseContribution) increaseContribution(positionsToIncrease);
 
     }
 
-    private boolean insertionForWeightedAverageTable(Table table, Member newMember) {
-
-
+    private boolean insertionForWeightedAverageTable(Table table, Member newMember, Problem problem) {
         Member worstMemberOfTable = table.tablePopulation.population.get(Constants.TABLE_SIZE-1);
+        problem.applyFunctionsGivenMask(newMember,table.mask);
+
+
+//        if(Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
+//            return true;
+//        }
+
         if (worstMemberOfTable.weightedAverage > newMember.weightedAverage){
             table.tablePopulation.population.remove(Constants.TABLE_SIZE-1);
             Member newMemberWithWeightedAverage = WeightedAverage.calculateWeightedAverageForSingleMember(newMember);
+
             Utils.insertMemberOnCrescentOrderedArrayByWeightedAverage(newMemberWithWeightedAverage,table.tablePopulation.population);
 
             return true;
@@ -147,6 +142,8 @@ public class TableAEMMT extends TableFunctions{
 
     private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
         boolean shouldIncreaseContribution = false;
+
+        problem.applyFunctionsGivenMask(newMember,table.mask);
 
         table.tablePopulation.addMember(newMember);
         table.tablePopulation.fastNonDominatedSort();
@@ -165,12 +162,9 @@ public class TableAEMMT extends TableFunctions{
 
     private void increaseContribution(ArrayList<Integer> positionsToIncrease)
     {
-        //Printer.printOnlyScoredTables(tables);//todo
         if(positionsToIncrease.size() == 1) positionsToIncrease.add(positionsToIncrease.get(0));
         tables.get(positionsToIncrease.get(0)).contribution++;
         tables.get(positionsToIncrease.get(1)).contribution++;
-        //Printer.printOnlyScoredTables(tables);//todo
-        //Utils.stop();//todo
     }
 
     @Override
