@@ -1,6 +1,7 @@
 package ManyObjective.TableFunctions;
 
 import Constants.*;
+import Dominance.Dominance;
 import ManyObjective.*;
 import Population.*;
 import Problems.*;
@@ -47,7 +48,7 @@ public class TableAEMMT extends TableFunctions{
 
         }
 
-        Printer.printTables(this);//todo
+        //Printer.printTables(this);//todo
         //Utils.stop();//todo
 
     }
@@ -56,14 +57,13 @@ public class TableAEMMT extends TableFunctions{
 
     @Override
     public void mainLoop(Problem problem) {
+        SelectionTables selectionTables = new SelectionTables();
         while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
 
             System.out.println("Generation "+genCounter);//todo
+
             if (genCounter % 50 ==0)
                 TableFunctions.resetContributionAndConvergence(this);
-
-
-            SelectionTables selectionTables = new SelectionTables();
 
             ArrayList<Table> parentTables = selectionTables.selectTables(tables,"AEMMT");
 
@@ -84,6 +84,7 @@ public class TableAEMMT extends TableFunctions{
 
 //          System.out.println(TableAEMMT.tables.get(TableAEMMT.tables.size()-1).tablePopulation.population.size());//todo
 
+
         }
 
     }
@@ -93,6 +94,7 @@ public class TableAEMMT extends TableFunctions{
         boolean haveToIncreaseContribution = false, shoudIncreaseContribution;
         ArrayList<Integer> positionsToIncrease = new ArrayList<>();
         int tablePosition = 0;
+        int pointsToIncrease = 0;
 
         for (Table table : tables)
         {
@@ -104,9 +106,10 @@ public class TableAEMMT extends TableFunctions{
                 shoudIncreaseContribution = insertionForWeightedAverageTable(table, newMember.deepCopy(), problem);
             }
 
-            if (shoudIncreaseContribution)
+            if (shoudIncreaseContribution) {
                 haveToIncreaseContribution = true;
-
+                pointsToIncrease++;
+            }
 
             if (Arrays.equals(table.mask, newMember.parentTableMask1) || Arrays.equals(table.mask, newMember.parentTableMask2))
                 positionsToIncrease.add(tablePosition);
@@ -114,7 +117,7 @@ public class TableAEMMT extends TableFunctions{
             tablePosition++;
 
         }
-        if (haveToIncreaseContribution) increaseContribution(positionsToIncrease);
+        if (haveToIncreaseContribution) increaseContribution(positionsToIncrease,pointsToIncrease);
 
     }
 
@@ -122,10 +125,11 @@ public class TableAEMMT extends TableFunctions{
         Member worstMemberOfTable = table.tablePopulation.population.get(Constants.TABLE_SIZE-1);
         problem.applyFunctionsGivenMask(newMember,table.mask);
 
+        WeightedAverage.calculateWeightedAverageForSingleMember(newMember);
 
-//        if(Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
-//            return true;
-//        }
+        if(Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
+            return false;
+        }
 
         if (worstMemberOfTable.weightedAverage > newMember.weightedAverage){
             table.tablePopulation.population.remove(Constants.TABLE_SIZE-1);
@@ -141,30 +145,42 @@ public class TableAEMMT extends TableFunctions{
 
 
     private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
-        boolean shouldIncreaseContribution = false;
+        Dominance dominance = new Dominance();
+        boolean shoudAdd = false;
+        if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
+            return false;
+        }
 
         problem.applyFunctionsGivenMask(newMember,table.mask);
 
-        table.tablePopulation.addMember(newMember);
-        table.tablePopulation.fastNonDominatedSort();
 
+        for (Member m:table.tablePopulation.population)
+        {
+            if (dominance.dominates(newMember,m))
+            {
+                shoudAdd = true;
+                break;
 
-        if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
-            shouldIncreaseContribution = true;
+            }
         }
 
-        Problem.removeSimilar(table.tablePopulation.getFirstFront(),problem);
-        table.tablePopulation.population = table.tablePopulation.getFirstFront().membersAtThisFront;
+        if (shoudAdd){
+            table.tablePopulation.addMember(newMember);
+            table.tablePopulation.fastNonDominatedSort();
+            table.tablePopulation.population = table.tablePopulation.getFirstFront().membersAtThisFront;
+            return true;
+        }
 
-
-        return shouldIncreaseContribution;
+        return false;
     }
 
-    private void increaseContribution(ArrayList<Integer> positionsToIncrease)
+    private void increaseContribution(ArrayList<Integer> positionsToIncrease, int pointsToIncrease)
     {
+
         if(positionsToIncrease.size() == 1) positionsToIncrease.add(positionsToIncrease.get(0));
-        tables.get(positionsToIncrease.get(0)).contribution++;
-        tables.get(positionsToIncrease.get(1)).contribution++;
+
+        tables.get(positionsToIncrease.get(0)).contribution+= pointsToIncrease;
+        tables.get(positionsToIncrease.get(1)).contribution+= pointsToIncrease;
     }
 
     @Override

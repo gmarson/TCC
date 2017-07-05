@@ -50,7 +50,7 @@ public class MOEAD {
 
         //System.out.println("Tamanho: "+aux.population.size());//todo
         //Printer.printMembersValue(aux);//todo
-        //Printer.printBinaryMembers(aux);//todo
+        Printer.printBinaryMembers(aux);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo
 
         reset();

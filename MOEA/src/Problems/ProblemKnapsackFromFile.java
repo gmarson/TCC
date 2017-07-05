@@ -2,6 +2,7 @@ package Problems;
 
 import Constants.Constants;
 import Crossover.CrossoverBinaryKnapsack;
+import Crossover.CrossoverUniformKnapsack;
 import Population.*;
 import Utilities.Reader;
 import Utilities.Utils;
@@ -17,7 +18,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
     public  ArrayList<KnapsackItem> items = new ArrayList<>();
 
     public ProblemKnapsackFromFile(String file){
-        crossover = new CrossoverBinaryKnapsack();
+        crossover = new CrossoverUniformKnapsack();
 
         try {
             Reader.getProblemFromFile(file);
@@ -95,7 +96,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
 
-            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (Double.MAX_VALUE) : (1/functionToBeInserted);
+            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (1/functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
 
@@ -122,14 +123,14 @@ public class ProblemKnapsackFromFile  extends  Problem{
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
 
-            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (Double.MAX_VALUE) : (1/functionToBeInserted);
+            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (1/functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
     }
 
     private void buildItemsFromFile(){
         ArrayList<Double> objectivesOfItem;
-        Double weight;
+        double weight;
 
         for (int i = 0; i < Constants.QTD_ITEMS; i++) {
             objectivesOfItem = new ArrayList<>();
