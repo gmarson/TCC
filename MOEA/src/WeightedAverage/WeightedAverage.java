@@ -1,8 +1,6 @@
 package WeightedAverage;
 
-import Constants.*;
 import Population.*;
-import ManyObjective.*;
 import Utilities.Utils;
 
 import java.util.ArrayList;
@@ -12,19 +10,19 @@ import java.util.ArrayList;
  */
 public class WeightedAverage {
 
-    public void setWeightedAverageForAllMembers(Population population)
+    private static void calculateWeightedAverageForAllMembers(Population population)
     {
         Member member;
 
         for (int i = 0; i < population.population.size(); i++) {
             member = population.population.get(i);
-            setWeightedAverage(member);
+            calculateWeightedAverage(member);
         }
 
     }
 
-    public void establishWeightedAverageRelationsForTable(Population population){
-        setWeightedAverageForAllMembers(population);
+    public static void sortByWeightedAverage(Population population){
+        calculateWeightedAverageForAllMembers(population);
 
         ArrayList<Member> orderedArray = new ArrayList<>();
         for(Member member:population.population){
@@ -35,7 +33,7 @@ public class WeightedAverage {
 
     }
 
-    private void setWeightedAverage(Member member)
+    public static void calculateWeightedAverage(Member member)
     {
         double weightedSum= 0.0;
 
@@ -46,16 +44,4 @@ public class WeightedAverage {
         member.weightedAverage = weightedSum/member.resultOfFunctions.size();
 
     }
-
-    public static Member calculateWeightedAverageForSingleMember(Member member){
-        double weightedSum=0.0;
-        for (int i = 0; i < member.resultOfFunctions.size(); i++) {
-
-            weightedSum += member.resultOfFunctions.get(i);
-        }
-        member.weightedAverage = weightedSum/member.resultOfFunctions.size();
-        return member;
-    }
-
-
 }

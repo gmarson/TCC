@@ -1,6 +1,7 @@
 package ManyObjective;
 
 import Constants.*;
+import Dominance.Dominance;
 import Population.*;
 import Utilities.Printer;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by gabrielm on 11/03/17.
  */
+
 public class Table {
 
     public Population tablePopulation = new Population();
@@ -21,20 +23,6 @@ public class Table {
         this.mask = mask;
         this.isNonDominatedTable = mask.length == 0;
     }
-
-
-    public void bestMembersForMonoObjectiveAndNonDominatedTables(){
-        while (tablePopulation.population.size() > Constants.TABLE_SIZE)
-        {
-            int size = tablePopulation.population.size()-1;
-            tablePopulation.population.remove(size);
-        }
-
-        if (mask.length ==1) applyWeightedAverageForPopulation();
-
-    }
-
-
 
     public void setBestMembersByWeightedAverage(){
         while(tablePopulation.population.size() > Constants.TABLE_SIZE)
@@ -49,18 +37,23 @@ public class Table {
         this.convergence = 0;
     }
 
-    private void applyWeightedAverageForPopulation(){
-        for (Member m : tablePopulation.population){
-            applyWeightedAverageInSingleObjectiveMember(m);
+    public void organizeNonDominatedTable()
+    {
+        Dominance dominance = new Dominance();
+        dominance.establishDominanceForAllMembers(this.tablePopulation);
+        ArrayList<Member> members = this.tablePopulation.population;
+
+        for (int i = 0; i < members.size(); i++) {
+            Member member = members.get(i);
+            if (member.numberOfSolutionsThatDominatesThisMember != 0){
+                members.remove(member);
+            }
         }
+
+        if (members.size() > Constants.TABLE_SIZE){
+            this.tablePopulation.population = new ArrayList<Member>(members.subList(0,Constants.TABLE_SIZE-1));
+        }
+
     }
-
-    private void applyWeightedAverageInSingleObjectiveMember(Member member){
-
-        member.weightedAverage = member.resultOfFunctions.get(0);
-    }
-
-
-
 
 }

@@ -16,8 +16,8 @@ import java.io.File;
 
 public class Main {
 
-    //private static String fileName = "KP_p-3_n-10_ins-1";
-    private static String fileName = "KPTESTE";
+    private static String fileName = "KP_p-3_n-10_ins-1";
+    //private static String fileName = "KPTESTE";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
@@ -52,7 +52,7 @@ public class Main {
         int counter = 0;
 
         if (AEMMD.class.isInstance(algorithm) || AEMMT.class.isInstance(algorithm)){
-            Constants.NUMBER_OF_GENERATIONS = 1500;
+            Constants.NUMBER_OF_GENERATIONS = 30000;
         }
 
         while (counter < x) {

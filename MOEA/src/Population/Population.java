@@ -18,7 +18,6 @@ public class Population implements Serializable, Cloneable {
     public Fronts fronts = new Fronts();
 
     public static Dominance dominance = new Dominance();
-    public static WeightedAverage weightedAverage = new WeightedAverage();
 
     public Population()
     {
@@ -72,7 +71,6 @@ public class Population implements Serializable, Cloneable {
             member.rawFitness = 0;
             member.fitness = 0;
             member.distances = new ArrayList<>();
-
 
         }
 

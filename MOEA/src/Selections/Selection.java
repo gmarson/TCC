@@ -42,7 +42,15 @@ public abstract class Selection {
 
     public static Population selectParents(Table table1, Table table2){
         Population p = new Population();
-        ArrayList<Member> parents = selectionTables.singleTournament(table1,table2);
+
+        ArrayList<Member> parents = new ArrayList<Member>();
+
+        int tableSize1 = table1.tablePopulation.population.size();
+        int tableSize2 = table2.tablePopulation.population.size();
+
+        parents.add(table1.tablePopulation.population.get(Utils.getRandom(0,tableSize1)));
+        parents.add(table2.tablePopulation.population.get(Utils.getRandom(0,tableSize2)));
+
         for (Member m:parents)
         {
             m.parentTableMask1 = table1.mask;
