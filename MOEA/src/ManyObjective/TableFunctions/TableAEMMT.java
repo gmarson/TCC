@@ -31,14 +31,9 @@ public class TableAEMMT extends TableFunctions{
             problem.evaluateAgainstMask(table.tablePopulation,table.mask);
 
             if (table.isNonDominatedTable)
-            {
                 table.organizeNonDominatedTable();
-            }
             else
-            {
-                WeightedAverage.sortByWeightedAverage(table.tablePopulation);
-                table.setBestMembersByWeightedAverage();
-            }
+                table.organizeWeightedAverageTable();
 
         }
     }
@@ -62,6 +57,7 @@ public class TableAEMMT extends TableFunctions{
             super.copyMaskToChildren(parentsPopulation, children);
 
             this.insertMemberOnTables(children.population.get(0), problem);
+            this.insertMemberOnTables(children.population.get(1), problem);
 
             genCounter++;
 
@@ -71,7 +67,7 @@ public class TableAEMMT extends TableFunctions{
 
     @Override
     public void insertMemberOnTables(Member newMember, Problem problem) {
-        boolean haveToIncreaseContribution = false, shoudIncreaseContribution;
+        boolean haveToIncreaseContribution = false, shouldIncreaseContribution;
         ArrayList<Integer> positionsToIncrease = new ArrayList<>();
         int tablePosition = 0;
         int pointsToIncrease = 0;
@@ -80,13 +76,13 @@ public class TableAEMMT extends TableFunctions{
         {
             if (table.isNonDominatedTable)
             {
-                shoudIncreaseContribution = insertionForNonDominatedTable(table, newMember.deepCopy(), problem);
+                shouldIncreaseContribution = insertionForNonDominatedTable(table, newMember.deepCopy(), problem);
             }
             else {
-                shoudIncreaseContribution = insertionForWeightedAverageTable(table, newMember.deepCopy(), problem);
+                shouldIncreaseContribution = insertionForWeightedAverageTable(table, newMember.deepCopy(), problem);
             }
 
-            if (shoudIncreaseContribution) {
+            if (shouldIncreaseContribution) {
                 haveToIncreaseContribution = true;
                 pointsToIncrease++;
             }
@@ -127,12 +123,12 @@ public class TableAEMMT extends TableFunctions{
     private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
         Dominance dominance = new Dominance();
         boolean shoudAdd = false;
+
         if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
             return false;
         }
 
         problem.applyFunctionsGivenMask(newMember,table.mask);
-
 
         for (Member m:table.tablePopulation.population)
         {
@@ -140,14 +136,12 @@ public class TableAEMMT extends TableFunctions{
             {
                 shoudAdd = true;
                 break;
-
             }
         }
 
         if (shoudAdd){
             table.tablePopulation.addMember(newMember);
-            table.tablePopulation.fastNonDominatedSort();
-            table.tablePopulation.population = table.tablePopulation.getFirstFront().membersAtThisFront;
+            table.organizeNonDominatedTable();
             return true;
         }
 

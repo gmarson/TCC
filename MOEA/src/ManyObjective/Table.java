@@ -4,6 +4,7 @@ import Constants.*;
 import Dominance.Dominance;
 import Population.*;
 import Utilities.Printer;
+import WeightedAverage.WeightedAverage;
 
 import java.util.ArrayList;
 
@@ -18,28 +19,15 @@ public class Table {
     public int convergence = 0;
     public int[] mask;
     public boolean isNonDominatedTable;
+    private Dominance dominance = new Dominance();
 
     public Table(int[] mask){
         this.mask = mask;
         this.isNonDominatedTable = mask.length == 0;
     }
 
-    public void setBestMembersByWeightedAverage(){
-        while(tablePopulation.population.size() > Constants.TABLE_SIZE)
-        {
-            int size = tablePopulation.population.size()-1;
-            tablePopulation.population.remove(size);
-        }
-    }
-
-    public void resetContributionAndConvergence(){
-        this.contribution = 0;
-        this.convergence = 0;
-    }
-
     public void organizeNonDominatedTable()
     {
-        Dominance dominance = new Dominance();
         dominance.establishDominanceForAllMembers(this.tablePopulation);
         ArrayList<Member> members = this.tablePopulation.population;
 
@@ -50,10 +38,24 @@ public class Table {
             }
         }
 
-        if (members.size() > Constants.TABLE_SIZE){
-            this.tablePopulation.population = new ArrayList<Member>(members.subList(0,Constants.TABLE_SIZE-1));
-        }
+        tablePopulation.population = members;
+        removeSurplusMembers();
+    }
 
+    public void organizeWeightedAverageTable(){
+        WeightedAverage.sortByWeightedAverage(this.tablePopulation);
+        removeSurplusMembers();
+    }
+
+    public void removeSurplusMembers(){
+        if (tablePopulation.population.size() > Constants.TABLE_SIZE){
+            this.tablePopulation.population = new ArrayList<Member>(tablePopulation.population.subList(0,Constants.TABLE_SIZE));
+        }
+    }
+
+    public void resetContributionAndConvergence(){
+        this.contribution = 0;
+        this.convergence = 0;
     }
 
 }

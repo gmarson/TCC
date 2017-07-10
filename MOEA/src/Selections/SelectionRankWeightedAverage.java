@@ -27,7 +27,6 @@ public class SelectionRankWeightedAverage extends Selection {
         return bestMember;
     }
 
-
     @Override @Ignore
     public Population selectParents(Population population) {return null;}
     @Override @Ignore

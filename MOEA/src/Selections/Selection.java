@@ -13,8 +13,6 @@ import java.util.ArrayList;
  */
 public abstract class Selection {
 
-    private static SelectionTables selectionTables = new SelectionTables();
-
     public abstract Population selectParents(Population population);
     protected abstract Member returnWinnerCompetitor(ArrayList<Member> membersByTour);
     protected abstract Population tournament(Population population);
