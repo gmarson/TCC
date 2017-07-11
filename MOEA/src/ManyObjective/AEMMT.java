@@ -43,8 +43,8 @@ public class AEMMT {
     }
 
     private void saveParetto(Problem problem){
-        paretto.membersAtThisFront = TableAEMMT.tables.get(TableAEMMT.tables.size()-1).tablePopulation.population;
-        //Problem.removeSimilar(paretto,problem);
+        paretto.membersAtThisFront = TableAEMMT.nonDominatedMembers.population;
+
     }
 
 }

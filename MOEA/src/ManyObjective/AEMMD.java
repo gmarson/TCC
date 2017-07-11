@@ -22,17 +22,18 @@ public class AEMMD {
 
     public void runAlgorithm(Problem problem)
     {
-
-        p.population = problem.generateMembers(Constants.POPULATION_SIZE);
-
         tableAEMMD.buildTables();
+
+        p.population = problem.generateMembers(Constants.POPULATION_SIZE * Constants.QTD_TABLES);
 
         tableAEMMD.fillTables(problem,p);
 
         tableAEMMD.mainLoop(problem);
 
         //Printer.printTables(tableAEMMD);//todo
+        Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);//todo
         Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
+
         saveParetto(problem);
         reset();
 
@@ -46,7 +47,7 @@ public class AEMMD {
     }
 
     private void saveParetto(Problem problem){
-        paretto.membersAtThisFront.addAll(TableAEMMD.tables.get(TableAEMMD.tables.size()-1).tablePopulation.population);
+        paretto.membersAtThisFront.addAll(TableAEMMD.nonDominatedMembers.population);
         //Problem.removeSimilar(paretto,problem);
     }
 

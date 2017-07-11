@@ -31,7 +31,7 @@ public class TableAEMMT extends TableFunctions{
             problem.evaluateAgainstMask(table.tablePopulation,table.mask);
 
             if (table.isNonDominatedTable) {
-                table.organizeNonDominatedTable();
+                table.organizeNonDominatedTable(true);
             }
             else
                 table.organizeWeightedAverageTable();
@@ -46,7 +46,7 @@ public class TableAEMMT extends TableFunctions{
 
             System.out.println("Generation "+genCounter);//todo
 
-            if (genCounter % 50 ==0)
+            if (genCounter % Constants.RESET_ON_GEN == 0)
                 TableFunctions.resetContributionAndConvergence(this);
 
             ArrayList<Table> parentTables = selectionTables.selectTables(tables,"AEMMT");
@@ -127,9 +127,10 @@ public class TableAEMMT extends TableFunctions{
             return false;
         }
 
+
         problem.applyFunctionsGivenMask(newMember,table.mask);
         table.tablePopulation.addMember(newMember);
-        table.organizeNonDominatedTable();
+        table.organizeNonDominatedTable(true);
 
         return Problem.valueOfMemberIsPresent(newMember, table.tablePopulation, problem);
     }
@@ -210,7 +211,6 @@ public class TableAEMMT extends TableFunctions{
                     problem.applyFunctionsGivenMask(member,nonDominatedMask);
                     nonDominatedMembers.addMember(member);
                 }
-
             }
         }
 

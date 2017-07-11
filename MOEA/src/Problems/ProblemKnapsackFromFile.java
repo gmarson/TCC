@@ -110,6 +110,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
         }
 
         if(Constants.PROBLEM_SIZE <2) return ;
+        member.resultOfFunctions = new ArrayList<>();
 
         for (int i = 0; i < mask.length; i++) {
 

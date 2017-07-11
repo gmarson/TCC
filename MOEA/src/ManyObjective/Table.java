@@ -27,7 +27,7 @@ public class Table {
         this.isNonDominatedTable = (mask.length == 0);
     }
 
-    public void organizeNonDominatedTable()
+    public void organizeNonDominatedTable(boolean removeSurplusMembers)
     {
         this.resetDominanceStatus();
         dominance.establishDominanceForAllMembers(this.tablePopulation);
@@ -42,7 +42,7 @@ public class Table {
         }
 
         tablePopulation = pop.deepCopy();
-        removeSurplusMembers();
+        if (removeSurplusMembers) removeSurplusMembers();
     }
 
     public void organizeWeightedAverageTable(){
