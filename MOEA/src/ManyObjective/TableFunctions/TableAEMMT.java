@@ -100,14 +100,14 @@ public class TableAEMMT extends TableFunctions{
     }
 
     private boolean insertionForWeightedAverageTable(Table table, Member newMember, Problem problem) {
-        Member worstMemberOfTable = table.tablePopulation.population.get(Constants.TABLE_SIZE-1);
-
-        problem.applyFunctionsGivenMask(newMember,table.mask);
-        WeightedAverage.calculateWeightedAverage(newMember);
 
         if(Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
             return false;
         }
+
+        Member worstMemberOfTable = table.tablePopulation.population.get(Constants.TABLE_SIZE-1);
+        problem.applyFunctionsGivenMask(newMember,table.mask);
+        WeightedAverage.calculateWeightedAverage(newMember);
 
         if (worstMemberOfTable.weightedAverage > newMember.weightedAverage){
 
@@ -121,8 +121,6 @@ public class TableAEMMT extends TableFunctions{
     }
 
     private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
-        Dominance dominance = new Dominance();
-        boolean shouldAdd = false;
 
         if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)
                 || table.tablePopulation.population.size() == Constants.TABLE_SIZE){
@@ -130,23 +128,10 @@ public class TableAEMMT extends TableFunctions{
         }
 
         problem.applyFunctionsGivenMask(newMember,table.mask);
+        table.tablePopulation.addMember(newMember);
+        table.organizeNonDominatedTable();
 
-        for (Member m:table.tablePopulation.population)
-        {
-            if (dominance.dominates(newMember,m))
-            {
-                shouldAdd = true;
-                break;
-            }
-        }
-
-        if (shouldAdd){
-            table.tablePopulation.addMember(newMember);
-            table.organizeNonDominatedTable();
-            return true;
-        }
-
-        return false;
+        return Problem.valueOfMemberIsPresent(newMember, table.tablePopulation, problem);
     }
 
     private void increaseContribution(ArrayList<Integer> positionsToIncrease, int pointsToIncrease)

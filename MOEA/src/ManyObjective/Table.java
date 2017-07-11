@@ -27,8 +27,9 @@ public class Table {
         this.isNonDominatedTable = (mask.length == 0);
     }
 
-    public void organizeNonDominatedTable( )
+    public void organizeNonDominatedTable()
     {
+        this.resetDominanceStatus();
         dominance.establishDominanceForAllMembers(this.tablePopulation);
         Population pop = new Population();
         ArrayList<Member> members = this.tablePopulation.population;
@@ -49,7 +50,7 @@ public class Table {
         removeSurplusMembers();
     }
 
-    public void removeSurplusMembers(){
+    private void removeSurplusMembers(){
         if (tablePopulation.population.size() > Constants.TABLE_SIZE){
             this.tablePopulation.population = new ArrayList<Member>(tablePopulation.population.subList(0,Constants.TABLE_SIZE));
         }
@@ -58,6 +59,13 @@ public class Table {
     public void resetContributionAndConvergence(){
         this.contribution = 0;
         this.convergence = 0;
+    }
+
+    private void resetDominanceStatus(){
+        for(Member member: tablePopulation.population){
+            member.numberOfSolutionsThatDominatesThisMember = 0;
+            member.solutionsThatThisMemberDominates = new ArrayList<>();
+        }
     }
 
 }
