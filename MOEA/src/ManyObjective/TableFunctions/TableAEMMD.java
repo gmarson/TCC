@@ -135,7 +135,7 @@ public class TableAEMMD extends  TableFunctions{
     }
 
     @Override
-    public void buildTables(Population population){
+    public void buildTables(){
         TableFunctions.setQtdMembersOfATable();
         Constants.QTD_TABLES = this.setQtdTables();
         TableFunctions.buildMasks(Constants.PROBLEM_SIZE +1);
@@ -165,43 +165,5 @@ public class TableAEMMD extends  TableFunctions{
         tables = new ArrayList<>();
         genCounter = 0;
     }
-
-    public void testDomination(){
-        int i=0;
-        int shoudBeWoried = 0;
-        Dominance d = new Dominance();
-        for (Table table : tables){
-            if (tables.get(i).isNonDominatedTable)
-            {
-                Table ndt = tables.get(i);
-                for (int j = 0; j < tables.size(); j++) {
-
-                    if (!tables.get(j).isNonDominatedTable){
-
-                        for (Member m : tables.get(j).tablePopulation.population){
-
-                            for (Member ndtm : ndt.tablePopulation.population)
-                            {
-                                if (d.dominates(m,ndtm)){
-                                    shoudBeWoried++;
-                                }
-                                else {
-                                    break;
-                                }
-                            }
-                            if (shoudBeWoried == ndt.tablePopulation.population.size())
-                            {
-                                System.out.println("tem algo de errado!");
-                            }
-
-                            shoudBeWoried = 0;
-                        }
-                    }
-                }
-            }
-            i++;
-        }
-    }
-
 
 }

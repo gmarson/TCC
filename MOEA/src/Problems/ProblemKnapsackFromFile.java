@@ -96,7 +96,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
 
-            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (1/functionToBeInserted);
+            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (-1 * functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
 
@@ -123,7 +123,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
 
-            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (1/functionToBeInserted);
+            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (-1 * functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
     }

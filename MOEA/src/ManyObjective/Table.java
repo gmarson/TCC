@@ -23,22 +23,24 @@ public class Table {
 
     public Table(int[] mask){
         this.mask = mask;
-        this.isNonDominatedTable = mask.length == 0;
+
+        this.isNonDominatedTable = (mask.length == 0);
     }
 
-    public void organizeNonDominatedTable()
+    public void organizeNonDominatedTable( )
     {
         dominance.establishDominanceForAllMembers(this.tablePopulation);
+        Population pop = new Population();
         ArrayList<Member> members = this.tablePopulation.population;
 
         for (int i = 0; i < members.size(); i++) {
             Member member = members.get(i);
-            if (member.numberOfSolutionsThatDominatesThisMember != 0){
-                members.remove(member);
+            if (member.numberOfSolutionsThatDominatesThisMember == 0){
+                pop.addMember(member.deepCopy());
             }
         }
 
-        tablePopulation.population = members;
+        tablePopulation = pop.deepCopy();
         removeSurplusMembers();
     }
 

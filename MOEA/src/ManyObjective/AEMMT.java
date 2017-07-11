@@ -19,14 +19,12 @@ public class AEMMT {
     public void runAlgorithm(Problem problem)
     {
 
-        p.population = problem.generateMembers(Constants.POPULATION_SIZE);
-
-
-        tableAEMMT.buildTables(p);
+        tableAEMMT.buildTables();
+        p.population = problem.generateMembers(Constants.POPULATION_SIZE * Constants.QTD_TABLES);
         tableAEMMT.fillTables(problem,p);
         tableAEMMT.mainLoop(problem);
 
-
+        Printer.printBinaryMembersWithAppliedFunctions(TableAEMMT.nonDominatedMembers);
         //problem.printResolutionMessage();//todo
         Printer.printNonDominatedTable(tableAEMMT);//todo
         //Printer.printBinaryValuesNonDominatedTable(tableAEMMT);//todo

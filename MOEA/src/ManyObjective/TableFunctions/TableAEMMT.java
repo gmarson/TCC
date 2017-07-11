@@ -20,7 +20,7 @@ public class TableAEMMT extends TableFunctions{
 
     private static int genCounter=0;
     public static ArrayList<Table> tables = new ArrayList<>();
-
+    public static Population nonDominatedMembers = new Population();
 
     @Override
     public void fillTables(Problem problem, Population p){
@@ -30,8 +30,9 @@ public class TableAEMMT extends TableFunctions{
             table.tablePopulation = p.deepCopy();
             problem.evaluateAgainstMask(table.tablePopulation,table.mask);
 
-            if (table.isNonDominatedTable)
+            if (table.isNonDominatedTable) {
                 table.organizeNonDominatedTable();
+            }
             else
                 table.organizeWeightedAverageTable();
 
@@ -60,8 +61,9 @@ public class TableAEMMT extends TableFunctions{
             this.insertMemberOnTables(children.population.get(1), problem);
 
             genCounter++;
-
         }
+
+        getNonDominatedMembers(problem);
 
     }
 
@@ -99,8 +101,8 @@ public class TableAEMMT extends TableFunctions{
 
     private boolean insertionForWeightedAverageTable(Table table, Member newMember, Problem problem) {
         Member worstMemberOfTable = table.tablePopulation.population.get(Constants.TABLE_SIZE-1);
-        problem.applyFunctionsGivenMask(newMember,table.mask);
 
+        problem.applyFunctionsGivenMask(newMember,table.mask);
         WeightedAverage.calculateWeightedAverage(newMember);
 
         if(Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
@@ -108,9 +110,8 @@ public class TableAEMMT extends TableFunctions{
         }
 
         if (worstMemberOfTable.weightedAverage > newMember.weightedAverage){
-            table.tablePopulation.population.remove(Constants.TABLE_SIZE-1);
-            WeightedAverage.calculateWeightedAverage(newMember);
 
+            table.tablePopulation.population.remove(Constants.TABLE_SIZE-1);
             Utils.insertMemberOnCrescentOrderedArrayByWeightedAverage(newMember,table.tablePopulation.population);
 
             return true;
@@ -119,12 +120,12 @@ public class TableAEMMT extends TableFunctions{
         return false;
     }
 
-
     private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
         Dominance dominance = new Dominance();
-        boolean shoudAdd = false;
+        boolean shouldAdd = false;
 
-        if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
+        if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)
+                || table.tablePopulation.population.size() == Constants.TABLE_SIZE){
             return false;
         }
 
@@ -134,12 +135,12 @@ public class TableAEMMT extends TableFunctions{
         {
             if (dominance.dominates(newMember,m))
             {
-                shoudAdd = true;
+                shouldAdd = true;
                 break;
             }
         }
 
-        if (shoudAdd){
+        if (shouldAdd){
             table.tablePopulation.addMember(newMember);
             table.organizeNonDominatedTable();
             return true;
@@ -200,7 +201,7 @@ public class TableAEMMT extends TableFunctions{
         }
     }
 
-    public void buildTables(Population population ){
+    public void buildTables(){
         TableFunctions.setQtdMembersOfATable();
         Constants.QTD_TABLES = this.setQtdTables();
         TableFunctions.buildMasks();
@@ -214,4 +215,21 @@ public class TableAEMMT extends TableFunctions{
 
     }
 
+    private void getNonDominatedMembers(Problem problem) {
+
+        int[] nonDominatedMask = new int[0];
+        for(Table table: tables){
+            for (Member member : table.tablePopulation.population){
+
+                if (!Problem.valueOfMemberIsPresent(member,nonDominatedMembers,problem)){
+                    problem.applyFunctionsGivenMask(member,nonDominatedMask);
+                    nonDominatedMembers.addMember(member);
+                }
+
+            }
+        }
+
+        nonDominatedMembers.fastNonDominatedSort();
+        nonDominatedMembers.population = nonDominatedMembers.getFirstFront().membersAtThisFront;
+    }
 }

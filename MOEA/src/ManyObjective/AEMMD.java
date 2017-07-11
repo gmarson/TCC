@@ -25,15 +25,11 @@ public class AEMMD {
 
         p.population = problem.generateMembers(Constants.POPULATION_SIZE);
 
-
-        tableAEMMD.buildTables(p);
-
+        tableAEMMD.buildTables();
 
         tableAEMMD.fillTables(problem,p);
 
-
         tableAEMMD.mainLoop(problem);
-
 
         //Printer.printTables(tableAEMMD);//todo
         Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
