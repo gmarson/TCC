@@ -3,79 +3,60 @@ package ManyObjective.MOEADFunctions;
 import Constants.Constants;
 import Population.*;
 import Utilities.Utils;
-import com.sun.xml.internal.ws.api.model.MEP;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by gabrielm on 30/04/17.
  */
 public class Neighboring {
 
+    private static void setClosestNeighbours(Member cell, Population population){
 
-    private static void setClosestNeighbours(Member parentMember, Population population){
+        cell.closestMembers = new ArrayList<>();
 
         for(Member childMember: population.population)
         {
-            if(!parentMember.equals(childMember))
+            if(!cell.equals(childMember))
             {
-                childMember.distanceFromParentMember = Utils.euclidianDistanceBasedOnDistanceVector(parentMember,childMember);
-                tryToAdd(parentMember, childMember.deepCopy());
+                childMember.distanceFromParentMember = Utils.euclidianDistanceBasedOnDistanceVector(cell,childMember);
+                insertMemberByDistanceWithNeighborhoodLength(childMember.deepCopy(),cell.closestMembers);
             }
-
-
             childMember.distanceFromParentMember = Constants.DEFAULT_DISTANCE_VALUE;
         }
     }
 
     public static void setNeighboursOfAllMembers(Population population){
-        for (Member parentMember: population.population)
+        for (Member cell: population.population)
         {
-            parentMember.closestMembers = new ArrayList<>();
-            setClosestNeighbours(parentMember,population);
+            setClosestNeighbours(cell,population);
         }
-
     }
 
     public static void createWeightVectorForPopulation(Population population) {
         for (Member m : population.population) {
-          m.weightVector = new WeightVector();
-
+            m.weightVector = new WeightVector();
         }
     }
 
-    private static void tryToAdd(Member parentMember, Member memberToBeInserted){
-        if (parentMember.closestMembers.isEmpty()) {
-            parentMember.closestMembers.add(memberToBeInserted);
-        }
+    private static void insertMemberByDistanceWithNeighborhoodLength(Member memberToBeInserted, ArrayList<Member> neighboring){
+
+        if (neighboring.isEmpty())
+            neighboring.add(memberToBeInserted);
         else
         {
-            for (int i = 0; i < parentMember.closestMembers.size(); i++) {
-                if(parentMember.closestMembers.get(i).distanceFromParentMember > memberToBeInserted.distanceFromParentMember)
-                {
-                    addIfNear(parentMember,memberToBeInserted,i);
-                    break;
-                }
+            int i=0;
+
+            while(memberToBeInserted.distanceFromParentMember > neighboring.get(i).distanceFromParentMember)
+            {
+                i++;
+                if(i == neighboring.size()) break;
             }
 
-            if(parentMember.closestMembers.size() < Constants.NEIGHBOUR_QTD)
-                parentMember.closestMembers.add(memberToBeInserted);
+            neighboring.add(i,memberToBeInserted);
 
-        }
-    }
+            if (neighboring.size() > Constants.NEIGHBOUR_SIZE) neighboring.remove(neighboring.size() -1 );
 
-
-    private static void addIfNear(Member parentMember, Member memberToBeInserted, int index){
-        if (parentMember.closestMembers.size() == Constants.NEIGHBOUR_QTD)
-        {
-            int last = parentMember.closestMembers.size()-1;
-            parentMember.closestMembers.remove(last);
-            parentMember.closestMembers.add(memberToBeInserted);
-        }
-        else
-        {
-            parentMember.closestMembers.add(index,memberToBeInserted);
         }
     }
 }

@@ -15,8 +15,8 @@ public class SelectionNeighboring extends  Selection {
 
     public static Population selectParents(ArrayList<Member> neighboring)
     {
-        int position1stMember = Utils.getRandom(0,Constants.NEIGHBOUR_QTD);
-        int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOUR_QTD);
+        int position1stMember = Utils.getRandom(0,Constants.NEIGHBOUR_SIZE);
+        int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOUR_SIZE);
         Population parentsPopulation = new Population();
 
         parentsPopulation.addMember(neighboring.get(position1stMember).deepCopy());

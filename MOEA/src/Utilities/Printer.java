@@ -375,6 +375,14 @@ public abstract class Printer
         }
     }
 
+    public static void printInfoNeighborhoods(Population population){
+        for(Member cell: population.population){
+            if (cell.closestMembers == null) break;
+            System.out.println("Tamanho da Celula : "+cell.closestMembers.size());
+        }
+    }
+
+
     private static void printInfoTable(Table t){
         System.out.println("Tabela: "+ Arrays.toString(t.mask));
         System.out.println("Is Non Dominated Table? "+t.isNonDominatedTable);

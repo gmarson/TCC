@@ -13,8 +13,6 @@ import java.util.Map;
  * TCC UFU
  */
 
-
-
 public class Member implements Serializable, Cloneable{
 
     //NSGAII variables
@@ -42,13 +40,11 @@ public class Member implements Serializable, Cloneable{
     public int[] parentTableMask1;
     public int[] parentTableMask2;
 
-
     //MOEA-D Variables
     public WeightVector weightVector ;
     public double solution = -1.0;
     public double distanceFromParentMember = -1.0;
     public ArrayList<Member> closestMembers;
-
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 
@@ -68,7 +64,6 @@ public class Member implements Serializable, Cloneable{
         newMember.weightedAverage = this.weightedAverage;
         newMember.solution = this.solution;
         newMember.distanceFromParentMember = this.distanceFromParentMember;
-
 
         for (Double d :this.resultOfFunctions)
         {

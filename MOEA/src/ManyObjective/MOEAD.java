@@ -25,17 +25,23 @@ public class MOEAD {
     {
         moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
         Neighboring.createWeightVectorForPopulation(moeadPopulation);
+
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
         SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
+        System.out.println("oi");//todo
         Neighboring.setNeighboursOfAllMembers(moeadPopulation);
+        System.out.println("oi");//todo
         populateNonDominatedPopulation();
 
 
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
+
+            System.out.println("GEN = "+genCounter);//todo
+
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
-            nonDominatedPopulation.fastNonDominatedSort();
+            nonDominatedPopulation.removeAllButNonDominated();
             Problem.removeSimilar(nonDominatedPopulation.fronts.allFronts.get(0),problem);
             nonDominatedPopulation.population = nonDominatedPopulation.fronts.allFronts.get(0).membersAtThisFront;
 

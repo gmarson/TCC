@@ -24,7 +24,7 @@ public abstract class  Constants {
     public static int TABLE_SIZE;
 
     //ONLY MOEA-D
-    public static int NEIGHBOUR_QTD = 10;
+    public static int NEIGHBOUR_SIZE = 10;
     public static double DEFAULT_DISTANCE_VALUE = -1.0;
 
     //PROBLEM CONSTANTS

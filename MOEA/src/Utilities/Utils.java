@@ -64,22 +64,7 @@ public abstract class Utils {
         return binaryNymber;
     }
 
-    public static double[] getWeightVector(int size, double totalSum) {
-        Random rand = new Random();
-        double randNums[] = new double[size], sum = 0;
 
-        for (int i = 0; i < randNums.length; i++) {
-            randNums[i] = rand.nextDouble();
-            sum += randNums[i];
-        }
-
-        for (int i = 0; i < randNums.length; i++) {
-            randNums[i] /= sum * totalSum;
-        }
-
-
-        return randNums;
-    }
 
     public static int binaryToInteger(ArrayList<Integer> binary)
     {
@@ -218,6 +203,8 @@ public abstract class Utils {
 
         }
     }
+
+
 
     public static ArrayList<Member> newArrayWithMember(Member member)
     {

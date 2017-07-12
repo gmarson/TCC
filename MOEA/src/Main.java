@@ -46,8 +46,8 @@ public class Main {
         //NSGAII algorithm = new NSGAII();
         //SPEA2 algorithm = new SPEA2();
         //AEMMT algorithm = new AEMMT();
-        AEMMD algorithm = new AEMMD();
-        //MOEAD algorithm = new MOEAD();
+        //AEMMD algorithm = new AEMMD();
+        MOEAD algorithm = new MOEAD();
 
         int x =1;
         int counter = 0;
