@@ -16,9 +16,9 @@ import java.util.List;
  */
 public abstract class TableFunctions {
 
-    abstract public void fillTables(Problem problem, Population p);
-    abstract public void insertMemberOnTables(Member newMember, Problem problem);
-    abstract public void mainLoop(Problem problem);
+    abstract public void fillTables(Population p);
+    abstract public void insertMemberOnTables(Member newMember);
+    abstract public void mainLoop();
     abstract public void addTable(int[] mask);
     abstract public ArrayList<Table> getTables();
     abstract int setQtdTables();

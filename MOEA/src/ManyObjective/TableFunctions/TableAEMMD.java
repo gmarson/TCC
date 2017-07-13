@@ -12,20 +12,26 @@ import Utilities.Printer;
 import Utilities.Utils;
 import com.sun.java.browser.plugin2.DOM;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Created by gabrielm on 30/03/17.
  */
-public class TableAEMMD extends  TableFunctions{
+public class TableAEMMD extends TableFunctions{
 
     private static int genCounter=0;
-    public static ArrayList<Table> tables = new ArrayList<>();
+    private static ArrayList<Table> tables = new ArrayList<>();
     public static Population nonDominatedMembers = new Population();
+    private static Problem problem;
+
+    public TableAEMMD(Problem problem){
+        TableAEMMD.problem = problem;
+    }
 
     @Override
-    public void fillTables(Problem problem,Population p) {
+    public void fillTables(Population p) {
 
         for(Table table: tables)
         {
@@ -37,7 +43,7 @@ public class TableAEMMD extends  TableFunctions{
     }
 
     @Override
-    public void insertMemberOnTables(Member newMember, Problem problem) {
+    public void insertMemberOnTables(Member newMember) {
 
         for (Table table :tables)
         {
@@ -52,13 +58,12 @@ public class TableAEMMD extends  TableFunctions{
                     table.convergence++;
                 }
             }
-
         }
 
     }
 
     @Override
-    public void mainLoop(Problem problem) {
+    public void mainLoop() {
 
         SelectionTables selectionTables = new SelectionTables();
 
@@ -72,14 +77,14 @@ public class TableAEMMD extends  TableFunctions{
             Population parentsPopulation = SelectionRank.selectParents(parentTables.get(0),parentTables.get(1));
             Population children = problem.crossover.crossoverAndMutation(parentsPopulation);
 
-            this.insertMemberOnTables(children.population.get(0), problem);
-            this.insertMemberOnTables(children.population.get(1), problem);
+            this.insertMemberOnTables(children.population.get(0));
+            this.insertMemberOnTables(children.population.get(1));
             genCounter++;
 
 
         }
 
-        this.getNonDominatedMembers(problem);
+        this.getNonDominatedMembers();
     }
 
     @Override
@@ -149,8 +154,7 @@ public class TableAEMMD extends  TableFunctions{
         genCounter = 0;
     }
 
-
-    private void getNonDominatedMembers(Problem problem) {
+    private void getNonDominatedMembers() {
 
         int[] nonDominatedMask = new int[0];
         for(Table table: tables){

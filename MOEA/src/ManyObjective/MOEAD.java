@@ -30,8 +30,6 @@ public class MOEAD {
         Neighboring.setNeighboursOfAllMembers(moeadPopulation);
         populateNonDominatedPopulation();
 
-
-
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 

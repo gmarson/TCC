@@ -6,41 +6,40 @@ import Population.Population;
 import Problems.Problem;
 import Constants.*;
 import Utilities.Printer;
-import Utilities.Utils;
-
-import java.util.Scanner;
 
 /**
  * Created by gabrielm on 07/03/17.
  */
 public class AEMMD {
 
-    private static TableAEMMD tableAEMMD = new TableAEMMD();
+    private static TableAEMMD tableAEMMD;
     private Population p = new Population();
     public Front paretto = new Front();
 
 
     public void runAlgorithm(Problem problem)
     {
+        tableAEMMD = new TableAEMMD(problem);
+
         tableAEMMD.buildTables();
 
         p.population = problem.generateMembers(Constants.POPULATION_SIZE * Constants.QTD_TABLES);
 
-        tableAEMMD.fillTables(problem,p);
+        tableAEMMD.fillTables(p);
 
-        tableAEMMD.mainLoop(problem);
+        tableAEMMD.mainLoop();
 
         //Printer.printTables(tableAEMMD);//todo
         Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);//todo
         Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
 
         saveParetto(problem);
-        reset();
+        reset(problem);
 
     }
 
-    private void reset(){
-        tableAEMMD = new TableAEMMD();
+    private void reset(Problem problem){
+        tableAEMMD = new TableAEMMD(problem);
         p = new Population();
         tableAEMMD.reset();
 

@@ -12,17 +12,18 @@ import Utilities.Printer;
  */
 public class AEMMT {
 
-    private TableAEMMT tableAEMMT = new TableAEMMT();
+    private TableAEMMT tableAEMMT;
     private Population p = new Population();
     public Front paretto = new Front();
 
     public void runAlgorithm(Problem problem)
     {
 
+        tableAEMMT = new TableAEMMT(problem);
         tableAEMMT.buildTables();
         p.population = problem.generateMembers(Constants.POPULATION_SIZE * Constants.QTD_TABLES);
-        tableAEMMT.fillTables(problem,p);
-        tableAEMMT.mainLoop(problem);
+        tableAEMMT.fillTables(p);
+        tableAEMMT.mainLoop();
 
         Printer.printBinaryMembersWithAppliedFunctions(TableAEMMT.nonDominatedMembers);
         //problem.printResolutionMessage();//todo
@@ -32,12 +33,12 @@ public class AEMMT {
 
         saveParetto(problem);
 
-        reset();
+        reset(problem);
 
     }
 
-    private void reset(){
-        tableAEMMT = new TableAEMMT();
+    private void reset(Problem problem){
+        tableAEMMT = new TableAEMMT(problem);
         p = new Population();
         tableAEMMT.reset();
     }

@@ -21,9 +21,14 @@ public class TableAEMMT extends TableFunctions{
     private static int genCounter=0;
     public static ArrayList<Table> tables = new ArrayList<>();
     public static Population nonDominatedMembers = new Population();
+    private static Problem problem;
+
+    public TableAEMMT(Problem problem){
+        TableAEMMT.problem = problem;
+    }
 
     @Override
-    public void fillTables(Problem problem, Population p){
+    public void fillTables(Population p){
 
         for(Table table: tables)
         {
@@ -40,7 +45,7 @@ public class TableAEMMT extends TableFunctions{
     }
 
     @Override
-    public void mainLoop(Problem problem) {
+    public void mainLoop() {
         SelectionTables selectionTables = new SelectionTables();
         while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
 
@@ -57,8 +62,8 @@ public class TableAEMMT extends TableFunctions{
 
             super.copyMaskToChildren(parentsPopulation, children);
 
-            this.insertMemberOnTables(children.population.get(0), problem);
-            this.insertMemberOnTables(children.population.get(1), problem);
+            this.insertMemberOnTables(children.population.get(0));
+            this.insertMemberOnTables(children.population.get(1));
 
             genCounter++;
         }
@@ -68,7 +73,7 @@ public class TableAEMMT extends TableFunctions{
     }
 
     @Override
-    public void insertMemberOnTables(Member newMember, Problem problem) {
+    public void insertMemberOnTables(Member newMember) {
         boolean haveToIncreaseContribution = false, shouldIncreaseContribution;
         ArrayList<Integer> positionsToIncrease = new ArrayList<>();
         int tablePosition = 0;
