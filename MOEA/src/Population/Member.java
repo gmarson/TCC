@@ -53,6 +53,29 @@ public class Member implements Serializable, Cloneable{
         this.value = value;
     }
 
+    public Member deepCopyForChildMembers(){
+        Member newMember = new Member(this.value);
+        newMember.solution = this.solution;
+        newMember.distanceFromParentMember = this.distanceFromParentMember;
+
+        for (Double d :this.resultOfFunctions)
+        {
+            newMember.resultOfFunctions.add(new Double(d));
+        }
+
+        newMember.binaryValue = new ArrayList<>();
+        for (Integer i: this.binaryValue)
+        {
+            newMember.binaryValue.add(new Integer(i));
+        }
+
+        if (this.weightVector != null)
+            newMember.weightVector = this.weightVector;
+
+
+        return newMember;
+    }
+
     public Member deepCopy()
     {
         Member newMember = new Member(this.value);
@@ -60,7 +83,6 @@ public class Member implements Serializable, Cloneable{
         newMember.density = this.density;
         newMember.fitness = this.fitness;
         newMember.strength = this.strength;
-        newMember.rawFitness = this.rawFitness;
         newMember.weightedAverage = this.weightedAverage;
         newMember.solution = this.solution;
         newMember.distanceFromParentMember = this.distanceFromParentMember;

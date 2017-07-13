@@ -16,9 +16,9 @@ import java.io.File;
 
 public class Main {
 
-    private static String fileName = "KP_p-3_n-50_ins-2";
+    //private static String fileName = "KP_p-3_n-10_ins-1";
     //private static String fileName = "KPTESTE";
-    //private static String fileName = "KPTIAGO";
+    private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;

@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class Neighboring {
 
-    private static void setClosestNeighbours(Member cell, Population population){
-
+    private static void setClosestNeighbours(Member cell, Population population)
+    {
         cell.closestMembers = new ArrayList<>();
 
         for(Member childMember: population.population)
@@ -20,13 +20,13 @@ public class Neighboring {
             if(!cell.equals(childMember))
             {
                 childMember.distanceFromParentMember = Utils.euclidianDistanceBasedOnDistanceVector(cell,childMember);
-                insertMemberByDistanceWithNeighborhoodLength(childMember.deepCopy(),cell.closestMembers);
+                insertMemberByDistanceWithNeighborhoodLength(childMember.deepCopyForChildMembers(),cell.closestMembers);
             }
             childMember.distanceFromParentMember = Constants.DEFAULT_DISTANCE_VALUE;
         }
     }
 
-    public static void setNeighboursOfAllMembers(Population population){
+    public static void setNeighboursForAllMembers(Population population){
         for (Member cell: population.population)
         {
             setClosestNeighbours(cell,population);
@@ -45,18 +45,17 @@ public class Neighboring {
             neighboring.add(memberToBeInserted);
         else
         {
-            int i=0;
+            int i;
 
-            while(memberToBeInserted.distanceFromParentMember > neighboring.get(i).distanceFromParentMember)
-            {
-                i++;
-                if(i == neighboring.size()) break;
+            for (i = 0; i < neighboring.size(); i++) {
+                if (memberToBeInserted.distanceFromParentMember < neighboring.get(i).distanceFromParentMember){
+                    break;
+                }
             }
 
             neighboring.add(i,memberToBeInserted);
 
-            if (neighboring.size() > Constants.NEIGHBOUR_SIZE) neighboring.remove(neighboring.size() -1 );
-
+            if (neighboring.size() > Constants.NEIGHBOURHOOD_SIZE) neighboring.remove(neighboring.size() -1 );
         }
     }
 }
