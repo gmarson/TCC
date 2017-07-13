@@ -126,4 +126,15 @@ public abstract class  Problem {
 
     }
 
+    public static void removeSimilar(Population p, Problem problem){
+        Front f = new Front();
+        f.membersAtThisFront = p.population;
+        if(ProblemKnapsack.class.isInstance(problem) || ProblemKnapsackFromFile.class.isInstance(problem))
+            p.population = removeUsingBinaryValue(f);
+        else
+            p.population = removeUsingDecimalValue(f);
+
+
+    }
+
 }

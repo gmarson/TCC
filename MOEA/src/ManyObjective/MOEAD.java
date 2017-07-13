@@ -6,8 +6,6 @@ import Population.*;
 import Problems.Problem;
 import Utilities.Printer;
 import Fronts.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 
 /**
@@ -20,48 +18,50 @@ public class MOEAD {
     private int genCounter = 0;
     public Front paretto = new Front();
 
-
     public void runAlgorithm(Problem problem)
     {
         moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
         Neighboring.createWeightVectorForPopulation(moeadPopulation);
+
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
         SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
-        Neighboring.setNeighboursOfAllMembers(moeadPopulation);
-        populateNonDominatedPopulation();
+        Neighboring.setNeighboursForAllMembers(moeadPopulation);
+        populateNonDominatedPopulation(problem);
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
+
+            System.out.println("GEN = "+genCounter);//todo
+
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
-            nonDominatedPopulation.fastNonDominatedSort();
-            Problem.removeSimilar(nonDominatedPopulation.fronts.allFronts.get(0),problem);
-            nonDominatedPopulation.population = nonDominatedPopulation.fronts.allFronts.get(0).membersAtThisFront;
+            nonDominatedPopulation.removeAllButNonDominated();
+
+            Problem.removeSimilar(nonDominatedPopulation,problem);
 
             genCounter++;
-
         }
 
-        saveParetto(problem);
+        saveParetto();
+
         Population aux = new Population();
         aux.population = paretto.membersAtThisFront;
 
 
         //System.out.println("Tamanho: "+aux.population.size());//todo
         //Printer.printMembersValue(aux);//todo
-        Printer.printBinaryMembers(aux);//todo
+        Printer.printBinaryMembersWithAppliedFunctions(aux);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo
 
         reset();
     }
 
-    private void populateNonDominatedPopulation() {
+    private void populateNonDominatedPopulation(Problem problem) {
         for (Member member:moeadPopulation.population)
         {
-            nonDominatedPopulation.addMember(member.deepCopy());
+            if (!Problem.valueOfMemberIsPresent(member,nonDominatedPopulation,problem))
+                nonDominatedPopulation.addMember(member.deepCopy());
         }
-
     }
-
 
     private void reset(){
         moeadPopulation = new Population();
@@ -69,14 +69,9 @@ public class MOEAD {
         nonDominatedPopulation = new Population();
     }
 
-    private void saveParetto(Problem problem){
-
-        Problem.removeSimilar(nonDominatedPopulation.getFirstFront(),problem);
+    private void saveParetto(){
         paretto = new Front();
-        paretto = nonDominatedPopulation.fronts.allFronts.get(0);
-
+        paretto.membersAtThisFront = nonDominatedPopulation.population;
     }
-
-
 
 }

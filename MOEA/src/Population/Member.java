@@ -13,8 +13,6 @@ import java.util.Map;
  * TCC UFU
  */
 
-
-
 public class Member implements Serializable, Cloneable{
 
     //NSGAII variables
@@ -42,19 +40,40 @@ public class Member implements Serializable, Cloneable{
     public int[] parentTableMask1;
     public int[] parentTableMask2;
 
-
     //MOEA-D Variables
     public WeightVector weightVector ;
     public double solution = -1.0;
     public double distanceFromParentMember = -1.0;
     public ArrayList<Member> closestMembers;
 
-
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 
     public Member(double value)
     {
         this.value = value;
+    }
+
+    public Member deepCopyForChildMembers(){
+        Member newMember = new Member(this.value);
+        newMember.solution = this.solution;
+        newMember.distanceFromParentMember = this.distanceFromParentMember;
+
+        for (Double d :this.resultOfFunctions)
+        {
+            newMember.resultOfFunctions.add(new Double(d));
+        }
+
+        newMember.binaryValue = new ArrayList<>();
+        for (Integer i: this.binaryValue)
+        {
+            newMember.binaryValue.add(new Integer(i));
+        }
+
+        if (this.weightVector != null)
+            newMember.weightVector = this.weightVector;
+
+
+        return newMember;
     }
 
     public Member deepCopy()
@@ -64,11 +83,9 @@ public class Member implements Serializable, Cloneable{
         newMember.density = this.density;
         newMember.fitness = this.fitness;
         newMember.strength = this.strength;
-        newMember.rawFitness = this.rawFitness;
         newMember.weightedAverage = this.weightedAverage;
         newMember.solution = this.solution;
         newMember.distanceFromParentMember = this.distanceFromParentMember;
-
 
         for (Double d :this.resultOfFunctions)
         {

@@ -53,6 +53,27 @@ public class Population implements Serializable, Cloneable {
         this.fronts.buildOrderedFronts(this);
     }
 
+    public void removeAllButNonDominated(){
+        resetDominanceStatus();
+        dominance.establishDominanceForAllMembers(this);
+        ArrayList<Member> aux = new ArrayList<>();
+
+        for (Member member : population){
+            if (member.numberOfSolutionsThatDominatesThisMember == 0){
+                aux.add(member);
+            }
+        }
+
+        population = aux;
+
+    }
+
+    private void resetDominanceStatus(){
+        for(Member member : population){
+            member.solutionsThatThisMemberDominates = new ArrayList<>();
+            member.numberOfSolutionsThatDominatesThisMember = 0;
+        }
+    }
 
     private void resetAttributesAndFrontsForAllMembers()
     {

@@ -13,15 +13,13 @@ import java.util.ArrayList;
  */
 public class OffspringGeneration {
 
-    private static Member generateChildGivenNeighboring(ArrayList<Member> parentNeighboring, Problem problem){
+    private static ArrayList<Member> generateChildGivenNeighboring(ArrayList<Member> parentNeighboring, Problem problem){
 
         Population parentsPopulation = SelectionNeighboring.selectParents(parentNeighboring);
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
-        childPopulation.fastNonDominatedSort();
 
-
-        return childPopulation.population.get(0);
+        return childPopulation.population;
     }
 
 
@@ -30,10 +28,10 @@ public class OffspringGeneration {
         for (int i = 0; i < population.population.size(); i++)
         {
             Member parent = population.population.get(i);
-            Member childMember = generateChildGivenNeighboring (parent.closestMembers , problem);
+            ArrayList<Member> children = generateChildGivenNeighboring (parent.closestMembers , problem);
 
-            insertion(parent,childMember,population,i);
-
+            insertion(parent,children.get(0),population,i);
+            insertion(parent,children.get(1),population,i);
         }
 
     }
@@ -47,10 +45,7 @@ public class OffspringGeneration {
         }
 
         tryToInsertOnNeighborhood(parent,child);
-
     }
-
-
 
     private static void tryToInsertOnNeighborhood(Member parent, Member child) {
 
@@ -82,7 +77,6 @@ public class OffspringGeneration {
         child.closestMembers = parent.closestMembers;
         population.population.set(indexOf,child);
         parent = null;
-
 
     }
 
