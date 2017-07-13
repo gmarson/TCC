@@ -62,7 +62,12 @@ public abstract class Printer
             System.out.println("\nValor dos membros na vizinhanca");
             for (Member childMember : m.closestMembers)
             {
-                System.out.println(childMember.binaryValue);
+                System.out.print(childMember + " " );
+                for (int i = 0; i <childMember.weightVector.vector.length ; i++) {
+                    System.out.print(childMember.weightVector.vector[i]+" ");
+                }
+                System.out.println("Solution: "+childMember.solution);
+
             }
 
         }

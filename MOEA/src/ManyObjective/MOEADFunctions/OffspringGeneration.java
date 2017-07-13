@@ -27,73 +27,61 @@ public class OffspringGeneration {
 
         for (int i = 0; i < population.population.size(); i++)
         {
-            Member parent = population.population.get(i);
-            ArrayList<Member> children = generateChildGivenNeighboring (parent.closestMembers , problem);
+            Member cell = population.population.get(i);
+            ArrayList<Member> children = generateChildGivenNeighboring (cell.closestMembers , problem);
 
-            insertion(parent,children.get(0),population,i);
-            insertion(parent,children.get(1),population,i);
+            insertion(cell,children.get(0),population,i);
+            insertion(cell,children.get(1),population,i);
         }
 
     }
 
-    private static void insertion(Member parent, Member child, Population population,int indexOf){
-        calculateSolutions(parent,child);
-        if (parent.solution > child.solution)
+    private static void insertion(Member cell, Member child, Population population,int indexOf){
+        calculateSolutions(cell,child);
+        if (cell.solution < child.solution)
         {
-            replaceMember(parent,child.deepCopy(),population,indexOf);
+            replaceMember(cell,child.deepCopy(),population,indexOf);
             addToMOEADNonDominatedPopulation(child.deepCopy());
         }
 
-        tryToInsertOnNeighborhood(parent,child);
+        insertionForNeighborhood(cell,child);
     }
 
-    private static void tryToInsertOnNeighborhood(Member parent, Member child) {
+    private static void insertionForNeighborhood(Member cell, Member child) {
 
-        for (int i = 0; i < parent.closestMembers.size(); i++)
+        for (int i = 0; i < cell.closestMembers.size(); i++)
         {
-            Member neighborhoodMember = parent.closestMembers.get(i);
+            Member neighborhoodMember = cell.closestMembers.get(i);
 
             calculateSolutions(neighborhoodMember,child);
-            if (neighborhoodMember.solution > child.solution)
+            if (neighborhoodMember.solution < child.solution)
             {
-                replaceMember(parent.closestMembers, i, child);
-
+                cell.closestMembers.set(i,child.deepCopy());
                 addToMOEADNonDominatedPopulation(child.deepCopy());
-
             }
-
         }
-
     }
 
-    private static void clearUnnecessaryFields(Member member) {
-        member.solution = -1.0;
-        member.weightVector = null;
-        member.closestMembers = null;
-        member.distances = null;
-    }
-
-    private static void replaceMember(Member parent, Member child, Population population,int indexOf) {
-        child.closestMembers = parent.closestMembers;
+    private static void replaceMember(Member cell, Member child, Population population,int indexOf) {
+        child.closestMembers = cell.closestMembers;
         population.population.set(indexOf,child);
-        parent = null;
+        cell = null;
 
     }
 
-    private static void replaceMember(ArrayList<Member> closestMembers, int indexOfNeighborhoodMember, Member child) {
-        closestMembers.set(indexOfNeighborhoodMember,child.deepCopy());
-    }
-
-    private static void calculateSolutions(Member parent, Member child){
-        child.weightVector = parent.weightVector;
+    private static void calculateSolutions(Member cell, Member child){
+        child.weightVector = cell.weightVector;
         SolutionWeightedSum.calculateSolution(child);
 
     }
 
     private static void addToMOEADNonDominatedPopulation(Member member){
-        clearUnnecessaryFields(member);
+        member.solution = -1.0;
+        member.weightVector = null;
+        member.closestMembers = null;
         MOEAD.nonDominatedPopulation.addMember(member);
     }
+
 
 
 }

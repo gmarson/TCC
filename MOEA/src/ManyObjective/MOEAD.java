@@ -6,6 +6,7 @@ import Population.*;
 import Problems.Problem;
 import Utilities.Printer;
 import Fronts.*;
+import Utilities.Utils;
 
 
 /**
@@ -27,6 +28,9 @@ public class MOEAD {
         SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
         Neighboring.setNeighboursForAllMembers(moeadPopulation);
         populateNonDominatedPopulation(problem);
+
+        Printer.printNeighboringBinary(moeadPopulation);//todo
+        Utils.stop();//todo
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
