@@ -67,7 +67,6 @@ public class Main {
 
         Population parettoPopulation = readParettoFromFile(macPathRead);
 
-
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         NSGAII nsgaii = new NSGAII();

@@ -19,8 +19,8 @@ public class SelectionNeighboring extends  Selection {
         int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE);
         Population parentsPopulation = new Population();
 
-        parentsPopulation.addMember(neighboring.get(position1stMember).deepCopy());
-        parentsPopulation.addMember(neighboring.get(position2dnMember).deepCopy());
+        parentsPopulation.addMember(neighboring.get(position1stMember));
+        parentsPopulation.addMember(neighboring.get(position2dnMember));
         return parentsPopulation;
     }
 

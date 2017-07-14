@@ -63,11 +63,14 @@ public class Member implements Serializable, Cloneable{
             newMember.resultOfFunctions.add(new Double(d));
         }
 
-        newMember.binaryValue = new ArrayList<>();
-        for (Integer i: this.binaryValue)
-        {
-            newMember.binaryValue.add(new Integer(i));
+        if (this.binaryValue != null){
+            newMember.binaryValue = new ArrayList<>();
+            for (Integer i: this.binaryValue)
+            {
+                newMember.binaryValue.add(new Integer(i));
+            }
         }
+
 
         if (this.weightVector != null)
             newMember.weightVector = this.weightVector;
@@ -97,11 +100,14 @@ public class Member implements Serializable, Cloneable{
             newMember.distances.add(new Double(d));
         }
 
-        newMember.binaryValue = new ArrayList<>();
-        for (Integer i: this.binaryValue)
-        {
-            newMember.binaryValue.add(new Integer(i));
+        if (this.binaryValue != null){
+            newMember.binaryValue = new ArrayList<>();
+            for (Integer i: this.binaryValue)
+            {
+                newMember.binaryValue.add(new Integer(i));
+            }
         }
+
 
         if (this.weightVector != null)
             newMember.weightVector = new WeightVector(this.weightVector);

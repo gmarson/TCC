@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class OffspringGeneration {
 
-    private static ArrayList<Member> generateChildGivenNeighboring(ArrayList<Member> parentNeighboring, Problem problem){
+    private static ArrayList<Member> generateChildrenGivenNeighboring(ArrayList<Member> parentNeighboring, Problem problem){
 
         Population parentsPopulation = SelectionNeighboring.selectParents(parentNeighboring);
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
@@ -28,7 +28,7 @@ public class OffspringGeneration {
         for (int i = 0; i < population.population.size(); i++)
         {
             Member cell = population.population.get(i);
-            ArrayList<Member> children = generateChildGivenNeighboring (cell.closestMembers , problem);
+            ArrayList<Member> children = generateChildrenGivenNeighboring(cell.closestMembers , problem);
 
             insertion(cell,children.get(0),population,i);
             insertion(cell,children.get(1),population,i);
@@ -38,7 +38,7 @@ public class OffspringGeneration {
 
     private static void insertion(Member cell, Member child, Population population,int indexOf){
         calculateSolutions(cell,child);
-        if (cell.solution < child.solution)
+        if (cell.solution > child.solution)
         {
             replaceMember(cell,child.deepCopy(),population,indexOf);
             addToMOEADNonDominatedPopulation(child.deepCopy());
@@ -54,7 +54,7 @@ public class OffspringGeneration {
             Member neighborhoodMember = cell.closestMembers.get(i);
 
             calculateSolutions(neighborhoodMember,child);
-            if (neighborhoodMember.solution < child.solution)
+            if (neighborhoodMember.solution > child.solution)
             {
                 cell.closestMembers.set(i,child.deepCopy());
                 addToMOEADNonDominatedPopulation(child.deepCopy());
@@ -65,14 +65,11 @@ public class OffspringGeneration {
     private static void replaceMember(Member cell, Member child, Population population,int indexOf) {
         child.closestMembers = cell.closestMembers;
         population.population.set(indexOf,child);
-        cell = null;
-
     }
 
-    private static void calculateSolutions(Member cell, Member child){
-        child.weightVector = cell.weightVector;
+    private static void calculateSolutions(Member memberInsideCell, Member child){
+        child.weightVector = memberInsideCell.weightVector;
         SolutionWeightedSum.calculateSolution(child);
-
     }
 
     private static void addToMOEADNonDominatedPopulation(Member member){

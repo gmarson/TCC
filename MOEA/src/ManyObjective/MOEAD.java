@@ -29,9 +29,6 @@ public class MOEAD {
         Neighboring.setNeighboursForAllMembers(moeadPopulation);
         populateNonDominatedPopulation(problem);
 
-        Printer.printNeighboringBinary(moeadPopulation);//todo
-        Utils.stop();//todo
-
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
             System.out.println("GEN = "+genCounter);//todo

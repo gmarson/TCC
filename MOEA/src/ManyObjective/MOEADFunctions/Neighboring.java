@@ -59,7 +59,6 @@ public class Neighboring {
             if (neighboring.size() > Constants.NEIGHBOURHOOD_SIZE) neighboring.remove(neighboring.size() -1 );
         }
 
-        //TODO INSERIR ORDENADO NAO EH NECESSARIO
 
     }
 }
