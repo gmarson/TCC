@@ -35,6 +35,7 @@ public class TableAEMMD extends TableFunctions{
 
         for(Table table: tables)
         {
+            //todo tem que otimizar aki
             table.tablePopulation = p.deepCopy();
             problem.evaluateAgainstMask(table.tablePopulation,table.mask);
             table.organizeNonDominatedTable(false);
@@ -51,6 +52,7 @@ public class TableAEMMD extends TableFunctions{
 
             if (!Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem))
             {
+                //todo tem que otimizar aki
                 table.tablePopulation.addMember(newMember.deepCopy());
                 table.organizeNonDominatedTable(false);
 

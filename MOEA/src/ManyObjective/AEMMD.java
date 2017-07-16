@@ -25,13 +25,15 @@ public class AEMMD {
 
         p.population = problem.generateMembers(Constants.POPULATION_SIZE * Constants.QTD_TABLES);
 
+        System.out.println("oi");//todo
         tableAEMMD.fillTables(p);
+        System.out.println("oi");//todo
 
         tableAEMMD.mainLoop();
 
         //Printer.printTables(tableAEMMD);//todo
-        Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);//todo
-        Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
+        //Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);//todo
+        //Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
 
         saveParetto(problem);
         reset(problem);

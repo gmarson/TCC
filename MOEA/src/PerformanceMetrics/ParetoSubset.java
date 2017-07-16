@@ -11,6 +11,7 @@ public class ParetoSubset extends Metrics{
 
     private double gotRight;
     private double result;
+    private double bestParetoSize;
     public ParetoSubset(Problem problem) {
         super(problem);
         gotRight = 0.0;
@@ -30,12 +31,14 @@ public class ParetoSubset extends Metrics{
                 this.gotRight++;
             }
         }
+        bestParetoSize = bestPareto.population.size();
         result =  ((double) this.gotRight / (double) bestPareto.population.size()) * 100.00;
     }
 
 
     @Override
     public void messageAfterProcess() {
+        System.out.println("Quantidade de elementos no Paretto: "+bestParetoSize);
         System.out.println("(ps) Porcentagem dos elementos da fronteira achada que estão na fronteira de pareto: "+result);
         System.out.println("(ps - qtd) Quantidade dos elementos da fronteira achada que estão na fronteira de pareto: "+gotRight);
 

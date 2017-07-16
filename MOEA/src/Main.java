@@ -16,9 +16,9 @@ import java.io.File;
 
 public class Main {
 
-    //private static String fileName = "KP_p-3_n-20_ins-1";
+    private static String fileName = "KP_p-3_n-30_ins-1";
     //private static String fileName = "KPTESTE";
-    private static String fileName = "KPTIAGO";
+    //private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
@@ -31,8 +31,8 @@ public class Main {
 
         //spaceOfObjectives();
         //writeParettoFromProblem();
-        //compareToParettoFront();
-        normal();
+        compareToParettoFront();
+        //normal();
 
     }
 
@@ -43,11 +43,11 @@ public class Main {
         //Problem problem = new ProblemKnapsack();
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
-        //NSGAII algorithm = new NSGAII();
+        NSGAII algorithm = new NSGAII();
         //SPEA2 algorithm = new SPEA2();
         //AEMMT algorithm = new AEMMT();
         //AEMMD algorithm = new AEMMD();
-        MOEAD algorithm = new MOEAD();
+        //MOEAD algorithm = new MOEAD();
 
         int x =1;
         int counter = 0;
@@ -77,10 +77,10 @@ public class Main {
 
         //nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
-        moead.runAlgorithm(problem);
+        //moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS = 30000;
-        //aemmt.runAlgorithm(problem);
+        aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
 
@@ -110,8 +110,6 @@ public class Main {
 
         generationalDistance.estimateBasedOnMetric(newPopulation,parettoPopulation);
         generationalDistance.messageAfterProcess();
-
-
     }
 
     //Do not call this
@@ -130,23 +128,27 @@ public class Main {
 
         for (int i = 0; i < numberOfRounds; i++) {
 
-            Constants.NUMBER_OF_GENERATIONS = 400;
+            Constants.NUMBER_OF_GENERATIONS = 150;
 
+            System.out.println("NSGAII");
             nsgaii.runAlgorithm(problem);
             allFrontsMembers.population.addAll(nsgaii.paretto.membersAtThisFront);
 
+            System.out.println("SPEA2");
             spea2.runAlgorithm(problem);
             allFrontsMembers.population.addAll(spea2.paretto.membersAtThisFront);
 
-            moead.runAlgorithm(problem);
-            allFrontsMembers.population.addAll( moead.paretto.membersAtThisFront);
+            //moead.runAlgorithm(problem);
+            //allFrontsMembers.population.addAll( moead.paretto.membersAtThisFront);
 
             Constants.NUMBER_OF_GENERATIONS = 30000;
+            System.out.println("AEMMT");
             aemmt.runAlgorithm(problem);
             allFrontsMembers.population.addAll(aemmt.paretto.membersAtThisFront);
 
-            aemmd.runAlgorithm(problem);
-            allFrontsMembers.population.addAll(aemmd.paretto.membersAtThisFront);
+//            System.out.println("AEMMD");
+//            aemmd.runAlgorithm(problem);
+//            allFrontsMembers.population.addAll(aemmd.paretto.membersAtThisFront);
 
             progressBar.addJobDone();
 
@@ -171,8 +173,6 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -184,9 +184,7 @@ public class Main {
         catch (Exception e){
             e.printStackTrace();
         }
-
         return paretto;
-
     }
 
     static void currentDirectory(){
