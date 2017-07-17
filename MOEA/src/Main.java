@@ -16,9 +16,9 @@ import java.io.File;
 
 public class Main {
 
-    private static String fileName = "KP_p-3_n-30_ins-1";
+    //private static String fileName = "KP_p-3_n-30_ins-1";
     //private static String fileName = "KPTESTE";
-    //private static String fileName = "KPTIAGO";
+    private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
@@ -31,8 +31,8 @@ public class Main {
 
         //spaceOfObjectives();
         //writeParettoFromProblem();
-        compareToParettoFront();
-        //normal();
+        //compareToParettoFront();
+        normal();
 
     }
 
@@ -43,10 +43,10 @@ public class Main {
         //Problem problem = new ProblemKnapsack();
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
-        NSGAII algorithm = new NSGAII();
+        //NSGAII algorithm = new NSGAII();
         //SPEA2 algorithm = new SPEA2();
         //AEMMT algorithm = new AEMMT();
-        //AEMMD algorithm = new AEMMD();
+        AEMMD algorithm = new AEMMD();
         //MOEAD algorithm = new MOEAD();
 
         int x =1;

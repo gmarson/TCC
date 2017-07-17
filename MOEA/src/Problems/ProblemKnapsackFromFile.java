@@ -99,7 +99,6 @@ public class ProblemKnapsackFromFile  extends  Problem{
             functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (-1 * functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
-
     }
 
     @Override
