@@ -31,8 +31,8 @@ public class AEMMD {
 
         tableAEMMD.mainLoop();
 
-        //Printer.printTables(tableAEMMD);//todo
-        //Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);//todo
+        Printer.printTables(tableAEMMD);//todo
+        Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);//todo
         //Printer.printBinaryValuesNonDominatedTable(tableAEMMD);//todo
 
         saveParetto(problem);

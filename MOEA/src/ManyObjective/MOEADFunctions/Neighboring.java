@@ -18,12 +18,11 @@ public class Neighboring {
 
         for(Member childMember: population.population)
         {
-            if(!cell.equals(childMember))
-            {
-                childMember.distanceFromParentMember = Utils.euclidianDistanceBasedOnDistanceVector(cell,childMember);
-                insertMemberByDistanceWithNeighborhoodLength(childMember.deepCopyForChildMembers(),cell.closestMembers);
-            }
-            childMember.distanceFromParentMember = Constants.DEFAULT_DISTANCE_VALUE;
+
+            childMember.distanceFromParentMember = Utils.euclidianDistanceBasedOnDistanceVector(cell,childMember);
+            insertMemberByDistanceWithNeighborhoodLength(childMember.deepCopyForChildMembers(),cell.closestMembers);
+
+            //childMember.distanceFromParentMember = Constants.DEFAULT_DISTANCE_VALUE;
         }
     }
 
@@ -42,7 +41,7 @@ public class Neighboring {
 
     private static void insertMemberByDistanceWithNeighborhoodLength(Member memberToBeInserted, ArrayList<Member> neighboring){
 
-        if (neighboring.isEmpty())
+        if (neighboring.size() < Constants.NEIGHBOURHOOD_SIZE)
             neighboring.add(memberToBeInserted);
         else
         {
@@ -50,11 +49,12 @@ public class Neighboring {
 
             for (i = 0; i < neighboring.size(); i++) {
                 if (memberToBeInserted.distanceFromParentMember < neighboring.get(i).distanceFromParentMember){
+                    neighboring.add(i,memberToBeInserted);
                     break;
                 }
             }
 
-            neighboring.add(i,memberToBeInserted);
+
 
             if (neighboring.size() > Constants.NEIGHBOURHOOD_SIZE) neighboring.remove(neighboring.size() -1 );
         }

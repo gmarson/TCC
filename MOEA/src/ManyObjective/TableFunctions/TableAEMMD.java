@@ -33,12 +33,12 @@ public class TableAEMMD extends TableFunctions{
     @Override
     public void fillTables(Population p) {
 
+        problem.evaluateAgainstObjectiveFunctions(p);
+
         for(Table table: tables)
         {
-            //todo tem que otimizar aki
             table.tablePopulation = p.deepCopy();
-            problem.evaluateAgainstMask(table.tablePopulation,table.mask);
-            table.organizeNonDominatedTable(false);
+            table.organizeNonDominatedMaskedTable(false);
         }
 
     }
@@ -48,13 +48,14 @@ public class TableAEMMD extends TableFunctions{
 
         for (Table table :tables)
         {
-            problem.applyFunctionsGivenMask(newMember,table.mask);
+
+            problem.applyFunctions(newMember);
+
 
             if (!Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem))
             {
-                //todo tem que otimizar aki
                 table.tablePopulation.addMember(newMember.deepCopy());
-                table.organizeNonDominatedTable(false);
+                table.organizeNonDominatedMaskedTable(false);
 
                 if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
                     table.convergence++;

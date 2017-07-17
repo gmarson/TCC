@@ -38,7 +38,7 @@ public abstract class Printer
 
 
         for(Member m : p.population){
-            System.out.print("Membro de vetor de distancia: ");
+            System.out.print("Vetor de pesos da celula: ");
             for (int i = 0; i <m.weightVector.vector.length ; i++) {
                 System.out.print(m.weightVector.vector[i]+" ");
             }
@@ -46,8 +46,11 @@ public abstract class Printer
             System.out.println("\nValor dos membros na vizinhanca");
             for (Member childMember : m.closestMembers)
             {
-                System.out.println(childMember.value);
+                System.out.println("Binary Value: "+childMember);
+                System.out.println("Distance from Cell: "+childMember.distanceFromParentMember);
             }
+
+            System.out.println();
 
         }
     }
@@ -420,4 +423,6 @@ public abstract class Printer
             System.out.println(Arrays.toString(table.mask));
         }
     }
+
+
 }

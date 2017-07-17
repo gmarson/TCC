@@ -7,8 +7,6 @@ import Problems.Problem;
 import Utilities.Printer;
 import Fronts.*;
 import Utilities.Utils;
-
-
 /**
  * Created by gabrielm on 01/04/17.
  */
@@ -27,7 +25,8 @@ public class MOEAD {
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
         SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
         Neighboring.setNeighboursForAllMembers(moeadPopulation);
-        populateNonDominatedPopulation(problem);
+        //Printer.printNeighboring(moeadPopulation);//todo
+        //Utils.stop();//todo
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
@@ -35,34 +34,19 @@ public class MOEAD {
 
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
-            nonDominatedPopulation.removeAllButNonDominated();
-
-            Problem.removeSimilar(nonDominatedPopulation,problem);
-
             genCounter++;
         }
 
         saveParetto();
 
-        Population aux = new Population();
-        aux.population = paretto.membersAtThisFront;
-
-
         //System.out.println("Tamanho: "+aux.population.size());//todo
         //Printer.printMembersValue(aux);//todo
-        Printer.printBinaryMembersWithAppliedFunctions(aux);//todo
+        Printer.printBinaryMembersWithAppliedFunctions(nonDominatedPopulation);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo
 
         reset();
     }
 
-    private void populateNonDominatedPopulation(Problem problem) {
-        for (Member member:moeadPopulation.population)
-        {
-            if (!Problem.valueOfMemberIsPresent(member,nonDominatedPopulation,problem))
-                nonDominatedPopulation.addMember(member.deepCopy());
-        }
-    }
 
     private void reset(){
         moeadPopulation = new Population();

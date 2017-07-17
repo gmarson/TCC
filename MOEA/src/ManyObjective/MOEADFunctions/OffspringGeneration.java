@@ -1,5 +1,6 @@
 package ManyObjective.MOEADFunctions;
 
+import Dominance.Dominance;
 import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
@@ -30,41 +31,26 @@ public class OffspringGeneration {
             Member cell = population.population.get(i);
             ArrayList<Member> children = generateChildrenGivenNeighboring(cell.closestMembers , problem);
 
-            insertion(cell,children.get(0),population,i);
-            insertion(cell,children.get(1),population,i);
+            addToMOEADNonDominatedPopulation(children.get(0).deepCopy());
+            insertion(cell,children.get(0));
         }
 
     }
 
-    private static void insertion(Member cell, Member child, Population population,int indexOf){
-        calculateSolutions(cell,child);
-        if (cell.solution > child.solution)
-        {
-            replaceMember(cell,child.deepCopy(),population,indexOf);
-            addToMOEADNonDominatedPopulation(child.deepCopy());
-        }
-
-        insertionForNeighborhood(cell,child);
-    }
-
-    private static void insertionForNeighborhood(Member cell, Member child) {
+    private static void insertion(Member cell, Member child) {
 
         for (int i = 0; i < cell.closestMembers.size(); i++)
         {
             Member neighborhoodMember = cell.closestMembers.get(i);
 
             calculateSolutions(neighborhoodMember,child);
+
             if (neighborhoodMember.solution > child.solution)
             {
+
                 cell.closestMembers.set(i,child.deepCopy());
-                addToMOEADNonDominatedPopulation(child.deepCopy());
             }
         }
-    }
-
-    private static void replaceMember(Member cell, Member child, Population population,int indexOf) {
-        child.closestMembers = cell.closestMembers;
-        population.population.set(indexOf,child);
     }
 
     private static void calculateSolutions(Member memberInsideCell, Member child){
@@ -72,11 +58,15 @@ public class OffspringGeneration {
         SolutionWeightedSum.calculateSolution(child);
     }
 
-    private static void addToMOEADNonDominatedPopulation(Member member){
-        member.solution = -1.0;
-        member.weightVector = null;
-        member.closestMembers = null;
-        MOEAD.nonDominatedPopulation.addMember(member);
+    private static void addToMOEADNonDominatedPopulation(Member memberToBeInserted){
+        memberToBeInserted.solution = -1.0;
+        memberToBeInserted.weightVector = null;
+        memberToBeInserted.closestMembers = null;
+        Dominance dominance = new Dominance();
+        MOEAD.nonDominatedPopulation.addMember(memberToBeInserted);
+        MOEAD.nonDominatedPopulation.removeAllButNonDominated();
+
+
     }
 
 
