@@ -30,23 +30,17 @@ public class OffspringGeneration {
             Member cell = population.population.get(i);
             ArrayList<Member> children = generateChildrenGivenNeighboring(cell.closestMembers , problem);
 
-            insertion(cell,children.get(0),population,i);
-            insertion(cell,children.get(1),population,i);
+            addToMOEADNonDominatedPopulation(children.get(0).deepCopy());
+            insertion(cell,children.get(0));
         }
 
     }
 
-    private static void insertion(Member cell, Member child, Population population,int indexOf){
-        calculateSolutions(cell,child);
-        if (cell.solution > child.solution)
-        {
-            replaceMember(cell,child.deepCopy(),population,indexOf);
-            addToMOEADNonDominatedPopulation(child.deepCopy());
-        }
-
+    private static void insertion(Member cell, Member child){
         insertionForNeighborhood(cell,child);
     }
 
+    public static int counter =0;
     private static void insertionForNeighborhood(Member cell, Member child) {
 
         for (int i = 0; i < cell.closestMembers.size(); i++)
@@ -54,17 +48,14 @@ public class OffspringGeneration {
             Member neighborhoodMember = cell.closestMembers.get(i);
 
             calculateSolutions(neighborhoodMember,child);
+
             if (neighborhoodMember.solution > child.solution)
             {
+                counter++;
                 cell.closestMembers.set(i,child.deepCopy());
-                addToMOEADNonDominatedPopulation(child.deepCopy());
+
             }
         }
-    }
-
-    private static void replaceMember(Member cell, Member child, Population population,int indexOf) {
-        child.closestMembers = cell.closestMembers;
-        population.population.set(indexOf,child);
     }
 
     private static void calculateSolutions(Member memberInsideCell, Member child){

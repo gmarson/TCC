@@ -7,8 +7,6 @@ import Problems.Problem;
 import Utilities.Printer;
 import Fronts.*;
 import Utilities.Utils;
-
-
 /**
  * Created by gabrielm on 01/04/17.
  */
@@ -27,7 +25,11 @@ public class MOEAD {
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
         SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
         Neighboring.setNeighboursForAllMembers(moeadPopulation);
-        populateNonDominatedPopulation(problem);
+        //Printer.printNeighboring(moeadPopulation);//todo
+        //Utils.stop();//todo
+
+
+        //populateNonDominatedPopulation(problem);
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
@@ -35,6 +37,7 @@ public class MOEAD {
 
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
+            //todo inserir ordenado aki
             nonDominatedPopulation.removeAllButNonDominated();
 
             Problem.removeSimilar(nonDominatedPopulation,problem);
@@ -42,6 +45,7 @@ public class MOEAD {
             genCounter++;
         }
 
+        System.out.println("Counter:"+ OffspringGeneration.counter);//todo
         saveParetto();
 
         Population aux = new Population();
@@ -50,7 +54,7 @@ public class MOEAD {
 
         //System.out.println("Tamanho: "+aux.population.size());//todo
         //Printer.printMembersValue(aux);//todo
-        Printer.printBinaryMembersWithAppliedFunctions(aux);//todo
+        Printer.printBinaryMembersWithAppliedFunctions(nonDominatedPopulation);//todo
         //Printer.printMembersWithAppliedFunctions(aux);//todo
 
         reset();
