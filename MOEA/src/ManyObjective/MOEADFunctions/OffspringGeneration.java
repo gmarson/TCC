@@ -1,5 +1,6 @@
 package ManyObjective.MOEADFunctions;
 
+import Dominance.Dominance;
 import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
@@ -36,12 +37,7 @@ public class OffspringGeneration {
 
     }
 
-    private static void insertion(Member cell, Member child){
-        insertionForNeighborhood(cell,child);
-    }
-
-    public static int counter =0;
-    private static void insertionForNeighborhood(Member cell, Member child) {
+    private static void insertion(Member cell, Member child) {
 
         for (int i = 0; i < cell.closestMembers.size(); i++)
         {
@@ -51,9 +47,8 @@ public class OffspringGeneration {
 
             if (neighborhoodMember.solution > child.solution)
             {
-                counter++;
-                cell.closestMembers.set(i,child.deepCopy());
 
+                cell.closestMembers.set(i,child.deepCopy());
             }
         }
     }
@@ -63,11 +58,15 @@ public class OffspringGeneration {
         SolutionWeightedSum.calculateSolution(child);
     }
 
-    private static void addToMOEADNonDominatedPopulation(Member member){
-        member.solution = -1.0;
-        member.weightVector = null;
-        member.closestMembers = null;
-        MOEAD.nonDominatedPopulation.addMember(member);
+    private static void addToMOEADNonDominatedPopulation(Member memberToBeInserted){
+        memberToBeInserted.solution = -1.0;
+        memberToBeInserted.weightVector = null;
+        memberToBeInserted.closestMembers = null;
+        Dominance dominance = new Dominance();
+        MOEAD.nonDominatedPopulation.addMember(memberToBeInserted);
+        MOEAD.nonDominatedPopulation.removeAllButNonDominated();
+
+
     }
 
 

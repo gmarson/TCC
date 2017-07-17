@@ -28,29 +28,16 @@ public class MOEAD {
         //Printer.printNeighboring(moeadPopulation);//todo
         //Utils.stop();//todo
 
-
-        //populateNonDominatedPopulation(problem);
-
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
             System.out.println("GEN = "+genCounter);//todo
 
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
-            //todo inserir ordenado aki
-            nonDominatedPopulation.removeAllButNonDominated();
-
-            Problem.removeSimilar(nonDominatedPopulation,problem);
-
             genCounter++;
         }
 
-        System.out.println("Counter:"+ OffspringGeneration.counter);//todo
         saveParetto();
-
-        Population aux = new Population();
-        aux.population = paretto.membersAtThisFront;
-
 
         //System.out.println("Tamanho: "+aux.population.size());//todo
         //Printer.printMembersValue(aux);//todo
@@ -60,13 +47,6 @@ public class MOEAD {
         reset();
     }
 
-    private void populateNonDominatedPopulation(Problem problem) {
-        for (Member member:moeadPopulation.population)
-        {
-            if (!Problem.valueOfMemberIsPresent(member,nonDominatedPopulation,problem))
-                nonDominatedPopulation.addMember(member.deepCopy());
-        }
-    }
 
     private void reset(){
         moeadPopulation = new Population();
