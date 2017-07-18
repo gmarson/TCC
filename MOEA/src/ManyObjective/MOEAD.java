@@ -34,8 +34,12 @@ public class MOEAD {
 
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
+            MOEAD.nonDominatedPopulation.removeAllButNonDominated();
+
             genCounter++;
         }
+
+
 
         saveParetto();
 

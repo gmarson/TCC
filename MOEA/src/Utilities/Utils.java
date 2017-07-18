@@ -13,7 +13,7 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    private static Random random = new Random(Constants.SEED);
+    private static Random random = new Random();
 
     private static Scanner s = new Scanner(System.in);
     public static void setSeed(int SEED)
@@ -121,10 +121,11 @@ public abstract class Utils {
 
     }
 
-    public static double euclidianDistanceBasedOnDistanceVector(Member parentMember, Member childMember){
+    public static double euclideanDistanceBasedOnWeightVector(Member cell, Member childMember){
         double result = 0.0, difference;
-        for (int i = 0; i < parentMember.weightVector.vector.length; i++) {
-            difference = parentMember.weightVector.vector[i] - childMember.weightVector.vector[i];
+
+        for (int i = 0; i < cell.weightVector.vector.length; i++) {
+            difference = cell.weightVector.vector[i] - childMember.weightVector.vector[i];
             result += pow(difference,2);
         }
         return sqrt(result);

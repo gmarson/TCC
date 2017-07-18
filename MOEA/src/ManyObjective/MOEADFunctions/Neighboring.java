@@ -2,7 +2,6 @@ package ManyObjective.MOEADFunctions;
 
 import Constants.Constants;
 import Population.*;
-import Utilities.Printer;
 import Utilities.Utils;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Neighboring {
         for(Member childMember: population.population)
         {
 
-            childMember.distanceFromParentMember = Utils.euclidianDistanceBasedOnDistanceVector(cell,childMember);
+            childMember.distanceFromParentMember = Utils.euclideanDistanceBasedOnWeightVector(cell,childMember);
             insertMemberByDistanceWithNeighborhoodLength(childMember.deepCopyForChildMembers(),cell.closestMembers);
 
             //childMember.distanceFromParentMember = Constants.DEFAULT_DISTANCE_VALUE;

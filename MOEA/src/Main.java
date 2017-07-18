@@ -1,13 +1,11 @@
 import Constants.Constants;
 import PerformanceMetrics.Erro;
 import PerformanceMetrics.GenerationalDistance;
-import PerformanceMetrics.InvertedError;
 import PerformanceMetrics.ParetoSubset;
 import Population.*;
 import Problems.*;
 import Utilities.*;
 import NSGAII.*;
-import Fronts.*;
 import SPEA2.*;
 import ManyObjective.*;
 
@@ -29,13 +27,20 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        Member m1 = new Member(32);
+        Member m2 = new Member(23);
+
+        m1.weightVector = new WeightVector();
+        m2.weightVector = new WeightVector();
+
+        double x = Utils.euclideanDistanceBasedOnWeightVector(m1,m2);
+
+
         //spaceOfObjectives();
         //writeParettoFromProblem();
         //compareToParettoFront();
         normal();
-
     }
-
 
     private static void normal(){
         //Problem problem = new ProblemSCH();
@@ -60,7 +65,6 @@ public class Main {
             algorithm.runAlgorithm(problem);
             counter++;
         }
-
     }
 
     private static void compareToParettoFront(){
@@ -70,26 +74,24 @@ public class Main {
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         NSGAII nsgaii = new NSGAII();
-        SPEA2 spea2 = new SPEA2();
-        AEMMT aemmt = new AEMMT();
-        AEMMD aemmd = new AEMMD();
-        MOEAD moead = new MOEAD();
+        SPEA2  spea2 = new SPEA2();
+        AEMMT  aemmt = new AEMMT();
+        AEMMD  aemmd = new AEMMD();
+        MOEAD  moead = new MOEAD();
 
         //nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
-        //moead.runAlgorithm(problem);
+        moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS = 30000;
-        aemmt.runAlgorithm(problem);
+        //aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
-
 
         Erro erro = new Erro(problem);
         ParetoSubset paretoSubset = new ParetoSubset(problem);
         GenerationalDistance generationalDistance = new GenerationalDistance(problem);
 
         Population newPopulation = new Population();
-
 
         if(!nsgaii.paretto.membersAtThisFront.isEmpty())
             newPopulation.population = nsgaii.paretto.membersAtThisFront;

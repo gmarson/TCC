@@ -63,8 +63,10 @@ public class OffspringGeneration {
         memberToBeInserted.weightVector = null;
         memberToBeInserted.closestMembers = null;
         Dominance dominance = new Dominance();
+
         MOEAD.nonDominatedPopulation.addMember(memberToBeInserted);
-        MOEAD.nonDominatedPopulation.removeAllButNonDominated();
+
+
 
 
     }

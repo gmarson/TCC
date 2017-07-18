@@ -22,8 +22,6 @@ public class ParetoSubset extends Metrics{
     @Override
     public void estimateBasedOnMetric(Population population, Population bestPareto) {
 
-        Printer.printBinaryMembers(population);//todo
-
         for (Member normalMember: population.population)
         {
             if ( isIn(normalMember,bestPareto))
