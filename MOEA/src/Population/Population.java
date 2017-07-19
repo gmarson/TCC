@@ -65,7 +65,6 @@ public class Population implements Serializable, Cloneable {
         }
 
         population = aux;
-
     }
 
     private void resetDominanceStatus(){
@@ -156,8 +155,6 @@ public class Population implements Serializable, Cloneable {
         this.population.add(member);
     }
 
-
-
     public Population mergeWithCurrentPopulation(Population another)
     {
         Population mergedPopulation = new Population();
@@ -173,7 +170,6 @@ public class Population implements Serializable, Cloneable {
         ArrayList<Member> p2 = new ArrayList<>(archive.population);
         this.population.addAll(p1);
         this.population.addAll(p2);
-
 
     }
 

@@ -38,7 +38,7 @@ public abstract class Printer
 
 
         for(Member m : p.population){
-            System.out.print("Vetor de pesos da celula: ");
+            System.out.print("---- Vetor de pesos da celula -----");
             for (int i = 0; i <m.weightVector.vector.length ; i++) {
                 System.out.print(m.weightVector.vector[i]+" ");
             }
@@ -46,8 +46,17 @@ public abstract class Printer
             System.out.println("\nValor dos membros na vizinhanca");
             for (Member childMember : m.closestMembers)
             {
-                System.out.println("Binary Value: "+childMember);
+                System.out.println("\nBinary Value: "+childMember);
                 System.out.println("Distance from Cell: "+childMember.distanceFromParentMember);
+                int j =1;
+                for (Double d: childMember.resultOfFunctions)
+                {
+                    System.out.println("Function = "+ j+" = "+d);
+                    j++;
+                }
+
+                System.out.println("Solution: "+childMember.solution);
+
             }
 
             System.out.println();
@@ -163,8 +172,11 @@ public abstract class Printer
                 j++;
 
             }
-            System.out.println("Rank = "+m.rank + "\n");
+            System.out.println("Rank = "+m.rank );
             i++;
+
+            System.out.println("Solution: "+m.solution+ "\n");
+
         }
     }
 

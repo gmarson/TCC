@@ -19,7 +19,7 @@ public class WeightVector implements Serializable{
         vector = this.generateWeightVector();
     }
 
-    public WeightVector(WeightVector wv)
+    WeightVector(WeightVector wv)
     {
         this.vector = wv.vector;
         this.TOTAL_SUM = wv.TOTAL_SUM;
@@ -32,6 +32,7 @@ public class WeightVector implements Serializable{
 
             Utils.insertDataOnCrescentOrderedArray(Utils.getRandomDouble(0.0,1.0),numbers);
         }
+
         numbers.add(0,0.0);
         numbers.add(numbers.size(),1.0);
 

@@ -25,7 +25,6 @@ public abstract class  Constants {
 
     //ONLY MOEA-D
     public static int NEIGHBOURHOOD_SIZE = 10;
-    public static double DEFAULT_DISTANCE_VALUE = -1.0;
 
     //PROBLEM CONSTANTS
     public static int PROBLEM_SIZE;

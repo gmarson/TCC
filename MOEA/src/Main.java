@@ -27,15 +27,6 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Member m1 = new Member(32);
-        Member m2 = new Member(23);
-
-        m1.weightVector = new WeightVector();
-        m2.weightVector = new WeightVector();
-
-        double x = Utils.euclideanDistanceBasedOnWeightVector(m1,m2);
-
-
         //spaceOfObjectives();
         //writeParettoFromProblem();
         //compareToParettoFront();

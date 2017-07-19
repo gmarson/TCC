@@ -13,20 +13,19 @@ import Utilities.Utils;
 public class MOEAD {
 
     public static Population nonDominatedPopulation = new Population();
-    private Population moeadPopulation = new Population();
+    private static Population moeadPopulation = new Population();
     private int genCounter = 0;
     public Front paretto = new Front();
 
     public void runAlgorithm(Problem problem)
     {
-        moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
+        moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE );
         Neighboring.createWeightVectorForPopulation(moeadPopulation);
 
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
+
         SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
         Neighboring.setNeighboursForAllMembers(moeadPopulation);
-        //Printer.printNeighboring(moeadPopulation);//todo
-        //Utils.stop();//todo
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
@@ -34,19 +33,15 @@ public class MOEAD {
 
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
-            MOEAD.nonDominatedPopulation.removeAllButNonDominated();
+            nonDominatedPopulation.removeAllButNonDominated();
 
             genCounter++;
         }
 
-
-
         saveParetto();
 
-        //System.out.println("Tamanho: "+aux.population.size());//todo
-        //Printer.printMembersValue(aux);//todo
+        //Printer.printNeighboring(moeadPopulation);//todo
         Printer.printBinaryMembersWithAppliedFunctions(nonDominatedPopulation);//todo
-        //Printer.printMembersWithAppliedFunctions(aux);//todo
 
         reset();
     }

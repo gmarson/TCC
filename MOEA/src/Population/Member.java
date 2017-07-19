@@ -53,6 +53,13 @@ public class Member implements Serializable, Cloneable{
         this.value = value;
     }
 
+    public Member(String bValue){
+        char[] binaryVector = bValue.toCharArray();
+        for (int i = 0, n = binaryVector.length; i < n; i++) {
+             binaryValue.add((int) binaryVector[i]);
+        }
+    }
+
     public Member deepCopyForChildMembers(){
         Member newMember = new Member(this.value);
         newMember.solution = this.solution;

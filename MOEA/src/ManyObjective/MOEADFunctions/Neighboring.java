@@ -17,11 +17,8 @@ public class Neighboring {
 
         for(Member childMember: population.population)
         {
-
             childMember.distanceFromParentMember = Utils.euclideanDistanceBasedOnWeightVector(cell,childMember);
             insertMemberByDistanceWithNeighborhoodLength(childMember.deepCopyForChildMembers(),cell.closestMembers);
-
-            //childMember.distanceFromParentMember = Constants.DEFAULT_DISTANCE_VALUE;
         }
     }
 
@@ -42,22 +39,17 @@ public class Neighboring {
 
         if (neighboring.size() < Constants.NEIGHBOURHOOD_SIZE)
             neighboring.add(memberToBeInserted);
-        else
-        {
+        else {
             int i;
 
             for (i = 0; i < neighboring.size(); i++) {
-                if (memberToBeInserted.distanceFromParentMember < neighboring.get(i).distanceFromParentMember){
-                    neighboring.add(i,memberToBeInserted);
+                if (memberToBeInserted.distanceFromParentMember < neighboring.get(i).distanceFromParentMember) {
+                    neighboring.add(i, memberToBeInserted);
                     break;
                 }
             }
 
-
-
-            if (neighboring.size() > Constants.NEIGHBOURHOOD_SIZE) neighboring.remove(neighboring.size() -1 );
+            if (neighboring.size() > Constants.NEIGHBOURHOOD_SIZE) neighboring.remove(neighboring.size() - 1);
         }
-
-
     }
 }

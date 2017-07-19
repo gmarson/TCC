@@ -25,7 +25,7 @@ public class AEMMT {
         tableAEMMT.fillTables(p);
         tableAEMMT.mainLoop();
 
-        Printer.printBinaryMembersWithAppliedFunctions(TableAEMMT.nonDominatedMembers);
+        Printer.printBinaryMembersWithAppliedFunctions(TableAEMMT.nonDominatedMembers);//todo
         //problem.printResolutionMessage();//todo
         //Printer.printNonDominatedTable(tableAEMMT);//todo
         //Printer.printBinaryValuesNonDominatedTable(tableAEMMT);//todo
