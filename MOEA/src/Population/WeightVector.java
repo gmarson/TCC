@@ -25,6 +25,26 @@ public class WeightVector implements Serializable{
         this.TOTAL_SUM = wv.TOTAL_SUM;
     }
 
+
+    private double[] generateWeightVectorNormalizing(){
+        double[] weightVector = new double[Constants.PROBLEM_SIZE];
+        double sum=0;
+
+        for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {
+            weightVector[i] = Utils.getRandomDouble(0,1000);
+            sum += weightVector[i];
+        }
+
+
+
+        for (int i = 0; i <Constants.PROBLEM_SIZE ; i++) {
+            weightVector[i] /= sum;
+        }
+
+        return weightVector;
+
+    }
+
     private double[] generateWeightVector(){
         ArrayList<Double> numbers = new ArrayList<>();
 

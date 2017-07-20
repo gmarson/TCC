@@ -33,9 +33,14 @@ public abstract class  Problem {
             if (m == member) return  true;
         }
         return false;
-
     }
 
+    public static boolean valueOfMemberIsPresent(Member member, ArrayList<Member> neighborhood, Problem problem){
+        if(ProblemKnapsack.class.isInstance(problem) || ProblemKnapsackFromFile.class.isInstance(problem))
+            return checkUsingBinaryValue( member,  neighborhood);
+        else
+            return checkUsingDecimalValue( member,  neighborhood);
+    }
 
     public static boolean valueOfMemberIsPresent(Member member, Population p, Problem problem){
         if(ProblemKnapsack.class.isInstance(problem) || ProblemKnapsackFromFile.class.isInstance(problem))
@@ -57,6 +62,25 @@ public abstract class  Problem {
 
     private static boolean checkUsingDecimalValue(Member member, Population p){
         for(Member m: p.population)
+        {
+            if (m.value == member.value) return  true;
+        }
+        return false;
+    }
+
+    private static boolean checkUsingBinaryValue(Member member, ArrayList<Member> p){
+        for(Member m: p)
+        {
+            if (isEqual(m,member))
+            {
+                return  true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean checkUsingDecimalValue(Member member, ArrayList<Member> p){
+        for(Member m: p)
         {
             if (m.value == member.value) return  true;
         }

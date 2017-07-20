@@ -26,26 +26,28 @@ public class OffspringGeneration {
 
     public static void updateNeighboring(Population population, Problem problem){
 
-        for (int i = 0; i < population.population.size(); i++) {
-            boolean add = false;
-            Member cell = population.population.get(i);
+        for (Member cell: population.population){
             Member child = generateChildrenGivenNeighboring(cell.closestMembers , problem);
 
-            //TODO VERIFICAR SE NAO ESTOU INSERINDO IGUAL
+
             addToNonDominatedPopulation(child.deepCopy());
-            insertion(cell,child);
+            if (!Problem.valueOfMemberIsPresent(child,cell.closestMembers,problem)){
+
+                insertion(cell,child);
+            }
         }
+
     }
 
     private static void insertion(Member cell, Member child) {
-
         for (int i = 0; i < cell.closestMembers.size(); i++) {
-
             Member neighborhoodMember = cell.closestMembers.get(i);
             SolutionWeightedSum.calculateSolution(child,neighborhoodMember.weightVector.vector);
 
             if (neighborhoodMember.solution > child.solution)
+            {
                 replaceMember(neighborhoodMember,child);
+            }
         }
     }
 

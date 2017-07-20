@@ -33,6 +33,7 @@ public class MOEAD {
 
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
+            Problem.removeSimilar(nonDominatedPopulation,problem);
             nonDominatedPopulation.removeAllButNonDominated();
 
             genCounter++;
@@ -42,7 +43,6 @@ public class MOEAD {
 
         //Printer.printNeighboring(moeadPopulation);//todo
         Printer.printBinaryMembersWithAppliedFunctions(nonDominatedPopulation);//todo
-
         reset();
     }
 

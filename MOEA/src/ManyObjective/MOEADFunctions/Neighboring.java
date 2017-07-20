@@ -20,6 +20,7 @@ public class Neighboring {
             childMember.distanceFromParentMember = Utils.euclideanDistanceBasedOnWeightVector(cell,childMember);
             insertMemberByDistanceWithNeighborhoodLength(childMember.deepCopyForChildMembers(),cell.closestMembers);
         }
+
     }
 
     public static void setNeighboursForAllMembers(Population population){
