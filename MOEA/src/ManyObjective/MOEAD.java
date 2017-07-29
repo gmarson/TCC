@@ -33,9 +33,6 @@ public class MOEAD {
 
             OffspringGeneration.updateNeighboring(moeadPopulation,problem);
 
-            Problem.removeSimilar(nonDominatedPopulation,problem);
-            nonDominatedPopulation.removeAllButNonDominated();
-
             genCounter++;
         }
 

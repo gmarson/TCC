@@ -1,12 +1,11 @@
 package ManyObjective.MOEADFunctions;
 
-import Constants.Constants;
+import Dominance.Dominance;
 import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighboring;
 import Utilities.Utils;
-import com.sun.tools.internal.jxc.ap.Const;
 
 import java.util.ArrayList;
 
@@ -29,25 +28,21 @@ public class OffspringGeneration {
         for (Member cell: population.population){
             Member child = generateChildrenGivenNeighboring(cell.closestMembers , problem);
 
+            addToNonDominatedPopulation(child.deepCopy(), problem);
 
-            addToNonDominatedPopulation(child.deepCopy());
-            if (!Problem.valueOfMemberIsPresent(child,cell.closestMembers,problem)){
+            addToNeighborhood(cell,child);
 
-                insertion(cell,child);
-            }
         }
-
     }
 
-    private static void insertion(Member cell, Member child) {
-        for (int i = 0; i < cell.closestMembers.size(); i++) {
-            Member neighborhoodMember = cell.closestMembers.get(i);
-            SolutionWeightedSum.calculateSolution(child,neighborhoodMember.weightVector.vector);
+    private static void addToNeighborhood(Member cell, Member child) {
 
-            if (neighborhoodMember.solution > child.solution)
-            {
+        for(Member neighborhoodMember : cell.closestMembers){
+            SolutionWeightedSum.calculateSolution(child,neighborhoodMember.weightVector.vector);
+            if(child.solution <= neighborhoodMember.solution){
                 replaceMember(neighborhoodMember,child);
             }
+
         }
     }
 
@@ -58,11 +53,27 @@ public class OffspringGeneration {
         neighborhoodMember.binaryValue = child.binaryValue;
     }
 
-    private static void addToNonDominatedPopulation(Member memberToBeInserted){
-        memberToBeInserted.weightVector = null;
-        memberToBeInserted.closestMembers = null;
+    private static void addToNonDominatedPopulation(Member member, Problem problem){
 
-        MOEAD.nonDominatedPopulation.addMember(memberToBeInserted);
+        Dominance dominance = new Dominance();
+        ArrayList<Member> toBeRemoved = new ArrayList<>();
+        boolean shouldAddNewMember = true;
+
+        if (Problem.valueOfMemberIsPresent(member,MOEAD.nonDominatedPopulation,problem)) return;
+
+        for (Member paretoMember : MOEAD.nonDominatedPopulation.population){
+
+            if (dominance.dominates(member,paretoMember)){
+                toBeRemoved.add(paretoMember);
+            }
+
+            if (dominance.dominates(paretoMember,member)){
+                shouldAddNewMember = false;
+            }
+        }
+
+        MOEAD.nonDominatedPopulation.population.removeAll(toBeRemoved);
+        if (shouldAddNewMember) MOEAD.nonDominatedPopulation.addMember(member);
     }
 
 }
