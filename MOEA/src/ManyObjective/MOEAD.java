@@ -6,7 +6,7 @@ import Population.*;
 import Problems.Problem;
 import Utilities.Printer;
 import Fronts.*;
-import Utilities.Utils;
+
 /**
  * Created by gabrielm on 01/04/17.
  */
@@ -14,31 +14,23 @@ public class MOEAD {
 
     public static Population nonDominatedPopulation = new Population();
     private static Population moeadPopulation = new Population();
-    private int genCounter = 0;
-    public Front paretto = new Front();
+
+    public Front pareto = new Front();
 
     public void runAlgorithm(Problem problem)
     {
-        moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE );
-        Neighboring.createWeightVectorForPopulation(moeadPopulation);
-
+        moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
 
-        SolutionWeightedSum.calculateSolutionForPopulation(moeadPopulation);
-        Neighboring.setNeighboursForAllMembers(moeadPopulation);
+        ScalarizeWeightedSum.calculateSolutionForPopulation(moeadPopulation);
 
-        while (genCounter < Constants.NUMBER_OF_GENERATIONS){
+        MOEADFunctions.Neighboring.setNeighboursForAllMembers(moeadPopulation);
 
-            System.out.println("GEN = "+genCounter);//todo
-
-            OffspringGeneration.updateNeighboring(moeadPopulation,problem);
-
-            genCounter++;
-        }
+        MOEADFunctions.mainLoop(moeadPopulation,problem);
 
         saveParetto();
 
-        //Printer.printNeighboring(moeadPopulation);//todo
+        Printer.printNeighboring(moeadPopulation);//todo
         Printer.printBinaryMembersWithAppliedFunctions(nonDominatedPopulation);//todo
         reset();
     }
@@ -46,13 +38,13 @@ public class MOEAD {
 
     private void reset(){
         moeadPopulation = new Population();
-        genCounter = 0;
+        MOEADFunctions.genCounter = 0;
         nonDominatedPopulation = new Population();
     }
 
     private void saveParetto(){
-        paretto = new Front();
-        paretto.membersAtThisFront = nonDominatedPopulation.population;
+        pareto = new Front();
+        pareto.membersAtThisFront = nonDominatedPopulation.population;
     }
 
 }

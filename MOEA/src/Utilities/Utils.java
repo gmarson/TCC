@@ -128,6 +128,7 @@ public abstract class Utils {
             difference = cell.weightVector.vector[i] - childMember.weightVector.vector[i];
             result += pow(difference,2);
         }
+
         return sqrt(result);
     }
 

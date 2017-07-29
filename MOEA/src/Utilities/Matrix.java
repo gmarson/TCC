@@ -15,6 +15,8 @@ public class Matrix {
     public int[][] decimalMatrix;
     public int[] sizeOfNonZeroElementsInDecimalMatrixRow;
 
+
+
     public Matrix(int rows, int columns) {
         setDimensions(rows,columns);
         distance = new double[rows][columns];

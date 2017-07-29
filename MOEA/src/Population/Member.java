@@ -1,12 +1,7 @@
 package Population;
 
-import Constants.Constants;
-import Utilities.Utils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by gmarson on 12/21/2016.
@@ -41,10 +36,10 @@ public class Member implements Serializable, Cloneable{
     public int[] parentTableMask2;
 
     //MOEA-D Variables
-    public WeightVector weightVector ;
+    public WeightVector weightVector = new WeightVector();
     public double solution = -1.0;
     public double distanceFromParentMember = -1.0;
-    public ArrayList<Member> closestMembers;
+    public ArrayList<Member> neighborhood;
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 
@@ -77,6 +72,7 @@ public class Member implements Serializable, Cloneable{
                 newMember.binaryValue.add(new Integer(i));
             }
         }
+
 
 
         if (this.weightVector != null)
@@ -119,11 +115,11 @@ public class Member implements Serializable, Cloneable{
         if (this.weightVector != null)
             newMember.weightVector = new WeightVector(this.weightVector);
 
-        if (closestMembers != null && !closestMembers.isEmpty()) {
-            newMember.closestMembers = new ArrayList<>();
-            for (Member m : this.closestMembers) {
+        if (neighborhood != null && !neighborhood.isEmpty()) {
+            newMember.neighborhood = new ArrayList<>();
+            for (Member m : this.neighborhood) {
 
-                newMember.closestMembers.add(m.deepCopy());
+                newMember.neighborhood.add(m.deepCopy());
             }
         }
 

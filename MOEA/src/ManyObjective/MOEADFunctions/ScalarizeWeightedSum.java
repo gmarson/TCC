@@ -1,5 +1,6 @@
 package ManyObjective.MOEADFunctions;
 
+import Constants.Constants;
 import Population.*;
 
 import java.util.Scanner;
@@ -7,8 +8,7 @@ import java.util.Scanner;
 /**
  * Created by gabrielm on 30/04/17.
  */
-public class SolutionWeightedSum {
-
+public class ScalarizeWeightedSum {
 
     public static void calculateSolutionForPopulation(Population population){
         for (Member member : population.population){
@@ -21,7 +21,9 @@ public class SolutionWeightedSum {
 
         for (int i = 0; i < member.resultOfFunctions.size(); i++) {
             member.solution += (member.resultOfFunctions.get(i) * weightVector[i]);
+
         }
+
     }
 
 }

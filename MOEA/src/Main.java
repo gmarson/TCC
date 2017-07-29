@@ -14,9 +14,9 @@ import java.io.File;
 
 public class Main {
 
-    //private static String fileName = "KP_p-3_n-30_ins-1";
+    private static String fileName = "KP_p-3_n-10_ins-1";
     //private static String fileName = "KPTESTE";
-    private static String fileName = "KPTIAGO";
+    //private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
     private static String parettoName = "Paretto";
     private static String directoryName ="KP/" ;
@@ -92,8 +92,8 @@ public class Main {
             newPopulation.population = aemmt.paretto.membersAtThisFront;
         else if (!aemmd.paretto.membersAtThisFront.isEmpty())
             newPopulation.population = aemmd.paretto.membersAtThisFront;
-        else if (!moead.paretto.membersAtThisFront.isEmpty())
-            newPopulation.population = moead.paretto.membersAtThisFront;
+        else if (!moead.pareto.membersAtThisFront.isEmpty())
+            newPopulation.population = moead.pareto.membersAtThisFront;
 
         erro.estimateBasedOnMetric(newPopulation,parettoPopulation);
         erro.messageAfterProcess();

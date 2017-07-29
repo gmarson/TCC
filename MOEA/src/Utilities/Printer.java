@@ -1,7 +1,6 @@
 package Utilities;
 
 import ManyObjective.*;
-import ManyObjective.TableFunctions.TableAEMMT;
 import ManyObjective.TableFunctions.TableFunctions;
 import Population.*;
 
@@ -28,7 +27,7 @@ public abstract class Printer
         }
 
         System.out.println("\nValor dos membros na vizinhanca");
-        for (Member childMember : m.closestMembers)
+        for (Member childMember : m.neighborhood)
         {
             System.out.println(childMember.value);
         }
@@ -44,7 +43,7 @@ public abstract class Printer
             }
 
             System.out.println("\nValor dos membros na vizinhanca");
-            for (Member childMember : m.closestMembers)
+            for (Member childMember : m.neighborhood)
             {
                 System.out.println("\nBinary Value: "+childMember);
                 System.out.println("Distance from Cell: "+childMember.distanceFromParentMember);
@@ -72,7 +71,7 @@ public abstract class Printer
             }
 
             System.out.println("\nValor dos membros na vizinhanca");
-            for (Member childMember : m.closestMembers)
+            for (Member childMember : m.neighborhood)
             {
                 System.out.print(childMember + " " );
                 for (int i = 0; i <childMember.weightVector.vector.length ; i++) {
@@ -366,7 +365,7 @@ public abstract class Printer
 
         }
 
-        for(Member me: m.closestMembers){
+        for(Member me: m.neighborhood){
             System.out.println("Valor do Membro: "+ me.value);
             System.out.println("Distancia para o pai: "+me.distanceFromParentMember);
             System.out.println("Solution: "+me.solution);
@@ -387,7 +386,7 @@ public abstract class Printer
 
 
             System.out.println("OS SEGUINTE ATRIBUTOS DEVEM SER NULOS OU VAZIOS");
-            System.out.println("Closest Members: "+me.closestMembers);
+            System.out.println("Closest Members: "+me.neighborhood);
 
 
 
@@ -397,8 +396,8 @@ public abstract class Printer
 
     public static void printInfoNeighborhoods(Population population){
         for(Member cell: population.population){
-            if (cell.closestMembers == null) break;
-            System.out.println("Tamanho da Celula : "+cell.closestMembers.size());
+            if (cell.neighborhood == null) break;
+            System.out.println("Tamanho da Celula : "+cell.neighborhood.size());
         }
     }
 

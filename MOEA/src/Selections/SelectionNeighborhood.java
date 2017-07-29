@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by gabrielm on 06/05/17.
  */
-public class SelectionNeighboring extends  Selection {
+public class SelectionNeighborhood extends  Selection {
 
 
 
