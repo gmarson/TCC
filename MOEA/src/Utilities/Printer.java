@@ -33,30 +33,43 @@ public abstract class Printer
         }
     }
 
-    public static void printNeighboring(Population p){
+
+    public static void printSingleNeighborhood(ArrayList<Member> neighborhood){
+
+        System.out.println("\nValor dos membros na vizinhanca");
+
+        for (Member childMember : neighborhood)
+        {
+            System.out.print("Binary Value: ");
+            for (int i = 0; i < childMember.binaryValue.size(); i++) {
+                System.out.print(childMember.binaryValue.get(i));
+            }
+
+            System.out.print("\nWeight Vector: ");
+            for (int i = 0; i <childMember.weightVector.vector.length ; i++) {
+                System.out.print(childMember.weightVector.vector[i]+" ");
+            }
+            System.out.println("\nDistance from Cell: "+childMember.distanceFromParentMember);
+            int j =1;
+            for (Double d: childMember.resultOfFunctions)
+            {
+                System.out.println("Function = "+ j+" = "+d);
+                j++;
+            }
+
+            System.out.println("Solution: "+childMember.solution+"\n");
+
+        }
+    }
+
+    public static void printNeighborhoods(Population p){
 
 
         for(Member m : p.population){
-            System.out.print("---- Vetor de pesos da celula -----");
-            for (int i = 0; i <m.weightVector.vector.length ; i++) {
-                System.out.print(m.weightVector.vector[i]+" ");
-            }
 
-            System.out.println("\nValor dos membros na vizinhanca");
-            for (Member childMember : m.neighborhood)
-            {
-                System.out.println("\nBinary Value: "+childMember);
-                System.out.println("Distance from Cell: "+childMember.distanceFromParentMember);
-                int j =1;
-                for (Double d: childMember.resultOfFunctions)
-                {
-                    System.out.println("Function = "+ j+" = "+d);
-                    j++;
-                }
+            System.out.print("---- NOVA VIZINHANÇA -----");
 
-                System.out.println("Solution: "+childMember.solution);
-
-            }
+            printSingleNeighborhood(m.neighborhood);
 
             System.out.println();
 

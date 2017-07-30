@@ -6,6 +6,7 @@ import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighborhood;
+import Utilities.Printer;
 import Utilities.Utils;
 
 import java.util.ArrayList;
@@ -39,27 +40,28 @@ public class MOEADFunctions {
                 addToNeighborhood(cell,child);
             }
 
+
+
             genCounter++;
         }
     }
 
     private static void addToNeighborhood(Member cell, Member child) {
 
+        int indexOfReplacement = 0;
         for(Member neighborhoodMember : cell.neighborhood){
-            ScalarizeWeightedSum.calculateSolution(child,neighborhoodMember.weightVector.vector);
+            MOEAD.scalarizationApproach.calculateSolution(child,neighborhoodMember.weightVector.vector);
 
             if(child.solution <= neighborhoodMember.solution){
-                replaceMember(neighborhoodMember,child);
+
+                child.weightVector = neighborhoodMember.weightVector;
+                child.distanceFromParentMember = neighborhoodMember.distanceFromParentMember;
+
+                cell.neighborhood.set(indexOfReplacement,child.deepCopyForChildMembers());
             }
 
+            indexOfReplacement++;
         }
-    }
-
-    private static void replaceMember(Member neighborhoodMember, Member child){
-        neighborhoodMember.solution = child.solution;
-        neighborhoodMember.resultOfFunctions = child.resultOfFunctions;
-        neighborhoodMember.value = child.value;
-        neighborhoodMember.binaryValue = child.binaryValue;
     }
 
     private static void addToNonDominatedPopulation(Member member, Problem problem){
@@ -86,7 +88,7 @@ public class MOEADFunctions {
     }
 
 
-    public static class Neighboring {
+    public static class NeighborhoodSettings {
 
         public static void setNeighboursForAllMembers(Population population) {
 
@@ -120,8 +122,6 @@ public class MOEADFunctions {
 
             }
         }
-
-
     }
 
 }

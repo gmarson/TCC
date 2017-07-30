@@ -14,6 +14,8 @@ public class MOEAD {
 
     public static Population nonDominatedPopulation = new Population();
     private static Population moeadPopulation = new Population();
+    public static ScalarizeWS scalarizationApproach = new ScalarizeWS();
+
 
     public Front pareto = new Front();
 
@@ -21,20 +23,26 @@ public class MOEAD {
     {
         moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
+        instantiateWeightVectors();
+        scalarizationApproach.calculateSolutionForPopulation(moeadPopulation);
 
-        ScalarizeWeightedSum.calculateSolutionForPopulation(moeadPopulation);
-
-        MOEADFunctions.Neighboring.setNeighboursForAllMembers(moeadPopulation);
+        MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers(moeadPopulation);
 
         MOEADFunctions.mainLoop(moeadPopulation,problem);
 
         saveParetto();
 
-        Printer.printNeighboring(moeadPopulation);//todo
+        Printer.printNeighborhoods(moeadPopulation);//todo
         Printer.printBinaryMembersWithAppliedFunctions(nonDominatedPopulation);//todo
         reset();
     }
 
+
+    private void instantiateWeightVectors(){
+        for(Member member : moeadPopulation.population){
+            member.weightVector = new WeightVector();
+        }
+    }
 
     private void reset(){
         moeadPopulation = new Population();

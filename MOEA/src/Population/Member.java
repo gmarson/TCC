@@ -36,7 +36,7 @@ public class Member implements Serializable, Cloneable{
     public int[] parentTableMask2;
 
     //MOEA-D Variables
-    public WeightVector weightVector = new WeightVector();
+    public WeightVector weightVector ;
     public double solution = -1.0;
     public double distanceFromParentMember = -1.0;
     public ArrayList<Member> neighborhood;
@@ -73,11 +73,8 @@ public class Member implements Serializable, Cloneable{
             }
         }
 
-
-
         if (this.weightVector != null)
             newMember.weightVector = this.weightVector;
-
 
         return newMember;
     }
