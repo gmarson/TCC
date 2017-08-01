@@ -6,7 +6,6 @@ import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighborhood;
-import Utilities.Printer;
 import Utilities.Utils;
 
 import java.util.ArrayList;
@@ -34,10 +33,10 @@ public class MOEADFunctions {
             System.out.println("GEN = "+genCounter);//todo
 
             for (Member cell: population.population){
-                Member child = generateChildrenGivenNeighborhood(cell.neighborhood, problem);
 
+                Member child = generateChildrenGivenNeighborhood(cell.neighborhood, problem);
                 addToNonDominatedPopulation(child.deepCopy(), problem);
-                addToNeighborhood(cell,child);
+                updateNeighborhood(cell,child);
             }
 
 
@@ -46,13 +45,14 @@ public class MOEADFunctions {
         }
     }
 
-    private static void addToNeighborhood(Member cell, Member child) {
+    private static void updateNeighborhood(Member cell, Member child) {
 
         int indexOfReplacement = 0;
         for(Member neighborhoodMember : cell.neighborhood){
-            MOEAD.scalarizationApproach.calculateSolution(child,neighborhoodMember.weightVector.vector);
 
-            if(child.solution <= neighborhoodMember.solution){
+            MOEAD.scalarization.calculateSolution(child,neighborhoodMember.weightVector.vector);
+
+            if(child.fitness <= neighborhoodMember.fitness){
 
                 child.weightVector = neighborhoodMember.weightVector;
                 child.distanceFromParentMember = neighborhoodMember.distanceFromParentMember;
@@ -70,9 +70,9 @@ public class MOEADFunctions {
         ArrayList<Member> toBeRemoved = new ArrayList<>();
         boolean shouldAddNewMember = true;
 
-        if (Problem.valueOfMemberIsPresent(member,MOEAD.nonDominatedPopulation,problem)) return;
+        if (Problem.valueOfMemberIsPresent(member,MOEAD.archive,problem)) return;
 
-        for (Member paretoMember : MOEAD.nonDominatedPopulation.population){
+        for (Member paretoMember : MOEAD.archive.population){
 
             if (dominance.dominates(member,paretoMember)){
                 toBeRemoved.add(paretoMember);
@@ -83,8 +83,8 @@ public class MOEADFunctions {
             }
         }
 
-        MOEAD.nonDominatedPopulation.population.removeAll(toBeRemoved);
-        if (shouldAddNewMember) MOEAD.nonDominatedPopulation.addMember(member);
+        MOEAD.archive.population.removeAll(toBeRemoved);
+        if (shouldAddNewMember) MOEAD.archive.addMember(member);
     }
 
 

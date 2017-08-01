@@ -57,7 +57,7 @@ public abstract class Printer
                 j++;
             }
 
-            System.out.println("Solution: "+childMember.solution+"\n");
+            System.out.println("Solution: "+childMember.fitness+"\n");
 
         }
     }
@@ -90,7 +90,7 @@ public abstract class Printer
                 for (int i = 0; i <childMember.weightVector.vector.length ; i++) {
                     System.out.print(childMember.weightVector.vector[i]+" ");
                 }
-                System.out.println("Solution: "+childMember.solution);
+                System.out.println("Solution: "+childMember.fitness);
 
             }
 
@@ -187,7 +187,7 @@ public abstract class Printer
             System.out.println("Rank = "+m.rank );
             i++;
 
-            System.out.println("Solution: "+m.solution+ "\n");
+            System.out.println("Solution: "+m.fitness+ "\n");
 
         }
     }
@@ -363,7 +363,7 @@ public abstract class Printer
 
     public static void printMemberWithClosestMembers(Member m ){
         System.out.println("Membro de valor: "+m.value);
-        System.out.println("Solution: "+m.solution);
+        System.out.println("Solution: "+m.fitness);
         System.out.print("Vetor de Pesos: ");
         for(Double d:m.weightVector.vector)
             System.out.print(d+" ");
@@ -381,7 +381,7 @@ public abstract class Printer
         for(Member me: m.neighborhood){
             System.out.println("Valor do Membro: "+ me.value);
             System.out.println("Distancia para o pai: "+me.distanceFromParentMember);
-            System.out.println("Solution: "+me.solution);
+            System.out.println("Solution: "+me.fitness);
             System.out.print("Vetor de Pesos: ");
             for(Double d:me.weightVector.vector)
                 System.out.print(d+" ");

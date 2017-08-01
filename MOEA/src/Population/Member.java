@@ -19,7 +19,6 @@ public class Member implements Serializable, Cloneable{
     //SPEA2 variables
     public double rawFitness = -1;
     public double density = -1;
-    public double fitness = -1;
     public double strength = -1;
     public double sigma = -1;
     public ArrayList<Double> distances = new ArrayList<>();
@@ -36,8 +35,8 @@ public class Member implements Serializable, Cloneable{
     public int[] parentTableMask2;
 
     //MOEA-D Variables
+    public double fitness = -1;
     public WeightVector weightVector ;
-    public double solution = -1.0;
     public double distanceFromParentMember = -1.0;
     public ArrayList<Member> neighborhood;
 
@@ -57,7 +56,7 @@ public class Member implements Serializable, Cloneable{
 
     public Member deepCopyForChildMembers(){
         Member newMember = new Member(this.value);
-        newMember.solution = this.solution;
+        newMember.fitness = this.fitness;
         newMember.distanceFromParentMember = this.distanceFromParentMember;
 
         for (Double d :this.resultOfFunctions)
@@ -87,7 +86,6 @@ public class Member implements Serializable, Cloneable{
         newMember.fitness = this.fitness;
         newMember.strength = this.strength;
         newMember.weightedAverage = this.weightedAverage;
-        newMember.solution = this.solution;
         newMember.distanceFromParentMember = this.distanceFromParentMember;
 
         for (Double d :this.resultOfFunctions)
