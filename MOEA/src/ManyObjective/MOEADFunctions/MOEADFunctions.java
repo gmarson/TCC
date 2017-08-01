@@ -6,8 +6,10 @@ import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighborhood;
+import Utilities.Printer;
 import Utilities.Utils;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +22,9 @@ public class MOEADFunctions {
     private static Member generateChildrenGivenNeighborhood(ArrayList<Member> parentNeighborhood, Problem problem){
 
         Population parentsPopulation = SelectionNeighborhood.selectParents(parentNeighborhood);
+
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
+
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
 
         return childPopulation.population.get(Utils.getRandom(0,2));
@@ -39,8 +43,6 @@ public class MOEADFunctions {
                 updateNeighborhood(cell,child);
             }
 
-
-
             genCounter++;
         }
     }
@@ -52,7 +54,7 @@ public class MOEADFunctions {
 
             MOEAD.scalarization.calculateSolution(child,neighborhoodMember.weightVector.vector);
 
-            if(child.fitness <= neighborhoodMember.fitness){
+            if(child.fitness < neighborhoodMember.fitness){
 
                 child.weightVector = neighborhoodMember.weightVector;
                 child.distanceFromParentMember = neighborhoodMember.distanceFromParentMember;

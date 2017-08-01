@@ -16,7 +16,11 @@ public class SelectionNeighborhood extends  Selection {
     public static Population selectParents(ArrayList<Member> neighboring)
     {
         int position1stMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE);
-        int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE);
+        int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE) ;
+        while(position1stMember == position2dnMember){
+            position2dnMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE) ;
+        }
+
         Population parentsPopulation = new Population();
 
         parentsPopulation.addMember(neighboring.get(position1stMember));
