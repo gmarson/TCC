@@ -9,6 +9,6 @@ import Population.*;
 public abstract class Scalarize {
 
     abstract void calculateSolutionForPopulation(Population population);
-    abstract void calculateSolution(Member member, double[] weightVector);
+    abstract void calculateFitness(Member member, double[] weightVector);
 
 }

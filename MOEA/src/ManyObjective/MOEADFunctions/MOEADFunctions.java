@@ -6,10 +6,8 @@ import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighborhood;
-import Utilities.Printer;
 import Utilities.Utils;
 
-import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 
 /**
@@ -40,6 +38,7 @@ public class MOEADFunctions {
 
                 Member child = generateChildrenGivenNeighborhood(cell.neighborhood, problem);
                 addToNonDominatedPopulation(child.deepCopy(), problem);
+                //updateInCell(cell,child);
                 updateNeighborhood(cell,child);
             }
 
@@ -47,23 +46,29 @@ public class MOEADFunctions {
         }
     }
 
+    private static void updateInCell(Member cell, Member child){
+        if(child.fitness < cell.fitness){
+            replaceMember(cell,child);
+        }
+    }
+
     private static void updateNeighborhood(Member cell, Member child) {
 
-        int indexOfReplacement = 0;
         for(Member neighborhoodMember : cell.neighborhood){
 
-            MOEAD.scalarization.calculateSolution(child,neighborhoodMember.weightVector.vector);
+            MOEAD.scalarization.calculateFitness(child,neighborhoodMember.weightVector.vector);
 
             if(child.fitness < neighborhoodMember.fitness){
-
-                child.weightVector = neighborhoodMember.weightVector;
-                child.distanceFromParentMember = neighborhoodMember.distanceFromParentMember;
-
-                cell.neighborhood.set(indexOfReplacement,child.deepCopyForChildMembers());
+                replaceMember(neighborhoodMember,child);
             }
-
-            indexOfReplacement++;
         }
+    }
+
+    private static void replaceMember(Member neighborhoodMember, Member child){
+        neighborhoodMember.binaryValue = child.binaryValue;
+        neighborhoodMember.resultOfFunctions = child.resultOfFunctions;
+        neighborhoodMember.value = child.value;
+        neighborhoodMember.fitness = child.fitness;
     }
 
     private static void addToNonDominatedPopulation(Member member, Problem problem){
@@ -99,7 +104,7 @@ public class MOEADFunctions {
 
                 for (Member child: population.population){
                     child.distanceFromParentMember = Utils.euclideanDistanceBasedOnWeightVector(cell,child);
-                    addOrdered(child.deepCopyForChildMembers(),cell.neighborhood);
+                    addOrdered(child,cell.neighborhood);
                 }
             }
 

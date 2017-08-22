@@ -12,6 +12,9 @@ import Fronts.*;
  */
 public class MOEAD {
 
+
+
+
     public static Population archive = new Population();
     private static Population moeadPopulation = new Population();
     public static ScalarizeWS scalarization = new ScalarizeWS();

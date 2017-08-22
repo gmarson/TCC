@@ -14,7 +14,7 @@ public class ScalarizeTE extends Scalarize{
     }
 
     @Override
-    void calculateSolution(Member member, double[] weightVector) {
+    void calculateFitness(Member member, double[] weightVector) {
 
     }
 }
