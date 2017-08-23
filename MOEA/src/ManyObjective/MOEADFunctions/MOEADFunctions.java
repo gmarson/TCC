@@ -8,6 +8,7 @@ import Problems.Problem;
 import Selections.SelectionNeighborhood;
 import Utilities.Utils;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 
 /**
@@ -37,24 +38,27 @@ public class MOEADFunctions {
             for (Member cell: population.population){
 
                 Member child = generateChildrenGivenNeighborhood(cell.neighborhood, problem);
-                addToNonDominatedPopulation(child.deepCopy(), problem);
-                //updateInCell(cell,child);
-                updateNeighborhood(cell,child);
+                addToNonDominatedPopulation(child, problem);
+                updateCell(cell,child);
+                updateNeighborhood(cell.neighborhood,child);
             }
+
 
             genCounter++;
         }
     }
 
-    private static void updateInCell(Member cell, Member child){
+    private static void updateCell(Member cell, Member child){
+
+        MOEAD.scalarization.calculateFitness(child,cell.weightVector.vector);
         if(child.fitness < cell.fitness){
             replaceMember(cell,child);
         }
     }
 
-    private static void updateNeighborhood(Member cell, Member child) {
+    private static void updateNeighborhood(ArrayList<Member> neighborhood, Member child) {
 
-        for(Member neighborhoodMember : cell.neighborhood){
+        for(Member neighborhoodMember : neighborhood){
 
             MOEAD.scalarization.calculateFitness(child,neighborhoodMember.weightVector.vector);
 
@@ -90,8 +94,10 @@ public class MOEADFunctions {
             }
         }
 
-        MOEAD.archive.population.removeAll(toBeRemoved);
-        if (shouldAddNewMember) MOEAD.archive.addMember(member);
+        if (shouldAddNewMember){
+            MOEAD.archive.addMember(member);
+            MOEAD.archive.population.removeAll(toBeRemoved);
+        }
     }
 
 
@@ -99,34 +105,38 @@ public class MOEADFunctions {
 
         public static void setNeighboursForAllMembers(Population population) {
 
-            for (Member cell: population.population){
-                cell.neighborhood = new ArrayList<>();
+            for (int i = 0; i < population.population.size(); i++) {
+                Member cell = population.population.get(i);
 
-                for (Member child: population.population){
-                    child.distanceFromParentMember = Utils.euclideanDistanceBasedOnWeightVector(cell,child);
-                    addOrdered(child,cell.neighborhood);
+                for (int j = i; j < population.population.size(); j++) {
+                    Member child = population.population.get(j);
+                    double distance = Utils.euclideanDistanceBasedOnWeightVector(cell,child);
+
+                    if (distance != 0.0){
+                        addOrdered(child,cell,distance);
+                        addOrdered(cell,child,distance);
+                    }
                 }
             }
-
         }
 
-        private static void addOrdered(Member memberToBeInserted, ArrayList<Member> neighborhood){
+        private static void addOrdered(Member candidate, Member cell, double candidateDistance){
 
-            if (neighborhood.isEmpty())
-                neighborhood.add(memberToBeInserted);
+            if (cell.neighborhood.isEmpty())
+                cell.neighborhood.add(candidate);
             else {
                 int i;
 
-                for (i = 0; i < neighborhood.size(); i++) {
-                    if (memberToBeInserted.distanceFromParentMember < neighborhood.get(i).distanceFromParentMember) {
+                for (i = 0; i < cell.neighborhood.size(); i++) {
+
+                    if (candidateDistance < Utils.euclideanDistanceBasedOnWeightVector(cell.neighborhood.get(i),cell)) {
                         break;
                     }
                 }
 
-                neighborhood.add(i,memberToBeInserted);
+                cell.neighborhood.add(i,candidate);
 
-                if (neighborhood.size() > Constants.NEIGHBOURHOOD_SIZE) neighborhood.remove(neighborhood.size() -1 );
-
+                if (cell.neighborhood.size() > Constants.NEIGHBOURHOOD_SIZE) cell.neighborhood.remove(cell.neighborhood.size() -1 );
             }
         }
     }

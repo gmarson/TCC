@@ -7,18 +7,16 @@ import Problems.Problem;
 import Utilities.Printer;
 import Fronts.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by gabrielm on 01/04/17.
  */
 public class MOEAD {
 
-
-
-
     public static Population archive = new Population();
     private static Population moeadPopulation = new Population();
     public static ScalarizeWS scalarization = new ScalarizeWS();
-
 
     public Front pareto = new Front();
 
@@ -26,7 +24,7 @@ public class MOEAD {
     {
         moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
-        instantiateWeightVectors();
+        instantiateVariables();
         scalarization.calculateSolutionForPopulation(moeadPopulation);
 
         MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers(moeadPopulation);
@@ -41,9 +39,10 @@ public class MOEAD {
     }
 
 
-    private void instantiateWeightVectors(){
+    private void instantiateVariables(){
         for(Member member : moeadPopulation.population){
             member.weightVector = new WeightVector();
+            member.neighborhood = new ArrayList<>();
         }
     }
 

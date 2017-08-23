@@ -40,6 +40,7 @@ public abstract class Printer
 
         for (Member childMember : neighborhood)
         {
+            System.out.println("Instance: "+childMember);
             System.out.print("Binary Value: ");
             for (int i = 0; i < childMember.binaryValue.size(); i++) {
                 System.out.print(childMember.binaryValue.get(i));
@@ -49,7 +50,7 @@ public abstract class Printer
             for (int i = 0; i <childMember.weightVector.vector.length ; i++) {
                 System.out.print(childMember.weightVector.vector[i]+" ");
             }
-            System.out.println("\nDistance from Cell: "+childMember.distanceFromParentMember);
+            //System.out.println("\nDistance from Cell: "+childMember.distanceFromParentMember);
             int j =1;
             for (Double d: childMember.resultOfFunctions)
             {
@@ -380,7 +381,7 @@ public abstract class Printer
 
         for(Member me: m.neighborhood){
             System.out.println("Valor do Membro: "+ me.value);
-            System.out.println("Distancia para o pai: "+me.distanceFromParentMember);
+            //System.out.println("Distancia para o pai: "+me.distanceFromParentMember);
             System.out.println("Solution: "+me.fitness);
             System.out.print("Vetor de Pesos: ");
             for(Double d:me.weightVector.vector)

@@ -23,22 +23,21 @@ public class Member implements Serializable, Cloneable{
     public double sigma = -1;
     public ArrayList<Double> distances = new ArrayList<>();
 
-    //Both Variables
-    public double value;
-    public double key;
-    public ArrayList<Integer> binaryValue;
-    public ArrayList<Double> resultOfFunctions = new ArrayList<>();
-
     //AEMMT Variables
     public double weightedAverage=-1;
     public int[] parentTableMask1;
     public int[] parentTableMask2;
 
     //MOEA-D Variables
-    public double fitness = -1;
     public WeightVector weightVector ;
-    public double distanceFromParentMember = -1.0;
     public ArrayList<Member> neighborhood;
+
+    //Both Variables
+    public double value;
+    public double key;
+    public ArrayList<Integer> binaryValue;
+    public ArrayList<Double> resultOfFunctions = new ArrayList<>();
+    public double fitness = -1;
 
     public Member(ArrayList<Integer> binaryValue) {this.binaryValue = binaryValue;}
 
@@ -57,7 +56,7 @@ public class Member implements Serializable, Cloneable{
     public Member deepCopyForChildMembers(){
         Member newMember = new Member(this.value);
         newMember.fitness = this.fitness;
-        newMember.distanceFromParentMember = this.distanceFromParentMember;
+        //newMember.distanceFromParentMember = this.distanceFromParentMember;
 
         for (Double d :this.resultOfFunctions)
         {
@@ -86,7 +85,7 @@ public class Member implements Serializable, Cloneable{
         newMember.fitness = this.fitness;
         newMember.strength = this.strength;
         newMember.weightedAverage = this.weightedAverage;
-        newMember.distanceFromParentMember = this.distanceFromParentMember;
+        //newMember.distanceFromParentMember = this.distanceFromParentMember;
 
         for (Double d :this.resultOfFunctions)
         {

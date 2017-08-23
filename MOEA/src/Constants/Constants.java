@@ -37,6 +37,6 @@ public abstract class  Constants {
     public static double BAG_CAPACITY;
 
     //FOR TEST ONLY
-    public static int SEED = 8793;
+    public static int SEED = 4;
 
 }
