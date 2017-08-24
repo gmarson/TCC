@@ -4,6 +4,7 @@ import Constants.Constants;
 import ManyObjective.MOEADFunctions.*;
 import Population.*;
 import Problems.Problem;
+import Utilities.Matrix;
 import Utilities.Printer;
 import Fronts.*;
 
@@ -17,25 +18,27 @@ public class MOEAD {
     public static Population archive = new Population();
     private static Population moeadPopulation = new Population();
     public static ScalarizeWS scalarization = new ScalarizeWS();
+    public static Matrix neighborhoods;
 
     public Front pareto = new Front();
 
     public void runAlgorithm(Problem problem)
     {
         moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
-        problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
         instantiateVariables();
-        scalarization.calculateSolutionForPopulation(moeadPopulation);
+        problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
+        neighborhoods = new Matrix(Constants.POPULATION_SIZE, Constants.NEIGHBOURHOOD_SIZE, moeadPopulation);
+        scalarization.calculateSolutionForPopulation(neighborhoods);
 
-        MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers(moeadPopulation);
+        MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers(neighborhoods);
 
-        MOEADFunctions.mainLoop(moeadPopulation,problem);
-
-        saveParetto();
-
-        Printer.printNeighborhoods(moeadPopulation);//todo
-        Printer.printBinaryMembersWithAppliedFunctions(archive);//todo
-        reset();
+//        MOEADFunctions.mainLoop(moeadPopulation,problem);
+//
+//        saveParetto();
+//
+//        Printer.printNeighborhoods(moeadPopulation);//todo
+//        Printer.printBinaryMembersWithAppliedFunctions(archive);//todo
+//        reset();
     }
 
 

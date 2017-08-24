@@ -1,6 +1,7 @@
 package ManyObjective.MOEADFunctions;
 
 import Population.*;
+import Utilities.Matrix;
 
 /**
  * Created by gabrielm on 30/04/17.
@@ -8,9 +9,10 @@ import Population.*;
 public class ScalarizeWS extends Scalarize {
 
     @Override
-    public void calculateSolutionForPopulation(Population population){
-        for (Member member : population.population){
-            calculateFitness(member, member.weightVector.vector);
+    public void calculateSolutionForPopulation(Matrix neighborhoods){
+
+        for (int i = 0; i < neighborhoods.rows; i++) {
+            calculateFitness(neighborhoods.memberMatrix[i][0],neighborhoods.memberMatrix[i][0].weightVector.vector);
         }
     }
 

@@ -2,6 +2,9 @@ package Utilities; /**
  * Created by gabrielm on 12/01/17.
  */
 import Constants.*;
+import Population.Member;
+import Population.Population;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -14,8 +17,16 @@ public class Matrix {
     public int[][] binaryMatrix;
     public int[][] decimalMatrix;
     public int[] sizeOfNonZeroElementsInDecimalMatrixRow;
+    public Member[][] memberMatrix;
 
 
+    public Matrix(int rows, int columns, Population population){
+        memberMatrix = new Member[rows][columns];
+        setDimensions(rows,columns);
+        for (int i = 0; i < rows; i++) {
+            memberMatrix[i][0] = population.population.get(i);
+        }
+    }
 
     public Matrix(int rows, int columns) {
         setDimensions(rows,columns);
@@ -108,7 +119,7 @@ public class Matrix {
                 System.out.print("\n");
             }
         }
-        else
+        else if(decimalMatrix != null)
         {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j <columns ; j++) {
@@ -120,11 +131,22 @@ public class Matrix {
 
     }
 
+
     public int size()
     {
         return size;
     }
 
+
+    public int getNeighborhoodSize(int cellIndex){
+        for (int i = 0; i < Constants.NEIGHBOURHOOD_SIZE; i++) {
+            if(memberMatrix[cellIndex][i] != null){
+                return i;
+            }
+        }
+
+        return -1;
+    }
 
 
 

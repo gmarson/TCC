@@ -6,6 +6,7 @@ import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighborhood;
+import Utilities.Matrix;
 import Utilities.Utils;
 
 import javax.rmi.CORBA.Util;
@@ -94,50 +95,62 @@ public class MOEADFunctions {
             }
         }
 
+        MOEAD.archive.population.removeAll(toBeRemoved);
         if (shouldAddNewMember){
             MOEAD.archive.addMember(member);
-            MOEAD.archive.population.removeAll(toBeRemoved);
+
         }
     }
 
 
     public static class NeighborhoodSettings {
 
-        public static void setNeighboursForAllMembers(Population population) {
+        public static void setNeighboursForAllMembers(Matrix neighborhoods) {
 
-            for (int i = 0; i < population.population.size(); i++) {
-                Member cell = population.population.get(i);
+            for (int i = 0; i < neighborhoods.rows ; i++) {
+                for (int j = i; j < neighborhoods.rows; j++) {
 
-                for (int j = i; j < population.population.size(); j++) {
-                    Member child = population.population.get(j);
-                    double distance = Utils.euclideanDistanceBasedOnWeightVector(cell,child);
-
-                    if (distance != 0.0){
-                        addOrdered(child,cell,distance);
-                        addOrdered(cell,child,distance);
-                    }
+                    addOrdered(i,j,neighborhoods);
+                    addOrdered(j,i,neighborhoods);
                 }
             }
+
+            //TODO fazer um print pra ver se as distancia euclidianas estão em ordem
+
         }
 
-        private static void addOrdered(Member candidate, Member cell, double candidateDistance){
+        private static void addOrdered(int cellIndex, int neighbourCandidateIndex, Matrix neighborhoods){
 
-            if (cell.neighborhood.isEmpty())
-                cell.neighborhood.add(candidate);
-            else {
-                int i;
+            Member[] neighborhood = neighborhoods.memberMatrix[cellIndex];
+            Member cell = neighborhood[0];
+            Member child = neighborhoods.memberMatrix[neighbourCandidateIndex][0];
+            double candidateDistance = Utils.euclideanDistanceBasedOnWeightVector(cell,child);
+            if (candidateDistance == 0.0) return;
 
-                for (i = 0; i < cell.neighborhood.size(); i++) {
 
-                    if (candidateDistance < Utils.euclideanDistanceBasedOnWeightVector(cell.neighborhood.get(i),cell)) {
+            int indexToInsert;
+            for (indexToInsert = 1; indexToInsert < Constants.NEIGHBOURHOOD_SIZE - 1; indexToInsert++) {
+
+
+                if (neighborhood[indexToInsert] == null){
+                    neighborhood[indexToInsert] = child;
+                    return;
+                }
+                else
+                {
+                    if (candidateDistance < Utils.euclideanDistanceBasedOnWeightVector(neighborhood[indexToInsert],neighborhood[0])){
                         break;
                     }
                 }
 
-                cell.neighborhood.add(i,candidate);
-
-                if (cell.neighborhood.size() > Constants.NEIGHBOURHOOD_SIZE) cell.neighborhood.remove(cell.neighborhood.size() -1 );
             }
+
+            for (int i = Constants.NEIGHBOURHOOD_SIZE -1; i > indexToInsert + 1; i--) {
+                neighborhood[i] = neighborhood[i - 1];
+            }
+            neighborhood[indexToInsert] = child;
+
+
         }
     }
 

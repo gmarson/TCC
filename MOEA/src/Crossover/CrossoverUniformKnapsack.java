@@ -12,7 +12,6 @@ import java.util.ArrayList;
  */
 public class CrossoverUniformKnapsack implements Crossover{
 
-
     @Override
     public Population crossoverAndMutation(Population selected) {
         Population children = new Population();
