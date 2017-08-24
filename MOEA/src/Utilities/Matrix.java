@@ -128,6 +128,21 @@ public class Matrix {
                 System.out.print("\n");
             }
         }
+        else{
+            for (int i = 0; i < rows; i++) {
+                Member[] neighborhood = memberMatrix[i];
+                for (int j = 0; j <columns ; j++) {
+                    if(neighborhood[j] != null){
+                        double distance = ( Utils.euclideanDistanceBasedOnWeightVector(neighborhood[0], neighborhood[j]) );
+                        //String dstring = new DecimalFormat("##.#########").format(distance);
+                        System.out.print( distance +"   ");
+                    }
+
+
+                }
+                System.out.print("\n");
+            }
+        }
 
     }
 

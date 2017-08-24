@@ -32,13 +32,14 @@ public class MOEAD {
 
         MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers(neighborhoods);
 
-//        MOEADFunctions.mainLoop(moeadPopulation,problem);
-//
-//        saveParetto();
-//
-//        Printer.printNeighborhoods(moeadPopulation);//todo
-//        Printer.printBinaryMembersWithAppliedFunctions(archive);//todo
-//        reset();
+        MOEADFunctions.mainLoop(neighborhoods,problem);
+
+        saveParetto();
+
+        //Printer.printNeighborhoods(moeadPopulation);//todo
+
+        Printer.printBinaryMembersWithAppliedFunctions(archive);//todo
+        reset();
     }
 
 

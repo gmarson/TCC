@@ -13,18 +13,19 @@ public class SelectionNeighborhood extends  Selection {
 
 
 
-    public static Population selectParents(ArrayList<Member> neighborhood)
+    public static Population selectParents(Member[] neighborhood)
     {
         int position1stMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE);
         int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE) ;
+
         while(position1stMember == position2dnMember){
             position2dnMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE) ;
         }
 
         Population parentsPopulation = new Population();
 
-        parentsPopulation.addMember(neighborhood.get(position1stMember));
-        parentsPopulation.addMember(neighborhood.get(position2dnMember));
+        parentsPopulation.addMember(neighborhood[position1stMember]);
+        parentsPopulation.addMember(neighborhood[position2dnMember]);
         return parentsPopulation;
     }
 

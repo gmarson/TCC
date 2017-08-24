@@ -10,6 +10,7 @@ import Utilities.Matrix;
 import Utilities.Utils;
 
 import javax.rmi.CORBA.Util;
+import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 
 /**
@@ -19,9 +20,9 @@ public class MOEADFunctions {
 
     public static int genCounter = 0;
 
-    private static Member generateChildrenGivenNeighborhood(ArrayList<Member> parentNeighborhood, Problem problem){
+    private static Member generateChildrenGivenNeighborhood(Member[] neighborhood, Problem problem){
 
-        Population parentsPopulation = SelectionNeighborhood.selectParents(parentNeighborhood);
+        Population parentsPopulation = SelectionNeighborhood.selectParents(neighborhood);
 
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
 
@@ -30,40 +31,30 @@ public class MOEADFunctions {
         return childPopulation.population.get(Utils.getRandom(0,2));
     }
 
-    public static void mainLoop(Population population, Problem problem){
+    public static void mainLoop(Matrix neighborhoods, Problem problem){
 
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
             System.out.println("GEN = "+genCounter);//todo
 
-            for (Member cell: population.population){
 
-                Member child = generateChildrenGivenNeighborhood(cell.neighborhood, problem);
-                addToNonDominatedPopulation(child, problem);
-                updateCell(cell,child);
-                updateNeighborhood(cell.neighborhood,child);
+            for (int i = 0; i < neighborhoods.rows; i++) {
+                Member[] neighborhood = neighborhoods.memberMatrix[i];
+                Member child = generateChildrenGivenNeighborhood(neighborhood, problem);
+                addToNonDominatedPopulation(child.deepCopy(),problem);
+                updateNeighborhood(neighborhood, child);
             }
-
 
             genCounter++;
         }
     }
 
-    private static void updateCell(Member cell, Member child){
+    private static void updateNeighborhood(Member[] neighborhood, Member child) {
 
-        MOEAD.scalarization.calculateFitness(child,cell.weightVector.vector);
-        if(child.fitness < cell.fitness){
-            replaceMember(cell,child);
-        }
-    }
-
-    private static void updateNeighborhood(ArrayList<Member> neighborhood, Member child) {
-
-        for(Member neighborhoodMember : neighborhood){
-
+        for (int i = 0; i < Constants.NEIGHBOURHOOD_SIZE; i++) {
+            Member neighborhoodMember = neighborhood[i];
             MOEAD.scalarization.calculateFitness(child,neighborhoodMember.weightVector.vector);
-
-            if(child.fitness < neighborhoodMember.fitness){
+            if(child.fitness < neighborhoodMember.fitness ){
                 replaceMember(neighborhoodMember,child);
             }
         }
@@ -110,46 +101,48 @@ public class MOEADFunctions {
             for (int i = 0; i < neighborhoods.rows ; i++) {
                 for (int j = i; j < neighborhoods.rows; j++) {
 
-                    addOrdered(i,j,neighborhoods);
-                    addOrdered(j,i,neighborhoods);
+                    if(i != j) {
+
+                        addOrdered(i, j, neighborhoods);
+                        addOrdered(j, i, neighborhoods);
+                    }
+
                 }
             }
-
-            //TODO fazer um print pra ver se as distancia euclidianas estão em ordem
 
         }
 
         private static void addOrdered(int cellIndex, int neighbourCandidateIndex, Matrix neighborhoods){
 
+            boolean shouldAddLastPosition = false;
             Member[] neighborhood = neighborhoods.memberMatrix[cellIndex];
             Member cell = neighborhood[0];
             Member child = neighborhoods.memberMatrix[neighbourCandidateIndex][0];
             double candidateDistance = Utils.euclideanDistanceBasedOnWeightVector(cell,child);
-            if (candidateDistance == 0.0) return;
-
 
             int indexToInsert;
-            for (indexToInsert = 1; indexToInsert < Constants.NEIGHBOURHOOD_SIZE - 1; indexToInsert++) {
+            for (indexToInsert = 1; indexToInsert < Constants.NEIGHBOURHOOD_SIZE ; indexToInsert++) {
 
-
-                if (neighborhood[indexToInsert] == null){
-                    neighborhood[indexToInsert] = child;
-                    return;
-                }
-                else
-                {
+                if (neighborhood[indexToInsert] != null){
                     if (candidateDistance < Utils.euclideanDistanceBasedOnWeightVector(neighborhood[indexToInsert],neighborhood[0])){
+                        shouldAddLastPosition = true;
                         break;
                     }
                 }
+                else
+                {
+                    neighborhood[indexToInsert] = child;
+                    return;
+
+                }
 
             }
 
-            for (int i = Constants.NEIGHBOURHOOD_SIZE -1; i > indexToInsert + 1; i--) {
+            for (int i = Constants.NEIGHBOURHOOD_SIZE -1; i > indexToInsert ; i--) {
                 neighborhood[i] = neighborhood[i - 1];
             }
-            neighborhood[indexToInsert] = child;
 
+            if(shouldAddLastPosition) neighborhood[indexToInsert] = child;
 
         }
     }

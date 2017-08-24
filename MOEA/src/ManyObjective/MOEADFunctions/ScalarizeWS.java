@@ -18,15 +18,11 @@ public class ScalarizeWS extends Scalarize {
 
     @Override
     void calculateFitness(Member member, double[] weightVector){
-
         member.fitness = 0.0;
-
-
+        
         for (int i = 0; i < member.resultOfFunctions.size(); i++) {
             member.fitness += (member.resultOfFunctions.get(i) * weightVector[i]);
-
         }
-
     }
 
 }
