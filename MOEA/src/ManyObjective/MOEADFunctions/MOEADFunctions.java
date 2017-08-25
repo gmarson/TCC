@@ -7,6 +7,7 @@ import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighborhood;
 import Utilities.Matrix;
+import Utilities.Printer;
 import Utilities.Utils;
 
 import javax.rmi.CORBA.Util;
@@ -26,6 +27,14 @@ public class MOEADFunctions {
 
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
 
+//        if (genCounter == 19){
+//            System.out.println("parents");
+//            Printer.printBinaryMembers(parentsPopulation);
+//            System.out.println("child");
+//            Printer.printBinaryMembers(childPopulation);
+//            Utils.stop();//todo
+//        }
+
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
 
         return childPopulation.population.get(Utils.getRandom(0,2));
@@ -38,7 +47,7 @@ public class MOEADFunctions {
             System.out.println("GEN = "+genCounter);//todo
 
 
-            for (int i = 0; i < neighborhoods.rows; i++) {
+            for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
                 Member[] neighborhood = neighborhoods.memberMatrix[i];
                 Member child = generateChildrenGivenNeighborhood(neighborhood, problem);
                 addToNonDominatedPopulation(child.deepCopy(),problem);
@@ -68,7 +77,6 @@ public class MOEADFunctions {
     }
 
     private static void addToNonDominatedPopulation(Member member, Problem problem){
-
         Dominance dominance = new Dominance();
         ArrayList<Member> toBeRemoved = new ArrayList<>();
         boolean shouldAddNewMember = true;

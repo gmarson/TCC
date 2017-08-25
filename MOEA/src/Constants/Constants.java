@@ -11,7 +11,7 @@ public abstract class  Constants {
     public static int POPULATION_SIZE =150;
     public static int MUTATION_RATE = 5;
     public static double CROSSOVER_RATE = 1;
-    public static double NUMBER_OF_GENERATIONS = 100;
+    public static double NUMBER_OF_GENERATIONS = 20;
     public static int TOUR_SIZE = 4;
 
     //ONLY SPEA2 CONSTANTS
@@ -19,7 +19,7 @@ public abstract class  Constants {
     public static int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
 
     //ONLY AEMMT AND AEMMD CONSTANTS
-    public static int RESET_ON_GEN = 100;
+    public static int RESET_ON_GEN = 10;
     public static int QTD_TABLES;
     public static int TABLE_SIZE;
 
@@ -37,6 +37,6 @@ public abstract class  Constants {
     public static double BAG_CAPACITY;
 
     //FOR TEST ONLY
-    public static int SEED = 4;
+    public static int SEED = 3424;
 
 }

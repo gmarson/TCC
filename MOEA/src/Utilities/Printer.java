@@ -34,7 +34,7 @@ public abstract class Printer
     }
 
 
-    public static void printSingleNeighborhood(ArrayList<Member> neighborhood){
+    public static void printSingleNeighborhood(Member[] neighborhood){
 
         System.out.println("\nValor dos membros na vizinhanca");
 
@@ -50,30 +50,27 @@ public abstract class Printer
             for (int i = 0; i <childMember.weightVector.vector.length ; i++) {
                 System.out.print(childMember.weightVector.vector[i]+" ");
             }
-            //System.out.println("\nDistance from Cell: "+childMember.distanceFromParentMember);
+
             int j =1;
             for (Double d: childMember.resultOfFunctions)
             {
-                System.out.println("Function = "+ j+" = "+d);
+                System.out.print("\nFunction = "+ j+" = "+d);
                 j++;
             }
 
-            System.out.println("Solution: "+childMember.fitness+"\n");
+            System.out.println("\nSolution: "+childMember.fitness+"\n");
 
         }
     }
 
-    public static void printNeighborhoods(Population p){
+    public static void printNeighborhoods(Matrix neighborhoods){
 
-
-        for(Member m : p.population){
-
+        for (int i = 0; i < neighborhoods.rows; i++) {
             System.out.print("---- NOVA VIZINHANÇA -----");
+            Member[] neighborhood = neighborhoods.memberMatrix[i];
 
-            printSingleNeighborhood(m.neighborhood);
-
+            printSingleNeighborhood(neighborhood);
             System.out.println();
-
         }
     }
 

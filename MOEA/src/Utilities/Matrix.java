@@ -135,7 +135,8 @@ public class Matrix {
                     if(neighborhood[j] != null){
                         double distance = ( Utils.euclideanDistanceBasedOnWeightVector(neighborhood[0], neighborhood[j]) );
                         //String dstring = new DecimalFormat("##.#########").format(distance);
-                        System.out.print( distance +"   ");
+                        //System.out.print( distance +"   ");
+                        System.out.print(neighborhood[j]+ "   ");
                     }
 
 

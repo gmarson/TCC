@@ -11,8 +11,6 @@ import java.util.ArrayList;
  */
 public class SelectionNeighborhood extends  Selection {
 
-
-
     public static Population selectParents(Member[] neighborhood)
     {
         int position1stMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE);
