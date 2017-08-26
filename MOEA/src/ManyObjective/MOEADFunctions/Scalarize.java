@@ -10,6 +10,6 @@ import Utilities.Matrix;
 public abstract class Scalarize {
 
     abstract void calculateSolutionForPopulation(Matrix neighborhoods);
-    abstract void calculateFitness(Member member, double[] weightVector);
+    abstract void calculateFitness(Member member, Member neighborhoodMember);
 
 }

@@ -289,7 +289,9 @@ public abstract class Printer
         int i =0;
         for(Member m : p.population)
         {
-            System.out.println("Population.Member "+i+ " = "+m.value+"   SPEA2.Fitness = "+m.fitness);
+            System.out.println("Instance: "+m);
+            System.out.println("Population.Member "+i+ " = "+m.binaryValue+"\nFitness = "+m.fitness);
+            if(m.weightVector!=null) System.out.println("WV: "+ Arrays.toString(m.weightVector.vector));
             i++;
         }
     }

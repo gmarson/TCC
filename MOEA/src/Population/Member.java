@@ -96,11 +96,17 @@ public class Member implements Serializable, Cloneable{
     }
 
     public void printMember(){
+        System.out.println("Instance: "+this);
         System.out.println("Value: "+value);
         System.out.println("Binary value: "+binaryValue );
         for (int i = 0; i < resultOfFunctions.size(); i++) {
             System.out.println("F"+i+" = "+resultOfFunctions.get(i));
         }
+        if(fitness != -1){
+            System.out.println("Fitness: "+fitness);
+        }
     }
+
+
 
 }
