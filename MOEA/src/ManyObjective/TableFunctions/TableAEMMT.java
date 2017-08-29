@@ -40,7 +40,6 @@ public class TableAEMMT extends TableFunctions{
             }
             else
                 table.organizeWeightedAverageTable();
-
         }
     }
 
@@ -202,8 +201,6 @@ public class TableAEMMT extends TableFunctions{
             this.updateCurrentMask(i);
             this.addTable(TableFunctions.currentMask);
         }
-
-
     }
 
     private void getNonDominatedMembers(Problem problem) {

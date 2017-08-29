@@ -1,5 +1,6 @@
 package PerformanceMetrics;
 
+import Dominance.Dominance;
 import Population.*;
 import Problems.Problem;
 import Utilities.Printer;
@@ -18,16 +19,20 @@ public class ParetoSubset extends Metrics{
         result = 0.0;
     }
 
-
     @Override
     public void estimateBasedOnMetric(Population population, Population bestPareto) {
 
+        Dominance  d = new Dominance();
+
         for (Member normalMember: population.population)
         {
-            if ( isIn(normalMember,bestPareto))
-            {
-                this.gotRight++;
+            for (Member paretoMember: bestPareto.population){
+                if ( d.dominates(normalMember,paretoMember))
+                {
+                    this.gotRight++;
+                }
             }
+
         }
         bestParetoSize = bestPareto.population.size();
         result =  ((double) this.gotRight / (double) bestPareto.population.size()) * 100.00;
@@ -37,15 +42,9 @@ public class ParetoSubset extends Metrics{
     @Override
     public void messageAfterProcess() {
         System.out.println("Quantidade de elementos no Paretto: "+bestParetoSize);
-        System.out.println("(ps) Porcentagem dos elementos da fronteira achada que estão na fronteira de pareto: "+result);
-        System.out.println("(ps - qtd) Quantidade dos elementos da fronteira achada que estão na fronteira de pareto: "+gotRight);
+        System.out.println("(ps - qtd) Quantidade dos elementos da fronteira achada que dominam fronteira de pareto: "+gotRight);
 
     }
 
-    private boolean isIn(Member normalMember, Population bestPareto){
-
-        return Problem.valueOfMemberIsPresent(normalMember, bestPareto, problem);
-
-    }
 
 }

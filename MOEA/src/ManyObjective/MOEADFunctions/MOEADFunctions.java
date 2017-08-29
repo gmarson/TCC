@@ -29,13 +29,13 @@ public class MOEADFunctions {
 
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
 
-        if (genCounter == 19){
-            System.out.println("parents");
-            Printer.printMembersWithValueAndFitness(parentsPopulation);
-            System.out.println("child");
-            Printer.printMembersWithValueAndFitness(childPopulation);
-            Utils.stop();//todo
-        }
+//        if (genCounter == 19){
+//            System.out.println("parents");
+//            Printer.printMembersWithValueAndFitness(parentsPopulation);
+//            System.out.println("child");
+//            Printer.printMembersWithValueAndFitness(childPopulation);
+//            Utils.stop();//todo
+//        }
 
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
 
@@ -47,7 +47,6 @@ public class MOEADFunctions {
         while (genCounter < Constants.NUMBER_OF_GENERATIONS){
 
             System.out.println("GEN = "+genCounter);//todo
-
 
             for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
                 Member[] neighborhood = neighborhoods.memberMatrix[i];
@@ -67,32 +66,17 @@ public class MOEADFunctions {
             MOEAD.scalarization.calculateFitness(child,neighborhoodMember);
             if(child.fitness < neighborhoodMember.fitness ){
                 replaceMember(neighborhoodMember,child);
+                break;
             }
         }
     }
 
     private static void replaceMember(Member neighborhoodMember, Member child){
 
-        boolean shouldAdd = true;
-//        for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
-//            for (int j = 0; j < Constants.NEIGHBOURHOOD_SIZE; j++) {
-//                if(neighborhoods.memberMatrix[i][j].fitness == child.fitness){
-//                    shouldAdd = false;
-//                    break;
-//                }
-//            }
-//            if(!shouldAdd) {
-//                break;
-//            }
-//        }
-
-        if (shouldAdd){
-            neighborhoodMember.binaryValue = new ArrayList<>(child.binaryValue);
-            neighborhoodMember.resultOfFunctions = new ArrayList<>(child.resultOfFunctions);
-            neighborhoodMember.value = child.value;
-            neighborhoodMember.fitness = child.fitness;
-        }
-
+        neighborhoodMember.binaryValue = new ArrayList<>(child.binaryValue);
+        neighborhoodMember.resultOfFunctions = new ArrayList<>(child.resultOfFunctions);
+        neighborhoodMember.value = child.value;
+        neighborhoodMember.fitness = child.fitness;
     }
 
     private static void addToNonDominatedPopulation(Member member, Problem problem){
@@ -116,7 +100,6 @@ public class MOEADFunctions {
         MOEAD.archive.population.removeAll(toBeRemoved);
         if (shouldAddNewMember){
             MOEAD.archive.addMember(member);
-
         }
     }
 
@@ -133,7 +116,6 @@ public class MOEADFunctions {
                         addOrdered(i, j, neighborhoods);
                         addOrdered(j, i, neighborhoods);
                     }
-
                 }
             }
         }

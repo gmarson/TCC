@@ -108,5 +108,18 @@ public class Member implements Serializable, Cloneable{
     }
 
 
+    public String functionsToString(){
+
+        String functions = "[";
+        for(Double d : resultOfFunctions){
+
+        }
+
+        functions += "]";
+
+        return functions;
+    }
+
+
 
 }

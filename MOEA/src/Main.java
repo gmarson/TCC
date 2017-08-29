@@ -29,8 +29,8 @@ public class Main {
 
         //spaceOfObjectives();
         //writeParettoFromProblem();
-        //compareToParettoFront();
-        normal();
+        compareToParettoFront();
+        //normal();
     }
 
     private static void normal(){
@@ -107,7 +107,7 @@ public class Main {
 
     //Do not call this
     private static Population  getBestPossibleParettoOfAGS(){
-        int numberOfRounds = 10;
+        int numberOfRounds = 1;
         Population allFrontsMembers = new Population();
 
         NSGAII nsgaii = new NSGAII();
@@ -148,8 +148,6 @@ public class Main {
             allFrontsMembers.fastNonDominatedSort();
             Problem.removeSimilar(allFrontsMembers.fronts.allFronts.get(0),problem);
             allFrontsMembers.population = allFrontsMembers.fronts.allFronts.get(0).membersAtThisFront;
-
-
         }
 
         problem.printResolutionMessage();

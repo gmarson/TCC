@@ -26,21 +26,19 @@ public class Erro extends Metrics{
         double Ei = 0;
         for (Member memberNormal: population.population) {
             for (Member memberParetto: bestParetto.population){
-                if (d.dominates(memberParetto,memberNormal)){
+                if (d.dominates(memberNormal,memberParetto)){
                     Ei++;
                     break;
                 }
             }
-
         }
-
         result =  (Ei / population.population.size()) * 100;
     }
 
 
     @Override
     public void messageAfterProcess(){
-        System.out.println("(er) Porcentagem dos elementos da fronteira de paretto que dominam a fronteira normal: "+result );
+        System.out.println("(er) Porcentagem dos elementos da fronteira achada que dominam a fronteira de paretto: "+result );
     }
 
 
