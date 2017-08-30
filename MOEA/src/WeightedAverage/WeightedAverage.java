@@ -1,7 +1,7 @@
 package WeightedAverage;
 
 import Population.*;
-import Utilities.Utils;
+import SupportingFiles.Utils;
 
 import java.util.ArrayList;
 

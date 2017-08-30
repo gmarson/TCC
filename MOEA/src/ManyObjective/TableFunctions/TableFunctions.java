@@ -1,15 +1,11 @@
 package ManyObjective.TableFunctions;
 
 import Constants.Constants;
-import Dominance.Dominance;
 import ManyObjective.*;
 import Population.*;
-import Problems.*;
-import Utilities.Matrix;
-import com.sun.org.apache.bcel.internal.generic.POP;
+import SupportingFiles.Matrix;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by gabrielm on 30/03/17.

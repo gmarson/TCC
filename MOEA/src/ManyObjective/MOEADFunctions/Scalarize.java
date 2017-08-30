@@ -1,7 +1,7 @@
 package ManyObjective.MOEADFunctions;
 
 import Population.*;
-import Utilities.Matrix;
+import SupportingFiles.Matrix;
 
 /**
  * Created by gabrielm on 30/07/17.

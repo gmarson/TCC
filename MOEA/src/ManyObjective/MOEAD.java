@@ -4,13 +4,11 @@ import Constants.Constants;
 import ManyObjective.MOEADFunctions.*;
 import Population.*;
 import Problems.Problem;
-import Utilities.Matrix;
-import Utilities.Printer;
+import SupportingFiles.Matrix;
+import SupportingFiles.Printer;
 import Fronts.*;
 
 import java.util.ArrayList;
-
-import static ManyObjective.MOEADFunctions.MOEADFunctions.neighborhoods;
 
 /**
  * Created by gabrielm on 01/04/17.

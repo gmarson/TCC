@@ -1,11 +1,10 @@
 package Problems;
 
 import Constants.Constants;
-import Crossover.CrossoverBinaryKnapsack;
 import Crossover.CrossoverUniformKnapsack;
 import Population.*;
-import Utilities.Reader;
-import Utilities.Utils;
+import SupportingFiles.Reader;
+import SupportingFiles.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;

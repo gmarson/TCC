@@ -3,7 +3,7 @@ package Problems;
 import Constants.Constants;
 import Crossover.CrossoverBinary;
 import Population.*;
-import Utilities.Utils;
+import SupportingFiles.Utils;
 
 import java.util.ArrayList;
 

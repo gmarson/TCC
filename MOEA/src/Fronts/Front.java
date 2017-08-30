@@ -2,11 +2,10 @@ package Fronts;
 
 import Constants.Constants;
 import Population.Member;
-import Utilities.Sorts;
+import SupportingFiles.Sorts;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Created by gmarson on 12/21/2016.

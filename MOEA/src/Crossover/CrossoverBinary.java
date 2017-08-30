@@ -1,10 +1,9 @@
 package Crossover;
 
 import Constants.Constants;
-import Utilities.*;
+import SupportingFiles.*;
 import Population.*;
 
-import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 
 /**

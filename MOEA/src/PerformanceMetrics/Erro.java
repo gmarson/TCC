@@ -19,18 +19,20 @@ public class Erro extends Metrics{
     @Override
     public void estimateBasedOnMetric(Population population, Population bestParetto){
 
-        //super.problem.evaluateAgainstObjectiveFunctions(tablePopulation);
-        //super.problem.evaluateAgainstObjectiveFunctions(bestParetto);
-
         Dominance d = new Dominance();
         double Ei = 0;
+        boolean shouldIncreaseCounter;
+
         for (Member memberNormal: population.population) {
+            shouldIncreaseCounter = true;
             for (Member memberParetto: bestParetto.population){
-                if (d.dominates(memberNormal,memberParetto)){
-                    Ei++;
+                if (d.dominates(memberParetto,memberNormal)){
+                    shouldIncreaseCounter = false;
                     break;
                 }
             }
+            if (shouldIncreaseCounter) Ei++;
+
         }
         result =  (Ei / population.population.size()) * 100;
     }
@@ -38,7 +40,7 @@ public class Erro extends Metrics{
 
     @Override
     public void messageAfterProcess(){
-        System.out.println("(er) Porcentagem dos elementos da fronteira achada que dominam a fronteira de paretto: "+result );
+        System.out.println("(er) porcentagem dos resultados encontrados que não são dominados por qualquer solução no Pareto de referência: "+result );
     }
 
 

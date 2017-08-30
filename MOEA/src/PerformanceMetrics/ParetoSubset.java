@@ -3,7 +3,6 @@ package PerformanceMetrics;
 import Dominance.Dominance;
 import Population.*;
 import Problems.Problem;
-import Utilities.Printer;
 
 /**
  * Created by gabrielm on 04/05/17.

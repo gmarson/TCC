@@ -2,7 +2,7 @@ package Selections;
 
 import Constants.Constants;
 import Population.*;
-import Utilities.Utils;
+import SupportingFiles.Utils;
 import ManyObjective.Table;
 
 import java.util.ArrayList;

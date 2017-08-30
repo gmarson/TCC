@@ -2,8 +2,8 @@ package SPEA2;
 
 import Constants.Constants;
 import Population.*;
-import Utilities.Sorts;
-import Utilities.Utils;
+import SupportingFiles.Sorts;
+import SupportingFiles.Utils;
 
 import java.util.ArrayList;
 

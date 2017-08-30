@@ -95,7 +95,8 @@ public class Member implements Serializable, Cloneable{
         return newMember;
     }
 
-    public void printMember(){
+    public void printMember()
+    {
         System.out.println("Instance: "+this);
         System.out.println("Value: "+value);
         System.out.println("Binary value: "+binaryValue );
@@ -107,19 +108,20 @@ public class Member implements Serializable, Cloneable{
         }
     }
 
-
     public String functionsToString(){
 
-        String functions = "[";
+        StringBuilder functions = new StringBuilder("[");
+        int commasAdded = 0;
         for(Double d : resultOfFunctions){
-
+            functions.append(d.toString());
+            if(commasAdded != resultOfFunctions.size() - 1){
+                functions.append(",");
+                commasAdded++;
+            }
         }
 
-        functions += "]";
+        functions.append("]");
 
-        return functions;
+        return functions.toString();
     }
-
-
-
 }

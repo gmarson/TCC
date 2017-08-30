@@ -1,13 +1,12 @@
 package ManyObjective.TableFunctions;
 
 import Constants.*;
-import Dominance.Dominance;
 import ManyObjective.*;
 import Population.*;
 import Problems.*;
 import Selections.SelectionRankWeightedAverage;
 import Selections.SelectionTables;
-import Utilities.*;
+import SupportingFiles.*;
 import WeightedAverage.*;
 
 import java.util.ArrayList;

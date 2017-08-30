@@ -1,7 +1,7 @@
 package Population;
 
 import Constants.Constants;
-import Utilities.Utils;
+import SupportingFiles.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;

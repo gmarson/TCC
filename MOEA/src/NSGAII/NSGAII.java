@@ -7,7 +7,6 @@ import Problems.Problem;
 import Selections.Selection;
 import Selections.SelectionRank;
 import Selections.SelectionRankCrowding;
-import Utilities.Printer;
 
 /**
  * Created by gmarson on 12/20/2016.

@@ -2,7 +2,7 @@ package PerformanceMetrics;
 
 import Population.*;
 import Problems.Problem;
-import Utilities.Utils;
+import SupportingFiles.Utils;
 
 import static java.lang.Math.sqrt;
 

@@ -6,12 +6,9 @@ import ManyObjective.MOEAD;
 import Population.*;
 import Problems.Problem;
 import Selections.SelectionNeighborhood;
-import Utilities.Matrix;
-import Utilities.Printer;
-import Utilities.Utils;
+import SupportingFiles.Matrix;
+import SupportingFiles.Utils;
 
-import javax.rmi.CORBA.Util;
-import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 
 /**

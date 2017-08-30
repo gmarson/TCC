@@ -4,12 +4,13 @@ import PerformanceMetrics.GenerationalDistance;
 import PerformanceMetrics.ParetoSubset;
 import Population.*;
 import Problems.*;
-import Utilities.*;
+import SupportingFiles.*;
 import NSGAII.*;
 import SPEA2.*;
 import ManyObjective.*;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class Main {
@@ -27,9 +28,17 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        Population p  = new Population();
+        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        ArrayList<Member> members = problem.generateMembers(10);
+        p.population = members;
+        problem.evaluateAgainstObjectiveFunctions(p);
+        Serializer.writeToFile("testFile",p);
+
+        Serializer.readFromFile("testFile");
         //spaceOfObjectives();
         //writeParettoFromProblem();
-        compareToParettoFront();
+        //compareToParettoFront();
         //normal();
     }
 

@@ -1,4 +1,4 @@
-package Utilities;
+package SupportingFiles;
 
 import ManyObjective.*;
 import ManyObjective.TableFunctions.TableFunctions;

@@ -5,7 +5,7 @@ import ManyObjective.TableFunctions.TableAEMMD;
 import Population.Population;
 import Problems.Problem;
 import Constants.*;
-import Utilities.Printer;
+import SupportingFiles.Printer;
 
 /**
  * Created by gabrielm on 07/03/17.

@@ -1,20 +1,13 @@
 package ManyObjective.TableFunctions;
 
 import Constants.Constants;
-import Dominance.Dominance;
-import Fronts.Front;
 import ManyObjective.*;
 import Population.*;
 import Problems.*;
 import Selections.SelectionRank;
 import Selections.SelectionTables;
-import Utilities.Printer;
-import Utilities.Utils;
-import com.sun.java.browser.plugin2.DOM;
 
-import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Created by gabrielm on 30/03/17.

@@ -1,9 +1,6 @@
 package Selections;
 
-import Constants.*;
-import ManyObjective.*;
 import Population.*;
-import Utilities.*;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import java.util.ArrayList;

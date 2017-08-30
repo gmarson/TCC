@@ -3,7 +3,6 @@ package ManyObjective;
 import Constants.*;
 import Dominance.Dominance;
 import Population.*;
-import Utilities.Printer;
 import WeightedAverage.WeightedAverage;
 
 import java.util.ArrayList;
