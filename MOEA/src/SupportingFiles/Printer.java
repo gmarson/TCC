@@ -173,7 +173,10 @@ public abstract class Printer
         int i =0;
         for(Member m : p.population)
         {
-            System.out.println("Member "+i+ " = "+m.binaryValue);
+            if(m.binaryValue != null)
+                System.out.println("Member "+i+ " = "+m.binaryValue);
+            else
+                System.out.println("Member "+i+ " = "+m);
             int j=1;
             for(Double d: m.resultOfFunctions)
             {

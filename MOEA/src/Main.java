@@ -30,7 +30,7 @@ public class Main {
 
         Population p  = new Population();
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
-        ArrayList<Member> members = problem.generateMembers(10);
+        ArrayList<Member> members = problem.generateMembers(2);
         p.population = members;
         problem.evaluateAgainstObjectiveFunctions(p);
         Serializer.writeToFile("testFile",p);

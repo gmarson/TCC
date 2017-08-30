@@ -1,8 +1,12 @@
 package SupportingFiles;
 
+import Constants.Constants;
 import Population.Population;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Population.*;
 
@@ -51,7 +55,7 @@ public class Serializer {
             for(Member member : p.population){
                 functions.append(member.functionsToString());
                 if(commasAdded != p.population.size() - 1){
-                    functions.append(",");
+                    functions.append(" , ");
                     commasAdded++;
                 }
 
@@ -64,6 +68,7 @@ public class Serializer {
 
     public static void readFromFile(String filename){
         File file = new File(filename+".txt");
+        Population paretto = new Population();
 
         try (FileInputStream fis = new FileInputStream(file)) {
 
@@ -72,14 +77,31 @@ public class Serializer {
 
             int content;
             while ((content = fis.read()) != -1) {
-                //todo yesterday you were a shame, time to compensate today, man!
                 allFunctions += (char) content;
-
             }
+
+            Pattern p = Pattern.compile("-?[0-9]*\\.?[0-9]+");
+            Matcher m = p.matcher(allFunctions);
+            int counter = 0;
+            Member member = new Member(-1);
+
+            while (m.find()) {
+                if(counter  % Constants.PROBLEM_SIZE  == 0 & counter != 0){
+                    counter = 0;
+                    paretto.population.add(member.deepCopy());
+                    member = new Member(-1);
+                }
+
+                member.resultOfFunctions.add(new Double(m.group()));
+
+                counter++;
+                
+            }
+
+            Printer.printBinaryMembersWithAppliedFunctions(paretto);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
