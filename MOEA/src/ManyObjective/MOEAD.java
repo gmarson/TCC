@@ -28,8 +28,6 @@ public class MOEAD {
         instantiateVariables();
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
         MOEADFunctions.neighborhoods = new Matrix(Constants.POPULATION_SIZE, Constants.NEIGHBOURHOOD_SIZE, moeadPopulation);
-        scalarization.calculateSolutionForPopulation(MOEADFunctions.neighborhoods);
-
 
         MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers();
         MOEADFunctions.mainLoop(problem);

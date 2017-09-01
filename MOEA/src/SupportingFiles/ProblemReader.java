@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by gabrielm on 02/04/17.
  */
-public class FileReader {
+public class ProblemReader {
 
     public static int numberOfObjectives;
     public static int numberOfItems;

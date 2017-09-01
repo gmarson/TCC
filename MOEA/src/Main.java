@@ -28,18 +28,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Population p  = new Population();
-        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
-        ArrayList<Member> members = problem.generateMembers(2);
-        p.population = members;
-        problem.evaluateAgainstObjectiveFunctions(p);
-        Serializer.writeToFile("testFile",p);
 
-        Serializer.readFromFile("testFile");
         //spaceOfObjectives();
         //writeParettoFromProblem();
         //compareToParettoFront();
-        //normal();
+        normal();
     }
 
     private static void normal(){
