@@ -4,11 +4,15 @@ import Constants.Constants;
 import Population.Population;
 
 import java.io.*;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import Population.*;
+
+
 
 /**
  * Created by gabrielm on 05/04/17.
@@ -55,10 +59,9 @@ public class Serializer {
             for(Member member : p.population){
                 functions.append(member.functionsToString());
                 if(commasAdded != p.population.size() - 1){
-                    functions.append(" , ");
+                    functions.append(",");
                     commasAdded++;
                 }
-
             }
 
             writer.write(functions.toString());
@@ -66,7 +69,7 @@ public class Serializer {
         }
     }
 
-    public static void readFromFile(String filename){
+    public static Population readFromFile(String filename){
         File file = new File(filename+".txt");
         Population paretto = new Population();
 
@@ -75,33 +78,47 @@ public class Serializer {
             System.out.println("Total file size to read (in bytes) : "+ fis.available());
             String allFunctions = "";
 
-            int content;
-            while ((content = fis.read()) != -1) {
-                allFunctions += (char) content;
+
+            Reader reader = new FileReader(filename + ".txt");
+            try {
+                try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+                    for(String line; (line = br.readLine()) != null; ) {
+                        allFunctions += line;
+                    }
+                }
+
+            } finally {
+                reader.close();
             }
 
             Pattern p = Pattern.compile("-?[0-9]*\\.?[0-9]+");
             Matcher m = p.matcher(allFunctions);
-            int counter = 0;
+            int counter = 1;
             Member member = new Member(-1);
 
             while (m.find()) {
-                if(counter  % Constants.PROBLEM_SIZE  == 0 & counter != 0){
-                    counter = 0;
-                    paretto.population.add(member.deepCopy());
+                if(counter % (Constants.PROBLEM_SIZE +1) == 0){
+                    paretto.addMember(member.deepCopy());
+                    counter = 1;
                     member = new Member(-1);
                 }
 
                 member.resultOfFunctions.add(new Double(m.group()));
 
+
+
                 counter++;
-                
             }
 
+            paretto.addMember(member.deepCopy());
+
             Printer.printBinaryMembersWithAppliedFunctions(paretto);
+            Utils.stop();//todo
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return paretto;
     }
 }

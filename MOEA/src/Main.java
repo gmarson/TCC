@@ -10,6 +10,7 @@ import SPEA2.*;
 import ManyObjective.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -28,18 +29,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Population p  = new Population();
-        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
-        ArrayList<Member> members = problem.generateMembers(2);
-        p.population = members;
-        problem.evaluateAgainstObjectiveFunctions(p);
-        Serializer.writeToFile("testFile",p);
-
-        Serializer.readFromFile("testFile");
         //spaceOfObjectives();
-        //writeParettoFromProblem();
-        //compareToParettoFront();
+        //writeParettoFromProblem(); //todo never use for kptiago
+        compareToParettoFront();
         //normal();
+
     }
 
     private static void normal(){
@@ -69,7 +63,7 @@ public class Main {
 
     private static void compareToParettoFront(){
 
-        Population parettoPopulation = readParettoFromFile(macPathRead);
+        Population parettoPopulation = readParettoFromFile("MOEA/Pareto/paretoKPTIAGO");
 
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
@@ -104,11 +98,11 @@ public class Main {
         else if (!moead.pareto.membersAtThisFront.isEmpty())
             newPopulation.population = moead.pareto.membersAtThisFront;
 
-        erro.estimateBasedOnMetric(newPopulation,parettoPopulation);
-        erro.messageAfterProcess();
-
         paretoSubset.estimateBasedOnMetric(newPopulation,parettoPopulation);
         paretoSubset.messageAfterProcess();
+
+        erro.estimateBasedOnMetric(newPopulation,parettoPopulation);
+        erro.messageAfterProcess();
 
         generationalDistance.estimateBasedOnMetric(newPopulation,parettoPopulation);
         generationalDistance.messageAfterProcess();
@@ -169,8 +163,8 @@ public class Main {
     private static void writeParettoFromProblem(){
         Population parettoOfAGS = getBestPossibleParettoOfAGS();
         try {
-            Serializer.writeObject(fileName+parettoName+extension,parettoOfAGS);
-        } catch (Exception e) {
+            Serializer.writeToFile("partialPareto",parettoOfAGS);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -179,7 +173,7 @@ public class Main {
     private static Population readParettoFromFile(String fileName){
         Population paretto = new Population();
         try{
-            paretto = Serializer.readObject(fileName);
+            paretto = Serializer.readFromFile(fileName);
         }
         catch (Exception e){
             e.printStackTrace();

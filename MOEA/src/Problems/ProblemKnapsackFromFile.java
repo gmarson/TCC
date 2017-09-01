@@ -3,7 +3,7 @@ package Problems;
 import Constants.Constants;
 import Crossover.CrossoverUniformKnapsack;
 import Population.*;
-import SupportingFiles.Reader;
+import SupportingFiles.ProblemReader;
 import SupportingFiles.Utils;
 
 import java.io.IOException;
@@ -20,15 +20,15 @@ public class ProblemKnapsackFromFile  extends  Problem{
         crossover = new CrossoverUniformKnapsack();
 
         try {
-            Reader.getProblemFromFile(file);
+            ProblemReader.getProblemFromFile(file);
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
-        Constants.PROBLEM_SIZE = Reader.numberOfObjectives;
-        Constants.QTD_ITEMS = Reader.numberOfItems;
-        Constants.BAG_CAPACITY = Reader.totalWeight;
+        Constants.PROBLEM_SIZE = ProblemReader.numberOfObjectives;
+        Constants.QTD_ITEMS = ProblemReader.numberOfItems;
+        Constants.BAG_CAPACITY = ProblemReader.totalWeight;
         this.buildItemsFromFile();
         Constants.MUTATION_RATE = 2/items.size();
 
@@ -136,10 +136,10 @@ public class ProblemKnapsackFromFile  extends  Problem{
 
             for (int j = 0; j < Constants.PROBLEM_SIZE; j++) {
                 int offSet = j * Constants.QTD_ITEMS;
-                objectivesOfItem.add(Reader.objectives.get( i + offSet));
+                objectivesOfItem.add(ProblemReader.objectives.get( i + offSet));
             }
 
-            weight = Reader.weights.get(i);
+            weight = ProblemReader.weights.get(i);
 
             items.add(new KnapsackItem(objectivesOfItem, weight));
         }
