@@ -26,14 +26,6 @@ public class MOEADFunctions {
 
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
 
-//        if (genCounter == 19){
-//            System.out.println("parents");
-//            Printer.printMembersWithValueAndFitness(parentsPopulation);
-//            System.out.println("child");
-//            Printer.printMembersWithValueAndFitness(childPopulation);
-//            Utils.stop();//todo
-//        }
-
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
 
         return childPopulation.population.get(Utils.getRandom(0,2));
@@ -60,8 +52,10 @@ public class MOEADFunctions {
 
         for (int i = 0; i < Constants.NEIGHBOURHOOD_SIZE; i++) {
             Member neighborhoodMember = neighborhood[i];
+
             MOEAD.scalarization.calculateFitness(child,neighborhoodMember);
-            if(child.fitness < neighborhoodMember.fitness ){
+
+            if(child.fitness <= neighborhoodMember.fitness ){
                 replaceMember(neighborhoodMember,child);
                 break;
             }
@@ -69,7 +63,6 @@ public class MOEADFunctions {
     }
 
     private static void replaceMember(Member neighborhoodMember, Member child){
-
         neighborhoodMember.binaryValue = new ArrayList<>(child.binaryValue);
         neighborhoodMember.resultOfFunctions = new ArrayList<>(child.resultOfFunctions);
         neighborhoodMember.value = child.value;
@@ -109,15 +102,14 @@ public class MOEADFunctions {
                 for (int j = i; j < neighborhoods.rows; j++) {
 
                     if(i != j) {
-
-                        addOrdered(i, j, neighborhoods);
-                        addOrdered(j, i, neighborhoods);
+                        addOrdered(i, j);
+                        addOrdered(j, i);
                     }
                 }
             }
         }
 
-        private static void addOrdered(int cellIndex, int neighbourCandidateIndex, Matrix neighborhoods){
+        private static void addOrdered(int cellIndex, int neighbourCandidateIndex){
 
             boolean shouldAddLastPosition = false;
             Member[] neighborhood = neighborhoods.memberMatrix[cellIndex];
