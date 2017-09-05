@@ -1,6 +1,6 @@
 package ManyObjective;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import ManyObjective.MOEADFunctions.*;
 import Population.*;
 import Problems.Problem;

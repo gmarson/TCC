@@ -1,14 +1,10 @@
 package SupportingFiles;
 
-import Constants.Constants;
 import Population.Population;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import Population.*;
 
@@ -77,17 +73,14 @@ public class Serializer {
 
             System.out.println("Total file size to read (in bytes) : "+ fis.available());
             String allFunctions = "";
-
-
             Reader reader = new FileReader(filename + ".txt");
-            try {
-                try(BufferedReader br = new BufferedReader(new FileReader(file))) {
-                    for(String line; (line = br.readLine()) != null; ) {
-                        allFunctions += line;
-                    }
-                }
 
-            } finally {
+            try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+                for(String line; (line = br.readLine()) != null; ) {
+                    allFunctions += line;
+                }
+            }
+             finally {
                 reader.close();
             }
 
@@ -101,19 +94,18 @@ public class Serializer {
                     paretto.addMember(member.deepCopy());
                     counter = 1;
                     member = new Member(-1);
+
+
                 }
 
                 member.resultOfFunctions.add(new Double(m.group()));
 
-
-
                 counter++;
+
             }
 
             paretto.addMember(member.deepCopy());
 
-            Printer.printBinaryMembersWithAppliedFunctions(paretto);
-            Utils.stop();//todo
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -121,4 +113,5 @@ public class Serializer {
 
         return paretto;
     }
+
 }

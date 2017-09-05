@@ -1,4 +1,4 @@
-import Constants.Constants;
+import SupportingFiles.Constants;
 import PerformanceMetrics.Erro;
 import PerformanceMetrics.GenerationalDistance;
 import PerformanceMetrics.ParetoSubset;
@@ -30,6 +30,8 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        //testLargeFile();
+
         //spaceOfObjectives();
         //writeParettoFromProblem(); //todo never use for kptiago
         compareToParettoFront();
@@ -53,7 +55,11 @@ public class Main {
         int counter = 0;
 
         if (AEMMD.class.isInstance(algorithm) || AEMMT.class.isInstance(algorithm)){
-            Constants.NUMBER_OF_GENERATIONS = 30000;
+            Constants.NUMBER_OF_GENERATIONS = 15000;
+        }
+
+        if (MOEAD.class.isInstance(algorithm)){
+            Constants.NUMBER_OF_GENERATIONS = 200;
         }
 
         while (counter < x) {
@@ -63,10 +69,9 @@ public class Main {
     }
 
     private static void compareToParettoFront(){
-
-        Population parettoPopulation = readParettoFromFile("MOEA/Pareto/paretoKPTIAGO");
-
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+
+        Population parettoPopulation = readParettoFromFile("MOEA/Pareto/paretoKPTIAGO2");
 
         NSGAII nsgaii = new NSGAII();
         SPEA2  spea2 = new SPEA2();
@@ -76,10 +81,12 @@ public class Main {
 
         //nsgaii.runAlgorithm(problem);
         //spea2.runAlgorithm(problem);
-        moead.runAlgorithm(problem);
 
-        Constants.NUMBER_OF_GENERATIONS = 30000;
-        //aemmt.runAlgorithm(problem);
+        Constants.NUMBER_OF_GENERATIONS = 200;
+        //moead.runAlgorithm(problem);
+
+        Constants.NUMBER_OF_GENERATIONS = 15000;
+        aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
         Erro erro = new Erro(problem);
@@ -173,6 +180,12 @@ public class Main {
 
     private static Population readParettoFromFile(String fileName){
         Population paretto = new Population();
+
+        if(Constants.PROBLEM_SIZE == -1) {
+            System.out.println("Problem size not defined!");
+            return null;
+        }
+
         try{
             paretto = Serializer.readFromFile(fileName);
         }
@@ -194,6 +207,17 @@ public class Main {
     static void spaceOfObjectives(){
         Population p = readParettoFromFile(macPathRead);
         Printer.printMembersWithAppliedFunctions(p);
+    }
+
+
+    static void testLargeFile() throws IOException {
+        Population p  = new Population();
+        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        ArrayList<Member> members = problem.generateMembers(200000);
+        p.population = members;
+        problem.evaluateAgainstObjectiveFunctions(p);
+        Serializer.writeToFile("testFile",p);
+        Serializer.readFromFile("testFile");
     }
 
 }

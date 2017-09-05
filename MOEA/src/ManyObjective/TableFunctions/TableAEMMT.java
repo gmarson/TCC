@@ -1,6 +1,5 @@
 package ManyObjective.TableFunctions;
 
-import Constants.*;
 import ManyObjective.*;
 import Population.*;
 import Problems.*;
@@ -142,8 +141,8 @@ public class TableAEMMT extends TableFunctions{
     {
         if(positionsToIncrease.size() == 1) positionsToIncrease.add(positionsToIncrease.get(0));
 
-        tables.get(positionsToIncrease.get(0)).contribution+= pointsToIncrease;
-        tables.get(positionsToIncrease.get(1)).contribution+= pointsToIncrease;
+        tables.get(positionsToIncrease.get(0)).contribution+= 1;
+        tables.get(positionsToIncrease.get(1)).contribution+= 1;
     }
 
     @Override
@@ -193,6 +192,7 @@ public class TableAEMMT extends TableFunctions{
     public void buildTables(){
         TableFunctions.setQtdMembersOfATable();
         Constants.QTD_TABLES = this.setQtdTables();
+
         TableFunctions.buildMasks();
 
         for(int i=0;i<Constants.QTD_TABLES;i++)

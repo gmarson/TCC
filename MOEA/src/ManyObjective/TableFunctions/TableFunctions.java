@@ -1,6 +1,6 @@
 package ManyObjective.TableFunctions;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import ManyObjective.*;
 import Population.*;
 import SupportingFiles.Matrix;
@@ -34,7 +34,7 @@ public abstract class TableFunctions {
     }
 
     static void setQtdMembersOfATable(){
-        Constants.TABLE_SIZE = Constants.POPULATION_SIZE;
+        //Constants.TABLE_SIZE = 70;
     }
 
     static void buildMasks() {

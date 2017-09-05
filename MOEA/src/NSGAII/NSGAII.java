@@ -1,12 +1,12 @@
 package NSGAII;
 
-import Constants.*;
 import Fronts.Front;
 import Population.Population;
 import Problems.Problem;
 import Selections.Selection;
 import Selections.SelectionRank;
 import Selections.SelectionRankCrowding;
+import SupportingFiles.Constants;
 
 /**
  * Created by gmarson on 12/20/2016.

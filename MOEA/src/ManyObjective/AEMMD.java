@@ -4,7 +4,7 @@ import Fronts.Front;
 import ManyObjective.TableFunctions.TableAEMMD;
 import Population.Population;
 import Problems.Problem;
-import Constants.*;
+import SupportingFiles.Constants;
 import SupportingFiles.Printer;
 
 /**
@@ -25,9 +25,7 @@ public class AEMMD {
 
         p.population = problem.generateMembers(Constants.POPULATION_SIZE * Constants.QTD_TABLES);
 
-        System.out.println("oi");//todo
         tableAEMMD.fillTables(p);
-        System.out.println("oi");//todo
 
         tableAEMMD.mainLoop();
 

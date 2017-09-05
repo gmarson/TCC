@@ -1,6 +1,6 @@
 package ManyObjective.TableFunctions;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import ManyObjective.*;
 import Population.*;
 import Problems.*;
@@ -41,9 +41,7 @@ public class TableAEMMD extends TableFunctions{
 
         for (Table table :tables)
         {
-
             problem.applyFunctions(newMember);
-
 
             if (!Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem))
             {

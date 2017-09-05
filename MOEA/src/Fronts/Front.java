@@ -1,6 +1,6 @@
 package Fronts;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import Population.Member;
 import SupportingFiles.Sorts;
 

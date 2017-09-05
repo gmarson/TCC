@@ -1,6 +1,6 @@
 package Problems;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import SupportingFiles.Utils;
 
 import java.util.ArrayList;

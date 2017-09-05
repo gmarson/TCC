@@ -22,27 +22,32 @@ public class ParetoSubset extends Metrics{
     public void estimateBasedOnMetric(Population population, Population bestPareto) {
 
         Dominance  d = new Dominance();
+        boolean shouldIncreaseContribution;
 
         for (Member normalMember: population.population)
         {
+            shouldIncreaseContribution = true;
             for (Member paretoMember: bestPareto.population){
-                if ( d.dominates(normalMember,paretoMember))
+
+                if ( d.dominates(paretoMember,normalMember))
                 {
-                    this.gotRight++;
+                    shouldIncreaseContribution = false;
                 }
+
             }
+            if (shouldIncreaseContribution) this.gotRight++;
 
         }
         bestParetoSize = bestPareto.population.size();
-        result =  ((double) this.gotRight / (double) bestPareto.population.size()) * 100.00;
+        result =  this.gotRight;
     }
 
 
     @Override
     public void messageAfterProcess() {
-        System.out.println("Quantidade de elementos no Paretto: "+bestParetoSize);
-        System.out.println("(ps - qtd) Quantidade dos elementos da fronteira achada que dominam fronteira de pareto: "+gotRight);
 
+        System.out.println("Quantidade de elementos no Paretto: "+bestParetoSize);
+        System.out.println("(ps) Quantidade dos resultados encontrados que são dominados por alguma solução no Pareto de referência: "+gotRight);
     }
 
 

@@ -1,6 +1,6 @@
 package SPEA2;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import Population.*;
 import SupportingFiles.*;
 

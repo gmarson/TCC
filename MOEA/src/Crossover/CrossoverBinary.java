@@ -1,6 +1,6 @@
 package Crossover;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import SupportingFiles.*;
 import Population.*;
 

@@ -1,6 +1,6 @@
 package Problems;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import Crossover.CrossoverArithmetic;
 import Population.*;
 import SupportingFiles.Utils;

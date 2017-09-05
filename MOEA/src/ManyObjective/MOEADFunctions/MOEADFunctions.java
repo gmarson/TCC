@@ -1,6 +1,6 @@
 package ManyObjective.MOEADFunctions;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import Dominance.Dominance;
 import ManyObjective.MOEAD;
 import Population.*;
@@ -41,6 +41,7 @@ public class MOEADFunctions {
                 Member[] neighborhood = neighborhoods.memberMatrix[i];
                 Member child = generateChildrenGivenNeighborhood(neighborhood, problem);
                 addToNonDominatedPopulation(child.deepCopy(),problem);
+
                 updateNeighborhood(neighborhood, child);
             }
 

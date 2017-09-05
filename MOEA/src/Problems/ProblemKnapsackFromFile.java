@@ -1,6 +1,6 @@
 package Problems;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import Crossover.CrossoverUniformKnapsack;
 import Population.*;
 import SupportingFiles.ProblemReader;

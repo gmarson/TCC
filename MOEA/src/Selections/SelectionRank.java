@@ -1,9 +1,7 @@
 package Selections;
 
-import Constants.Constants;
-import ManyObjective.Table;
+import SupportingFiles.Constants;
 import Population.*;
-import javafx.scene.control.Tab;
 
 import java.util.ArrayList;
 

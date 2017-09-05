@@ -2,6 +2,7 @@ package PerformanceMetrics;
 
 import Population.*;
 import Problems.Problem;
+import SupportingFiles.Printer;
 import SupportingFiles.Utils;
 
 import static java.lang.Math.sqrt;
@@ -22,19 +23,22 @@ public class GenerationalDistance extends Metrics{
     public void estimateBasedOnMetric(Population population, Population bestParetto) {
 
         double currentEuclidianDistance;
-        double shortestDistance = Double.MAX_VALUE;
+        double shortestDistance;
 
         for(Member normal : population.population)
         {
+            shortestDistance = Double.MAX_VALUE;
             for (Member paretto: bestParetto.population)
             {
                 currentEuclidianDistance = Utils.euclidianDistance(normal,paretto);
-                if (currentEuclidianDistance < shortestDistance) shortestDistance = currentEuclidianDistance;
+                if (currentEuclidianDistance < shortestDistance){
+                    shortestDistance = currentEuclidianDistance;
+                }
             }
 
             result += shortestDistance;
         }
-        
+
         result =  sqrt(result) / (double) population.population.size();
     }
 

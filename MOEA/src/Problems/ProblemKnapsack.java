@@ -1,8 +1,8 @@
 package Problems;
 
-import Constants.*;
 import Crossover.CrossoverUniformKnapsack;
 import Population.*;
+import SupportingFiles.Constants;
 import SupportingFiles.Utils;
 
 import java.util.ArrayList;

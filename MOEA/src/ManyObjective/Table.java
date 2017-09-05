@@ -1,8 +1,8 @@
 package ManyObjective;
 
-import Constants.*;
 import Dominance.Dominance;
 import Population.*;
+import SupportingFiles.Constants;
 import WeightedAverage.WeightedAverage;
 
 import java.util.ArrayList;

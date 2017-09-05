@@ -34,13 +34,13 @@ public class Erro extends Metrics{
             if (shouldIncreaseCounter) Ei++;
 
         }
-        result =  (Ei / population.population.size()) * 100;
+        result =  (1 - ( (Ei / population.population.size()))) *100;
     }
 
 
     @Override
     public void messageAfterProcess(){
-        System.out.println("(er) porcentagem dos resultados encontrados que não são dominados por qualquer solução no Pareto de referência: "+result );
+        System.out.println("(er) porcentagem dos resultados encontrados que são dominados por alguma solução no Pareto de referência: "+result );
     }
 
 

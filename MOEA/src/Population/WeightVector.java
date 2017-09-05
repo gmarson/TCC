@@ -1,6 +1,6 @@
 package Population;
 
-import Constants.Constants;
+import SupportingFiles.Constants;
 import SupportingFiles.Utils;
 
 import java.io.Serializable;

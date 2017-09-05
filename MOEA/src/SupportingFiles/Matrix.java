@@ -1,7 +1,6 @@
 package SupportingFiles; /**
  * Created by gabrielm on 12/01/17.
  */
-import Constants.*;
 import Population.Member;
 import Population.Population;
 
