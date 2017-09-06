@@ -21,7 +21,7 @@ public abstract class  Constants {
     //ONLY AEMMT AND AEMMD CONSTANTS
     public static int RESET_ON_GEN = 10;
     public static int QTD_TABLES;
-    public static int TABLE_SIZE = 55;
+    public static int TABLE_SIZE = 60;
 
     //ONLY MOEA-D
     public static int NEIGHBOURHOOD_SIZE = 100;
@@ -37,6 +37,6 @@ public abstract class  Constants {
     public static double BAG_CAPACITY;
 
     //FOR TEST ONLY
-    public static int SEED = 3424;
+    public static int SEED = 34824;
 
 }

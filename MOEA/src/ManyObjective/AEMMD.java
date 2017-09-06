@@ -23,7 +23,7 @@ public class AEMMD {
 
         tableAEMMD.buildTables();
 
-        p.population = problem.generateMembers(Constants.POPULATION_SIZE * Constants.QTD_TABLES);
+        p.population = problem.generateMembers(Constants.TABLE_SIZE * Constants.QTD_TABLES);
 
         tableAEMMD.fillTables(p);
 

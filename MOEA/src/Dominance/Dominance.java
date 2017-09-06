@@ -1,6 +1,6 @@
 package Dominance;
 
-import Constants.*;
+
 import Population.*;
 import java.util.ArrayList;
 /**
@@ -10,7 +10,6 @@ public class Dominance {
 
     public void establishDominanceForAllMembers(Population p)
     {
-
         Member mi,mj;
 
         for(int i =0; i< p.population.size();i++)

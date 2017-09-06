@@ -129,7 +129,6 @@ public class TableAEMMT extends TableFunctions{
             return false;
         }
 
-
         problem.applyFunctionsGivenMask(newMember,table.mask);
         table.tablePopulation.addMember(newMember);
         table.organizeNonDominatedTable(true);

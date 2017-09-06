@@ -26,23 +26,7 @@ public class Table {
         this.isNonDominatedTable = (mask.length == 0);
     }
 
-    public void organizeNonDominatedTable(boolean removeSurplusMembers)
-    {
-        this.resetDominanceStatus();
-        dominance.establishDominanceForAllMembers(this.tablePopulation);
-        Population pop = new Population();
-        ArrayList<Member> members = this.tablePopulation.population;
 
-        for (int i = 0; i < members.size(); i++) {
-            Member member = members.get(i);
-            if (member.numberOfSolutionsThatDominatesThisMember == 0){
-                pop.addMember(member.deepCopy());
-            }
-        }
-
-        tablePopulation = pop.deepCopy();
-        if (removeSurplusMembers) removeSurplusMembers();
-    }
 
     public void organizeWeightedAverageTable(){
         WeightedAverage.sortByWeightedAverage(this.tablePopulation);
@@ -67,10 +51,26 @@ public class Table {
         }
     }
 
-    public void organizeNonDominatedMaskedTable(boolean removeSurplusMembers)
+    public void organizeNonDominatedAEMMDTables()
     {
         this.resetDominanceStatus();
         dominance.establishDominanceForAllMembers(this.tablePopulation, this.mask);
+        Population pop = new Population();
+        ArrayList<Member> members = this.tablePopulation.population;
+
+        for (int i = 0; i < members.size(); i++) {
+            Member member = members.get(i);
+            if (member.numberOfSolutionsThatDominatesThisMember == 0){
+                pop.addMember(member.deepCopy());
+            }
+        }
+        tablePopulation = pop;
+    }
+
+    public void organizeNonDominatedTable(boolean removeSurplusMembers)
+    {
+        this.resetDominanceStatus();
+        dominance.establishDominanceForAllMembers(this.tablePopulation);
         Population pop = new Population();
         ArrayList<Member> members = this.tablePopulation.population;
 
@@ -84,5 +84,4 @@ public class Table {
         tablePopulation = pop;
         if (removeSurplusMembers) removeSurplusMembers();
     }
-
 }

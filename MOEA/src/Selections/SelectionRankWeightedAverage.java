@@ -10,7 +10,6 @@ import java.util.ArrayList;
  */
 public class SelectionRankWeightedAverage extends Selection {
 
-
     @Override
     protected Member returnWinnerCompetitor(ArrayList<Member> membersByTour) {
         Member bestMember, opponentMember;

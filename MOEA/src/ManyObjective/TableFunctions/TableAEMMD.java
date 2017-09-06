@@ -1,5 +1,6 @@
 package ManyObjective.TableFunctions;
 
+import Dominance.Dominance;
 import SupportingFiles.Constants;
 import ManyObjective.*;
 import Population.*;
@@ -30,8 +31,8 @@ public class TableAEMMD extends TableFunctions{
 
         for(Table table: tables)
         {
-            table.tablePopulation = p.deepCopy();
-            table.organizeNonDominatedMaskedTable(false);
+            table.tablePopulation = p;
+            table.organizeNonDominatedAEMMDTables();
         }
 
     }
@@ -39,21 +40,33 @@ public class TableAEMMD extends TableFunctions{
     @Override
     public void insertMemberOnTables(Member newMember) {
 
+        boolean shouldIncreaseConvergence = false;
         for (Table table :tables)
         {
-            problem.applyFunctions(newMember);
 
-            if (!Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem))
-            {
-                table.tablePopulation.addMember(newMember.deepCopy());
-                table.organizeNonDominatedMaskedTable(false);
+            if (!Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
+                shouldIncreaseConvergence = addToNonDominatedPopulation(newMember,problem,table);
+            }
 
-                if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
+            if (shouldIncreaseConvergence){
                     table.convergence++;
-                }
             }
         }
+    }
 
+    private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
+
+        if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)
+                || table.tablePopulation.population.size() == Constants.TABLE_SIZE){
+            return false;
+        }
+
+
+        problem.applyFunctionsGivenMask(newMember,table.mask);
+        table.tablePopulation.addMember(newMember);
+        table.organizeNonDominatedTable(true);
+
+        return Problem.valueOfMemberIsPresent(newMember, table.tablePopulation, problem);
     }
 
     @Override
@@ -163,6 +176,30 @@ public class TableAEMMD extends TableFunctions{
 
         nonDominatedMembers.fastNonDominatedSort();
         nonDominatedMembers.population = nonDominatedMembers.getFirstFront().membersAtThisFront;
+    }
+
+    private static boolean addToNonDominatedPopulation(Member member, Problem problem, Table table){
+        Dominance dominance = new Dominance();
+        ArrayList<Member> toBeRemoved = new ArrayList<>();
+        boolean shouldAddNewMember = true;
+
+        for (Member tableMember : table.tablePopulation.population){
+
+            if (dominance.dominates(member,tableMember,table.mask)){
+                toBeRemoved.add(tableMember);
+            }
+
+            if (dominance.dominates(tableMember,member,table.mask)){
+                shouldAddNewMember = false;
+            }
+        }
+
+        table.tablePopulation.population.removeAll(toBeRemoved);
+        if (shouldAddNewMember){
+            table.tablePopulation.addMember(member);
+        }
+
+        return shouldAddNewMember;
     }
 
 }

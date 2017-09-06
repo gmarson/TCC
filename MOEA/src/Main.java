@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    //private static String fileName = "KP_p-3_n-10_ins-1";
+    //private static String fileName = "KP_p-5_n-10_ins-1";
     //private static String fileName = "KPTESTE";
     private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
@@ -47,9 +47,9 @@ public class Main {
 
         //NSGAII algorithm = new NSGAII();
         //SPEA2 algorithm = new SPEA2();
-        //AEMMT algorithm = new AEMMT();
+        AEMMT algorithm = new AEMMT();
         //AEMMD algorithm = new AEMMD();
-        MOEAD algorithm = new MOEAD();
+        //MOEAD algorithm = new MOEAD();
 
         int x =1;
         int counter = 0;
@@ -67,6 +67,7 @@ public class Main {
             counter++;
         }
     }
+
 
     private static void compareToParettoFront(){
         Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
@@ -86,8 +87,8 @@ public class Main {
         //moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS = 15000;
-        aemmt.runAlgorithm(problem);
-        //aemmd.runAlgorithm(problem);
+        //aemmt.runAlgorithm(problem);
+        aemmd.runAlgorithm(problem);
 
         Erro erro = new Erro(problem);
         ParetoSubset paretoSubset = new ParetoSubset(problem);
