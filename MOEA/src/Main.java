@@ -87,8 +87,8 @@ public class Main {
         //moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS = 15000;
-        //aemmt.runAlgorithm(problem);
-        aemmd.runAlgorithm(problem);
+        aemmt.runAlgorithm(problem);
+        //aemmd.runAlgorithm(problem);
 
         Erro erro = new Erro(problem);
         ParetoSubset paretoSubset = new ParetoSubset(problem);

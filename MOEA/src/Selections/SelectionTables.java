@@ -1,6 +1,6 @@
 package Selections;
 
-import ManyObjective.*;
+import ManyObjective.TableFunctions.Table;
 import Population.*;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 

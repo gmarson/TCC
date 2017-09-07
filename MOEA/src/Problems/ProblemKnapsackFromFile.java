@@ -42,6 +42,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
         }
     }
 
+
     @Override
     public void evaluateAgainstObjectiveFunctions(Population p) {
         for (int i = 0; i < p.population.size(); i++) {

@@ -1,4 +1,4 @@
-package ManyObjective;
+package ManyObjective.TableFunctions;
 
 import Dominance.Dominance;
 import Population.*;
@@ -26,8 +26,6 @@ public class Table {
         this.isNonDominatedTable = (mask.length == 0);
     }
 
-
-
     public void organizeWeightedAverageTable(){
         WeightedAverage.sortByWeightedAverage(this.tablePopulation);
         removeSurplusMembers();
@@ -51,10 +49,10 @@ public class Table {
         }
     }
 
-    public void organizeNonDominatedAEMMDTables()
+    void organizeNonDominatedAEMMDTables()
     {
         this.resetDominanceStatus();
-        dominance.establishDominanceForAllMembers(this.tablePopulation, this.mask);
+        dominance.establishDominanceForAllMembers(this.tablePopulation);
         Population pop = new Population();
         ArrayList<Member> members = this.tablePopulation.population;
 
@@ -67,7 +65,7 @@ public class Table {
         tablePopulation = pop;
     }
 
-    public void organizeNonDominatedTable(boolean removeSurplusMembers)
+    void organizeNonDominatedTable(boolean removeSurplusMembers)
     {
         this.resetDominanceStatus();
         dominance.establishDominanceForAllMembers(this.tablePopulation);

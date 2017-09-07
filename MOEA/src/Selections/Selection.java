@@ -3,7 +3,7 @@ package Selections;
 import SupportingFiles.Constants;
 import Population.*;
 import SupportingFiles.Utils;
-import ManyObjective.Table;
+import ManyObjective.TableFunctions.Table;
 
 import java.util.ArrayList;
 

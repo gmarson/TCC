@@ -1,6 +1,6 @@
 package SupportingFiles;
 
-import ManyObjective.*;
+import ManyObjective.TableFunctions.Table;
 import ManyObjective.TableFunctions.TableFunctions;
 import Population.*;
 

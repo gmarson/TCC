@@ -1,7 +1,6 @@
 package ManyObjective.TableFunctions;
 
 import SupportingFiles.Constants;
-import ManyObjective.*;
 import Population.*;
 import SupportingFiles.Matrix;
 

@@ -35,7 +35,6 @@ public class AEMMD {
 
         saveParetto(problem);
         reset(problem);
-
     }
 
     private void reset(Problem problem){

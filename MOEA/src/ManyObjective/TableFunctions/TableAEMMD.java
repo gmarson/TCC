@@ -2,20 +2,23 @@ package ManyObjective.TableFunctions;
 
 import Dominance.Dominance;
 import SupportingFiles.Constants;
-import ManyObjective.*;
 import Population.*;
 import Problems.*;
 import Selections.SelectionRank;
 import Selections.SelectionTables;
+import SupportingFiles.Printer;
+import SupportingFiles.Utils;
 
+import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by gabrielm on 30/03/17.
  */
 public class TableAEMMD extends TableFunctions{
 
-    private static int genCounter=0;
+    private static int genCounter = 0;
     private static ArrayList<Table> tables = new ArrayList<>();
     public static Population nonDominatedMembers = new Population();
     private static Problem problem;
@@ -27,11 +30,10 @@ public class TableAEMMD extends TableFunctions{
     @Override
     public void fillTables(Population p) {
 
-        problem.evaluateAgainstObjectiveFunctions(p);
-
         for(Table table: tables)
         {
-            table.tablePopulation = p;
+            table.tablePopulation = p.deepCopy();
+            problem.evaluateAgainstMask(table.tablePopulation,table.mask);
             table.organizeNonDominatedAEMMDTables();
         }
 
@@ -43,30 +45,15 @@ public class TableAEMMD extends TableFunctions{
         boolean shouldIncreaseConvergence = false;
         for (Table table :tables)
         {
-
             if (!Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)){
-                shouldIncreaseConvergence = addToNonDominatedPopulation(newMember,problem,table);
+                problem.applyFunctionsGivenMask(newMember,table.mask);
+                shouldIncreaseConvergence = addToNonDominatedPopulation(newMember.deepCopy(),table);
             }
 
             if (shouldIncreaseConvergence){
-                    table.convergence++;
+                table.convergence++;
             }
         }
-    }
-
-    private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
-
-        if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)
-                || table.tablePopulation.population.size() == Constants.TABLE_SIZE){
-            return false;
-        }
-
-
-        problem.applyFunctionsGivenMask(newMember,table.mask);
-        table.tablePopulation.addMember(newMember);
-        table.organizeNonDominatedTable(true);
-
-        return Problem.valueOfMemberIsPresent(newMember, table.tablePopulation, problem);
     }
 
     @Override
@@ -163,12 +150,11 @@ public class TableAEMMD extends TableFunctions{
 
     private void getNonDominatedMembers() {
 
-        int[] nonDominatedMask = new int[0];
         for(Table table: tables){
             for (Member member : table.tablePopulation.population){
 
                 if (!Problem.valueOfMemberIsPresent(member,nonDominatedMembers,problem)){
-                    problem.applyFunctionsGivenMask(member,nonDominatedMask);
+                    problem.applyFunctions(member);
                     nonDominatedMembers.addMember(member);
                 }
             }
@@ -178,18 +164,18 @@ public class TableAEMMD extends TableFunctions{
         nonDominatedMembers.population = nonDominatedMembers.getFirstFront().membersAtThisFront;
     }
 
-    private static boolean addToNonDominatedPopulation(Member member, Problem problem, Table table){
+    private static boolean addToNonDominatedPopulation(Member member, Table table){
         Dominance dominance = new Dominance();
         ArrayList<Member> toBeRemoved = new ArrayList<>();
         boolean shouldAddNewMember = true;
 
         for (Member tableMember : table.tablePopulation.population){
 
-            if (dominance.dominates(member,tableMember,table.mask)){
+            if (dominance.dominates(member,tableMember)){
                 toBeRemoved.add(tableMember);
             }
 
-            if (dominance.dominates(tableMember,member,table.mask)){
+            if (dominance.dominates(tableMember,member)){
                 shouldAddNewMember = false;
             }
         }

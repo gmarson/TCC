@@ -15,7 +15,7 @@ public abstract class  Constants {
     public static int TOUR_SIZE = 4;
 
     //ONLY SPEA2 CONSTANTS
-    public static int ARCHIVE_SIZE = 60;
+    public static int ARCHIVE_SIZE = 70;
     public static int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
 
     //ONLY AEMMT AND AEMMD CONSTANTS

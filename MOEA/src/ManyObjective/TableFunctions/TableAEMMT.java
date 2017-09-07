@@ -1,6 +1,5 @@
 package ManyObjective.TableFunctions;
 
-import ManyObjective.*;
 import Population.*;
 import Problems.*;
 import Selections.SelectionRankWeightedAverage;
@@ -16,7 +15,7 @@ import java.util.Arrays;
  */
 public class TableAEMMT extends TableFunctions{
 
-    private static int genCounter=0;
+    private static int genCounter = 0;
     public static ArrayList<Table> tables = new ArrayList<>();
     public static Population nonDominatedMembers = new Population();
     private static Problem problem;
@@ -129,7 +128,7 @@ public class TableAEMMT extends TableFunctions{
             return false;
         }
 
-        problem.applyFunctionsGivenMask(newMember,table.mask);
+        problem.applyFunctions(newMember);
         table.tablePopulation.addMember(newMember);
         table.organizeNonDominatedTable(true);
 
@@ -203,12 +202,11 @@ public class TableAEMMT extends TableFunctions{
 
     private void getNonDominatedMembers(Problem problem) {
 
-        int[] nonDominatedMask = new int[0];
         for(Table table: tables){
             for (Member member : table.tablePopulation.population){
 
                 if (!Problem.valueOfMemberIsPresent(member,nonDominatedMembers,problem)){
-                    problem.applyFunctionsGivenMask(member,nonDominatedMask);
+                    problem.applyFunctions(member);
                     nonDominatedMembers.addMember(member);
                 }
             }
