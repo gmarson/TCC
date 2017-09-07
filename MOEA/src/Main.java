@@ -17,15 +17,16 @@ import java.util.ArrayList;
 
 public class Main {
 
-    //private static String fileName = "KP_p-5_n-10_ins-1";
+    private static String fileName = "KP_p-6_n-200_ins-1";
     //private static String fileName = "KPTESTE";
-    private static String fileName = "KPTIAGO";
+    //private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
-    private static String parettoName = "Paretto";
+    private static String paretoName = "Pareto";
     private static String directoryName ="KP/" ;
     public static String windowsPathRead = "MOEA/"+fileName+"Paretto.dat";
-    private static String macPathRead = fileName+parettoName+extension;
+    private static String macPathRead = fileName+ paretoName +extension;
     private static String macPathGetProblemFrom = "MOEA/"+directoryName+fileName+extension;
+    private static String pathToPareto = "MOEA/Pareto/";
     private static ProgressBar progressBar;
 
     public static void main(String[] args) throws Exception {
@@ -33,8 +34,8 @@ public class Main {
         //testLargeFile();
 
         //spaceOfObjectives();
-        //writeParettoFromProblem(); //todo never use for kptiago
-        compareToParettoFront();
+        writeParetoFromProblem();
+        //compareToParettoFront();
         //normal();
 
     }
@@ -43,11 +44,11 @@ public class Main {
         //Problem problem = new ProblemSCH();
         //Problem problem = new ProblemF2();
         //Problem problem = new ProblemKnapsack();
-        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        ProblemKnapsackFromFile problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
         //NSGAII algorithm = new NSGAII();
-        //SPEA2 algorithm = new SPEA2();
-        AEMMT algorithm = new AEMMT();
+        SPEA2 algorithm = new SPEA2();
+        //AEMMT algorithm = new AEMMT();
         //AEMMD algorithm = new AEMMD();
         //MOEAD algorithm = new MOEAD();
 
@@ -57,9 +58,8 @@ public class Main {
         if (AEMMD.class.isInstance(algorithm) || AEMMT.class.isInstance(algorithm)){
             Constants.NUMBER_OF_GENERATIONS = 15000;
         }
-
-        if (MOEAD.class.isInstance(algorithm)){
-            Constants.NUMBER_OF_GENERATIONS = 200;
+        else{
+            Constants.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
         }
 
         while (counter < x) {
@@ -68,11 +68,10 @@ public class Main {
         }
     }
 
-
     private static void compareToParettoFront(){
-        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        ProblemKnapsackFromFile problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
 
-        Population parettoPopulation = readParettoFromFile("MOEA/Pareto/paretoKPTIAGO2");
+        Population parettoPopulation = readParetoFromFile(pathToPareto+fileName+paretoName);
 
         NSGAII nsgaii = new NSGAII();
         SPEA2  spea2 = new SPEA2();
@@ -80,14 +79,15 @@ public class Main {
         AEMMD  aemmd = new AEMMD();
         MOEAD  moead = new MOEAD();
 
+        Constants.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
         //nsgaii.runAlgorithm(problem);
+
         //spea2.runAlgorithm(problem);
 
-        Constants.NUMBER_OF_GENERATIONS = 200;
-        //moead.runAlgorithm(problem);
+        moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS = 15000;
-        aemmt.runAlgorithm(problem);
+        //aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
         Erro erro = new Erro(problem);
@@ -117,9 +117,18 @@ public class Main {
         generationalDistance.messageAfterProcess();
     }
 
+    private static void writeParetoFromProblem(){
+        Population paretoOfAGS = getBestPossibleParettoOfAGS();
+        try {
+            Serializer.writeToFile(pathToPareto+fileName+"Pareto",paretoOfAGS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //Do not call this
     private static Population  getBestPossibleParettoOfAGS(){
-        int numberOfRounds = 1;
+        int numberOfRounds = 10;
         Population allFrontsMembers = new Population();
 
         NSGAII nsgaii = new NSGAII();
@@ -128,12 +137,12 @@ public class Main {
         AEMMD aemmd = new AEMMD();
         MOEAD moead = new MOEAD();
 
-        Problem problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
+        ProblemKnapsackFromFile problem = new ProblemKnapsackFromFile(macPathGetProblemFrom);
         progressBar = new ProgressBar((double) numberOfRounds);
 
         for (int i = 0; i < numberOfRounds; i++) {
 
-            Constants.NUMBER_OF_GENERATIONS = 150;
+            Constants.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
 
             System.out.println("NSGAII");
             nsgaii.runAlgorithm(problem);
@@ -146,14 +155,14 @@ public class Main {
             //moead.runAlgorithm(problem);
             //allFrontsMembers.population.addAll( moead.paretto.membersAtThisFront);
 
-            Constants.NUMBER_OF_GENERATIONS = 30000;
+            Constants.NUMBER_OF_GENERATIONS = 15000;
             System.out.println("AEMMT");
             aemmt.runAlgorithm(problem);
             allFrontsMembers.population.addAll(aemmt.paretto.membersAtThisFront);
 
-//            System.out.println("AEMMD");
-//            aemmd.runAlgorithm(problem);
-//            allFrontsMembers.population.addAll(aemmd.paretto.membersAtThisFront);
+            System.out.println("AEMMD");
+            aemmd.runAlgorithm(problem);
+            allFrontsMembers.population.addAll(aemmd.paretto.membersAtThisFront);
 
             progressBar.addJobDone();
 
@@ -169,18 +178,8 @@ public class Main {
         return allFrontsMembers;
     }
 
-    private static void writeParettoFromProblem(){
-        Population parettoOfAGS = getBestPossibleParettoOfAGS();
-        try {
-            Serializer.writeToFile("partialPareto",parettoOfAGS);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private static Population readParettoFromFile(String fileName){
-        Population paretto = new Population();
+    private static Population readParetoFromFile(String fileName){
+        Population pareto = new Population();
 
         if(Constants.PROBLEM_SIZE == -1) {
             System.out.println("Problem size not defined!");
@@ -188,12 +187,12 @@ public class Main {
         }
 
         try{
-            paretto = Serializer.readFromFile(fileName);
+            pareto = Serializer.readFromFile(fileName);
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return paretto;
+        return pareto;
     }
 
     static void currentDirectory(){
@@ -204,12 +203,10 @@ public class Main {
     }
 
 
-
     static void spaceOfObjectives(){
-        Population p = readParettoFromFile(macPathRead);
+        Population p = readParetoFromFile(macPathRead);
         Printer.printMembersWithAppliedFunctions(p);
     }
-
 
     static void testLargeFile() throws IOException {
         Population p  = new Population();

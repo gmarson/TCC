@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class ProblemKnapsackFromFile  extends  Problem{
 
-    private  ArrayList<KnapsackItem> items = new ArrayList<>();
+    public  ArrayList<KnapsackItem> items = new ArrayList<>();
 
     public ProblemKnapsackFromFile(String file){
         crossover = new CrossoverUniformKnapsack();
