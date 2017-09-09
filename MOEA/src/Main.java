@@ -34,8 +34,8 @@ public class Main {
         //testLargeFile();
 
         //spaceOfObjectives();
-        writeParetoFromProblem();
-        //compareToParettoFront();
+        //writeParetoFromProblem();
+        compareToParettoFront();
         //normal();
 
     }
@@ -84,10 +84,10 @@ public class Main {
 
         //spea2.runAlgorithm(problem);
 
-        moead.runAlgorithm(problem);
+        //moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS = 15000;
-        //aemmt.runAlgorithm(problem);
+        aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
         Erro erro = new Erro(problem);
