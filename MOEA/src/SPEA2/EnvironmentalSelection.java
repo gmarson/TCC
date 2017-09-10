@@ -23,7 +23,7 @@ public abstract class EnvironmentalSelection {
             Member member = union.population.get(i);
 
             if (member.fitness >= 1.0) 
-                environment.population.add(member);
+                environment.population.add(member.deepCopy());
                  
             i++;
         }
@@ -31,7 +31,7 @@ public abstract class EnvironmentalSelection {
     }
 
 
-    public static Population environmentalSelection(Population population, Population archive)
+    static Population environmentalSelection(Population population, Population archive)
     {
         Population union = new Population();
         Population environment;

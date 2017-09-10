@@ -13,12 +13,12 @@ public abstract class Fitness {
 
     static Matrix distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
 
-    static void calculateStrength(Member member)
+    private static void calculateStrength(Member member)
     {
         member.strength = member.solutionsThatThisMemberDominates.size();
     }
 
-    static void calculateRawFitness(Member memberToBeEvaluated, Population union)
+    private static void calculateRawFitness(Member memberToBeEvaluated, Population union)
     {
         for (Member member: union.population) {
             if (member.solutionsThatThisMemberDominates.contains(memberToBeEvaluated)){
@@ -30,10 +30,9 @@ public abstract class Fitness {
     private static void calculateDensity(Member member, Population generic, int indexOfMatrix)
     {
         calculateDistanceBetweenMembers(generic,indexOfMatrix);
-        double sigma = calculateSigma(indexOfMatrix);
-        member.sigma = sigma;
+        member.sigma = calculateSigma(indexOfMatrix);
 
-        member.density = 1 / (sigma + 2);
+        member.density = 1.0 / (member.sigma + 2.0);
     }
 
     static void calculateDistanceBetweenMembers(Population generic,int indexOfMatrix)
@@ -43,7 +42,7 @@ public abstract class Fitness {
         for (int j = 0; j < distanceMatrix.distance[0].length; j++)
         { 
             mj = generic.population.get(j);
-            distanceMatrix.distance[indexOfMatrix][j] = j!=indexOfMatrix? Utils.euclidianDistance(mi,mj) : 0;
+            distanceMatrix.distance[indexOfMatrix][j] = j != indexOfMatrix ? Utils.euclidianDistance(mi,mj) : 0;
         }
 
     }
@@ -52,8 +51,6 @@ public abstract class Fitness {
     {
         int positionOfSigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
         ArrayList<Double> orderedMatrixRow = Utils.returnOrderedArray(distanceMatrix, indexOfMatrix);
-
-        
         return orderedMatrixRow.get(positionOfSigma);
     }
 

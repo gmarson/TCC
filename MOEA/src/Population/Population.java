@@ -165,7 +165,7 @@ public class Population implements Serializable, Cloneable {
 
     public void mergeTwoPopulations(Population currentPopulation, Population archive)
     {
-        this.population = new ArrayList<>(); 
+        this.population = new ArrayList<>();
         ArrayList<Member> p1 = new ArrayList<>(currentPopulation.population);
         ArrayList<Member> p2 = new ArrayList<>(archive.population);
         this.population.addAll(p1);
