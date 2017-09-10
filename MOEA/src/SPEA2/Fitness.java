@@ -13,12 +13,12 @@ public abstract class Fitness {
 
     static Matrix distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
 
-    public static void calculateStrength(Member member)
+    static void calculateStrength(Member member)
     {
         member.strength = member.solutionsThatThisMemberDominates.size();
     }
 
-    public static void calculateRawFitness(Member memberToBeEvaluated, Population union)
+    static void calculateRawFitness(Member memberToBeEvaluated, Population union)
     {
         for (Member member: union.population) {
             if (member.solutionsThatThisMemberDominates.contains(memberToBeEvaluated)){
@@ -36,7 +36,7 @@ public abstract class Fitness {
         member.density = 1 / (sigma + 2);
     }
 
-    public static void calculateDistanceBetweenMembers(Population generic,int indexOfMatrix)
+    static void calculateDistanceBetweenMembers(Population generic,int indexOfMatrix)
     {
         Member mi = generic.population.get(indexOfMatrix), mj;
        
@@ -48,7 +48,7 @@ public abstract class Fitness {
 
     }
 
-    public static double calculateSigma(int indexOfMatrix)
+    private static double calculateSigma(int indexOfMatrix)
     {
         int positionOfSigma = (int) Math.floor(Math.sqrt((double)distanceMatrix.columns));
         ArrayList<Double> orderedMatrixRow = Utils.returnOrderedArray(distanceMatrix, indexOfMatrix);
@@ -57,7 +57,7 @@ public abstract class Fitness {
         return orderedMatrixRow.get(positionOfSigma);
     }
 
-    public static void calculateFitness(Population union)
+    static void calculateFitness(Population union)
     {
         int indexOfMatrix=0;
         for(Member member: union.population)
@@ -71,22 +71,22 @@ public abstract class Fitness {
         }
     }
 
-    public static void eraseMatrix(){
+    static void eraseMatrix(){
         distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
     }
 
-    public static void buildMatrixFromEnvironment(Population environment)
+    static void buildMatrixFromEnvironment(Population environment)
     {
         int size = environment.population.size();
         distanceMatrix = new Matrix(size,size);
     }
 
-    public static void prepareForNextGen()
+    static void prepareForNextGen()
     {
         distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
     }
 
-    public static void copyDistancesFromMatrixToMembers(Population p)
+    static void copyDistancesFromMatrixToMembers(Population p)
     {
         int indexOfMatrix = 0;
         for (Member member: p.population ) {

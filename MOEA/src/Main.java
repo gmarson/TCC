@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private static String fileName = "KP_p-6_n-200_ins-1";
+    private static String fileName = "KP_p-3_n-50_ins-1";
     //private static String fileName = "KPTESTE";
     //private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
@@ -82,12 +82,12 @@ public class Main {
         Constants.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
         //nsgaii.runAlgorithm(problem);
 
-        //spea2.runAlgorithm(problem);
+        spea2.runAlgorithm(problem);
 
         //moead.runAlgorithm(problem);
 
         Constants.NUMBER_OF_GENERATIONS = 15000;
-        aemmt.runAlgorithm(problem);
+        //aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
         Erro erro = new Erro(problem);

@@ -74,8 +74,6 @@ public class TableAEMMD extends TableFunctions{
             this.insertMemberOnTables(children.population.get(0));
             this.insertMemberOnTables(children.population.get(1));
             genCounter++;
-
-
         }
 
         this.getNonDominatedMembers();

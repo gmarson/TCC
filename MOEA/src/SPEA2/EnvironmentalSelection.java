@@ -33,8 +33,6 @@ public abstract class EnvironmentalSelection {
 
     public static Population environmentalSelection(Population population, Population archive)
     {
-
-
         Population union = new Population();
         Population environment;
         union.mergeTwoPopulations(population,archive);
@@ -57,8 +55,6 @@ public abstract class EnvironmentalSelection {
 
     private static void removeMostSimilar(Population environment)
     {
-
-
         while(environment.population.size() > Constants.ARCHIVE_SIZE)
         {
             Fitness.buildMatrixFromEnvironment(environment);
