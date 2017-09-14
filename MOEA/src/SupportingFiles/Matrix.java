@@ -43,7 +43,7 @@ public class Matrix {
             setDimensions(rows,columns);
             binaryMatrix = new int[rows][columns];
             for (int i = 0; i < rows; i++) {
-                binaryNumber = Utils.integerToBinary(i+1,Constants.PROBLEM_SIZE+1);
+                binaryNumber = Utils.integerToBinary(i+1, Parameters.PROBLEM_SIZE+1);
                 for (int j = columns-1; j >=0 ; j--) {
                     binaryMatrix[i][j] = binaryNumber.get(j);
                 }
@@ -154,7 +154,7 @@ public class Matrix {
 
 
     public int getNeighborhoodSize(int cellIndex){
-        for (int i = 0; i < Constants.NEIGHBOURHOOD_SIZE; i++) {
+        for (int i = 0; i < Parameters.NEIGHBOURHOOD_SIZE; i++) {
             if(memberMatrix[cellIndex][i] != null){
                 return i;
             }

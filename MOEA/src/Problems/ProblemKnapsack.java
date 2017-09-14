@@ -2,7 +2,7 @@ package Problems;
 
 import Crossover.CrossoverUniformKnapsack;
 import Population.*;
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import SupportingFiles.Utils;
 
 import java.util.ArrayList;
@@ -18,11 +18,11 @@ public class ProblemKnapsack extends Problem{
 
     public ProblemKnapsack(){
         crossover = new CrossoverUniformKnapsack();
-        Constants.PROBLEM_SIZE = 3;
-        Constants.QTD_ITEMS = 10;
-        Constants.BAG_CAPACITY = 100;
+        Parameters.PROBLEM_SIZE = 3;
+        Parameters.QTD_ITEMS = 10;
+        Parameters.BAG_CAPACITY = 100;
         this.buildItems();
-        //Constants.MUTATION_RATE = 2/items.size();
+        //Parameters.MUTATION_RATE = 2/items.size();
     }
 
 
@@ -42,7 +42,7 @@ public class ProblemKnapsack extends Problem{
     {
         ArrayList<Member> population =  new ArrayList<>();
         for (int i = 0; i < QtdMembers; i++) {
-            population.add(new Member(Utils.getRandomBinaryArray(Constants.QTD_ITEMS)));
+            population.add(new Member(Utils.getRandomBinaryArray(Parameters.QTD_ITEMS)));
         }
 
         return population;
@@ -53,23 +53,23 @@ public class ProblemKnapsack extends Problem{
     @Override
     public void applyFunctions(Member member)
     {
-        if(Constants.PROBLEM_SIZE <2) return ;
+        if(Parameters.PROBLEM_SIZE <2) return ;
         member.resultOfFunctions = new ArrayList<>();
 
         member.resultOfFunctions.add(firstFunction(member));
         member.resultOfFunctions.add(secondFunction(member));
 
-        if(Constants.PROBLEM_SIZE >= 3) member.resultOfFunctions.add(thirdFunction(member));
-        if(Constants.PROBLEM_SIZE >= 4) member.resultOfFunctions.add(fourthFunction(member));
-        if(Constants.PROBLEM_SIZE >= 5) member.resultOfFunctions.add(fifthFunction(member));
-        if(Constants.PROBLEM_SIZE >= 6) member.resultOfFunctions.add(sixthFunction(member));
+        if(Parameters.PROBLEM_SIZE >= 3) member.resultOfFunctions.add(thirdFunction(member));
+        if(Parameters.PROBLEM_SIZE >= 4) member.resultOfFunctions.add(fourthFunction(member));
+        if(Parameters.PROBLEM_SIZE >= 5) member.resultOfFunctions.add(fifthFunction(member));
+        if(Parameters.PROBLEM_SIZE >= 6) member.resultOfFunctions.add(sixthFunction(member));
     }
 
 
     private double calculateWeightGivenMember(Member member)
     {
         double totalWeight = 0;
-        for (int i = 0; i < Constants.QTD_ITEMS; i++) {
+        for (int i = 0; i < Parameters.QTD_ITEMS; i++) {
             if (member.binaryValue.get(i) == 1)
             {
                 totalWeight += items.get(i).weight;
@@ -82,7 +82,7 @@ public class ProblemKnapsack extends Problem{
     public double firstFunction(Member member) {
         double firstFunctionValue = 0;
 
-        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        for (int j = 0; j < Parameters.QTD_ITEMS; j++)
         {
             if (member.binaryValue.get(j) == 1)
             {
@@ -92,7 +92,7 @@ public class ProblemKnapsack extends Problem{
 
         if( firstFunctionValue == 0) firstFunctionValue = 0.1;
 
-        return calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2): (1/firstFunctionValue);
+        return calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2): (1/firstFunctionValue);
 
     }
 
@@ -100,7 +100,7 @@ public class ProblemKnapsack extends Problem{
     @Override
     public double secondFunction(Member member) {
         double secondFunctionValue = 0;
-        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        for (int j = 0; j < Parameters.QTD_ITEMS; j++)
         {
             if(member.binaryValue.get(j) == 1)
             {
@@ -111,13 +111,13 @@ public class ProblemKnapsack extends Problem{
 
         if( secondFunctionValue == 0) secondFunctionValue = 0.1;
 
-        return calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/secondFunctionValue);
+        return calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2) : (1/secondFunctionValue);
 
     }
 
     public double thirdFunction(Member member){
         double thirdFunctionValue = 0;
-        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        for (int j = 0; j < Parameters.QTD_ITEMS; j++)
         {
             if(member.binaryValue.get(j) == 1)
             {
@@ -128,13 +128,13 @@ public class ProblemKnapsack extends Problem{
 
         if( thirdFunctionValue == 0) thirdFunctionValue = 0.1;
 
-        return calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/thirdFunctionValue);
+        return calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2) : (1/thirdFunctionValue);
     }
 
 
     public double fourthFunction(Member member){
         double fourthFunctionValue = 0;
-        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        for (int j = 0; j < Parameters.QTD_ITEMS; j++)
         {
             if(member.binaryValue.get(j) == 1)
             {
@@ -145,13 +145,13 @@ public class ProblemKnapsack extends Problem{
 
         if( fourthFunctionValue == 0) fourthFunctionValue = 0.1;
 
-        return calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/fourthFunctionValue);
+        return calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2) : (1/fourthFunctionValue);
     }
 
     public double fifthFunction(Member member)
     {
         double fifthFunctionValue = 0;
-        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        for (int j = 0; j < Parameters.QTD_ITEMS; j++)
         {
             if(member.binaryValue.get(j) == 1)
             {
@@ -162,13 +162,13 @@ public class ProblemKnapsack extends Problem{
 
         if( fifthFunctionValue == 0) fifthFunctionValue = 0.1;
 
-        return calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/fifthFunctionValue);
+        return calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2) : (1/fifthFunctionValue);
     }
 
     public double sixthFunction(Member member)
     {
         double sixthFunctionValue = 0;
-        for (int j = 0; j < Constants.QTD_ITEMS; j++)
+        for (int j = 0; j < Parameters.QTD_ITEMS; j++)
         {
             if(member.binaryValue.get(j) == 1)
             {
@@ -179,7 +179,7 @@ public class ProblemKnapsack extends Problem{
 
         if( sixthFunctionValue == 0) sixthFunctionValue = 0.1;
 
-        return calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2) : (1/sixthFunctionValue);
+        return calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2) : (1/sixthFunctionValue);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class ProblemKnapsack extends Problem{
 
     private void buildItems()
     {
-        for (int i = 0; i < Constants.QTD_ITEMS; i++) {
+        for (int i = 0; i < Parameters.QTD_ITEMS; i++) {
             items.add(new KnapsackItem());
         }
     }
@@ -225,12 +225,12 @@ public class ProblemKnapsack extends Problem{
             return;
         }
 
-        if(Constants.PROBLEM_SIZE <2) return ;
+        if(Parameters.PROBLEM_SIZE <2) return ;
 
         for (int i = 0; i < mask.length; i++) {
 
             double functionToBeInserted = 0.0;
-            for (int j = 0; j < Constants.QTD_ITEMS; j++)
+            for (int j = 0; j < Parameters.QTD_ITEMS; j++)
             {
                 if (member.binaryValue.get(j) == 1)
                 {
@@ -239,7 +239,7 @@ public class ProblemKnapsack extends Problem{
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
 
-            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (1/functionToBeInserted);
+            functionToBeInserted = calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2.0) : (1/functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
     }

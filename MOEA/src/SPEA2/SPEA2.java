@@ -1,13 +1,14 @@
 package SPEA2;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import Selections.*;
 import Problems.*;
 
 import java.util.Scanner;
 import Fronts.*;
-/** 
+
+/**
  * Created by gabrielm on 09/01/17.
  */
 public class SPEA2 {
@@ -25,9 +26,9 @@ public class SPEA2 {
     public void runAlgorithm(Problem problem){
 
 
-        p.population = problem.generateMembers(Constants.POPULATION_SIZE);
+        p.population = problem.generateMembers(Parameters.POPULATION_SIZE);
 
-        while(genCounter < Constants.NUMBER_OF_GENERATIONS)
+        while(genCounter < Parameters.NUMBER_OF_GENERATIONS)
         {
             //System.out.println("GERACAO = "+ genCounter+"===========================================");//todo
 

@@ -1,6 +1,6 @@
 package Selections;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class SelectionArchive extends Selection
     {
         Population selected = new Population();
         ArrayList<Member> membersByTour;
-        while(selected.population.size() < Constants.POPULATION_SIZE)
+        while(selected.population.size() < Parameters.POPULATION_SIZE)
         {
             membersByTour = super.makeCompetitors(archive);
             selected.population.add(returnWinnerCompetitor(membersByTour) );

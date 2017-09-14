@@ -1,6 +1,6 @@
 package ManyObjective.MOEADFunctions;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Dominance.Dominance;
 import ManyObjective.MOEAD;
 import Population.*;
@@ -21,23 +21,30 @@ public class MOEADFunctions {
     public static int genCounter = 0;
 
     private static Member generateChildrenGivenNeighborhood(Member[] neighborhood, Problem problem){
+        Dominance d = new Dominance();
 
         Population parentsPopulation = SelectionNeighborhood.selectParents(neighborhood);
 
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
 
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
+//
+//        if(d.dominates(childPopulation.population.get(0), childPopulation.population.get(1))){
+//            return childPopulation.population.get(0);
+//        }
+//
+//        return childPopulation.population.get(1);
 
         return childPopulation.population.get(Utils.getRandom(0,2));
     }
 
     public static void mainLoop(Problem problem){
 
-        while (genCounter < Constants.NUMBER_OF_GENERATIONS){
+        while (genCounter < Parameters.NUMBER_OF_GENERATIONS){
 
             System.out.println("GEN = "+genCounter);//todo
 
-            for (int i = 0; i < Constants.POPULATION_SIZE; i++) {
+            for (int i = 0; i < Parameters.POPULATION_SIZE; i++) {
                 Member[] neighborhood = neighborhoods.memberMatrix[i];
                 Member child = generateChildrenGivenNeighborhood(neighborhood, problem);
                 addToNonDominatedPopulation(child.deepCopy(),problem);
@@ -51,7 +58,7 @@ public class MOEADFunctions {
 
     private static void updateNeighborhood(Member[] neighborhood, Member child) {
 
-        for (int i = 0; i < Constants.NEIGHBOURHOOD_SIZE; i++) {
+        for (int i = 0; i < Parameters.NEIGHBOURHOOD_SIZE; i++) {
             Member neighborhoodMember = neighborhood[i];
 
             MOEAD.scalarization.calculateFitness(child,neighborhoodMember);
@@ -119,7 +126,7 @@ public class MOEADFunctions {
             double candidateDistance = Utils.euclideanDistanceBasedOnWeightVector(cell,child);
 
             int indexToInsert;
-            for (indexToInsert = 1; indexToInsert < Constants.NEIGHBOURHOOD_SIZE ; indexToInsert++) {
+            for (indexToInsert = 1; indexToInsert < Parameters.NEIGHBOURHOOD_SIZE ; indexToInsert++) {
 
                 if (neighborhood[indexToInsert] != null){
                     if (candidateDistance < Utils.euclideanDistanceBasedOnWeightVector(neighborhood[indexToInsert],neighborhood[0])){
@@ -131,12 +138,10 @@ public class MOEADFunctions {
                 {
                     neighborhood[indexToInsert] = child;
                     return;
-
                 }
-
             }
 
-            for (int i = Constants.NEIGHBOURHOOD_SIZE -1; i > indexToInsert ; i--) {
+            for (int i = Parameters.NEIGHBOURHOOD_SIZE -1; i > indexToInsert ; i--) {
                 neighborhood[i] = neighborhood[i - 1];
             }
 

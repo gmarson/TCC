@@ -1,4 +1,4 @@
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import PerformanceMetrics.Erro;
 import PerformanceMetrics.GenerationalDistance;
 import PerformanceMetrics.ParetoSubset;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private static String fileName = "KP_p-3_n-50_ins-1";
+    private static String fileName = "KP_p-6_n-100_ins-1";
     //private static String fileName = "KPTESTE";
     //private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
@@ -56,10 +56,10 @@ public class Main {
         int counter = 0;
 
         if (AEMMD.class.isInstance(algorithm) || AEMMT.class.isInstance(algorithm)){
-            Constants.NUMBER_OF_GENERATIONS = 15000;
+            Parameters.NUMBER_OF_GENERATIONS = 15000;
         }
         else{
-            Constants.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
+            Parameters.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
         }
 
         while (counter < x) {
@@ -79,14 +79,14 @@ public class Main {
         AEMMD  aemmd = new AEMMD();
         MOEAD  moead = new MOEAD();
 
-        Constants.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
+        Parameters.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
         //nsgaii.runAlgorithm(problem);
 
-        spea2.runAlgorithm(problem);
+        //spea2.runAlgorithm(problem);
 
-        //moead.runAlgorithm(problem);
+        moead.runAlgorithm(problem);
 
-        Constants.NUMBER_OF_GENERATIONS = 15000;
+        Parameters.NUMBER_OF_GENERATIONS = 15000;
         //aemmt.runAlgorithm(problem);
         //aemmd.runAlgorithm(problem);
 
@@ -142,7 +142,7 @@ public class Main {
 
         for (int i = 0; i < numberOfRounds; i++) {
 
-            Constants.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
+            Parameters.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
 
             System.out.println("NSGAII");
             nsgaii.runAlgorithm(problem);
@@ -155,7 +155,7 @@ public class Main {
             //moead.runAlgorithm(problem);
             //allFrontsMembers.population.addAll( moead.paretto.membersAtThisFront);
 
-            Constants.NUMBER_OF_GENERATIONS = 15000;
+            Parameters.NUMBER_OF_GENERATIONS = 15000;
             System.out.println("AEMMT");
             aemmt.runAlgorithm(problem);
             allFrontsMembers.population.addAll(aemmt.paretto.membersAtThisFront);
@@ -181,7 +181,7 @@ public class Main {
     private static Population readParetoFromFile(String fileName){
         Population pareto = new Population();
 
-        if(Constants.PROBLEM_SIZE == -1) {
+        if(Parameters.PROBLEM_SIZE == -1) {
             System.out.println("Problem size not defined!");
             return null;
         }

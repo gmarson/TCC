@@ -1,6 +1,6 @@
 package Crossover;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.Utils;
 
@@ -64,7 +64,7 @@ public class CrossoverUniformKnapsack implements Crossover{
 
     private void mutation(ArrayList<Integer> binaryNumber)
     {
-        if(Utils.getRandom(1,100) <= Constants.MUTATION_RATE)
+        if(Utils.getRandom(1,100) <= Parameters.MUTATION_RATE)
         {
             int sectionToBeMutated = Utils.getRandom(0,binaryNumber.size());
             if(binaryNumber.get(sectionToBeMutated) == 0)

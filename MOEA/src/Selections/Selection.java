@@ -1,6 +1,6 @@
 package Selections;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.Utils;
 import ManyObjective.TableFunctions.Table;
@@ -20,7 +20,7 @@ public abstract class Selection {
     ArrayList<Member> makeCompetitors(Population p)
     {
         ArrayList<Member> membersByTour = new ArrayList<>();
-        for (int j = 0; j < Constants.TOUR_SIZE; j++)
+        for (int j = 0; j < Parameters.TOUR_SIZE; j++)
         {
             int randomNumberForTournament = Utils.getRandom(0,p.population.size());
             membersByTour.add(p.population.get(randomNumberForTournament));
@@ -31,7 +31,7 @@ public abstract class Selection {
     ArrayList<Table> makeCompetitors(ArrayList<Table> tables)
     {
         ArrayList<Table> tablesByTour = new ArrayList<>();
-        for (int i = 0; i < Constants.TOUR_SIZE; i++) {
+        for (int i = 0; i < Parameters.TOUR_SIZE; i++) {
             int randomNumberForTournament = Utils.getRandom(0,tables.size());
             tablesByTour.add(tables.get(randomNumberForTournament));
         }

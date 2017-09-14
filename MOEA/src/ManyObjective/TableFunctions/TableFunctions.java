@@ -1,6 +1,6 @@
 package ManyObjective.TableFunctions;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.Matrix;
 
@@ -33,17 +33,17 @@ public abstract class TableFunctions {
     }
 
     static void setQtdMembersOfATable(){
-        //Constants.TABLE_SIZE = 70;
+        //Parameters.TABLE_SIZE = 70;
     }
 
     static void buildMasks() {
-        binaryRepresentationOfObjectives = new Matrix(Constants.QTD_TABLES, Constants.PROBLEM_SIZE+1,true);
+        binaryRepresentationOfObjectives = new Matrix(Parameters.QTD_TABLES, Parameters.PROBLEM_SIZE+1,true);
         decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
         decimalRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow = binaryRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow;
     }
 
     static void buildMasks(int moreColumns){
-        binaryRepresentationOfObjectives = new Matrix(Constants.QTD_TABLES + moreColumns, Constants.PROBLEM_SIZE+1,true);
+        binaryRepresentationOfObjectives = new Matrix(Parameters.QTD_TABLES + moreColumns, Parameters.PROBLEM_SIZE+1,true);
         decimalRepresentationOfObjectives = binaryRepresentationOfObjectives.buildDecimalMatrixGivenBinary();
         decimalRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow = binaryRepresentationOfObjectives.sizeOfNonZeroElementsInDecimalMatrixRow;
     }

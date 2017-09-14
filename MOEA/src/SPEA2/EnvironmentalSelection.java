@@ -1,6 +1,6 @@
 package SPEA2;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.Sorts;
 import SupportingFiles.Utils;
@@ -18,7 +18,7 @@ public abstract class EnvironmentalSelection {
         Sorts.quickSortMembersByKey(union,"fitness");
         int i = 0;
 
-        while(environment.population.size() < Constants.ARCHIVE_SIZE )
+        while(environment.population.size() < Parameters.ARCHIVE_SIZE )
         {
             Member member = union.population.get(i);
 
@@ -38,12 +38,12 @@ public abstract class EnvironmentalSelection {
         union.mergeTwoPopulations(population,archive);
         environment = union.getNonDominatedSPEA2();
 
-        if(environment.population.size() < Constants.ARCHIVE_SIZE){
+        if(environment.population.size() < Parameters.ARCHIVE_SIZE){
             populateWithRemainingBest(environment, union);
         }
 
 
-        else if(environment.population.size() > Constants.ARCHIVE_SIZE) {
+        else if(environment.population.size() > Parameters.ARCHIVE_SIZE) {
 
             removeMostSimilar(environment);
 
@@ -55,7 +55,7 @@ public abstract class EnvironmentalSelection {
 
     private static void removeMostSimilar(Population environment)
     {
-        while(environment.population.size() > Constants.ARCHIVE_SIZE)
+        while(environment.population.size() > Parameters.ARCHIVE_SIZE)
         {
             Fitness.buildMatrixFromEnvironment(environment);
             int i =0;

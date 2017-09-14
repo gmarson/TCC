@@ -2,7 +2,7 @@ package ManyObjective.TableFunctions;
 
 import Dominance.Dominance;
 import Population.*;
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import WeightedAverage.WeightedAverage;
 
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ public class Table {
     }
 
     private void removeSurplusMembers(){
-        if (tablePopulation.population.size() > Constants.TABLE_SIZE){
-            this.tablePopulation.population = new ArrayList<Member>(tablePopulation.population.subList(0,Constants.TABLE_SIZE));
+        if (tablePopulation.population.size() > Parameters.TABLE_SIZE){
+            this.tablePopulation.population = new ArrayList<Member>(tablePopulation.population.subList(0, Parameters.TABLE_SIZE));
         }
     }
 

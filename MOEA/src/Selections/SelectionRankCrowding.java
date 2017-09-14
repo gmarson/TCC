@@ -1,6 +1,6 @@
 package Selections;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class SelectionRankCrowding extends Selection{
     {
         Population selected = new Population();
         ArrayList<Member> membersByTour;
-        for (int i = 0; i < Constants.CROSSOVER_RATE * p.population.size(); i++)
+        for (int i = 0; i < Parameters.CROSSOVER_RATE * p.population.size(); i++)
         {
             membersByTour = super.makeCompetitors(p);
             selected.population.add(returnWinnerCompetitor(membersByTour) );

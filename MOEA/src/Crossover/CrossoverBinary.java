@@ -1,6 +1,6 @@
 package Crossover;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import SupportingFiles.*;
 import Population.*;
 
@@ -44,7 +44,7 @@ public class CrossoverBinary implements Crossover {
 
     private void mutation(ArrayList<Integer> binaryNumber)
     {
-        if(Utils.getRandom(1,100) <= Constants.MUTATION_RATE)
+        if(Utils.getRandom(1,100) <= Parameters.MUTATION_RATE)
         {
             int sectionToBeMutated = Utils.getRandom(0,binaryNumber.size());
             if(binaryNumber.get(sectionToBeMutated) == 0)
@@ -71,8 +71,8 @@ public class CrossoverBinary implements Crossover {
         {
             if (m1Size == MINIMAL_BINARY_LEN)
             {
-                increaseToSameSize(m2BinaryValue,Constants.MAX_BINARY_LEN - m1Size);
-                increaseToSameSize(m1BinaryValue,Constants.MAX_BINARY_LEN - m1Size);
+                increaseToSameSize(m2BinaryValue, Parameters.MAX_BINARY_LEN - m1Size);
+                increaseToSameSize(m1BinaryValue, Parameters.MAX_BINARY_LEN - m1Size);
             }
         }
 

@@ -1,6 +1,6 @@
 package ManyObjective;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import ManyObjective.MOEADFunctions.*;
 import Population.*;
 import Problems.Problem;
@@ -24,10 +24,10 @@ public class MOEAD {
 
     public void runAlgorithm(Problem problem)
     {
-        moeadPopulation.population = problem.generateMembers(Constants.POPULATION_SIZE);
+        moeadPopulation.population = problem.generateMembers(Parameters.POPULATION_SIZE);
         instantiateVariables();
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
-        MOEADFunctions.neighborhoods = new Matrix(Constants.POPULATION_SIZE, Constants.NEIGHBOURHOOD_SIZE, moeadPopulation);
+        MOEADFunctions.neighborhoods = new Matrix(Parameters.POPULATION_SIZE, Parameters.NEIGHBOURHOOD_SIZE, moeadPopulation);
 
         MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers();
         MOEADFunctions.mainLoop(problem);

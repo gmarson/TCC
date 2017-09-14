@@ -1,6 +1,6 @@
 package SPEA2;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.*;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public abstract class Fitness {
 
-    static Matrix distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
+    static Matrix distanceMatrix = new Matrix(Parameters.POPULATION_SIZE, Parameters.POPULATION_SIZE);
 
     private static void calculateStrength(Member member)
     {
@@ -69,7 +69,7 @@ public abstract class Fitness {
     }
 
     static void eraseMatrix(){
-        distanceMatrix = new Matrix(Constants.POPULATION_SIZE, Constants.POPULATION_SIZE);
+        distanceMatrix = new Matrix(Parameters.POPULATION_SIZE, Parameters.POPULATION_SIZE);
     }
 
     static void buildMatrixFromEnvironment(Population environment)
@@ -80,7 +80,7 @@ public abstract class Fitness {
 
     static void prepareForNextGen()
     {
-        distanceMatrix = new Matrix(Constants.DISTANCE_MATRIX_SIZE, Constants.DISTANCE_MATRIX_SIZE);
+        distanceMatrix = new Matrix(Parameters.DISTANCE_MATRIX_SIZE, Parameters.DISTANCE_MATRIX_SIZE);
     }
 
     static void copyDistancesFromMatrixToMembers(Population p)

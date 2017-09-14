@@ -1,6 +1,6 @@
 package Population;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import SupportingFiles.Utils;
 
 import java.io.Serializable;
@@ -27,17 +27,17 @@ public class WeightVector implements Serializable{
 
 
     private double[] generateWeightVectorNormalizing(){
-        double[] weightVector = new double[Constants.PROBLEM_SIZE];
+        double[] weightVector = new double[Parameters.PROBLEM_SIZE];
         double sum=0;
 
-        for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {
+        for (int i = 0; i < Parameters.PROBLEM_SIZE; i++) {
             weightVector[i] = Utils.getRandomDouble(0,1000);
             sum += weightVector[i];
         }
 
 
 
-        for (int i = 0; i <Constants.PROBLEM_SIZE ; i++) {
+        for (int i = 0; i < Parameters.PROBLEM_SIZE ; i++) {
             weightVector[i] /= sum;
         }
 
@@ -48,7 +48,7 @@ public class WeightVector implements Serializable{
     private double[] generateWeightVector(){
         ArrayList<Double> numbers = new ArrayList<>();
 
-        for (int i = 0; i < Constants.PROBLEM_SIZE - 1; i++) {
+        for (int i = 0; i < Parameters.PROBLEM_SIZE - 1; i++) {
 
             Utils.insertDataOnCrescentOrderedArray(Utils.getRandomDouble(0.0,1.0),numbers);
         }
@@ -56,7 +56,7 @@ public class WeightVector implements Serializable{
         numbers.add(0,0.0);
         numbers.add(numbers.size(),1.0);
 
-        double[] weightVector = new double[Constants.PROBLEM_SIZE];
+        double[] weightVector = new double[Parameters.PROBLEM_SIZE];
         for (int i = 0; i < numbers.size() - 1; i++) {
             weightVector[i] = numbers.get(i+1) - numbers.get(i);
         }

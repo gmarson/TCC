@@ -1,6 +1,6 @@
 package Selections;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.Utils;
 
@@ -13,11 +13,11 @@ public class SelectionNeighborhood extends  Selection {
 
     public static Population selectParents(Member[] neighborhood)
     {
-        int position1stMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE);
-        int position2dnMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE) ;
+        int position1stMember = Utils.getRandom(0, Parameters.NEIGHBOURHOOD_SIZE);
+        int position2dnMember = Utils.getRandom(0, Parameters.NEIGHBOURHOOD_SIZE) ;
 
         while(position1stMember == position2dnMember){
-            position2dnMember = Utils.getRandom(0,Constants.NEIGHBOURHOOD_SIZE) ;
+            position2dnMember = Utils.getRandom(0, Parameters.NEIGHBOURHOOD_SIZE) ;
         }
 
         Population parentsPopulation = new Population();

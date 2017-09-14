@@ -1,6 +1,6 @@
 package Problems;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Crossover.CrossoverArithmetic;
 import Population.*;
 import SupportingFiles.Utils;
@@ -17,10 +17,10 @@ public class ProblemF2 extends  Problem {
     public ProblemF2()
     {
         crossover = new CrossoverArithmetic();
-        Constants.PROBLEM_SIZE = 2;
-        Constants.MAX_MEMBER_VALUE = 10;
-        Constants.MIN_MEMBER_VALUE = -10;
-        Constants.MAX_BINARY_LEN = 11;
+        Parameters.PROBLEM_SIZE = 2;
+        Parameters.MAX_MEMBER_VALUE = 10;
+        Parameters.MIN_MEMBER_VALUE = -10;
+        Parameters.MAX_BINARY_LEN = 11;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ProblemF2 extends  Problem {
     public ArrayList<Member> generateMembers(int QtdMembers) {
         ArrayList<Member> population =  new ArrayList<>();
         for (int i = 0; i < QtdMembers; i++) {
-            population.add(new Member(Utils.getRandomDouble(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
+            population.add(new Member(Utils.getRandomDouble(Parameters.MIN_MEMBER_VALUE, Parameters.MAX_MEMBER_VALUE)));
         }
 
         return population;

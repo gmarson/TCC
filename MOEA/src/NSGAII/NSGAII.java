@@ -6,7 +6,7 @@ import Problems.Problem;
 import Selections.Selection;
 import Selections.SelectionRank;
 import Selections.SelectionRankCrowding;
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 
 /**
  * Created by gmarson on 12/20/2016.
@@ -27,14 +27,14 @@ public class NSGAII {
 
     public void runAlgorithm(Problem problem)
     {
-        p.population = problem.generateMembers(Constants.POPULATION_SIZE);
+        p.population = problem.generateMembers(Parameters.POPULATION_SIZE);
         problem.evaluateAgainstObjectiveFunctions(p);
         p.fastNonDominatedSort();
         Population selected = selectRanked.selectParents(p);
         Population children = problem.crossover.crossoverAndMutation(selected);
 
         sortedUnion = new Population();
-        while(genCounter < Constants.NUMBER_OF_GENERATIONS)
+        while(genCounter < Parameters.NUMBER_OF_GENERATIONS)
         {
             //System.out.println("GERACAO = "+ genCounter+"===========================================");
             genCounter++;
@@ -48,7 +48,7 @@ public class NSGAII {
             for(Front front: union.fronts.allFronts)
             {
                 front.crowdingDistanceAssignment();
-                if(sortedUnion.population.size() + union.fronts.allFronts.get(k).membersAtThisFront.size() > Constants.POPULATION_SIZE)
+                if(sortedUnion.population.size() + union.fronts.allFronts.get(k).membersAtThisFront.size() > Parameters.POPULATION_SIZE)
                 {
                     lastFrontToMergeWithPopulation = front;
                     break;
@@ -59,7 +59,7 @@ public class NSGAII {
             }
 
             int i=lastFrontToMergeWithPopulation.membersAtThisFront.size()-1;
-            while(sortedUnion.population.size() < Constants.POPULATION_SIZE)
+            while(sortedUnion.population.size() < Parameters.POPULATION_SIZE)
             {
                 sortedUnion.population.add(lastFrontToMergeWithPopulation.membersAtThisFront.get(i));
                 i--;

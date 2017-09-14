@@ -1,6 +1,6 @@
 package Fronts;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.Member;
 import SupportingFiles.Sorts;
 
@@ -16,7 +16,7 @@ public class Front implements Serializable{
     
     public void crowdingDistanceAssignment(){
 
-        for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {
+        for (int i = 0; i < Parameters.PROBLEM_SIZE; i++) {
 
             Sorts.insertionSort(membersAtThisFront,i);
 

@@ -90,7 +90,7 @@ public class Serializer {
             Member member = new Member(-1);
 
             while (m.find()) {
-                if(counter % (Constants.PROBLEM_SIZE +1) == 0){
+                if(counter % (Parameters.PROBLEM_SIZE +1) == 0){
                     paretto.addMember(member.deepCopy());
                     counter = 1;
                     member = new Member(-1);

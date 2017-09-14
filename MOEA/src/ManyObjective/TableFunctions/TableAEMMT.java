@@ -43,11 +43,11 @@ public class TableAEMMT extends TableFunctions{
     @Override
     public void mainLoop() {
         SelectionTables selectionTables = new SelectionTables();
-        while(genCounter < Constants.NUMBER_OF_GENERATIONS) {
+        while(genCounter < Parameters.NUMBER_OF_GENERATIONS) {
 
             System.out.println("Generation "+genCounter);//todo
 
-            if (genCounter % Constants.RESET_ON_GEN == 0)
+            if (genCounter % Parameters.RESET_ON_GEN == 0)
                 TableFunctions.resetContributionAndConvergence(this);
 
             ArrayList<Table> parentTables = selectionTables.selectTables(tables,"AEMMT");
@@ -106,13 +106,13 @@ public class TableAEMMT extends TableFunctions{
             return false;
         }
 
-        Member worstMemberOfTable = table.tablePopulation.population.get(Constants.TABLE_SIZE-1);
+        Member worstMemberOfTable = table.tablePopulation.population.get(Parameters.TABLE_SIZE-1);
         problem.applyFunctionsGivenMask(newMember,table.mask);
         WeightedAverage.calculateWeightedAverage(newMember);
 
         if (worstMemberOfTable.weightedAverage > newMember.weightedAverage){
 
-            table.tablePopulation.population.remove(Constants.TABLE_SIZE-1);
+            table.tablePopulation.population.remove(Parameters.TABLE_SIZE-1);
             Utils.insertMemberOnCrescentOrderedArrayByWeightedAverage(newMember,table.tablePopulation.population);
 
             return true;
@@ -124,7 +124,7 @@ public class TableAEMMT extends TableFunctions{
     private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
 
         if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)
-                || table.tablePopulation.population.size() == Constants.TABLE_SIZE){
+                || table.tablePopulation.population.size() == Parameters.TABLE_SIZE){
             return false;
         }
 
@@ -165,8 +165,8 @@ public class TableAEMMT extends TableFunctions{
 
         int nonDominatedTable = 1;
         int qtdTables =0;
-        for (int i = 1; i <= Constants.PROBLEM_SIZE ; i++) {
-            qtdTables += TableFunctions.fact(Constants.PROBLEM_SIZE) / (fact(i) * fact(Constants.PROBLEM_SIZE - i));
+        for (int i = 1; i <= Parameters.PROBLEM_SIZE ; i++) {
+            qtdTables += TableFunctions.fact(Parameters.PROBLEM_SIZE) / (fact(i) * fact(Parameters.PROBLEM_SIZE - i));
         }
 
         return  qtdTables + nonDominatedTable;
@@ -189,11 +189,11 @@ public class TableAEMMT extends TableFunctions{
 
     public void buildTables(){
         TableFunctions.setQtdMembersOfATable();
-        Constants.QTD_TABLES = this.setQtdTables();
+        Parameters.QTD_TABLES = this.setQtdTables();
 
         TableFunctions.buildMasks();
 
-        for(int i=0;i<Constants.QTD_TABLES;i++)
+        for(int i = 0; i< Parameters.QTD_TABLES; i++)
         {
             this.updateCurrentMask(i);
             this.addTable(TableFunctions.currentMask);

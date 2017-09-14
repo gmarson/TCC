@@ -1,6 +1,6 @@
 package Problems;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import SupportingFiles.Utils;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class KnapsackItem {
 
     private void createAttributesOfItems()
     {
-        for (int i = 0; i < Constants.PROBLEM_SIZE ; i++) {
+        for (int i = 0; i < Parameters.PROBLEM_SIZE ; i++) {
             this.attributes.add(i,(double)Utils.getRandom((int)MIN_ATTRIBUTE_VALUE_FOR_ITEM,(int)MAX_ATTRIBUTE_VALUE_FOR_ITEM));
         }
     }

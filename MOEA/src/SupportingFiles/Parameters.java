@@ -8,7 +8,7 @@ import Problems.ProblemKnapsack;
  * Project : TCC.
  */
 
-public abstract class  Constants {
+public abstract class Parameters {
 
     //ALL MOEAs CONSTANTS
     public static int POPULATION_SIZE = 150;
@@ -40,6 +40,6 @@ public abstract class  Constants {
     public static double BAG_CAPACITY;
 
     //FOR TEST ONLY
-    public static int SEED = 34824;
+    public static int SEED = 1;
 
 }

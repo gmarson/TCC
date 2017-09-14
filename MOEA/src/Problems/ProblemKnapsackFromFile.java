@@ -1,6 +1,6 @@
 package Problems;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Crossover.CrossoverUniformKnapsack;
 import Population.*;
 import SupportingFiles.ProblemReader;
@@ -26,11 +26,11 @@ public class ProblemKnapsackFromFile  extends  Problem{
             return;
         }
 
-        Constants.PROBLEM_SIZE = ProblemReader.numberOfObjectives;
-        Constants.QTD_ITEMS = ProblemReader.numberOfItems;
-        Constants.BAG_CAPACITY = ProblemReader.totalWeight;
+        Parameters.PROBLEM_SIZE = ProblemReader.numberOfObjectives;
+        Parameters.QTD_ITEMS = ProblemReader.numberOfItems;
+        Parameters.BAG_CAPACITY = ProblemReader.totalWeight;
         this.buildItemsFromFile();
-        Constants.MUTATION_RATE = 2/items.size();
+        Parameters.MUTATION_RATE = 2/items.size();
 
     }
 
@@ -55,7 +55,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
     public ArrayList<Member> generateMembers(int QtdMembers) {
         ArrayList<Member> population =  new ArrayList<>();
         for (int i = 0; i < QtdMembers; i++) {
-            population.add(new Member(Utils.getRandomBinaryArray(Constants.QTD_ITEMS)));
+            population.add(new Member(Utils.getRandomBinaryArray(Parameters.QTD_ITEMS)));
         }
 
         return population;
@@ -80,14 +80,14 @@ public class ProblemKnapsackFromFile  extends  Problem{
 
     @Override
     public void applyFunctions(Member member) {
-        if(Constants.PROBLEM_SIZE <2) return ;
+        if(Parameters.PROBLEM_SIZE <2) return ;
 
         member.resultOfFunctions = new ArrayList<>();
 
-        for (int i = 0; i < Constants.PROBLEM_SIZE; i++) {
+        for (int i = 0; i < Parameters.PROBLEM_SIZE; i++) {
 
             double functionToBeInserted = 0.0;
-            for (int j = 0; j < Constants.QTD_ITEMS; j++)
+            for (int j = 0; j < Parameters.QTD_ITEMS; j++)
             {
                 if (member.binaryValue.get(j) == 1)
                 {
@@ -96,7 +96,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
 
-            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (-1 * functionToBeInserted);
+            functionToBeInserted = calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2.0) : (-1 * functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
     }
@@ -108,13 +108,13 @@ public class ProblemKnapsackFromFile  extends  Problem{
             return;
         }
 
-        if(Constants.PROBLEM_SIZE <2) return ;
+        if(Parameters.PROBLEM_SIZE <2) return ;
         member.resultOfFunctions = new ArrayList<>();
 
         for (int i = 0; i < mask.length; i++) {
 
             double functionToBeInserted = 0.0;
-            for (int j = 0; j < Constants.QTD_ITEMS; j++)
+            for (int j = 0; j < Parameters.QTD_ITEMS; j++)
             {
                 if (member.binaryValue.get(j) == 1)
                 {
@@ -123,7 +123,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
             }
             if( functionToBeInserted == 0) functionToBeInserted = 0.1;
 
-            functionToBeInserted = calculateWeightGivenMember(member) > Constants.BAG_CAPACITY? (2.0) : (-1 * functionToBeInserted);
+            functionToBeInserted = calculateWeightGivenMember(member) > Parameters.BAG_CAPACITY? (2.0) : (-1 * functionToBeInserted);
             member.resultOfFunctions.add(functionToBeInserted);
         }
     }
@@ -132,11 +132,11 @@ public class ProblemKnapsackFromFile  extends  Problem{
         ArrayList<Double> objectivesOfItem;
         double weight;
 
-        for (int i = 0; i < Constants.QTD_ITEMS; i++) {
+        for (int i = 0; i < Parameters.QTD_ITEMS; i++) {
             objectivesOfItem = new ArrayList<>();
 
-            for (int j = 0; j < Constants.PROBLEM_SIZE; j++) {
-                int offSet = j * Constants.QTD_ITEMS;
+            for (int j = 0; j < Parameters.PROBLEM_SIZE; j++) {
+                int offSet = j * Parameters.QTD_ITEMS;
                 objectivesOfItem.add(ProblemReader.objectives.get( i + offSet));
             }
 
@@ -160,7 +160,7 @@ public class ProblemKnapsackFromFile  extends  Problem{
     private double calculateWeightGivenMember(Member member)
     {
         double totalWeight = 0.0;
-        for (int i = 0; i < Constants.QTD_ITEMS; i++) {
+        for (int i = 0; i < Parameters.QTD_ITEMS; i++) {
             if (member.binaryValue.get(i) == 1)
             {
                 totalWeight += items.get(i).weight;

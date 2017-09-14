@@ -1,6 +1,6 @@
 package Problems;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Crossover.CrossoverBinary;
 import Population.*;
 import SupportingFiles.Utils;
@@ -16,10 +16,10 @@ public class ProblemSCH extends Problem {
     public ProblemSCH()
     {
         crossover = new CrossoverBinary();
-        Constants.PROBLEM_SIZE = 2;
-        Constants.MAX_MEMBER_VALUE = 1000;
-        Constants.MIN_MEMBER_VALUE = -1000;
-        Constants.MAX_BINARY_LEN = 11;
+        Parameters.PROBLEM_SIZE = 2;
+        Parameters.MAX_MEMBER_VALUE = 1000;
+        Parameters.MIN_MEMBER_VALUE = -1000;
+        Parameters.MAX_BINARY_LEN = 11;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ProblemSCH extends Problem {
     public ArrayList<Member> generateMembers(int QtdMembers) {
         ArrayList<Member> population =  new ArrayList<>();
         for (int i = 0; i < QtdMembers; i++) {
-            population.add(new Member(Utils.getRandom(Constants.MIN_MEMBER_VALUE, Constants.MAX_MEMBER_VALUE)));
+            population.add(new Member(Utils.getRandom(Parameters.MIN_MEMBER_VALUE, Parameters.MAX_MEMBER_VALUE)));
         }        
 
         return population;

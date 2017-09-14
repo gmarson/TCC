@@ -1,17 +1,13 @@
 package ManyObjective.TableFunctions;
 
 import Dominance.Dominance;
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import Problems.*;
 import Selections.SelectionRank;
 import Selections.SelectionTables;
-import SupportingFiles.Printer;
-import SupportingFiles.Utils;
 
-import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by gabrielm on 30/03/17.
@@ -61,11 +57,11 @@ public class TableAEMMD extends TableFunctions{
 
         SelectionTables selectionTables = new SelectionTables();
 
-        while(genCounter < Constants.NUMBER_OF_GENERATIONS ) {
+        while(genCounter < Parameters.NUMBER_OF_GENERATIONS ) {
 
             System.out.println("GenCounter: "+genCounter);//todo
 
-            if (genCounter % Constants.RESET_ON_GEN == 0) TableFunctions.resetContributionAndConvergence(this);
+            if (genCounter % Parameters.RESET_ON_GEN == 0) TableFunctions.resetContributionAndConvergence(this);
 
             ArrayList<Table> parentTables = selectionTables.selectTables(tables,"AEMMD");
             Population parentsPopulation = SelectionRank.selectParents(parentTables.get(0),parentTables.get(1));
@@ -91,10 +87,10 @@ public class TableAEMMD extends TableFunctions{
 
     @Override
     int setQtdTables() {
-        int singleObjectiveTables = Constants.PROBLEM_SIZE;
+        int singleObjectiveTables = Parameters.PROBLEM_SIZE;
         int qtdTables =0;
-        for (int i = 1; i <= Constants.PROBLEM_SIZE ; i++) {
-            qtdTables += TableFunctions.fact(Constants.PROBLEM_SIZE) / (fact(i) * fact(Constants.PROBLEM_SIZE - i));
+        for (int i = 1; i <= Parameters.PROBLEM_SIZE ; i++) {
+            qtdTables += TableFunctions.fact(Parameters.PROBLEM_SIZE) / (fact(i) * fact(Parameters.PROBLEM_SIZE - i));
         }
 
         return  qtdTables - singleObjectiveTables;
@@ -118,16 +114,16 @@ public class TableAEMMD extends TableFunctions{
     @Override
     public void buildTables(){
         TableFunctions.setQtdMembersOfATable();
-        Constants.QTD_TABLES = this.setQtdTables();
-        TableFunctions.buildMasks(Constants.PROBLEM_SIZE +1);
+        Parameters.QTD_TABLES = this.setQtdTables();
+        TableFunctions.buildMasks(Parameters.PROBLEM_SIZE +1);
 
         this.updateCurrentMask(0);
         int i =0;
         int tableCounter = 0;
-        while(tableCounter<Constants.QTD_TABLES )
+        while(tableCounter< Parameters.QTD_TABLES )
         {
             this.updateCurrentMask(i);
-            while (currentMask.length == 1 || currentMask.length == Constants.PROBLEM_SIZE){
+            while (currentMask.length == 1 || currentMask.length == Parameters.PROBLEM_SIZE){
                 i++;
                 this.updateCurrentMask(i);
             }

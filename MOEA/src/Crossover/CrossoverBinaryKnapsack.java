@@ -1,6 +1,6 @@
 package Crossover;
 
-import SupportingFiles.Constants;
+import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.*;
 
@@ -33,13 +33,13 @@ public class CrossoverBinaryKnapsack implements Crossover {
 
     private ArrayList<Member> makeChildren(Member m1, Member m2)
     {
-        int cutoff =  Utils.getRandom(0, Constants.QTD_ITEMS);
+        int cutoff =  Utils.getRandom(0, Parameters.QTD_ITEMS);
 
         ArrayList<Member>  pairOfChildren       = new ArrayList<>();
         ArrayList<Integer> parent1FirstPart     = new ArrayList<>(m1.binaryValue.subList(0,cutoff));
-        ArrayList<Integer> parent1SecondPart    = new ArrayList<>(m1.binaryValue.subList(cutoff,Constants.QTD_ITEMS));
+        ArrayList<Integer> parent1SecondPart    = new ArrayList<>(m1.binaryValue.subList(cutoff, Parameters.QTD_ITEMS));
         ArrayList<Integer> parent2FirstPart     = new ArrayList<>(m2.binaryValue.subList(0,cutoff));
-        ArrayList<Integer> parent2SecondPart    = new ArrayList<>(m2.binaryValue.subList(cutoff,Constants.QTD_ITEMS));
+        ArrayList<Integer> parent2SecondPart    = new ArrayList<>(m2.binaryValue.subList(cutoff, Parameters.QTD_ITEMS));
 
         parent1FirstPart.addAll(parent2SecondPart);
         parent2FirstPart.addAll(parent1SecondPart);
@@ -60,7 +60,7 @@ public class CrossoverBinaryKnapsack implements Crossover {
 
     private void mutation(ArrayList<Integer> binaryNumber)
     {
-        if(Utils.getRandom(1,100) <= Constants.MUTATION_RATE)
+        if(Utils.getRandom(1,100) <= Parameters.MUTATION_RATE)
         {
             int sectionToBeMutated = Utils.getRandom(0,binaryNumber.size());
             if(binaryNumber.get(sectionToBeMutated) == 0)
