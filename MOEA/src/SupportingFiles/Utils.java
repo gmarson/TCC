@@ -12,7 +12,7 @@ import static java.lang.Math.*;
  */
 public abstract class Utils {
 
-    private static Random random = new Random();
+    private static Random random = new Random(Parameters.SEED);
 
     private static Scanner s = new Scanner(System.in);
     public static void setSeed(int SEED)

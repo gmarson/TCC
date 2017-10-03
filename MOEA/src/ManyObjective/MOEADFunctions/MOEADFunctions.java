@@ -9,6 +9,8 @@ import Selections.SelectionNeighborhood;
 import SupportingFiles.Matrix;
 import SupportingFiles.Utils;
 
+//import org.apache.commons.math3.util.MathArrays;
+
 import java.util.ArrayList;
 
 /**
@@ -28,14 +30,14 @@ public class MOEADFunctions {
         Population childPopulation = problem.crossover.crossoverAndMutation(parentsPopulation);
 
         problem.evaluateAgainstObjectiveFunctions(childPopulation);
-//
-//        if(d.dominates(childPopulation.population.get(0), childPopulation.population.get(1))){
-//            return childPopulation.population.get(0);
-//        }
-//
-//        return childPopulation.population.get(1);
 
-        return childPopulation.population.get(Utils.getRandom(0,2));
+        if(d.dominates(childPopulation.population.get(0), childPopulation.population.get(1))){
+            return childPopulation.population.get(0);
+        }
+
+        return childPopulation.population.get(1);
+
+        //return childPopulation.population.get(Utils.getRandom(0,2));
     }
 
     public static void mainLoop(Problem problem){
@@ -149,5 +151,40 @@ public class MOEADFunctions {
 
         }
     }
+
+
+    /**
+     * Compares individuals based on their distance from a specified individual.
+     */
+//    private static class WeightSorter implements Comparator<Member> {
+//
+//        /**
+//         * The individual from which weight distances are computed.
+//         */
+//        private final Member individual;
+//
+//        /**
+//         * Constructs a comparator for comparing individuals based on their
+//         * distance from the specified individual.
+//         *
+//         * @param individual the individual from which weight distances are
+//         *        computed
+//         */
+//        public WeightSorter(Member individual) {
+//            this.individual = individual;
+//        }
+//
+//        @Override
+//        public int compare(Member o1, Member o2) {
+//            double d1 = MathArrays.distance(
+//                    individual.getWeights(), o1.getWeights());
+//            double d2 = MathArrays.distance(
+//                    individual.getWeights(), o2.getWeights());
+//
+//            return Double.compare(d1, d2);
+//        }
+//
+//    }
+
 
 }
