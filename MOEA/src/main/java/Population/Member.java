@@ -124,4 +124,8 @@ public class Member implements Serializable, Cloneable{
 
         return functions.toString();
     }
+
+    public void addNeighbor(Member aMember) {
+        this.neighborhood.add(aMember);
+    }
 }

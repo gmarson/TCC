@@ -27,13 +27,16 @@ public class MOEAD {
         moeadPopulation.population = problem.generateMembers(Parameters.POPULATION_SIZE);
         instantiateVariables();
         problem.evaluateAgainstObjectiveFunctions(moeadPopulation);
-        MOEADFunctions.neighborhoods = new Matrix(Parameters.POPULATION_SIZE, Parameters.NEIGHBOURHOOD_SIZE, moeadPopulation);
 
-        MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers();
+        MOEADFunctions.neighborhoods = new Matrix(Parameters.POPULATION_SIZE, Parameters.NEIGHBOURHOOD_SIZE, moeadPopulation);
+        MOEADFunctions.NeighborhoodSettings.initializeNeighborhoods(moeadPopulation.population);
+        MOEADFunctions.transferToMatrix(moeadPopulation);
+
+        //MOEADFunctions.NeighborhoodSettings.setNeighboursForAllMembers();
+
         MOEADFunctions.mainLoop(problem);
 
         saveParetto();
-
         //neighborhoods.printMatrix();//todo
         //Printer.printNeighborhoods(MOEADFunctions.neighborhoods);//todo
         Printer.printBinaryMembersWithAppliedFunctions(archive);//todo
@@ -58,5 +61,4 @@ public class MOEAD {
         pareto = new Front();
         pareto.membersAtThisFront = archive.population;
     }
-
 }
