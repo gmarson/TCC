@@ -9,9 +9,13 @@ import Selections.SelectionNeighborhood;
 import SupportingFiles.Matrix;
 import SupportingFiles.Utils;
 
-//import org.apache.commons.math3.util.MathArrays;
+
+import org.apache.commons.math3.util.MathArrays;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by gabrielm on 06/05/17.
@@ -103,88 +107,55 @@ public class MOEADFunctions {
         }
     }
 
-
-    public static class NeighborhoodSettings {
-
-        public static void setNeighboursForAllMembers() {
-
-            for (int i = 0; i < neighborhoods.rows ; i++) {
-                for (int j = i; j < neighborhoods.rows; j++) {
-
-                    if(i != j) {
-                        addOrdered(i, j);
-                        addOrdered(j, i);
-                    }
-                }
+    public static void transferToMatrix(Population moeadPopulation) {
+        for (int i = 0; i < moeadPopulation.population.size(); i++) {
+            Member currentMember = moeadPopulation.population.get(i);
+            for (int j = 0; j < Parameters.NEIGHBOURHOOD_SIZE; j++) {
+                MOEADFunctions.neighborhoods.memberMatrix[i][j] = currentMember.neighborhood.get(j);
             }
-        }
-
-        private static void addOrdered(int cellIndex, int neighbourCandidateIndex){
-
-            boolean shouldAddLastPosition = false;
-            Member[] neighborhood = neighborhoods.memberMatrix[cellIndex];
-            Member cell = neighborhood[0];
-            Member child = neighborhoods.memberMatrix[neighbourCandidateIndex][0];
-            double candidateDistance = Utils.euclideanDistanceBasedOnWeightVector(cell,child);
-
-            int indexToInsert;
-            for (indexToInsert = 1; indexToInsert < Parameters.NEIGHBOURHOOD_SIZE ; indexToInsert++) {
-
-                if (neighborhood[indexToInsert] != null){
-                    if (candidateDistance < Utils.euclideanDistanceBasedOnWeightVector(neighborhood[indexToInsert],neighborhood[0])){
-                        shouldAddLastPosition = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    neighborhood[indexToInsert] = child;
-                    return;
-                }
-            }
-
-            for (int i = Parameters.NEIGHBOURHOOD_SIZE -1; i > indexToInsert ; i--) {
-                neighborhood[i] = neighborhood[i - 1];
-            }
-
-            if(shouldAddLastPosition) neighborhood[indexToInsert] = child;
-
         }
     }
 
 
-    /**
-     * Compares individuals based on their distance from a specified individual.
-     */
-//    private static class WeightSorter implements Comparator<Member> {
-//
-//        /**
-//         * The individual from which weight distances are computed.
-//         */
-//        private final Member individual;
-//
-//        /**
-//         * Constructs a comparator for comparing individuals based on their
-//         * distance from the specified individual.
-//         *
-//         * @param individual the individual from which weight distances are
-//         *        computed
-//         */
-//        public WeightSorter(Member individual) {
-//            this.individual = individual;
-//        }
-//
-//        @Override
-//        public int compare(Member o1, Member o2) {
-//            double d1 = MathArrays.distance(
-//                    individual.getWeights(), o1.getWeights());
-//            double d2 = MathArrays.distance(
-//                    individual.getWeights(), o2.getWeights());
-//
-//            return Double.compare(d1, d2);
-//        }
-//
-//    }
+    public static class NeighborhoodSettings {
+        public static void initializeNeighborhoods(ArrayList<Member> population) {
+            List<Member> sortedPopulation = new ArrayList<Member>(population);
+
+            for (Member individual : population) {
+                Collections.sort(sortedPopulation, new WeightSorter(individual));
+
+                for (int i = 0; i < Parameters.NEIGHBOURHOOD_SIZE; i++) {
+
+                    individual.addNeighbor(sortedPopulation.get(i));
+                }
+            }
+        }
+
+        private static class WeightSorter implements Comparator<Member> {
+
+            private final Member individual;
+
+            WeightSorter(Member individual) {
+                this.individual = individual;
+            }
+
+            @Override
+            public int compare(Member o1, Member o2) {
+                double d1 = MathArrays.distance(
+                        individual.weightVector.vector, o1.weightVector.vector);
+                double d2 = MathArrays.distance(
+                        individual.weightVector.vector, o2.weightVector.vector);
+
+                return Double.compare(d1, d2);
+            }
+
+        }
+
+
+    }
+
+
+
 
 
 }
