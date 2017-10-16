@@ -9,9 +9,9 @@ import Problems.Problem;
  */
 public class ParetoSubset extends Metrics{
 
-    private double gotRight;
-    private double result;
-    private double bestParetoSize;
+    public double gotRight;
+    public double result;
+    public double bestParetoSize;
     public ParetoSubset(Problem problem) {
         super(problem);
         gotRight = 0.0;

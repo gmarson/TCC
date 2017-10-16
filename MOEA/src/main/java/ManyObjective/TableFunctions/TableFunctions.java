@@ -13,7 +13,7 @@ public abstract class TableFunctions {
 
     abstract public void fillTables(Population p);
     abstract public void insertMemberOnTables(Member newMember);
-    abstract public void mainLoop();
+    abstract public Population mainLoop();
     abstract public void addTable(int[] mask);
     abstract public ArrayList<Table> getTables();
     abstract int setQtdTables();

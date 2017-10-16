@@ -39,7 +39,7 @@ public class MOEAD {
         saveParetto();
         //neighborhoods.printMatrix();//todo
         //Printer.printNeighborhoods(MOEADFunctions.neighborhoods);//todo
-        Printer.printBinaryMembersWithAppliedFunctions(archive);//todo
+        //Printer.printBinaryMembersWithAppliedFunctions(archive);//todo
         reset();
     }
 

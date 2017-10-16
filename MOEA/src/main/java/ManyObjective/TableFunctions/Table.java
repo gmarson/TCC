@@ -26,9 +26,9 @@ public class Table {
         this.isNonDominatedTable = (mask.length == 0);
     }
 
-    public void organizeWeightedAverageTable(){
+    public void organizeWeightedAverageTable(boolean removeSurplusMembers){
         WeightedAverage.sortByWeightedAverage(this.tablePopulation);
-        removeSurplusMembers();
+        if (removeSurplusMembers) removeSurplusMembers();
     }
 
     private void removeSurplusMembers(){

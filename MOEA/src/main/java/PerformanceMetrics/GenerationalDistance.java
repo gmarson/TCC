@@ -12,7 +12,7 @@ import static java.lang.Math.sqrt;
  */
 public class GenerationalDistance extends Metrics{
 
-    private double result;
+    public double result;
 
     public GenerationalDistance(Problem problem) {
         super(problem);

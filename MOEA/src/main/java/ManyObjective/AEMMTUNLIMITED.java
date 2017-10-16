@@ -2,31 +2,32 @@ package ManyObjective;
 
 import Fronts.Front;
 import ManyObjective.TableFunctions.TableAEMMT;
+import ManyObjective.TableFunctions.TableAEMMTUNLIMITED;
 import Population.Population;
-import Problems.*;
+import Problems.Problem;
 import SupportingFiles.Parameters;
 import SupportingFiles.Printer;
 
 /**
- * Created by gabrielm on 07/03/17.
+ * Created by gabrielm on 10/14/17.
+ * Project : TCC.
  */
-public class AEMMT {
+public class AEMMTUNLIMITED {
 
-    private TableAEMMT tableAEMMT;
-    private Population p ;
-    public Front paretto ;
+    private TableAEMMTUNLIMITED tableAEMMTUNLIMITED;
+    private Population p = new Population();
+    public Front pareto = new Front();
 
     public void runAlgorithm(Problem problem)
     {
-        paretto = new Front();
-        p = new Population();
-        tableAEMMT = new TableAEMMT(problem);
-        tableAEMMT.buildTables();
-        p.population = problem.generateMembers(Parameters.TABLE_SIZE * Parameters.QTD_TABLES);
-        tableAEMMT.fillTables(p);
-        p = tableAEMMT.mainLoop();
 
-        //Printer.printBinaryMembersWithAppliedFunctions(TableAEMMT.nonDominatedMembers);//todo
+        tableAEMMTUNLIMITED = new TableAEMMTUNLIMITED(problem);
+        tableAEMMTUNLIMITED.buildTables();
+        p.population = problem.generateMembers(Parameters.TABLE_SIZE * Parameters.QTD_TABLES);
+        tableAEMMTUNLIMITED.fillTables(p);
+        p = tableAEMMTUNLIMITED.mainLoop();
+
+        //Printer.printBinaryMembersWithAppliedFunctions(p);//todo
         //problem.printResolutionMessage();//todo
         //Printer.printNonDominatedTable(tableAEMMT);//todo
         //Printer.printBinaryValuesNonDominatedTable(tableAEMMT);//todo
@@ -39,14 +40,15 @@ public class AEMMT {
     }
 
     private void reset(Problem problem){
-        tableAEMMT = new TableAEMMT(problem);
+        tableAEMMTUNLIMITED = new TableAEMMTUNLIMITED(problem);
         p = new Population();
-        tableAEMMT.reset();
+        tableAEMMTUNLIMITED.reset();
     }
 
     private void saveParetto(Problem problem){
-        paretto.membersAtThisFront = p.population;
+        pareto.membersAtThisFront = p.population;
 
     }
+
 
 }

@@ -18,16 +18,16 @@ public abstract class Parameters {
     public static int TOUR_SIZE = 4;
 
     //ONLY SPEA2 CONSTANTS
-    public static int ARCHIVE_SIZE = POPULATION_SIZE;
+    public static int ARCHIVE_SIZE = 90;
     public static int DISTANCE_MATRIX_SIZE = ARCHIVE_SIZE + POPULATION_SIZE;
 
     //ONLY AEMMT AND AEMMD CONSTANTS
-    public static int RESET_ON_GEN = 10;
+    public static int RESET_ON_GEN = 50;
     public static int QTD_TABLES;
-    public static int TABLE_SIZE = 60;
+    public static int TABLE_SIZE = 50;
 
     //ONLY MOEA-D
-    public static int NEIGHBOURHOOD_SIZE = 100;
+    public static int NEIGHBOURHOOD_SIZE = 150;
 
     //PROBLEM CONSTANTS
     public static int PROBLEM_SIZE = -1;

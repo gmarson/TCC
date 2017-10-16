@@ -1,28 +1,29 @@
 package ManyObjective.TableFunctions;
 
+import Dominance.Dominance;
 import Population.*;
-import Problems.*;
+import Problems.Problem;
 import Selections.SelectionRankWeightedAverage;
 import Selections.SelectionTables;
-import SupportingFiles.*;
-import WeightedAverage.*;
+import SupportingFiles.Parameters;
+import SupportingFiles.Utils;
+import WeightedAverage.WeightedAverage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by gabrielm on 30/03/17.
+ * Created by gabrielm on 10/14/17.
+ * Project : TCC.
  */
-public class TableAEMMT extends TableFunctions{
+public class TableAEMMTUNLIMITED extends TableFunctions {
 
-    private int genCounter = 0;
-    public ArrayList<Table> tables = new ArrayList<>();
-    public Population nonDominatedMembers = new Population();
-    private Problem problem;
+    private  int genCounter = 0;
+    public  ArrayList<Table> tables = new ArrayList<>();
+    public  Population nonDominatedMembers = new Population();
+    private  Problem problem;
 
-
-    public TableAEMMT(Problem problem){
-
+    public TableAEMMTUNLIMITED(Problem problem){
         this.problem = problem;
     }
 
@@ -35,7 +36,7 @@ public class TableAEMMT extends TableFunctions{
             problem.evaluateAgainstMask(table.tablePopulation,table.mask);
 
             if (table.isNonDominatedTable) {
-                table.organizeNonDominatedTable(true);
+                table.organizeNonDominatedTable(false);
             }
             else
                 table.organizeWeightedAverageTable(true);
@@ -67,7 +68,7 @@ public class TableAEMMT extends TableFunctions{
         }
 
         getNonDominatedMembers(problem);
-        return nonDominatedMembers;
+        return this.nonDominatedMembers;
 
     }
 
@@ -126,14 +127,24 @@ public class TableAEMMT extends TableFunctions{
 
     private boolean insertionForNonDominatedTable(Table table, Member newMember, Problem problem) {
 
-        if (Problem.valueOfMemberIsPresent(newMember,table.tablePopulation,problem)
-                || table.tablePopulation.population.size() == Parameters.TABLE_SIZE){
-            return false;
+        Population toBeRemoved = new Population();
+        problem.applyFunctions(newMember);
+        boolean canAddNewMember = true;
+        Dominance dominance = new Dominance();
+
+        for (Member m : table.tablePopulation.population){
+            if (dominance.dominates(newMember,m)){
+                toBeRemoved.addMember(m);
+            }
+            else if(dominance.dominates(m,newMember)){
+                canAddNewMember = false;
+            }
+
         }
 
-        problem.applyFunctions(newMember);
-        table.tablePopulation.addMember(newMember);
-        table.organizeNonDominatedTable(true);
+
+        if (canAddNewMember) table.tablePopulation.addMember(newMember);
+        table.tablePopulation.population.remove(toBeRemoved.population);
 
         return Problem.valueOfMemberIsPresent(newMember, table.tablePopulation, problem);
     }
@@ -151,7 +162,6 @@ public class TableAEMMT extends TableFunctions{
         super.reset();
         genCounter = 1;
         tables = new ArrayList<>();
-
     }
 
     @Override
@@ -219,4 +229,5 @@ public class TableAEMMT extends TableFunctions{
         nonDominatedMembers.fastNonDominatedSort();
         nonDominatedMembers.population = nonDominatedMembers.getFirstFront().membersAtThisFront;
     }
+
 }

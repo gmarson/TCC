@@ -9,7 +9,7 @@ import Problems.*;
  */
 public class Erro extends Metrics{
 
-    private double result;
+    public double result;
 
     public Erro(Problem problem) {
         super(problem);

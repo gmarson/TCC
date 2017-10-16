@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class MOEADFunctions {
 
-
     public static Matrix neighborhoods;
     public static int genCounter = 0;
 
@@ -48,7 +47,7 @@ public class MOEADFunctions {
 
         while (genCounter < Parameters.NUMBER_OF_GENERATIONS){
 
-            System.out.println("GEN = "+genCounter);//todo
+            //System.out.println("GEN = "+genCounter);//todo
 
             for (int i = 0; i < Parameters.POPULATION_SIZE; i++) {
                 Member[] neighborhood = neighborhoods.memberMatrix[i];
@@ -115,7 +114,6 @@ public class MOEADFunctions {
             }
         }
     }
-
 
     public static class NeighborhoodSettings {
         public static void initializeNeighborhoods(ArrayList<Member> population) {

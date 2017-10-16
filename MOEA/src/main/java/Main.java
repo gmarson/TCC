@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private static String fileName = "KP_p-6_n-100_ins-1";
+    private static String fileName = "KP_p-2_n-100_ins-1";
     //private static String fileName = "KPTESTE";
     //private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
@@ -73,48 +73,70 @@ public class Main {
 
         Population parettoPopulation = readParetoFromFile(pathToPareto+fileName+paretoName);
 
-        NSGAII nsgaii = new NSGAII();
-        SPEA2  spea2 = new SPEA2();
-        AEMMT  aemmt = new AEMMT();
-        AEMMD  aemmd = new AEMMD();
-        MOEAD  moead = new MOEAD();
+        double error = 0;
+        double gd = 0;
+        double ps = 0;
 
-        Parameters.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
-        //nsgaii.runAlgorithm(problem);
+        double turns = 5;
 
-        //spea2.runAlgorithm(problem);
+        for (int i = 0; i < (int)turns; i++) {
+            NSGAII nsgaii = new NSGAII();
+            SPEA2  spea2 = new SPEA2();
+            AEMMT  aemmt = new AEMMT();
+            AEMMD  aemmd = new AEMMD();
+            MOEAD  moead = new MOEAD();
+            AEMMTUNLIMITED aemmtunlimited = new AEMMTUNLIMITED();
 
-        moead.runAlgorithm(problem);
+            Parameters.NUMBER_OF_GENERATIONS = 200;
+            //nsgaii.runAlgorithm(problem);
 
-        Parameters.NUMBER_OF_GENERATIONS = 15000;
-        //aemmt.runAlgorithm(problem);
-        //aemmd.runAlgorithm(problem);
+            spea2.runAlgorithm(problem);
 
-        Erro erro = new Erro(problem);
-        ParetoSubset paretoSubset = new ParetoSubset(problem);
-        GenerationalDistance generationalDistance = new GenerationalDistance(problem);
+            //moead.runAlgorithm(problem);
 
-        Population newPopulation = new Population();
+            Parameters.NUMBER_OF_GENERATIONS = 15000;
 
-        if(!nsgaii.paretto.membersAtThisFront.isEmpty())
-            newPopulation.population = nsgaii.paretto.membersAtThisFront;
-        else if (!spea2.paretto.membersAtThisFront.isEmpty())
-            newPopulation.population = spea2.paretto.membersAtThisFront;
-        else if (!aemmt.paretto.membersAtThisFront.isEmpty())
-            newPopulation.population = aemmt.paretto.membersAtThisFront;
-        else if (!aemmd.paretto.membersAtThisFront.isEmpty())
-            newPopulation.population = aemmd.paretto.membersAtThisFront;
-        else if (!moead.pareto.membersAtThisFront.isEmpty())
-            newPopulation.population = moead.pareto.membersAtThisFront;
+            aemmtunlimited.runAlgorithm(problem);
+            //aemmt.runAlgorithm(problem);
+            //aemmd.runAlgorithm(problem);
 
-        paretoSubset.estimateBasedOnMetric(newPopulation,parettoPopulation);
-        paretoSubset.messageAfterProcess();
+            Erro erro = new Erro(problem);
+            ParetoSubset paretoSubset = new ParetoSubset(problem);
+            GenerationalDistance generationalDistance = new GenerationalDistance(problem);
 
-        erro.estimateBasedOnMetric(newPopulation,parettoPopulation);
-        erro.messageAfterProcess();
+            Population newPopulation = new Population();
 
-        generationalDistance.estimateBasedOnMetric(newPopulation,parettoPopulation);
-        generationalDistance.messageAfterProcess();
+            if(!nsgaii.paretto.membersAtThisFront.isEmpty())
+                newPopulation.population = nsgaii.paretto.membersAtThisFront;
+            else if (!spea2.paretto.membersAtThisFront.isEmpty())
+                newPopulation.population = spea2.paretto.membersAtThisFront;
+            else if (aemmt.paretto != null && !aemmt.paretto.membersAtThisFront.isEmpty())
+                newPopulation.population = aemmt.paretto.membersAtThisFront;
+            else if (aemmd.paretto != null && !aemmd.paretto.membersAtThisFront.isEmpty())
+                newPopulation.population = aemmd.paretto.membersAtThisFront;
+            else if (aemmtunlimited.pareto != null && !aemmtunlimited.pareto.membersAtThisFront.isEmpty())
+                newPopulation.population = aemmtunlimited.pareto.membersAtThisFront;
+            else if (!moead.pareto.membersAtThisFront.isEmpty())
+                newPopulation.population = moead.pareto.membersAtThisFront;
+
+
+            paretoSubset.estimateBasedOnMetric(newPopulation,parettoPopulation);
+            paretoSubset.messageAfterProcess();
+
+            ps += paretoSubset.result;
+
+            erro.estimateBasedOnMetric(newPopulation,parettoPopulation);
+            erro.messageAfterProcess();
+            error += erro.result;
+
+            generationalDistance.estimateBasedOnMetric(newPopulation,parettoPopulation);
+            generationalDistance.messageAfterProcess();
+            gd += generationalDistance.result;
+        }
+
+        System.out.println("erro: "+error/turns+"\ngd: "+gd/turns+"\nps:"+ps/turns);
+
+
     }
 
     private static void writeParetoFromProblem(){
@@ -153,7 +175,7 @@ public class Main {
             allFrontsMembers.population.addAll(spea2.paretto.membersAtThisFront);
 
             //moead.runAlgorithm(problem);
-            //allFrontsMembers.population.addAll( moead.paretto.membersAtThisFront);
+            //allFrontsMembers.population.addAll( moead.pareto.membersAtThisFront);
 
             Parameters.NUMBER_OF_GENERATIONS = 15000;
             System.out.println("AEMMT");

@@ -14,13 +14,13 @@ import java.util.ArrayList;
  */
 public class TableAEMMD extends TableFunctions{
 
-    private static int genCounter = 0;
-    private static ArrayList<Table> tables = new ArrayList<>();
-    public static Population nonDominatedMembers = new Population();
-    private static Problem problem;
+    private  int genCounter = 0;
+    private  ArrayList<Table> tables = new ArrayList<>();
+    public  Population nonDominatedMembers = new Population();
+    private  Problem problem;
 
     public TableAEMMD(Problem problem){
-        TableAEMMD.problem = problem;
+        this.problem = problem;
     }
 
     @Override
@@ -53,13 +53,13 @@ public class TableAEMMD extends TableFunctions{
     }
 
     @Override
-    public void mainLoop() {
+    public Population mainLoop() {
 
         SelectionTables selectionTables = new SelectionTables();
 
         while(genCounter < Parameters.NUMBER_OF_GENERATIONS ) {
 
-            System.out.println("GenCounter: "+genCounter);//todo
+            //System.out.println("GenCounter: "+genCounter);//todo
 
             if (genCounter % Parameters.RESET_ON_GEN == 0) TableFunctions.resetContributionAndConvergence(this);
 
@@ -73,6 +73,8 @@ public class TableAEMMD extends TableFunctions{
         }
 
         this.getNonDominatedMembers();
+        return this.nonDominatedMembers;
+
     }
 
     @Override

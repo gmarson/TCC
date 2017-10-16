@@ -2,6 +2,8 @@ package ManyObjective;
 
 import Fronts.Front;
 import ManyObjective.TableFunctions.TableAEMMD;
+import ManyObjective.TableFunctions.TableAEMMT;
+import ManyObjective.TableFunctions.TableAEMMTUNLIMITED;
 import Population.Population;
 import Problems.Problem;
 import SupportingFiles.Parameters;
@@ -13,12 +15,14 @@ import SupportingFiles.Printer;
 public class AEMMD {
 
     private static TableAEMMD tableAEMMD;
-    private Population p = new Population();
-    public Front paretto = new Front();
+    private Population p ;
+    public Front paretto ;
 
 
     public void runAlgorithm(Problem problem)
     {
+        p = new Population();
+        paretto = new Front();
         tableAEMMD = new TableAEMMD(problem);
 
         tableAEMMD.buildTables();
@@ -27,11 +31,11 @@ public class AEMMD {
 
         tableAEMMD.fillTables(p);
 
-        tableAEMMD.mainLoop();
+        p = tableAEMMD.mainLoop();
 
         //Printer.printTables(tableAEMMD);//todo
         //Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);//todo
-        Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);
+        //Printer.printBinaryMembersWithAppliedFunctions(TableAEMMD.nonDominatedMembers);
 
         saveParetto(problem);
         reset(problem);
@@ -45,8 +49,8 @@ public class AEMMD {
     }
 
     private void saveParetto(Problem problem){
-        paretto.membersAtThisFront.addAll(TableAEMMD.nonDominatedMembers.population);
-        //Problem.removeSimilar(paretto,problem);
+        paretto.membersAtThisFront = p.population;
+        //Problem.removeSimilar(pareto,problem);
     }
 
 
