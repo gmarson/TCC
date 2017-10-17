@@ -128,4 +128,12 @@ public class Member implements Serializable, Cloneable{
     public void addNeighbor(Member aMember) {
         this.neighborhood.add(aMember);
     }
+
+    public void clearSPEA2Variables(){
+        this.fitness = 0.0;
+        this.rawFitness = 0.0;
+        this.density = 0.0;
+        this.sigma = 0.0;
+        this.distances = new ArrayList<>();
+    }
 }

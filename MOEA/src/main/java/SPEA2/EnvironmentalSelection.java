@@ -1,5 +1,6 @@
 package SPEA2;
 
+import SupportingFiles.Matrix;
 import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.Sorts;
@@ -103,6 +104,43 @@ public abstract class EnvironmentalSelection {
         }
         return mostCrowdedMembers.population.get(0);
 
+    }
+
+    //SPEAHADKA
+    protected static FitnessComparator fitnessComparator;
+
+    public static Population truncate(Population offspring){
+        fitnessComparator = new FitnessComparator();
+        Population survivors = new Population();
+        for (int i = 0; i < offspring.size(); i++) {
+            Member member = offspring.population.get(i);
+            if(member.fitness < 1.0){
+                survivors.addMember(member);
+            }
+        }
+
+        if (survivors.size() < Parameters.ARCHIVE_SIZE){
+            //fill remaining space with dominated Solutions
+            offspring.population.sort(fitnessComparator);
+            while (survivors.size() < Parameters.ARCHIVE_SIZE){
+                survivors.addMember(offspring.population.get(0));
+                offspring.population.remove(0);
+            }
+        }
+        else if (survivors.size() > Parameters.ARCHIVE_SIZE){
+            Matrix distance = new Matrix();
+            distance.computeDistanceMatrix(survivors);
+            MutableDistanceMap map = new MutableDistanceMap(distance.distance);
+
+            while (survivors.size() > Parameters.ARCHIVE_SIZE){
+                int index = map.findMostCrowdedPoint();
+                map.removePoint(index);
+                survivors.population.remove(index);
+            }
+
+        }
+
+        return survivors;
     }
 
 

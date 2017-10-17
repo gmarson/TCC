@@ -202,4 +202,15 @@ public class Population implements Serializable, Cloneable {
             member.resultOfFunctions = new ArrayList<>();
         }
     }
+
+    public int size(){
+        return this.population.size();
+    }
+
+    public void clear(){
+        for (int i = 0; i < this.size(); i++) {
+            this.population.remove(0);
+        }
+    }
+
 }

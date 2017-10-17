@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private static String fileName = "KP_p-2_n-100_ins-1";
+    private static String fileName = "KP_p-4_n-30_ins-1";
     //private static String fileName = "KPTESTE";
     //private static String fileName = "KPTIAGO";
     private static String extension = ".dat";
@@ -48,6 +48,7 @@ public class Main {
 
         //NSGAII algorithm = new NSGAII();
         SPEA2 algorithm = new SPEA2();
+        //SPEAHADKA algorithm = new SPEAHADKA();
         //AEMMT algorithm = new AEMMT();
         //AEMMD algorithm = new AEMMD();
         //MOEAD algorithm = new MOEAD();
@@ -85,18 +86,20 @@ public class Main {
             AEMMT  aemmt = new AEMMT();
             AEMMD  aemmd = new AEMMD();
             MOEAD  moead = new MOEAD();
+            SPEAHADKA speahadka = new SPEAHADKA();
             AEMMTUNLIMITED aemmtunlimited = new AEMMTUNLIMITED();
 
-            Parameters.NUMBER_OF_GENERATIONS = 200;
+            Parameters.NUMBER_OF_GENERATIONS = problem.items.size() < 100? 100 : 200;
             //nsgaii.runAlgorithm(problem);
 
+            //speahadka.runAlgorithm(problem);
             spea2.runAlgorithm(problem);
 
             //moead.runAlgorithm(problem);
 
             Parameters.NUMBER_OF_GENERATIONS = 15000;
 
-            aemmtunlimited.runAlgorithm(problem);
+            //aemmtunlimited.runAlgorithm(problem);
             //aemmt.runAlgorithm(problem);
             //aemmd.runAlgorithm(problem);
 
@@ -110,6 +113,8 @@ public class Main {
                 newPopulation.population = nsgaii.paretto.membersAtThisFront;
             else if (!spea2.paretto.membersAtThisFront.isEmpty())
                 newPopulation.population = spea2.paretto.membersAtThisFront;
+            else if (!speahadka.paretto.membersAtThisFront.isEmpty())
+                newPopulation.population = speahadka.paretto.membersAtThisFront;
             else if (aemmt.paretto != null && !aemmt.paretto.membersAtThisFront.isEmpty())
                 newPopulation.population = aemmt.paretto.membersAtThisFront;
             else if (aemmd.paretto != null && !aemmd.paretto.membersAtThisFront.isEmpty())
@@ -118,7 +123,6 @@ public class Main {
                 newPopulation.population = aemmtunlimited.pareto.membersAtThisFront;
             else if (!moead.pareto.membersAtThisFront.isEmpty())
                 newPopulation.population = moead.pareto.membersAtThisFront;
-
 
             paretoSubset.estimateBasedOnMetric(newPopulation,parettoPopulation);
             paretoSubset.messageAfterProcess();

@@ -3,6 +3,8 @@ package SPEA2;
 import SupportingFiles.Parameters;
 import Population.*;
 import SupportingFiles.*;
+import com.sun.org.apache.bcel.internal.generic.POP;
+import org.apache.commons.math3.util.KthSelector;
 
 import java.util.ArrayList;
 
@@ -95,6 +97,64 @@ public abstract class Fitness {
             indexOfMatrix++;
         }
     }
+    //
+
+    public static void evaluate(Population population){
+        int[] strength = new int[population.size()];
+        double[] fitness = new double[population.size()];
+        //ao chegar nessa função a pop ja tem que estar com as relações de dominancia estabelecidas
+
+
+        //strength
+        for (int i = 0; i < population.size(); i++) {
+            strength[i] = population.population.get(i).solutionsThatThisMemberDominates.size();
+        }
+
+        //raw fitness
+        for (int i = 0; i < population.size()-1; i++) {
+            for (int j = 0; j < population.size(); j++) {
+                int comparison = compare(population.population.get(i),population.population.get(j));
+
+                if (comparison < 0){
+                    fitness[j] += strength[i];
+                }
+                else if(comparison > 0 ){
+                    fitness[i] += strength[j];
+                }
+            }
+        }
+
+        //density
+        Matrix distances =  new Matrix();
+        distances.computeDistanceMatrix(population);
+        KthSelector selector = new KthSelector();
+        for (int i = 0; i < population.size(); i++) {
+            // k-nearest member
+            double kdist = selector.select(distances.distance[i],null,1);
+            fitness[i] += 1.0 / (kdist + 2.0);
+        }
+
+        for (int i = 0; i < population.size(); i++) {
+            population.population.get(i).fitness = fitness[i];
+        }
+
+
+    }
+
+
+    private static int compare(Member mi, Member mj){
+        if (mi.solutionsThatThisMemberDominates.contains(mj)) {
+            return 1;
+        }
+        else if (mj.solutionsThatThisMemberDominates.contains(mi)){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+
 
 
 }

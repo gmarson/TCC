@@ -84,6 +84,21 @@ public class Matrix {
         this.size = rows * columns;
     }
 
+
+    public void computeDistanceMatrix(Population population) {
+        double[][] distances = new double[population.population.size()][population.population.size()];
+
+        for (int i = 0; i < population.population.size(); i++) {
+            distances[i][i] = 0.0;
+
+            for (int j = i+1; j < population.population.size(); j++) {
+                distances[i][j] = distances[j][i] = Utils.euclidianDistance(population.population.get(i),population.population.get(j));
+            }
+        }
+
+        this.distance =  distances;
+    }
+
     public void addNewDistance(int row, int column, double value)
     {
         if (value >=0 && value != -1)
